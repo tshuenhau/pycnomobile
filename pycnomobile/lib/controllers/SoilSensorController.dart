@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:pycnomobile/model/soilsensor.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +11,7 @@ class SoilSensorController extends GetxController {
         'https://portal.pycno.co.uk/api/v2/data/no/${sensor.uid}.json?TK=${token}'));
 
     if (response.statusCode == 200) {
-      sensor.setLatestInfo(response.body);
+      sensor.setLatestInfo(jsonDecode(response.body));
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }

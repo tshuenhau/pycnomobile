@@ -4,8 +4,6 @@ import 'sensor.dart';
  * The parent class of Master Soil Sensor and Node Soil Sensor
  */
 class SoilSensor extends Sensor {
-  static String SENSOR_TYPE = "soil sensor";
-
   double temp;
   double hum;
   double lw1;
@@ -86,13 +84,13 @@ class SoilSensor extends Sensor {
       : super(
             uid,
             name,
-            address,
             img,
+            address,
             epoch,
             site,
             isLive,
-            isLiveHealth,
             isLiveTS,
+            isLiveHealth,
             updatedAt,
             polledAt,
             soilType,
