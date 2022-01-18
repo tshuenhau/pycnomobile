@@ -10,7 +10,7 @@ enum TYPE_OF_SENSOR {
   NODE_SOIL_SENSOR
 }
 
-class Sensor {
+abstract class Sensor {
   TYPE_OF_SENSOR type;
   String uid;
   String name;
