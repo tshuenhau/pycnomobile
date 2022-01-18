@@ -7,7 +7,7 @@ class ListOfSensorsLogic {
         'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=${token}'));
 
     if (response.statusCode == 200) {
-      sensor.setLatestInfo(jsonDecode(response.body));
+      ;
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
