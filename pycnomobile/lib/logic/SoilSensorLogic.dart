@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
 import 'package:pycnomobile/model/soilsensor.dart';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/logic/Commons.dart';
 
-class SoilSensorController extends GetxController {
-  getSoilSensorInfo(SoilSensor sensor) async {
+class SoilSensorLogic {
+  static getSoilSensorInfo(SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/no/${sensor.uid}.json?TK=${token}'));
 
@@ -17,17 +16,19 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getBatteryTimeSeries(DateTime start, DateTime end, SoilSensor sensor) async {
+  static getBatteryTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=${sensor.uid}&BAT&start=${start}&end=${end}'));
 
     if (response.statusCode == 200) {
+      jsonDecode(response.body);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  getOrderOfPacketsTimeSeries(DateTime start, DateTime end) async {
+  static getOrderOfPacketsTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&NS&start=${start}&end=${end}'));
     if (response.statusCode == 200) {
@@ -36,7 +37,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getTemperatureTimeSeries(DateTime start, DateTime end) async {
+  static getTemperatureTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&TEMP&start=${start}&end=${end}'));
 
@@ -46,7 +47,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getHumidityTimeSeries(DateTime start, DateTime end) async {
+  static getHumidityTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&HUM&start=${start}&end=${end}'));
 
@@ -56,7 +57,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getSunlightTimeSeries(DateTime start, DateTime end) async {
+  static getSunlightTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&LX1&start=${start}&end=${end}'));
 
@@ -66,7 +67,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getSolarRadiationTimeSeries(DateTime start, DateTime end) async {
+  static getSolarRadiationTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&LW1&start=${start}&end=${end}'));
 
@@ -76,7 +77,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getVersionTimeSeries(DateTime start, DateTime end) async {
+  static getVersionTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&VE&start=${start}&end=${end}'));
 
@@ -86,7 +87,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getUnitLogTimeSeries(DateTime start, DateTime end) async {
+  static getUnitLogTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&TXT&start=${start}&end=${end}'));
 
@@ -96,7 +97,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getRainfallTimeSeries(DateTime start, DateTime end) async {
+  static getRainfallTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&RAINH&start=${start}&end=${end}'));
 
@@ -106,7 +107,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getSensorToSensorFreqTimeSeries(DateTime start, DateTime end) async {
+  static getSensorToSensorFreqTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&LFREQ&start=${start}&end=${end}'));
 
@@ -116,7 +117,7 @@ class SoilSensorController extends GetxController {
     }
   }
 
-  getSignalStrengthTimeSeries(DateTime start, DateTime end) async {
+  static getSignalStrengthTimeSeries(DateTime start, DateTime end) async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&RSSI&start=${start}&end=${end}'));
 

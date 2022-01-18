@@ -37,6 +37,15 @@ class MasterSoilSensor extends SoilSensor {
       double bat,
       double rssi,
       double ns,
+      double s1t,
+      double s2t,
+      double s3t,
+      double s4t,
+      double s5t,
+      double s6t,
+      double st1,
+      double st3,
+      double st5,
       this.mdm,
       this.gr,
       this.grf,
@@ -68,7 +77,16 @@ class MasterSoilSensor extends SoilSensor {
             ve,
             bat,
             rssi,
-            ns);
+            ns,
+            s1t,
+            s2t,
+            s3t,
+            s4t,
+            s5t,
+            s6t,
+            st1,
+            st3,
+            st5);
 
   static bool isMasterSoilSensor(String uid) {
     return uid.startsWith("M");

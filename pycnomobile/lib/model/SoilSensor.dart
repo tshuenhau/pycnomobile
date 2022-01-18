@@ -24,29 +24,6 @@ class SoilSensor extends Sensor {
   double st3;
   double st5;
 
-  void setLatestInfo(List<Map<String, dynamic>> result) {
-    Map<String, dynamic> response = result[0];
-    this.temp = response["TEMP"];
-    this.hum = response["HUM"];
-    this.lw1 = response["LW1"];
-    this.txt = response["TXT"];
-    this.rainh = response["RAINH"];
-    this.lfreq = response["LFREQ"];
-    this.ve = response["VE"];
-    this.bat = response["BAT"];
-    this.rssi = response["RSSI"];
-    this.ns = response["NS"];
-    this.s1t = response["S1T"];
-    this.s2t = response["S2T"];
-    this.s3t = response["S3T"];
-    this.s4t = response["S4T"];
-    this.s5t = response["S5T"];
-    this.s6t = response["S6T"];
-    this.st1 = response["ST1"];
-    this.st3 = response["ST3"];
-    this.st5 = response["ST5"];
-  }
-
   SoilSensor(
       String uid,
       String name,
@@ -96,4 +73,27 @@ class SoilSensor extends Sensor {
             soilType,
             readableAgo,
             readableAgoFull);
+
+  void setLatestInfo(List<Map<String, dynamic>> result) {
+    Map<String, dynamic> response = result[0];
+    this.temp = response["TEMP"];
+    this.hum = response["HUM"];
+    this.lw1 = response["LW1"];
+    this.txt = response["TXT"];
+    this.rainh = response["RAINH"];
+    this.lfreq = response["LFREQ"];
+    this.ve = response["VE"];
+    this.bat = response["BAT"];
+    this.rssi = response["RSSI"];
+    this.ns = response["NS"];
+    this.s1t = response["S1T"];
+    this.s2t = response["S2T"];
+    this.s3t = response["S3T"];
+    this.s4t = response["S4T"];
+    this.s5t = response["S5T"];
+    this.s6t = response["S6T"];
+    this.st1 = response["ST1"];
+    this.st3 = response["ST3"];
+    this.st5 = response["ST5"];
+  }
 }
