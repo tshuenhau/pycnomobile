@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
@@ -15,6 +17,11 @@ class SensorListPage extends StatefulWidget {
 
 class _SensorListPageState extends State<SensorListPage> {
   late List<Sensor> sensors; //! API Call fills this up
+  Future _refreshData() async {
+    await Future.delayed(Duration(seconds: 1)); //! API CALL HERE
+    sensors.clear();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +37,19 @@ class _SensorListPageState extends State<SensorListPage> {
         ],
       ),
       body: Center(
-          child: Column(
-        children: [
-          //! iterate the sensors after the api call and instantiate each sensorlisttile
-          SensorsListTile(
-              sensorName: "Sensor Name",
-              sensorSerial: "Sensor Model Number",
-              availableGraphs: [""],
-              imageUrl:
-                  "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg"),
-        ],
+          child: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: ListView(
+          children: [
+            //! iterate the sensors after the api call and instantiate each sensorlisttile
+            SensorsListTile(
+                sensorName: "Sensor Name",
+                sensorSerial: "Sensor Model Number",
+                availableGraphs: [""],
+                imageUrl:
+                    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg"),
+          ],
+        ),
       )),
       bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 1),
     );

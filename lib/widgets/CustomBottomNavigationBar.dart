@@ -17,23 +17,23 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.calendar_today),
           label: 'Today',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.sensor_window),
           label: 'Sensors',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.map),
           label: 'Map',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.notifications),
           label: 'Alerts',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
+          icon: Icon(Icons.person),
           label: 'Account',
         ),
       ],
