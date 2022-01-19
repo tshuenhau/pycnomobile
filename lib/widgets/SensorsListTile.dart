@@ -23,19 +23,22 @@ class _SensorsListTileState extends State<SensorsListTile> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-      child: ListTile(
-          title: Text(widget.sensorName),
-          subtitle: Text(widget.sensorSerial),
-          trailing: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AvailableGraphsIcons(availableGraphs: widget.availableGraphs),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width *
-                        (1 / 20)), // give it width
-                Image(image: NetworkImage(widget.imageUrl))
-              ])),
+      child: InkWell(
+        onTap: () => {},
+        child: ListTile(
+            title: Text(widget.sensorName),
+            subtitle: Text(widget.sensorSerial),
+            trailing: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AvailableGraphsIcons(availableGraphs: widget.availableGraphs),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width *
+                          (1 / 20)), // give it width
+                  Image(image: NetworkImage(widget.imageUrl))
+                ])),
+      ),
     );
   }
 }

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
+import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 
 class SensorListPage extends StatefulWidget {
-  SensorListPage({Key? key}) : super(key: key);
+  SensorListPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SensorListPageState createState() => _SensorListPageState();
 }
 
 class _SensorListPageState extends State<SensorListPage> {
+  late List<Sensor> sensors; //! API Call fills this up
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +32,7 @@ class _SensorListPageState extends State<SensorListPage> {
       body: Center(
           child: Column(
         children: [
+          //! iterate the sensors after the api call and instantiate each sensorlisttile
           SensorsListTile(
               sensorName: "Sensor Name",
               sensorSerial: "Sensor Model Number",
@@ -34,29 +41,7 @@ class _SensorListPageState extends State<SensorListPage> {
                   "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg"),
         ],
       )),
-      bottomNavigationBar:
-          BottomNavigationBar(type: BottomNavigationBarType.fixed, items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
-          label: 'Today',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
-          label: 'Sensors',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
-          label: 'Map',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
-          label: 'Alerts',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.change_history),
-          label: 'Account',
-        ),
-      ]),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 1),
     );
   }
 }
