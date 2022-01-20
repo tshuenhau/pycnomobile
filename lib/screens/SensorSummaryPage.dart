@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
@@ -24,13 +25,7 @@ class SensorSummaryPage extends StatelessWidget {
             child: Wrap(
               spacing: 2, // gap between adjacent chips
               runSpacing: 4.0, // gap between lines
-              children: [
-                BasicSummaryCard(
-                    icon: Icons.thermostat,
-                    color: Colors.red,
-                    value: 17.55,
-                    unit: "°C"),
-              ],
+              children: buildSummaryCards(sensor),
             ),
           ),
         ),
