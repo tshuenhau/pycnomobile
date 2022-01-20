@@ -21,12 +21,16 @@ class SensorsListTile extends StatefulWidget {
 class _SensorsListTileState extends State<SensorsListTile> {
   @override
   Widget build(BuildContext context) {
+    print("Image URL: " + widget.imageUrl);
+
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       child: InkWell(
         onTap: () => {},
         child: ListTile(
-            title: Text(widget.sensorName),
+            title: Text(
+              widget.sensorName,
+            ),
             subtitle: Text(widget.sensorSerial),
             trailing: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,7 +40,10 @@ class _SensorsListTileState extends State<SensorsListTile> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width *
                           (1 / 20)), // give it width
-                  Image(image: NetworkImage(widget.imageUrl))
+                  Container(
+                      width: MediaQuery.of(context).size.height * 1 / 15,
+                      height: MediaQuery.of(context).size.height * 1 / 15,
+                      child: Image(image: NetworkImage(widget.imageUrl)))
                 ])),
       ),
     );

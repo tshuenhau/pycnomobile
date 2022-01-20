@@ -8,17 +8,17 @@ import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
-class SensorListPage extends StatefulWidget {
-  SensorListPage({
-    Key? key,
-  }) : super(key: key);
+class SensorListPage extends StatelessWidget {
+//   SensorListPage({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  _SensorListPageState createState() => _SensorListPageState();
-}
+//   @override
+//   _SensorListPageState createState() => _SensorListPageState();
+// }
 
-class _SensorListPageState extends State<SensorListPage> {
-  ListOfSensorsController sensorsController =
+// class _SensorListPageState extends State<SensorListPage> {
+  final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
