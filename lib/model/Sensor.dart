@@ -1,21 +1,22 @@
 import 'package:pycnomobile/model/sonicanemometer.dart';
 import 'package:pycnomobile/model/raingauge.dart';
-import 'package:pycnomobile/model/mastersoilsensor.dart';
-import 'package:pycnomobile/model/nodesoilsensor.dart';
+import 'package:pycnomobile/model/MasterSoilSensor.dart';
+import 'package:pycnomobile/model/NodeSoilSensor.dart';
 
 enum TYPE_OF_SENSOR {
   SONIC_ANEMOMETER,
   RAIN_GAUGE,
   MASTER_SOIL_SENSOR,
-  NODE_SOIL_SENSOR
+  NODE_SOIL_SENSOR,
+  PULSE
 }
 
 abstract class Sensor {
   TYPE_OF_SENSOR type;
   String uid;
-  String name;
-  String img;
-  String address;
+  String? name;
+  String? img;
+  String? address;
   int epoch;
   String site;
   bool isLive;
@@ -23,7 +24,7 @@ abstract class Sensor {
   DateTime isLiveTS;
   DateTime updatedAt;
   DateTime polledAt;
-  String soilType;
+  String? soilType;
   String readableAgo;
   String readableAgoFull;
 
@@ -44,13 +45,12 @@ abstract class Sensor {
       this.readableAgoFull)
       : type = getTypeOfSensor(uid);
 
-/**
-   * Sonic Anemometer: K80xxxxx
-   * Rain Gauge: K40xxxxx
-   * Master Soil Sensor: Mxxx
-   * Node Soil Sensor: Kxxx
-   * 
-   */
+  // Sonic Anemometer: K80xxxxx
+  // Rain Gauge: K40xxxxx
+  // Master Soil Sensor: Mxxx
+  // Node Soil Sensor: Kxxx
+  // Pulse: Pxxx
+  //
   static TYPE_OF_SENSOR getTypeOfSensor(String uid) {
     if (SonicAnemometer.isSonicAnemometer(uid)) {
       return TYPE_OF_SENSOR.SONIC_ANEMOMETER;
@@ -61,7 +61,8 @@ abstract class Sensor {
     } else if (NodeSoilSensor.isNodeSoilSensor(uid)) {
       return TYPE_OF_SENSOR.NODE_SOIL_SENSOR;
     } else {
-      throw Exception("Invalid sensor");
+      // throw Exception("Invalid sensor");
+      return TYPE_OF_SENSOR.PULSE; //temporary
     }
   }
 }

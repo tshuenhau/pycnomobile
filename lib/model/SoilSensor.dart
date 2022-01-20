@@ -1,63 +1,63 @@
-import 'sensor.dart';
+import 'Sensor.dart';
 
 /**
  * The parent class of Master Soil Sensor and Node Soil Sensor
  */
-class SoilSensor extends Sensor {
+abstract class SoilSensor extends Sensor {
   double temp;
   double hum;
   double lw1;
-  String txt;
+  String? txt;
   double rainh;
   int lfreq;
   double ve;
   double bat;
   double rssi;
-  double ns;
-  double s1t;
-  double s2t;
-  double s3t;
-  double s4t;
-  double s5t;
-  double s6t;
-  double st1;
-  double st3;
-  double st5;
+  double? ns;
+  double? s1t;
+  double? s2t;
+  double? s3t;
+  double? s4t;
+  double? s5t;
+  double? s6t;
+  double? st1;
+  double? st3;
+  double? st5;
 
   SoilSensor(
-      String uid,
-      String name,
-      String address,
-      String img,
-      int epoch,
-      String site,
-      bool isLive,
-      int isLiveHealth,
-      DateTime isLiveTS,
-      DateTime updatedAt,
-      DateTime polledAt,
-      String soilType,
-      String readableAgo,
-      String readableAgoFull,
-      this.temp,
-      this.hum,
-      this.lw1,
-      this.txt,
-      this.rainh,
-      this.lfreq,
-      this.ve,
-      this.bat,
-      this.rssi,
-      this.ns,
-      this.s1t,
-      this.s2t,
-      this.s3t,
-      this.s4t,
-      this.s5t,
-      this.s6t,
-      this.st1,
-      this.st3,
-      this.st5)
+      {required String uid,
+      required String name,
+      required String? address,
+      required String? img,
+      required int epoch,
+      required String site,
+      required bool isLive,
+      required int isLiveHealth,
+      required DateTime isLiveTS,
+      required DateTime updatedAt,
+      required DateTime polledAt,
+      required String? soilType,
+      required String readableAgo,
+      required String readableAgoFull,
+      required this.temp,
+      required this.hum,
+      required this.lw1,
+      required this.txt,
+      required this.rainh,
+      required this.lfreq,
+      required this.ve,
+      required this.bat,
+      required this.rssi,
+      required this.ns,
+      required this.s1t,
+      required this.s2t,
+      required this.s3t,
+      required this.s4t,
+      required this.s5t,
+      required this.s6t,
+      required this.st1,
+      required this.st3,
+      required this.st5})
       : super(
             uid,
             name,
@@ -95,5 +95,9 @@ class SoilSensor extends Sensor {
     this.st1 = response["ST1"];
     this.st3 = response["ST3"];
     this.st5 = response["ST5"];
+  }
+
+  String toString() {
+    return "UID: $uid, TEMP: $temp, HUM: $hum, LW1: $lw1, TXT: $txt, RAINH: $rainh, LFREQ: $lfreq, VE: $ve, BAT: $bat, RSSI: $rssi, NS: $ns, S1T: $s1t, S2T: $s2t, S3T: $s3t, S4T: $s4t, S5T: $s5t, S6T: $s6t, ST1: $st1, ST3: $st3, ST5: $st5";
   }
 }

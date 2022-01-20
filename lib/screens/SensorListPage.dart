@@ -1,10 +1,12 @@
 import 'dart:ffi';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
 import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
 class SensorListPage extends StatefulWidget {
   SensorListPage({
@@ -16,11 +18,10 @@ class SensorListPage extends StatefulWidget {
 }
 
 class _SensorListPageState extends State<SensorListPage> {
-  late List<Sensor> sensors; //! API Call fills this up
+  ListOfSensorsController sensorsController =
+      Get.put(ListOfSensorsController());
   Future _refreshData() async {
-    await Future.delayed(Duration(seconds: 1)); //! API CALL HERE
-    sensors.clear();
-    setState(() {});
+    await sensorsController.getListOfSensors();
   }
 
   @override
@@ -37,20 +38,24 @@ class _SensorListPageState extends State<SensorListPage> {
         ],
       ),
       body: Center(
-          child: RefreshIndicator(
-        onRefresh: _refreshData,
-        child: ListView(
-          children: [
-            //! iterate the sensors after the api call and instantiate each sensorlisttile
-            SensorsListTile(
-                sensorName: "Sensor Name",
-                sensorSerial: "Sensor Model Number",
-                availableGraphs: [""],
-                imageUrl:
-                    "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg"),
-          ],
+        child: RefreshIndicator(
+          onRefresh: _refreshData,
+          child: Obx(
+            () => ListView.builder(
+              itemCount: sensorsController.listOfSensors.length,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                Sensor sensor = sensorsController.listOfSensors[index];
+                return SensorsListTile(
+                    availableGraphs: [""],
+                    sensorName: sensor.name ?? "",
+                    imageUrl: sensor.img ?? "",
+                    sensorSerial: sensor.uid);
+              },
+            ),
+          ),
         ),
-      )),
+      ),
       bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 1),
     );
   }
