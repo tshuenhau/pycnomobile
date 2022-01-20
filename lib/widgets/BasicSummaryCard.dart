@@ -4,8 +4,13 @@ class BasicSummaryCard extends StatelessWidget {
   final IconData icon;
   final double value;
   final String unit;
+  final Color color;
   const BasicSummaryCard(
-      {Key? key, required this.icon, required this.value, required this.unit})
+      {Key? key,
+      required this.icon,
+      required this.color,
+      required this.value,
+      required this.unit})
       : super(key: key);
 
   @override
@@ -23,7 +28,7 @@ class BasicSummaryCard extends StatelessWidget {
                 Icon(
                   icon,
                   size: MediaQuery.of(context).size.width * 10 / 100,
-                  color: Colors.red,
+                  color: color,
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 2 / 100),
                 Row(

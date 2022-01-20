@@ -26,7 +26,10 @@ class SensorSummaryPage extends StatelessWidget {
               runSpacing: 4.0, // gap between lines
               children: [
                 BasicSummaryCard(
-                    icon: Icons.thermostat, value: 17.55, unit: "°C"),
+                    icon: Icons.thermostat,
+                    color: Colors.red,
+                    value: 17.55,
+                    unit: "°C"),
               ],
             ),
           ),
