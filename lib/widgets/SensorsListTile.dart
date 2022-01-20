@@ -1,49 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/screens/SensorSummaryPage.dart';
 
-class SensorsListTile extends StatefulWidget {
-  final String sensorName;
-  final String sensorSerial;
-  final List<String> availableGraphs; //! might need to change type
-  final String imageUrl;
+class SensorsListTile extends StatelessWidget {
+  final Sensor sensor;
 
   SensorsListTile({
     Key? key,
-    required this.sensorName,
-    required this.sensorSerial,
-    required this.availableGraphs,
-    required this.imageUrl,
+    required this.sensor,
   }) : super(key: key);
 
   @override
-  State<SensorsListTile> createState() => _SensorsListTileState();
-}
-
-class _SensorsListTileState extends State<SensorsListTile> {
-  @override
   Widget build(BuildContext context) {
-    print("Image URL: " + widget.imageUrl);
+    print("Image URL: " + ""); //! URL
 
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       child: InkWell(
-        onTap: () => {},
+        onTap: () => {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => SensorSummaryPage(sensor: sensor)))
+        },
         child: ListTile(
             title: Text(
-              widget.sensorName,
+              sensor.name ?? "",
+              overflow: TextOverflow.ellipsis,
             ),
-            subtitle: Text(widget.sensorSerial),
+            subtitle: Text(
+              sensor.uid,
+              overflow: TextOverflow.ellipsis,
+            ),
             trailing: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AvailableGraphsIcons(availableGraphs: widget.availableGraphs),
+                  AvailableGraphsIcons(availableGraphs: [""]
+                      //widget.availableGraphs //!AvailableGraphs
+                      ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width *
                           (1 / 20)), // give it width
                   Container(
                       width: MediaQuery.of(context).size.height * 1 / 15,
                       height: MediaQuery.of(context).size.height * 1 / 15,
-                      child: Image(image: NetworkImage(widget.imageUrl)))
+                      child: Image(image: NetworkImage(sensor.img ?? "")))
                 ])),
       ),
     );

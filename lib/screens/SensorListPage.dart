@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +8,6 @@ import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
 class SensorListPage extends StatelessWidget {
-//   SensorListPage({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   _SensorListPageState createState() => _SensorListPageState();
-// }
-
-// class _SensorListPageState extends State<SensorListPage> {
   final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
   Future _refreshData() async {
@@ -46,11 +36,7 @@ class SensorListPage extends StatelessWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 Sensor sensor = sensorsController.listOfSensors[index];
-                return SensorsListTile(
-                    availableGraphs: [""],
-                    sensorName: sensor.name ?? "",
-                    imageUrl: sensor.img ?? "",
-                    sensorSerial: sensor.uid);
+                return SensorsListTile(sensor: sensor);
               },
             ),
           ),
