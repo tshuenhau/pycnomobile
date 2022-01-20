@@ -100,24 +100,24 @@ class NodeSoilSensor extends SoilSensor {
         rainh: json["RAINH"].toDouble(),
         lfreq: json["LFREQ"],
         ve: json["VE"],
-        bat: json["BAT"],
+        bat: json["BAT"]?.toDouble(),
         rssi: json["RSSI"].toDouble(),
         ns: json["NS"]?.toDouble(),
-        s1t: json["S1T"],
-        s2t: json["S2T"],
-        s3t: json["S3T"],
-        s4t: json["S4T"],
-        s5t: json["S5T"],
-        s6t: json["S6T"],
-        st1: json["ST1"],
-        st3: json["ST3"],
-        st5: json["ST5"],
-        lw1: json["LW1"],
+        s1t: json["S1T"]?.toDouble(),
+        s2t: json["S2T"]?.toDouble(),
+        s3t: json["S3T"]?.toDouble(),
+        s4t: json["S4T"]?.toDouble(),
+        s5t: json["S5T"]?.toDouble(),
+        s6t: json["S6T"]?.toDouble(),
+        st1: json["ST1"]?.toDouble(),
+        st3: json["ST3"]?.toDouble(),
+        st5: json["ST5"]?.toDouble(),
+        lw1: json["LW1"]?.toDouble(),
         pw: json["PW"]?.toDouble(),
       );
 
   @override
   String toString() {
-    return "Node Soil Sensor: " + super.toString();
+    return "Node Soil Sensor: " + super.toString() + ", PW: $pw";
   }
 }

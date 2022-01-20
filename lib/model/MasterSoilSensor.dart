@@ -136,6 +136,8 @@ class MasterSoilSensor extends SoilSensor {
 
   @override
   String toString() {
-    return "Master Soil Sensor: " + super.toString();
+    return "Master Soil Sensor: " +
+        super.toString() +
+        ", MDM: $mdm, GR: $gr, GRF: $grf, CME: $cme, ICCID: $iccid, NET: $net, IP: $ip";
   }
 }

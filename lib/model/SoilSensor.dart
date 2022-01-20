@@ -74,6 +74,7 @@ abstract class SoilSensor extends Sensor {
             readableAgo,
             readableAgoFull);
 
+  // This method may not be needed
   void setLatestInfo(List<Map<String, dynamic>> result) {
     Map<String, dynamic> response = result[0];
     this.temp = response["TEMP"];
@@ -97,7 +98,9 @@ abstract class SoilSensor extends Sensor {
     this.st5 = response["ST5"];
   }
 
+  @override
   String toString() {
-    return "UID: $uid, TEMP: $temp, HUM: $hum, LW1: $lw1, TXT: $txt, RAINH: $rainh, LFREQ: $lfreq, VE: $ve, BAT: $bat, RSSI: $rssi, NS: $ns, S1T: $s1t, S2T: $s2t, S3T: $s3t, S4T: $s4t, S5T: $s5t, S6T: $s6t, ST1: $st1, ST3: $st3, ST5: $st5";
+    return super.toString() +
+        ", TEMP: $temp, HUM: $hum, LW1: $lw1, TXT: $txt, RAINH: $rainh, LFREQ: $lfreq, VE: $ve, BAT: $bat, RSSI: $rssi, NS: $ns, S1T: $s1t, S2T: $s2t, S3T: $s3t, S4T: $s4t, S5T: $s5t, S6T: $s6t, ST1: $st1, ST3: $st3, ST5: $st5";
   }
 }

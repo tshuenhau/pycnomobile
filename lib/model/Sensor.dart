@@ -11,6 +11,29 @@ enum TYPE_OF_SENSOR {
   PULSE
 }
 
+enum FUNCTIONALITY {
+  TEMP,
+  HUM,
+  WND,
+  GST,
+  WNDR,
+  LX1,
+  UV,
+  BAT,
+  RSSI,
+  LW1,
+  RAINH,
+  S1T,
+  S2T,
+  S3T,
+  S4T,
+  S5T,
+  S6T,
+  ST1,
+  ST3,
+  ST5
+}
+
 abstract class Sensor {
   TYPE_OF_SENSOR type;
   String uid;
@@ -64,5 +87,9 @@ abstract class Sensor {
       // throw Exception("Invalid sensor");
       return TYPE_OF_SENSOR.PULSE; //temporary
     }
+  }
+
+  String toString() {
+    return "UID: $uid, Name: $name, Img: $img, Address: $address, Epoch: $epoch, Site: $site, IsLive?: $isLive, IsLiveHealth: $isLiveHealth, IsLiveTS: $isLiveTS, UpdatedAt: $updatedAt, PolledAt: $polledAt, SoilType: $soilType, ReadableAgo: $readableAgo, ReadableAgoFull: $readableAgoFull";
   }
 }
