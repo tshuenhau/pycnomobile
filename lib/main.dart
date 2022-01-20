@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -6,6 +8,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,14 +50,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  ListOfSensorsController controller = Get.put(ListOfSensorsController());
 
   void _incrementCounter() {
-    setState(() {
+    setState(() async {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
+      await controller.getListOfSensors();
+      print(controller.listOfSensors);
       _counter++;
     });
   }

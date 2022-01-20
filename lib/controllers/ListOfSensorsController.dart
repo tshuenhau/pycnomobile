@@ -1,11 +1,16 @@
-import 'package:get/get.dart';
-import 'package:pycnomobile/model/sensor.dart';
-import 'package:http/http.dart' as http;
-import 'package:pycnomobile/logic/Commons.dart';
 import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
-class ListOfSensorsControllers extends GetxController {
-  List<Sensor> listOfSensors = List<Sensor>.empty().obs;
+import 'package:pycnomobile/model/MasterSoilSensor.dart';
+import 'package:pycnomobile/model/SonicAnemometer.dart';
+import 'package:pycnomobile/model/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/RainGauge.dart';
+import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/logic/Commons.dart';
+
+class ListOfSensorsController extends GetxController {
+  RxList<Sensor> listOfSensors = List<Sensor>.empty().obs;
 
   void addSensor(Sensor sensor) {
     listOfSensors.add(sensor);
@@ -18,16 +23,27 @@ class ListOfSensorsControllers extends GetxController {
 
   void updateSensor(Sensor updatedSensor) {}
 
-  static getListOfSensors() async {
+  getListOfSensors() async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=${token}'));
+        'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=$token'));
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       for (var i = 0; i < body.length; i++) {
-        TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["uid"]);
+        print("UID: ${body[i]["UID"]}");
+        TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
+
         if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
-        } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {}
+          addSensor(MasterSoilSensor.fromJson(body[i]));
+        } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+          addSensor(NodeSoilSensor.fromJson(body[i]));
+        } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
+          addSensor(SonicAnemometer.fromJson(body[i]));
+        } else if (type == TYPE_OF_SENSOR.RAIN_GAUGE) {
+          addSensor(RainGauge.fromJson(body[i]));
+        }
+        print(listOfSensors);
+        print(listOfSensors.length);
       }
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
