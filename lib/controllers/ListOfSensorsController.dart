@@ -12,6 +12,12 @@ import 'package:pycnomobile/logic/Commons.dart';
 class ListOfSensorsController extends GetxController {
   RxList<Sensor> listOfSensors = List<Sensor>.empty().obs;
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await getListOfSensors();
+  }
+
   void addSensor(Sensor sensor) {
     listOfSensors.add(sensor);
   }
@@ -23,14 +29,14 @@ class ListOfSensorsController extends GetxController {
 
   void updateSensor(Sensor updatedSensor) {}
 
-  getListOfSensors() async {
+  Future<List<Sensor>>? getListOfSensors() async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=$token'));
 
     if (response.statusCode == 200) {
+      listOfSensors.clear();
       var body = jsonDecode(response.body);
       for (var i = 0; i < body.length; i++) {
-        print("UID: ${body[i]["UID"]}");
         TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
 
         if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
@@ -42,11 +48,10 @@ class ListOfSensorsController extends GetxController {
         } else if (type == TYPE_OF_SENSOR.RAIN_GAUGE) {
           addSensor(RainGauge.fromJson(body[i]));
         }
-        print(listOfSensors);
-        print(listOfSensors.length);
       }
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
+    return listOfSensors;
   }
 }

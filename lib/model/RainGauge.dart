@@ -52,7 +52,6 @@ class RainGauge extends Sensor {
   }
 
   factory RainGauge.fromJson(Map<String, dynamic> json) {
-    print(json);
     return RainGauge(
         uid: json["UID"],
         name: json["name"],
