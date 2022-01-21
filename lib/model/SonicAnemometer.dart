@@ -38,6 +38,7 @@ class SonicAnemometer extends Sensor {
       required this.rssi,
       required this.pw})
       : super(
+            TYPE_OF_SENSOR.SONIC_ANEMOMETER,
             uid,
             name,
             address,

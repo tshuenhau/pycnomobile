@@ -25,7 +25,8 @@ abstract class SoilSensor extends Sensor {
   double? st5;
 
   SoilSensor(
-      {required String uid,
+      {required TYPE_OF_SENSOR type,
+      required String uid,
       required String name,
       required String? address,
       required String? img,
@@ -59,6 +60,7 @@ abstract class SoilSensor extends Sensor {
       required this.st3,
       required this.st5})
       : super(
+            type,
             uid,
             name,
             img,

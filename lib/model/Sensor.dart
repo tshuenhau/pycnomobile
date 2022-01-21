@@ -2,6 +2,28 @@ import 'package:pycnomobile/model/sonicanemometer.dart';
 import 'package:pycnomobile/model/raingauge.dart';
 import 'package:pycnomobile/model/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/model/functionalities/Bat.dart';
+import 'package:pycnomobile/model/functionalities/Gst.dart';
+import 'package:pycnomobile/model/functionalities/Hum.dart';
+import 'package:pycnomobile/model/functionalities/Lx1.dart';
+import 'package:pycnomobile/model/functionalities/Lw1.dart';
+import 'package:pycnomobile/model/functionalities/Rain.dart';
+import 'package:pycnomobile/model/functionalities/Rainh.dart';
+import 'package:pycnomobile/model/functionalities/Rssi.dart';
+import 'package:pycnomobile/model/functionalities/S1t.dart';
+import 'package:pycnomobile/model/functionalities/S2t.dart';
+import 'package:pycnomobile/model/functionalities/S3t.dart';
+import 'package:pycnomobile/model/functionalities/S4t.dart';
+import 'package:pycnomobile/model/functionalities/S5t.dart';
+import 'package:pycnomobile/model/functionalities/S6t.dart';
+import 'package:pycnomobile/model/functionalities/St1.dart';
+import 'package:pycnomobile/model/functionalities/St3.dart';
+import 'package:pycnomobile/model/functionalities/St5.dart';
+import 'package:pycnomobile/model/functionalities/Temp.dart';
+import 'package:pycnomobile/model/functionalities/Uv.dart';
+import 'package:pycnomobile/model/functionalities/Wnd.dart';
+import 'package:pycnomobile/model/functionalities/Wndr.dart';
 
 enum TYPE_OF_SENSOR {
   SONIC_ANEMOMETER,
@@ -9,29 +31,6 @@ enum TYPE_OF_SENSOR {
   MASTER_SOIL_SENSOR,
   NODE_SOIL_SENSOR,
   PULSE
-}
-
-enum FUNCTIONALITY {
-  TEMP,
-  HUM,
-  WND,
-  GST,
-  WNDR,
-  LX1,
-  UV,
-  BAT,
-  RSSI,
-  LW1,
-  RAINH,
-  S1T,
-  S2T,
-  S3T,
-  S4T,
-  S5T,
-  S6T,
-  ST1,
-  ST3,
-  ST5
 }
 
 abstract class Sensor {
@@ -50,8 +49,10 @@ abstract class Sensor {
   String? soilType;
   String readableAgo;
   String readableAgoFull;
+  List<Functionality> functionalities;
 
   Sensor(
+      this.type,
       this.uid,
       this.name,
       this.img,
@@ -66,7 +67,7 @@ abstract class Sensor {
       this.soilType,
       this.readableAgo,
       this.readableAgoFull)
-      : type = getTypeOfSensor(uid);
+      : functionalities = getFunctionalities(uid);
 
   // Sonic Anemometer: K80xxxxx
   // Rain Gauge: K40xxxxx
@@ -87,6 +88,67 @@ abstract class Sensor {
       // throw Exception("Invalid sensor");
       return TYPE_OF_SENSOR.PULSE; //temporary
     }
+  }
+
+  static List<Functionality> getFunctionalities(String uid) {
+    List<Functionality> functionalities = List<Functionality>.empty();
+    if (SonicAnemometer.isSonicAnemometer(uid)) {
+      functionalities.addAll([
+        new Bat(),
+        new Temp(),
+        new Hum(),
+        new Wnd(),
+        new Gst(),
+        new Wndr(),
+        new Lx1(),
+        new Uv(),
+        new Rssi()
+      ]);
+    } else if (RainGauge.isRainGauge(uid)) {
+      functionalities
+          .addAll([new Bat(), new Temp(), new Hum(), new Rain(), new Rssi()]);
+    } else if (MasterSoilSensor.isMasterSoilSensor(uid)) {
+      functionalities.addAll([
+        new Bat(),
+        new Temp(),
+        new Hum(),
+        new Lx1(),
+        new Lw1(),
+        new Rainh(),
+        new Rssi(),
+        new S1t(),
+        new S2t(),
+        new S3t(),
+        new S4t(),
+        new S5t(),
+        new S6t(),
+        new St1(),
+        new St3(),
+        new St5(),
+      ]);
+    } else if (NodeSoilSensor.isNodeSoilSensor(uid)) {
+      functionalities.addAll([
+        new Bat(),
+        new Temp(),
+        new Hum(),
+        new Lx1(),
+        new Lw1(),
+        new Rainh(),
+        new Rssi(),
+        new S1t(),
+        new S2t(),
+        new S3t(),
+        new S4t(),
+        new S5t(),
+        new S6t(),
+        new St1(),
+        new St3(),
+        new St5(),
+      ]);
+    } else {
+      // throw Exception("Invalid sensor");
+    }
+    return functionalities;
   }
 
   String toString() {

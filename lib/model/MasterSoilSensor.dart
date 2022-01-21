@@ -1,4 +1,5 @@
 import 'SoilSensor.dart';
+import 'package:pycnomobile/model/Sensor.dart';
 
 class MasterSoilSensor extends SoilSensor {
   double? mdm;
@@ -51,6 +52,7 @@ class MasterSoilSensor extends SoilSensor {
       required this.net,
       required this.ip})
       : super(
+            type: TYPE_OF_SENSOR.MASTER_SOIL_SENSOR,
             uid: uid,
             name: name,
             address: address,

@@ -1,8 +1,6 @@
 import 'Sensor.dart';
 
 class RainGauge extends Sensor {
-  static String SENSOR_TYPE = "rain gauge";
-
   double temp;
   double hum;
   double rain;
@@ -32,6 +30,7 @@ class RainGauge extends Sensor {
       required this.rssi,
       required this.pw})
       : super(
+            TYPE_OF_SENSOR.RAIN_GAUGE,
             uid,
             name,
             address,
