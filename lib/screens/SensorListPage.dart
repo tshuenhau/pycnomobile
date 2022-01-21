@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
-import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
+import 'package:pycnomobile/widgets/NotInUse/CustomBottomNavigationBar.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
 class SensorListPage extends StatelessWidget {
   final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
+
+  var bottomNavigationBar;
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
   }
@@ -42,7 +44,6 @@ class SensorListPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 1),
     );
   }
 }
