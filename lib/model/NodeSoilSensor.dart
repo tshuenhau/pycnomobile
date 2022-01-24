@@ -1,3 +1,5 @@
+import 'package:pycnomobile/model/Sensor.dart';
+
 import 'SoilSensor.dart';
 
 class NodeSoilSensor extends SoilSensor {
@@ -39,6 +41,7 @@ class NodeSoilSensor extends SoilSensor {
       required double? st5,
       required this.pw})
       : super(
+            type: TYPE_OF_SENSOR.NODE_SOIL_SENSOR,
             uid: uid,
             name: name,
             address: address,

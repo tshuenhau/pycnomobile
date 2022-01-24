@@ -4,139 +4,174 @@ import 'package:get/get.dart';
 import 'package:pycnomobile/model/SoilSensor.dart';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/logic/Commons.dart';
-import 'package:pycnomobile/model/time_series/TimeSeries.dart';
+import 'package:pycnomobile/model/TimeSeries.dart';
 
 class SoilSensorController extends GetxController {
-  List<TimeSeries<int, int>> listOfTimeSeries =
-      List<TimeSeries<int, int>>.empty();
+  static Map<String, String> functionality = {
+    "temp": "TEMP",
+    "hum": "HUM",
+    "lx1": "LX1",
+    "lw1": "LW1",
+    "rainh": "RAINH",
+    "s1t": "S1T",
+    "s2t": "S2T",
+    "s3t": "S3T",
+    "s4t": "S4T",
+    "s5t": "S5T",
+    "s6t": "S6T",
+    "st1": "ST1",
+    "st3": "ST3",
+    "st5": "ST5",
+    "bat": "BAT",
+    "rssi": "RSSI"
+  };
 
-  static getSoilSensorInfo(SoilSensor sensor) async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/no/${sensor.uid}.json?TK=$token'));
-
-    if (response.statusCode == 200) {
-      sensor.setLatestInfo(jsonDecode(response.body));
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
+  static Map<DateTime, T> convertListToMap<T>(List list) {
+    return Map.fromIterable(list,
+        key: (e) => DateTime.fromMillisecondsSinceEpoch(e[0]),
+        value: (e) => e[1]);
   }
 
-  static getBatteryTimeSeries(
+  static Future<TimeSeries<double>> getBatteryTimeSeries(
       DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=$sensor.uid&BAT&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&BAT&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
-      jsonDecode(response.body);
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getOrderOfPacketsTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getTemperatureTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=M05D53733415251045317&NS&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&TEMP&start=$start&end=$end'));
+
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getTemperatureTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getHumidityTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=M05D53733415251045317&TEMP&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&HUM&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getHumidityTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getSunlightTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&HUM&start=${start}&end=${end}'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&LX1&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getSunlightTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getSolarRadiationTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=M05D53733415251045317&LX1&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&LW1&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getSolarRadiationTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getRainfallTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&LW1&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&RAINH&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getVersionTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<double>> getSignalStrengthTimeSeries(
+      DateTime start, DateTime end, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&VE&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&RSSI&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      Map<DateTime, double> timeSeries =
+          convertListToMap<double>(body['values']);
+      return new TimeSeries<double>(
+          key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
   }
 
-  static getUnitLogTimeSeries(DateTime start, DateTime end) async {
+  static Future<TimeSeries<T>?> getSoilSensorTimeSeries<T>(
+      DateTime start, DateTime end, String key, SoilSensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&TXT&start=${start}&end=${end}'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=$start&end=$end'));
 
     if (response.statusCode == 200) {
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
-  }
-
-  static getRainfallTimeSeries(DateTime start, DateTime end) async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&RAINH&start=${start}&end=${end}'));
-
-    if (response.statusCode == 200) {
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
-  }
-
-  static getSensorToSensorFreqTimeSeries(DateTime start, DateTime end) async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&LFREQ&start=${start}&end=${end}'));
-
-    if (response.statusCode == 200) {
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
-  }
-
-  static getSignalStrengthTimeSeries(DateTime start, DateTime end) async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=${token}&UID=M05D53733415251045317&RSSI&start=$start&end=$end'));
-
-    if (response.statusCode == 200) {
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
-  }
-
-  static getTimeSeries(DateTime start, DateTime end, String key) async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=M05D53733415251045317&$key&start=$start&end=$end'));
-
-    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body)[0];
+      String color = body['color'];
+      String key = body['key'];
+      if (body["values"] == null) {
+        return null;
+      }
+      Map<DateTime, T> timeSeries = convertListToMap<T>(body['values']);
+      return new TimeSeries<T>(key: key, color: color, timeSeries: timeSeries);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }

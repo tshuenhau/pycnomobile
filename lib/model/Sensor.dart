@@ -91,7 +91,8 @@ abstract class Sensor {
   }
 
   static List<Functionality> getFunctionalities(String uid) {
-    List<Functionality> functionalities = List<Functionality>.empty();
+    List<Functionality> functionalities =
+        List<Functionality>.empty(growable: true);
     if (SonicAnemometer.isSonicAnemometer(uid)) {
       functionalities.addAll([
         new Bat(),
