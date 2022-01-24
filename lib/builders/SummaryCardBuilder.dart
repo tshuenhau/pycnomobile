@@ -27,9 +27,26 @@ List<Widget> buildSummaryCards(Sensor sensor) {
     }
   }
 
-  //! The summary cards are below, the fomat is (icon, color, latest value, units). Think all u need to touch is the value part.
+  //! The summary cards are below, the fomat is (icon, color, latest value, units). Think all u need to touch is the value part. dont delete the unused ones.
   //! The idea is to iterate a list or something then if there is that graph/function avail then instantiate this thing and change the value.
-  //! add only if they exist for the sensor
+  //! if any of these templates i defined below dont get used by u, then just put them into an if block that is never reached or just comment them out
+  /* many ways to do it but could be somthing like
+  Loop through a list of functions:
+    if(isTemperatureFunction) {
+      add(new BasicSummaryCard(
+        icon: Icons.thermostat, // Temperature
+        color: Colors.red,
+        value: 17.55,
+        unit: "°C"));
+    }
+    else if(isBatteryFunction) {
+      add(new BasicSummaryCard(
+        icon: Icons.battery_charging_full, //Battery Voltage
+        color: Colors.green,
+        value: 17.55,
+        unit: "dBm"));
+    }
+   */
   add(new BasicSummaryCard(
       icon: Icons.battery_charging_full, //Battery Voltage
       color: Colors.green,
@@ -41,7 +58,10 @@ List<Widget> buildSummaryCards(Sensor sensor) {
       value: 17.55,
       unit: "°C"));
   add(new BasicSummaryCard(
-      icon: Icons.thermostat, color: Colors.red, value: 17.55, unit: "°C"));
+      icon: Icons.thermostat, // Temperature
+      color: Colors.red,
+      value: 17.55,
+      unit: "°C"));
   add(new BasicSummaryCard(
       icon: FontAwesomeIcons.tint, // Relative Humidity
       color: Colors.blue,
@@ -63,10 +83,8 @@ List<Widget> buildSummaryCards(Sensor sensor) {
       value: 17.55,
       unit: "mm/h"));
 
-  // summaryCards.add(
-  //     new BlankBasicSummaryCard()); //! blank card just to make things look nicer for now, u can ignore this one.
-
-//! below is the multi summary cards for soil moisture and temp its not 100% finished but u can use it alr. 1 thing im not sure about for this is the units especially the 10cm, 20cm part
+//! below is the multi summary cards for soil moisture and temp, its more complicated but u can try use it. If too hard then we need discuss how to design it alr.
+//! 1 thing im not sure about for this is the units especially the 10cm, 20cm part. But if u have no prob using it as is it will b gud.
   add(new MultiSummaryCard(
       title: "Soil Moisture",
       data: {
