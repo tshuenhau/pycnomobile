@@ -30,7 +30,7 @@ class BasicSummaryCard extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 3.5 / 100),
                   Icon(
                     icon,
-                    size: MediaQuery.of(context).size.width * 10 / 100,
+                    size: MediaQuery.of(context).size.width * 9 / 100,
                     color: color,
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 2 / 100),
@@ -46,7 +46,11 @@ class BasicSummaryCard extends StatelessWidget {
                           padding: EdgeInsets.only(
                               top:
                                   MediaQuery.of(context).size.height * 1 / 100),
-                          child: Text(" " + unit)),
+                          child: Text(" " + unit,
+                              style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      3 /
+                                      100))),
                     ],
                   ),
                   //trailing: Text(" °C")

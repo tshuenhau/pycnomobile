@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
-import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
-import 'package:pycnomobile/widgets/NotInUse/CustomBottomNavigationBar.dart';
+import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
 
 class SensorSummaryPage extends StatelessWidget {
   final Sensor sensor;
