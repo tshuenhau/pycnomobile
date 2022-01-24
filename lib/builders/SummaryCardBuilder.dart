@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pycnomobile/widgets/BlankBasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
 
 List<Widget> buildSummaryCards(Sensor sensor) {
@@ -39,6 +40,14 @@ List<Widget> buildSummaryCards(Sensor sensor) {
       color: Colors.orange,
       value: 17.55,
       unit: "W/m2"));
+  summaryCards.add(new BasicSummaryCard(
+      icon: FontAwesomeIcons.cloudShowersHeavy, // Solar Radiation
+      color: Colors.grey,
+      value: 17.55,
+      unit: "mm/h"));
+
+  summaryCards.add(
+      new BlankBasicSummaryCard()); //! blank card just to make things look nicer for now, u can ignore this one.
 
 //! below is the multi summary cards for soil moisture and temp its not 100% finished but u can use it alr. 1 thing im not sure about for this is the units especially the 10cm, 20cm part
   summaryCards.add(new MultiSummaryCard(
