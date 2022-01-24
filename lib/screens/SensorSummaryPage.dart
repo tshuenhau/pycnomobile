@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
-import 'package:pycnomobile/widgets/CustomBottomNavigationBar.dart';
+import 'package:pycnomobile/widgets/NotInUse/CustomBottomNavigationBar.dart';
 
 class SensorSummaryPage extends StatelessWidget {
   final Sensor sensor;
@@ -30,7 +30,6 @@ class SensorSummaryPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 1),
     );
   }
 }

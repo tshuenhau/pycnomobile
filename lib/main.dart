@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/App.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SensorListPage(),
+      home: App(),
     );
   }
 }
