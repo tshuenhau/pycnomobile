@@ -7,16 +7,17 @@ import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
 List<Widget> buildSummaryCards(Sensor sensor) {
   //!it takes as an argument the sensor that u clicked on
   List<Widget> leftColumn =
-      []; //! this UI page is setup with a row of 2 columns
+      []; //! this page layout is setup with a row of 2 columns
   List<Widget> rightColumn = [];
-  //! heres the ordering of the cards
+  //! heres the layout/ordering of the cards
   /*
-  1 2
-  3 4
-  5 6
+  leftColumn  rightColumn
+      1           2
+      3           4
+      5           6
  */
   void add(Widget card) {
-    //! Adds to leftColumn, then rightColumn, then leftColumn, then rightColumn. I tried making a helper method but its late and my head hurts.
+    //! Adds to leftColumn, then rightColumn, then leftColumn, then rightColumn.
     if (leftColumn.isEmpty) {
       leftColumn.add(card);
     } else if (leftColumn.length <= rightColumn.length) {
