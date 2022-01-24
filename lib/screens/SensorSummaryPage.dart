@@ -21,11 +21,11 @@ class SensorSummaryPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Align(
             alignment: Alignment.topLeft,
-            child: Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.start,
-              spacing: 2, // gap between adjacent chips
-              runSpacing: 4.0, // gap between lines
+            child: Row(
+              // direction: Axis.horizontal,
+              // alignment: WrapAlignment.start,
+              // spacing: 2, // gap between adjacent chips
+              // runSpacing: 4.0, // gap between lines
               children: buildSummaryCards(sensor),
             ),
           ),
