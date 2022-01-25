@@ -10,11 +10,8 @@ import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 List<Widget> buildSummaryCards(
     {required Sensor sensor, required BuildContext context}) {
-  //!it takes as an argument the sensor that u clicked on
-  List<Widget> leftColumn =
-      []; //! this page layout is setup with a row of 2 columns
+  List<Widget> leftColumn = [];
   List<Widget> rightColumn = [];
-  //! heres the layout/ordering of the cards
   /*
   leftColumn  rightColumn
       1           2
@@ -22,8 +19,6 @@ List<Widget> buildSummaryCards(
       5           6
  */
   void add(Widget card) {
-    //! Adds to leftColumn, then rightColumn, then leftColumn, then rightColumn.
-
     if (leftColumn.isEmpty) {
       leftColumn.add(card);
     } else if (leftColumn.length <= rightColumn.length) {
@@ -52,9 +47,6 @@ List<Widget> buildSummaryCards(
     }
   }
 
-  //! The summary cards are below, the fomat is (icon, color, latest value, units). Think all u need to touch is the value part. dont delete the unused ones.
-  //! The idea is to iterate a list or something then if there is that graph/function avail then instantiate this thing and change the value.
-  //! if any of these templates i defined below dont get used by u, then just put them into an if block that is never reached or just comment them out
   /* many ways to do it but could be somthing like
   Loop through a list of functions:
     if(isTemperatureFunction) {

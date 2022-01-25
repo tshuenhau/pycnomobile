@@ -5,13 +5,14 @@ import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 
 Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions) {
+  //! parameters include a List<functionality> to take care of the multisummarycards
   print(
       functions); //! should print out all the list of functionalities to graph
 
-  //! takes in a list of functionality to hopefully take care of multisumamrycards
 //! Do api calls here.
   final Map data = {
-    //! Example data
+    //! Example data, time in milliseconds since 1970 thing: value
+    //! Just to be clear, the x value is the date which is in milliseconds since 1970, then the y value is just the value
     1643108878837: 20.55,
     1643126400000: 20.23,
     1653212800000: 20.55,
