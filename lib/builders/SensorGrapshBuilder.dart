@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
+
+Future<dynamic> buildSensorGraphs(
+    BuildContext context, Sensor sensor, List<Functionality> functions) {
+  print(
+      functions); //! should print out all the list of functionalities to graph
+
+  //! takes in a list of functionality to hopefully take care of multisumamrycards
+//! Do api calls here.
+  final Map data = {
+    //! Example data
+    1643108878837: 20.55,
+    1643126400000: 20.23,
+    1653212800000: 20.55,
+    1663299200000: 26.23,
+    1673212800001: 20.55,
+    1683299200002: 26.23,
+    1693212800003: 20.55,
+    1703299200004: 26.23,
+    1713212800005: 20.55,
+    1723299200006: 26.23,
+    1733212800007: 20.55,
+    1743299200008: 26.23,
+    1753212800009: 20.55,
+    1763299200012: 26.23,
+    1773212800013: 20.55,
+    1783299200014: 26.23,
+    1793212800015: 20.55,
+    1803299200016: 26.23,
+    1813299202216: 28.55,
+    1813299202217: 27.55,
+    1814299202217: 27.55,
+    1815299202217: 27.55,
+    1816299202217: 27.55,
+    1817299202217: 27.55,
+    1827299202217: 27.55,
+  };
+
+  final Map<Functionality, Map> graphs = {
+    functions[0]: data
+  }; //! basically make a map of functionality: data, if just have 1 functionality then it just has 1 entry.
+
+  return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return GraphBottomSheet(
+          graphs: graphs,
+        );
+      });
+}

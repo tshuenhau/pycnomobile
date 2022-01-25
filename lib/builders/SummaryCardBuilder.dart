@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/builders/SensorGrapshBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/model/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
-List<Widget> buildSummaryCards(Sensor sensor) {
+List<Widget> buildSummaryCards(
+    {required Sensor sensor, required BuildContext context}) {
   //!it takes as an argument the sensor that u clicked on
   List<Widget> leftColumn =
       []; //! this page layout is setup with a row of 2 columns
@@ -20,6 +23,7 @@ List<Widget> buildSummaryCards(Sensor sensor) {
  */
   void add(Widget card) {
     //! Adds to leftColumn, then rightColumn, then leftColumn, then rightColumn.
+
     if (leftColumn.isEmpty) {
       leftColumn.add(card);
     } else if (leftColumn.length <= rightColumn.length) {
@@ -33,16 +37,17 @@ List<Widget> buildSummaryCards(Sensor sensor) {
     for (Functionality func in sensor.functionalities!) {
       if (func.value is List<Functionality>) {
         add(new MultiSummaryCard(
-            title: func.name,
+            //! Maybeb do a check here? for whether the stuff in List<Functionality> has a graph or not
             data: Map.fromIterable(func.value,
                 key: (e) => e.name, value: (e) => e.value),
-            units: func.unit));
+            sensor: sensor,
+            function: func,
+            functions: func.value));
       } else {
         add(new BasicSummaryCard(
-            icon: func.icon!, //Battery Voltage
-            color: func.color!,
-            value: func.value,
-            unit: func.unit));
+            //TODO: Refactor these stuff especially the func.icon, func.color bs, just pass one func is enough.
+            sensor: sensor,
+            function: func));
       }
     }
   }
