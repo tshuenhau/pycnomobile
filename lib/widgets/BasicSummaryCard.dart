@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BasicSummaryCard extends StatelessWidget {
   final IconData icon;
-  final double value;
+  final double? value;
   final String unit;
   final Color color;
   const BasicSummaryCard(

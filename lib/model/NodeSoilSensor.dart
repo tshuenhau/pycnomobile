@@ -1,3 +1,22 @@
+import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Bat.dart';
+import 'package:pycnomobile/model/functionalities/Hum.dart';
+import 'package:pycnomobile/model/functionalities/Lw1.dart';
+import 'package:pycnomobile/model/functionalities/Rainh.dart';
+import 'package:pycnomobile/model/functionalities/Rssi.dart';
+import 'package:pycnomobile/model/functionalities/S123456t.dart';
+import 'package:pycnomobile/model/functionalities/S1t.dart';
+import 'package:pycnomobile/model/functionalities/S2t.dart';
+import 'package:pycnomobile/model/functionalities/S3t.dart';
+import 'package:pycnomobile/model/functionalities/S4t.dart';
+import 'package:pycnomobile/model/functionalities/S5t.dart';
+import 'package:pycnomobile/model/functionalities/S6t.dart';
+import 'package:pycnomobile/model/functionalities/St135.dart';
+import 'package:pycnomobile/model/functionalities/St1.dart';
+import 'package:pycnomobile/model/functionalities/St3.dart';
+import 'package:pycnomobile/model/functionalities/St5.dart';
+import 'package:pycnomobile/model/functionalities/Temp.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'SoilSensor.dart';
 
 class NodeSoilSensor extends SoilSensor {
@@ -18,27 +37,14 @@ class NodeSoilSensor extends SoilSensor {
       required String? soilType,
       required String readableAgo,
       required String readableAgoFull,
-      required double temp,
-      required double hum,
-      required double lw1,
       required String? txt,
-      required double rainh,
       required int lfreq,
       required double ve,
-      required double bat,
-      required double rssi,
       required double? ns,
-      required double? s1t,
-      required double? s2t,
-      required double? s3t,
-      required double? s4t,
-      required double? s5t,
-      required double? s6t,
-      required double? st1,
-      required double? st3,
-      required double? st5,
-      required this.pw})
+      required this.pw,
+      required List<Functionality> functionalities})
       : super(
+            type: TYPE_OF_SENSOR.NODE_SOIL_SENSOR,
             uid: uid,
             name: name,
             address: address,
@@ -53,25 +59,11 @@ class NodeSoilSensor extends SoilSensor {
             soilType: soilType,
             readableAgo: readableAgo,
             readableAgoFull: readableAgoFull,
-            temp: temp,
-            hum: hum,
-            lw1: lw1,
             txt: txt,
-            rainh: rainh,
             lfreq: lfreq,
             ve: ve,
-            bat: bat,
-            rssi: rssi,
             ns: ns,
-            s1t: s1t,
-            s2t: s2t,
-            s3t: s3t,
-            s4t: s4t,
-            s5t: s5t,
-            s6t: s6t,
-            st1: st1,
-            st3: st3,
-            st5: st5);
+            functionalities: functionalities);
 
   static bool isNodeSoilSensor(String uid) {
     return uid.startsWith("K") &&
@@ -94,30 +86,36 @@ class NodeSoilSensor extends SoilSensor {
         soilType: json["soilType"],
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
-        temp: json["TEMP"],
-        hum: json["HUM"],
         txt: json["TXT"],
-        rainh: json["RAINH"].toDouble(),
         lfreq: json["LFREQ"],
         ve: json["VE"],
-        bat: json["BAT"],
-        rssi: json["RSSI"].toDouble(),
         ns: json["NS"]?.toDouble(),
-        s1t: json["S1T"],
-        s2t: json["S2T"],
-        s3t: json["S3T"],
-        s4t: json["S4T"],
-        s5t: json["S5T"],
-        s6t: json["S6T"],
-        st1: json["ST1"],
-        st3: json["ST3"],
-        st5: json["ST5"],
-        lw1: json["LW1"],
         pw: json["PW"]?.toDouble(),
+        functionalities: [
+          new Temp(json["TEMP"]),
+          new Hum(json["HUM"].toDouble()),
+          new Bat(json["BAT"].toDouble()),
+          new Rainh(json["RAINH"].toDouble()),
+          new Lw1(json["LW1"].toDouble()),
+          new Rssi(json["RSSI"].toDouble()),
+          new S123456t([
+            new S1t(json["S1T"]?.toDouble()),
+            new S2t(json["S2T"]?.toDouble()),
+            new S3t(json["S3T"]?.toDouble()),
+            new S4t(json["S4T"]?.toDouble()),
+            new S5t(json["S5T"]?.toDouble()),
+            new S6t(json["S6T"]?.toDouble()),
+          ]),
+          new St135([
+            new St1(json["ST1"]?.toDouble()),
+            new St3(json["ST3"]?.toDouble()),
+            new St5(json["ST5"]?.toDouble())
+          ])
+        ],
       );
 
   @override
   String toString() {
-    return "Node Soil Sensor: " + super.toString();
+    return "Node Soil Sensor: " + super.toString() + ", PW: $pw";
   }
 }

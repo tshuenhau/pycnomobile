@@ -38,7 +38,6 @@ class ListOfSensorsController extends GetxController {
       var body = jsonDecode(response.body);
       for (var i = 0; i < body.length; i++) {
         TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
-
         if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
           addSensor(MasterSoilSensor.fromJson(body[i]));
         } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
