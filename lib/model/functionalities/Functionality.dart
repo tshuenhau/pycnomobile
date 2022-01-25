@@ -1,7 +1,17 @@
-class Functionality {
+import 'package:flutter/material.dart';
+
+class Functionality<T> {
   String name;
   String unit;
-  String color;
+  Color? color;
+  IconData? icon;
+  T value;
+  List<String>? multiKeys;
 
-  Functionality({required this.name, required this.unit, required this.color});
+  Functionality(
+      {required this.name,
+      required this.unit,
+      required this.color,
+      required this.icon,
+      required this.value});
 }

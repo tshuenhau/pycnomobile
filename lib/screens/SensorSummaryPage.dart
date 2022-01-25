@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
-import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
-import 'package:pycnomobile/widgets/NotInUse/CustomBottomNavigationBar.dart';
+import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
 
 class SensorSummaryPage extends StatelessWidget {
   final Sensor sensor;
@@ -22,9 +21,11 @@ class SensorSummaryPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Align(
             alignment: Alignment.topLeft,
-            child: Wrap(
-              spacing: 2, // gap between adjacent chips
-              runSpacing: 4.0, // gap between lines
+            child: Row(
+              // direction: Axis.horizontal,
+              // alignment: WrapAlignment.start,
+              // spacing: 2, // gap between adjacent chips
+              // runSpacing: 4.0, // gap between lines
               children: buildSummaryCards(sensor),
             ),
           ),

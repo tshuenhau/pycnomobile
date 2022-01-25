@@ -1,5 +1,6 @@
 import "package:pycnomobile/model/functionalities/Functionality.dart";
 
-class S3t extends Functionality {
-  S3t() : super(name: "Soil Moisture at 40cm", unit: "mm", color: "#A020F0");
+class S3t extends Functionality<double?> {
+  S3t(double? value)
+      : super(name: "40cm", unit: "mm", color: null, icon: null, value: value);
 }

@@ -1,5 +1,13 @@
 import "package:pycnomobile/model/functionalities/Functionality.dart";
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Hum extends Functionality {
-  Hum() : super(name: "Humidity", unit: "RH%", color: "#A020F0");
+class Hum extends Functionality<double?> {
+  Hum(double? value)
+      : super(
+            name: "Humidity",
+            unit: "RH%",
+            color: Colors.grey,
+            value: value,
+            icon: FontAwesomeIcons.tint);
 }

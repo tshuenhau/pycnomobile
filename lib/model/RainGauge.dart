@@ -1,50 +1,48 @@
 import 'Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Bat.dart';
+import 'package:pycnomobile/model/functionalities/Hum.dart';
+import 'package:pycnomobile/model/functionalities/Rain.dart';
+import 'package:pycnomobile/model/functionalities/Rssi.dart';
+import 'package:pycnomobile/model/functionalities/Temp.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 class RainGauge extends Sensor {
-  double temp;
-  double hum;
-  double rain;
-  double bat;
-  double? rssi;
   double pw;
 
-  RainGauge(
-      {required String uid,
-      required String name,
-      required String address,
-      required String img,
-      required int epoch,
-      required String site,
-      required bool isLive,
-      required int isLiveHealth,
-      required DateTime isLiveTS,
-      required DateTime updatedAt,
-      required DateTime polledAt,
-      required String? soilType,
-      required String readableAgo,
-      required String readableAgoFull,
-      required this.temp,
-      required this.hum,
-      required this.rain,
-      required this.bat,
-      required this.rssi,
-      required this.pw})
-      : super(
-            TYPE_OF_SENSOR.RAIN_GAUGE,
-            uid,
-            name,
-            address,
-            img,
-            epoch,
-            site,
-            isLive,
-            isLiveTS,
-            isLiveHealth,
-            updatedAt,
-            polledAt,
-            soilType,
-            readableAgo,
-            readableAgoFull);
+  RainGauge({
+    required String uid,
+    required String name,
+    required String address,
+    required String img,
+    required int epoch,
+    required String site,
+    required bool isLive,
+    required int isLiveHealth,
+    required DateTime isLiveTS,
+    required DateTime updatedAt,
+    required DateTime polledAt,
+    required String? soilType,
+    required String readableAgo,
+    required String readableAgoFull,
+    required List<Functionality>? functionalities,
+    required this.pw,
+  }) : super(
+            type: TYPE_OF_SENSOR.RAIN_GAUGE,
+            uid: uid,
+            name: name,
+            address: address,
+            img: img,
+            epoch: epoch,
+            site: site,
+            isLive: isLive,
+            isLiveTS: isLiveTS,
+            isLiveHealth: isLiveHealth,
+            updatedAt: updatedAt,
+            polledAt: polledAt,
+            soilType: soilType,
+            readableAgo: readableAgo,
+            readableAgoFull: readableAgoFull,
+            functionalities: functionalities);
 
   static bool isRainGauge(String uid) {
     return uid.startsWith("K40");
@@ -66,11 +64,13 @@ class RainGauge extends Sensor {
         soilType: json["soilType"],
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
-        rain: json["RAIN"].toDouble(),
-        temp: json["TEMP"].toDouble(),
-        hum: json["HUM"].toDouble(),
-        bat: json["BAT"].toDouble(),
-        rssi: json["RSSI"].toDouble(),
-        pw: json["PW"].toDouble());
+        pw: json["PW"].toDouble(),
+        functionalities: [
+          new Temp(json["TEMP"].toDouble()),
+          new Hum(json["HUM"].toDouble()),
+          new Bat(json["BAT"].toDouble()),
+          new Rain(json["RAIN"].toDouble()),
+          new Rssi(json["RSSI"].toDouble()),
+        ]);
   }
 }

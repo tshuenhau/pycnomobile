@@ -1,5 +1,7 @@
 import "package:pycnomobile/model/functionalities/Functionality.dart";
+import 'package:flutter/material.dart';
 
-class S5t extends Functionality {
-  S5t() : super(name: "Soil Moisture at 70cm", unit: "mm", color: "#A020F0");
+class S5t extends Functionality<double?> {
+  S5t(double? value)
+      : super(name: "70cm", unit: "mm", color: null, icon: null, value: value);
 }

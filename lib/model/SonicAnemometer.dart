@@ -1,15 +1,16 @@
 import 'Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Bat.dart';
+import 'package:pycnomobile/model/functionalities/Gst.dart';
+import 'package:pycnomobile/model/functionalities/Hum.dart';
+import 'package:pycnomobile/model/functionalities/Lx1.dart';
+import 'package:pycnomobile/model/functionalities/Rssi.dart';
+import 'package:pycnomobile/model/functionalities/Temp.dart';
+import 'package:pycnomobile/model/functionalities/Uv.dart';
+import 'package:pycnomobile/model/functionalities/Wnd.dart';
+import 'package:pycnomobile/model/functionalities/Wndr.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 class SonicAnemometer extends Sensor {
-  double temp;
-  double hum;
-  double wnd;
-  double gst;
-  double wndr;
-  double lx1;
-  double uv;
-  double bat;
-  double rssi;
   double pw;
 
   SonicAnemometer(
@@ -27,32 +28,25 @@ class SonicAnemometer extends Sensor {
       required String? soilType,
       required String readableAgo,
       required String readableAgoFull,
-      required this.temp,
-      required this.hum,
-      required this.wnd,
-      required this.gst,
-      required this.wndr,
-      required this.lx1,
-      required this.uv,
-      required this.bat,
-      required this.rssi,
+      required List<Functionality>? functionalities,
       required this.pw})
       : super(
-            TYPE_OF_SENSOR.SONIC_ANEMOMETER,
-            uid,
-            name,
-            address,
-            img,
-            epoch,
-            site,
-            isLive,
-            isLiveTS,
-            isLiveHealth,
-            updatedAt,
-            polledAt,
-            soilType,
-            readableAgo,
-            readableAgoFull);
+            type: TYPE_OF_SENSOR.SONIC_ANEMOMETER,
+            uid: uid,
+            name: name,
+            address: address,
+            img: img,
+            epoch: epoch,
+            site: site,
+            isLive: isLive,
+            isLiveTS: isLiveTS,
+            isLiveHealth: isLiveHealth,
+            updatedAt: updatedAt,
+            polledAt: polledAt,
+            soilType: soilType,
+            readableAgo: readableAgo,
+            readableAgoFull: readableAgoFull,
+            functionalities: functionalities);
 
   static bool isSonicAnemometer(String uid) {
     return uid.startsWith("K80");
@@ -74,15 +68,17 @@ class SonicAnemometer extends Sensor {
         soilType: json["soilType"],
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
-        temp: json["TEMP"],
-        hum: json["HUM"],
-        wnd: json["WND"].toDouble(),
-        gst: json["GST"].toDouble(),
-        wndr: json["WNDR"].toDouble(),
-        lx1: json["LX1"].toDouble(),
-        uv: json["UV"].toDouble(),
-        bat: json["BAT"],
-        rssi: json["RSSI"].toDouble(),
-        pw: json["PW"].toDouble());
+        pw: json["PW"].toDouble(),
+        functionalities: [
+          new Temp(json["TEMP"].toDouble()),
+          new Hum(json["HUM"].toDouble()),
+          new Bat(json["BAT"].toDouble()),
+          new Lx1(json["LX1"].toDouble()),
+          new Uv(json["UV"].toDouble()),
+          new Wnd(json["WND"].toDouble()),
+          new Wndr(json["WNDR"].toDouble()),
+          new Gst(json["GST"].toDouble()),
+          new Rssi(json["RSSI"].toDouble()),
+        ]);
   }
 }
