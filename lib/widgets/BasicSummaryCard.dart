@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BasicSummaryCard extends StatelessWidget {
   final IconData icon;
@@ -36,21 +37,26 @@ class BasicSummaryCard extends StatelessWidget {
                   SizedBox(width: MediaQuery.of(context).size.width * 2 / 100),
                   Row(
                     children: [
-                      Text(
-                        value.toString(),
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 7 / 100),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 20 / 100,
+                        child: AutoSizeText(
+                          value?.toStringAsFixed(2) ?? "-",
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                          minFontSize: 20,
+                        ),
                       ),
                       Container(
+                          width: MediaQuery.of(context).size.width * 10 / 100,
                           padding: EdgeInsets.only(
                               top:
                                   MediaQuery.of(context).size.height * 1 / 100),
-                          child: Text(" " + unit,
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      3 /
-                                      100))),
+                          child: AutoSizeText(
+                            " " + unit,
+                            maxLines: 1,
+                            minFontSize: 1,
+                            textAlign: TextAlign.left,
+                          )),
                     ],
                   ),
                   //trailing: Text(" °C")

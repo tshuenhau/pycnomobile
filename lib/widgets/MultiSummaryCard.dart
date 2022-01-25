@@ -48,7 +48,7 @@ class MultiSummaryCard extends StatelessWidget {
     List<DataPoint> dataPoints = [];
     for (final mapEntry in data.entries) {
       final key = mapEntry.key.toString();
-      final value = mapEntry.value.toString();
+      final value = mapEntry.value?.toStringAsFixed(2) ?? "-";
       dataPoints.add(new DataPoint(label: key, value: value));
     }
     return dataPoints;
@@ -73,20 +73,29 @@ class DataPoint extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 4 / 100),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 4 / 100),
+              textAlign: TextAlign.center,
+            ),
           ),
-          Text(
-            "|",
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 6 / 100),
+          Container(
+            child: Text(
+              "|",
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 6 / 100),
+              textAlign: TextAlign.center,
+            ),
           ),
-          Text(
-            value,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 4 / 100),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 4 / 100),
+              textAlign: TextAlign.center,
+            ),
           )
         ],
       ),
