@@ -7,7 +7,7 @@ class Hum extends Functionality<double?> {
       : super(
             name: "Humidity",
             unit: "RH%",
-            color: Colors.grey,
+            color: Colors.blue,
             value: value,
             icon: FontAwesomeIcons.tint);
 }

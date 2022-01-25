@@ -7,7 +7,7 @@ class Rainh extends Functionality<double?> {
       : super(
             name: "Rainfall intensity",
             unit: "mm/h",
-            color: Colors.blue,
+            color: Colors.grey,
             value: value,
             icon: FontAwesomeIcons.cloudShowersHeavy);
 }
