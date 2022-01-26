@@ -2,12 +2,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'dart:math';
 
 class SensorLineChart extends StatefulWidget {
-  SensorLineChart({Key? key, required this.data, required this.function})
+  SensorLineChart({Key? key, required this.data, required this.functionName})
       : super(key: key);
   final Map data;
-  final Functionality function;
+  final String functionName;
   //? time in milliseconds since 1970 thing: value
 
   @override
@@ -173,7 +174,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
         return DateFormat.Hm().format(date);
       },
       margin: 8,
-      interval: (_maxX - _minX) / 6,
+      interval: max((_maxX - _minX) / 6, 1),
     );
   }
 
@@ -181,8 +182,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-            widget.function.name + " (" + widget.function.unit.toString() + ")",
+        Text(widget.functionName,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),

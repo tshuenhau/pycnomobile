@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/App.dart';
-import 'package:pycnomobile/screens/SensorListPage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {

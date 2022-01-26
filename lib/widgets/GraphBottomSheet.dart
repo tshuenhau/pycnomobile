@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 class GraphBottomSheet extends StatelessWidget {
   const GraphBottomSheet({Key? key, required this.graphs}) : super(key: key);
-  final Map<Functionality, Map> graphs;
+  final List<TimeSeries> graphs;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,13 @@ class GraphBottomSheet extends StatelessWidget {
       graphsToDraw.add(Text(
           "Title")); //TODO: later for the multi summary card need to get the REAL TITLE
     }
-    graphs.forEach((key, value) {
-      graphsToDraw.add(SensorLineChart(data: value, function: key));
-    });
+    graphs.forEach((e) => {
+          graphsToDraw.add(
+              SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
+        });
+    // graphs.forEach((key, value) {
+    //   graphsToDraw.add(SensorLineChart(data: value, function: key));
+    // });
     return graphsToDraw;
   }
 }
