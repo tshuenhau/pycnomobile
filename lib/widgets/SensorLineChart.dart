@@ -42,13 +42,16 @@ class _SensorLineChartState extends State<SensorLineChart> {
     double maxY = double.minPositive;
     List<FlSpot> points = [];
     data.forEach((key, value) {
-      if (minY > value) {
-        minY = value;
+      if (value != null) {
+        //TODO: Maybe remove this if implemented on logic side
+        if (minY > value) {
+          minY = value;
+        }
+        if (maxY < value) {
+          maxY = value;
+        }
+        points.add(new FlSpot(key.toDouble(), value));
       }
-      if (maxY < value) {
-        maxY = value;
-      }
-      points.add(new FlSpot(key.toDouble(), value));
     });
     _values = points;
     _minX = _values.first.x;
@@ -57,6 +60,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
     _maxY = (maxY / _divider).ceilToDouble() * _divider;
     _leftTitlesInterval =
         ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
+
+    print("max Y: " + _maxY.toString());
+    print("min Y: " + _minY.toString());
   }
 
   List<Color> gradientColors = [
