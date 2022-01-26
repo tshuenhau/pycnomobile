@@ -18,16 +18,14 @@ Future<dynamic> buildSensorGraphs(
 
   TimeSeriesController controller = Get.put(TimeSeriesController());
   if (sensor.functionalities != null) {
-    if (functions.length > 1) {
-      //Multi so need to split up
-    } else {
+    //Multi so need to split up
+    for (Functionality function in functions) {
       try {
         await controller.getTimeSeries(
             DateTime.fromMillisecondsSinceEpoch(1643108878837),
             DateTime.fromMillisecondsSinceEpoch(1827299202217),
-            functions[0].key,
+            function.key,
             sensor);
-        print(controller.currentTimeSeries);
         if (controller.currentTimeSeries != null) {
           graphs.add(controller.currentTimeSeries!);
           print(graphs);
