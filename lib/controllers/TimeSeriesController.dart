@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:pycnomobile/logic/Commons.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 
@@ -10,7 +11,7 @@ class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
-    return Map.fromIterable(list.reversed,
+    return Map.fromIterable(list.reversed.where((e) => e[1] != null),
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
@@ -143,9 +144,9 @@ class TimeSeriesController extends GetxController {
   Future<void> getTimeSeries(
       DateTime start, DateTime end, String key, Sensor sensor) async {
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=$start&end=$end'));
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
     print(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=$start&end=$end');
+        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body)[0];
 
@@ -155,9 +156,7 @@ class TimeSeriesController extends GetxController {
         currentTimeSeries = null;
         return;
       }
-      print(1);
       Map<int, double> timeSeries = convertListToMap(body['values']);
-      print(2);
       currentTimeSeries =
           new TimeSeries(key: key, color: color, timeSeries: timeSeries);
 
