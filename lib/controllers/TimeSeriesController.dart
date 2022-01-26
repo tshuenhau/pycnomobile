@@ -10,8 +10,7 @@ class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
-    print(2);
-    return Map.fromIterable(list,
+    return Map.fromIterable(list.reversed,
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
@@ -141,23 +140,24 @@ class TimeSeriesController extends GetxController {
   //   }
   // }
 
-  Future<void> getSoilSensorTimeSeries(
+  Future<void> getTimeSeries(
       DateTime start, DateTime end, String key, Sensor sensor) async {
-    print(key);
-    print(start);
-    print(end);
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=$start&end=$end'));
     print(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=$start&end=$end');
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body)[0];
+
       String color = body['color'];
       String key = body['key'];
       if (body["values"] == null) {
+        currentTimeSeries = null;
         return;
       }
+      print(1);
       Map<int, double> timeSeries = convertListToMap(body['values']);
+      print(2);
       currentTimeSeries =
           new TimeSeries(key: key, color: color, timeSeries: timeSeries);
 
