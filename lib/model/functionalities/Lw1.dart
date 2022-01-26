@@ -6,6 +6,7 @@ class Lw1 extends Functionality<double?> {
   Lw1(double? value)
       : super(
             name: "Solar Radiation",
+            key: "LW1",
             unit: "W/m2",
             color: Colors.yellow,
             value: value,

@@ -6,6 +6,7 @@ class Wndr extends Functionality<double?> {
   Wndr(double? value)
       : super(
             name: "Wind Direction",
+            key: "WNDR",
             unit: "°",
             color: Colors.green,
             value: value,

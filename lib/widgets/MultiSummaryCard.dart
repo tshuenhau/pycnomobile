@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/widgets/SummaryCard.dart';
 
 class MultiSummaryCard extends StatelessWidget {
   final Map data;
-  final String title;
-  final String units;
-  const MultiSummaryCard(
-      {Key? key, required this.data, required this.title, required this.units})
+  final Sensor sensor;
+  final Functionality function;
+  final List<Functionality> functions;
+  MultiSummaryCard(
+      {Key? key,
+      required this.data,
+      required this.sensor,
+      required this.function,
+      required this.functions})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: InkWell(
-          onTap: () => {},
-          child: Container(
-              width: MediaQuery.of(context).size.width * 1 / 2 - 20,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 2.5 / 100),
-                child: Center(
-                    child: Column(
-                  children: [
-                    Text(
-                      title + " (" + units + ")",
-                      style: TextStyle(
-                          fontSize:
-                              MediaQuery.of(context).size.width * 3 / 100),
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 1 / 100),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Column(
-                        children: buildDataPoints(data),
-                      ),
-                    ),
-                  ],
-                )),
-              )),
-        ));
+    return SummaryCard(
+      sensor: sensor,
+      functions: functions,
+      child: Container(
+          width: MediaQuery.of(context).size.width * 1 / 2 - 20,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 2.5 / 100),
+            child: Center(
+                child: Column(
+              children: [
+                Text(
+                  function.name + " (" + function.unit + ")",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 3 / 100),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 1 / 100),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Column(
+                    children: buildDataPoints(data),
+                  ),
+                ),
+              ],
+            )),
+          )),
+    );
   }
 
   List<Widget> buildDataPoints(Map data) {

@@ -32,6 +32,8 @@ dependencies:
   persistent_bottom_nav_bar: any
   font_awesome_flutter: 9.2.0
   auto_size_text: ^3.0.0
+  fl_chart: ^0.41.0
+  intl: ^0.17.0
 
   flutter:
     sdk: flutter
