@@ -6,6 +6,7 @@ class Wnd extends Functionality<double?> {
   Wnd(double? value)
       : super(
             name: "Wind Speed",
+            key: "WND",
             unit: "km/h",
             color: Colors.green,
             value: value,

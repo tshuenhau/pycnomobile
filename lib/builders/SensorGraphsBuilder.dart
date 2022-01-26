@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/SoilSensor.dart';
+import 'package:pycnomobile/model/TimeSeries.dart';
+import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
+import 'package:get/get.dart';
 
 Future<dynamic> buildSensorGraphs(
-    BuildContext context, Sensor sensor, List<Functionality> functions) {
+    BuildContext context, Sensor sensor, List<Functionality> functions) async {
   //! parameters include a List<functionality> to take care of the multisummarycards
   print(
       functions); //! should print out all the list of functionalities to graph
 
+  final Map<Functionality, Map<int, double>> graphs =
+      {}; //! basically make a map of functionality: data, if just have 1 functionality then it just has 1 entry.
+
+  TimeSeriesController controller = Get.put(TimeSeriesController());
+  if (sensor.functionalities != null) {
+    if (functions.length > 1) {
+      //Multi so need to split up
+    } else {
+      try {
+        await controller.getSoilSensorTimeSeries(
+            DateTime.fromMillisecondsSinceEpoch(1643108878837),
+            DateTime.fromMillisecondsSinceEpoch(1827299202217),
+            functions[0].key,
+            sensor);
+
+        if (controller.currentTimeSeries != null) {
+          graphs[functions[0]] = controller.currentTimeSeries!.getTimeSeries;
+          print(graphs);
+        }
+      } catch (e) {
+        // TODO: handle exception in the UI
+      }
+    }
+  }
+
 //! Do api calls here.
-  final Map data = {
+  final Map<int, double> data = {
     //! Example data, time in milliseconds since 1970 thing: value
     //! Just to be clear, the x value is the date which is in milliseconds since 1970, then the y value is just the value
     1643108878837: 20.55,
@@ -39,10 +68,6 @@ Future<dynamic> buildSensorGraphs(
     1817299202217: 27.55,
     1827299202217: 27.55,
   };
-
-  final Map<Functionality, Map> graphs = {
-    functions[0]: data
-  }; //! basically make a map of functionality: data, if just have 1 functionality then it just has 1 entry.
 
   return showModalBottomSheet(
       backgroundColor: Colors.transparent,

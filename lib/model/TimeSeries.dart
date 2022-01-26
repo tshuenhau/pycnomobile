@@ -1,24 +1,29 @@
-class TimeSeries<T> {
-  Map<DateTime, T> _timeSeries;
+class TimeSeries {
+  Map<int, double> _timeSeries;
   String _color;
   String _key;
   TimeSeries(
       {required String key,
       required String color,
-      required Map<DateTime, T> timeSeries})
+      required Map<int, double> timeSeries})
       : _key = key,
         _color = color,
         _timeSeries = timeSeries;
 
-  String get key {
+  String get getKey {
     return _key;
   }
 
-  String get color {
+  String get getColor {
     return _color;
   }
 
-  Map<DateTime, T> get timeSeries {
+  Map<int, double> get getTimeSeries {
     return _timeSeries;
+  }
+
+  @override
+  String toString() {
+    return "color: $_color, key: $_key, data: $_timeSeries";
   }
 }

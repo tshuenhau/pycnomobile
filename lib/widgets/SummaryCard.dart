@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/SensorGrapshBuilder.dart';
+import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 

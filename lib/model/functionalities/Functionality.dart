@@ -7,9 +7,11 @@ class Functionality<T> {
   IconData? icon;
   T value;
   List<String>? multiKeys;
+  String key;
 
   Functionality(
       {required this.name,
+      required this.key,
       required this.unit,
       required this.color,
       required this.icon,
