@@ -34,9 +34,11 @@ class SensorsListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AvailableGraphsIcons(availableGraphs: [""]
-                      //widget.availableGraphs //!AvailableGraphs
-                      ),
+                  Icon(Icons.circle,
+                      color: sensor.isLive
+                          ? Colors.greenAccent.shade400
+                          : Colors.redAccent.shade400,
+                      size: MediaQuery.of(context).size.height * 2 / 100),
                   SizedBox(
                       width: MediaQuery.of(context).size.width *
                           (1 / 20)), // give it width
