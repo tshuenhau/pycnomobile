@@ -10,7 +10,7 @@ class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
-    return Map.fromIterable(list.reversed,
+    return Map.fromIterable(list.reversed.where((e) => e[1] != null),
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
