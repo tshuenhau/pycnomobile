@@ -157,7 +157,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       },
       reservedSize: 32,
       margin: 12,
-      interval: _leftTitlesInterval,
+      interval: max(1, _leftTitlesInterval),
     );
   }
 
