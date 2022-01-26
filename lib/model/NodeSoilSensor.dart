@@ -2,6 +2,7 @@ import 'package:pycnomobile/model/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
 import 'package:pycnomobile/model/functionalities/Lw1.dart';
+import 'package:pycnomobile/model/functionalities/Lx1.dart';
 import 'package:pycnomobile/model/functionalities/Rainh.dart';
 import 'package:pycnomobile/model/functionalities/Rssi.dart';
 import 'package:pycnomobile/model/functionalities/S123456t.dart';
@@ -97,6 +98,7 @@ class NodeSoilSensor extends SoilSensor {
           new Bat(json["BAT"].toDouble()),
           new Rainh(json["RAINH"].toDouble()),
           new Lw1(json["LW1"].toDouble()),
+          new Lx1(json["LX1"].toDouble()),
           new Rssi(json["RSSI"].toDouble()),
           new S123456t([
             new S1t(json["S1T"]?.toDouble()),

@@ -13,32 +13,28 @@ Future<dynamic> buildSensorGraphs(
   print(
       functions); //! should print out all the list of functionalities to graph
 
-  //final Map<Functionality, Map<int, double>> graphs =
-  {}
-  ; //! basically make a map of functionality: data, if just have 1 functionality then it just has 1 entry.
+  //! basically make a map of functionality: data, if just have 1 functionality then it just has 1 entry.
   final List<TimeSeries> graphs = [];
 
-  // TimeSeriesController controller = Get.put(TimeSeriesController());
-  // if (sensor.functionalities != null) {
-  //   if (functions.length > 1) {
-  //     //Multi so need to split up
-  //   } else {
-  //     try {
-  //       await controller.getSoilSensorTimeSeries(
-  //           DateTime.fromMillisecondsSinceEpoch(1643108878837),
-  //           DateTime.fromMillisecondsSinceEpoch(1827299202217),
-  //           functions[0].key,
-  //           sensor);
-
-  //       if (controller.currentTimeSeries != null) {
-  //         graphs[functions[0]] = controller.currentTimeSeries!.getTimeSeries;
-  //         print(graphs);
-  //       }
-  //     } catch (e) {
-  //       // TODO: handle exception in the UI
-  //     }
-  //   }
-  // }
+  TimeSeriesController controller = Get.put(TimeSeriesController());
+  if (sensor.functionalities != null) {
+    //Multi so need to split up
+    for (Functionality function in functions) {
+      try {
+        await controller.getTimeSeries(
+            DateTime.fromMillisecondsSinceEpoch(1643108878837),
+            DateTime.fromMillisecondsSinceEpoch(1827299202217),
+            function.key,
+            sensor);
+        if (controller.currentTimeSeries != null) {
+          graphs.add(controller.currentTimeSeries!);
+          print(graphs);
+        }
+      } catch (e) {
+        // TODO: handle exception in the UI
+      }
+    }
+  }
 
 //! Do api calls here.
   final Map<int, double> data = {
