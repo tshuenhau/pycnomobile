@@ -23,7 +23,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   double _maxY = 0;
   double _leftTitlesInterval = 0;
 
-  final int _divider = 25;
+  final int _divider = 5; //Old value 25
   final int _leftLabelsCount = 6;
 
   @override
@@ -157,7 +157,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       },
       reservedSize: 32,
       margin: 12,
-      interval: _leftTitlesInterval,
+      interval: max(1, _leftTitlesInterval),
     );
   }
 

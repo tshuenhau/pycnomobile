@@ -27,10 +27,10 @@ class GraphBottomSheet extends StatelessWidget {
   List<Widget> get buildGraphs {
     List<Widget> graphsToDraw = [];
 
-    if (graphs.length > 1) {
-      graphsToDraw.add(Text(
-          "Title")); //TODO: later for the multi summary card need to get the REAL TITLE
-    }
+    // if (graphs.length > 1) {
+    //   graphsToDraw.add(Text(
+    //       "Title")); //TODO: later for the multi summary card need to get the REAL TITLE
+    // }
     graphs.forEach((e) => {
           graphsToDraw.add(
               SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))

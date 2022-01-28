@@ -20,9 +20,9 @@ class _AppState extends State<App> {
 //Screens for each nav items.
   List<Widget> _NavScreens() {
     return [
-      TodayPage(),
+      //TodayPage(),
       SensorListPage(),
-      MapPage(),
+      //MapPage(),
       AlertsPage(),
       AccountPage(),
     ];
@@ -30,18 +30,18 @@ class _AppState extends State<App> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.calendar_today),
-        title: 'Today',
-      ),
+      // PersistentBottomNavBarItem(
+      //   icon: Icon(Icons.calendar_today),
+      //   title: 'Today',
+      // ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.sensor_window),
         title: 'Sensors',
       ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.map),
-        title: 'Map',
-      ),
+      // PersistentBottomNavBarItem(
+      //   icon: Icon(Icons.map),
+      //   title: 'Map',
+      // ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.notifications),
         title: 'Alerts',
