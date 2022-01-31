@@ -13,6 +13,8 @@ class Preferences {
 
   Future<void> setToken(String token) => _setValue(_tokenKey, token);
 
+  String getToken() => _getValue<String>('_tokenKey', '');
+
   T _getValue<T>(dynamic key, T defaultValue) =>
       _box.get(key, defaultValue: defaultValue) as T;
 
