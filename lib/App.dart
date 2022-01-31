@@ -19,7 +19,7 @@ class _AppState extends State<App> {
       PersistentTabController(initialIndex: 0);
 
 //Screens for each nav items.
-  List<Widget> _NavScreens() {
+  List<Widget> _navScreens() {
     return [
       //TodayPage(),
       SensorListPage(),
@@ -60,7 +60,7 @@ class _AppState extends State<App> {
       child: PersistentTabView(
         context,
         controller: _controller,
-        screens: _NavScreens(),
+        screens: _navScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,
         backgroundColor: Colors.white, // Default is Colors.white.

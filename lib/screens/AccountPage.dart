@@ -28,6 +28,9 @@ class AccountPage extends StatelessWidget {
               child: Text("Logout"),
               onPressed: () {
                 authController.logout();
+                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => LoginPage()),
+                    (_) => false);
               })
         ]));
   }
