@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 
-import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:pycnomobile/logic/Commons.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 

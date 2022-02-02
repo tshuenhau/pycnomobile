@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:pycnomobile/model/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/SonicAnemometer.dart';
-import 'package:pycnomobile/model/NodeSoilSensor.dart';
-import 'package:pycnomobile/model/RainGauge.dart';
-import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
+import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/RainGauge.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/logic/Commons.dart';
 
 class ListOfSensorsController extends GetxController {

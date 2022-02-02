@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/Sensor.dart';
-import 'package:pycnomobile/model/SoilSensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';

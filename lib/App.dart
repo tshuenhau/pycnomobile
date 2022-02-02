@@ -5,7 +5,6 @@ import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/MapPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
 import 'package:pycnomobile/screens/TodayPage.dart';
-import 'package:pycnomobile/screens/auth/LoginPage.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

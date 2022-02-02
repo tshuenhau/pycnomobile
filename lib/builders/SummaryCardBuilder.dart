@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-import 'package:pycnomobile/model/Sensor.dart';
-import 'package:pycnomobile/model/MasterSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/MultiSummaryCard.dart';

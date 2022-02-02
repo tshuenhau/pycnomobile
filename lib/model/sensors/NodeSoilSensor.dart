@@ -1,4 +1,4 @@
-import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
 import 'package:pycnomobile/model/functionalities/Lw1.dart';
