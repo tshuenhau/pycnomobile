@@ -1,33 +1,37 @@
-import 'Sensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';
+import 'package:pycnomobile/model/functionalities/Gst.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
-import 'package:pycnomobile/model/functionalities/Rain.dart';
+import 'package:pycnomobile/model/functionalities/Lx1.dart';
 import 'package:pycnomobile/model/functionalities/Rssi.dart';
 import 'package:pycnomobile/model/functionalities/Temp.dart';
+import 'package:pycnomobile/model/functionalities/Uv.dart';
+import 'package:pycnomobile/model/functionalities/Wnd.dart';
+import 'package:pycnomobile/model/functionalities/Wndr.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
-class RainGauge extends Sensor {
+class SonicAnemometer extends Sensor {
   double pw;
 
-  RainGauge({
-    required String uid,
-    required String name,
-    required String address,
-    required String img,
-    required int epoch,
-    required String site,
-    required bool isLive,
-    required int isLiveHealth,
-    required DateTime isLiveTS,
-    required DateTime updatedAt,
-    required DateTime polledAt,
-    required String? soilType,
-    required String readableAgo,
-    required String readableAgoFull,
-    required List<Functionality>? functionalities,
-    required this.pw,
-  }) : super(
-            type: TYPE_OF_SENSOR.RAIN_GAUGE,
+  SonicAnemometer(
+      {required String uid,
+      required String name,
+      required String address,
+      required String img,
+      required int epoch,
+      required String site,
+      required bool isLive,
+      required int isLiveHealth,
+      required DateTime isLiveTS,
+      required DateTime updatedAt,
+      required DateTime polledAt,
+      required String? soilType,
+      required String readableAgo,
+      required String readableAgoFull,
+      required List<Functionality>? functionalities,
+      required this.pw})
+      : super(
+            type: TYPE_OF_SENSOR.SONIC_ANEMOMETER,
             uid: uid,
             name: name,
             address: address,
@@ -44,12 +48,12 @@ class RainGauge extends Sensor {
             readableAgoFull: readableAgoFull,
             functionalities: functionalities);
 
-  static bool isRainGauge(String uid) {
-    return uid.startsWith("K40");
+  static bool isSonicAnemometer(String uid) {
+    return uid.startsWith("K80");
   }
 
-  factory RainGauge.fromJson(Map<String, dynamic> json) {
-    return RainGauge(
+  factory SonicAnemometer.fromJson(Map<String, dynamic> json) {
+    return SonicAnemometer(
         uid: json["UID"],
         name: json["name"],
         address: json["address"],
@@ -69,7 +73,11 @@ class RainGauge extends Sensor {
           new Temp(json["TEMP"].toDouble()),
           new Hum(json["HUM"].toDouble()),
           new Bat(json["BAT"].toDouble()),
-          new Rain(json["RAIN"].toDouble()),
+          new Lx1(json["LX1"].toDouble()),
+          new Uv(json["UV"].toDouble()),
+          new Wnd(json["WND"].toDouble()),
+          new Wndr(json["WNDR"].toDouble()),
+          new Gst(json["GST"].toDouble()),
           new Rssi(json["RSSI"].toDouble()),
         ]);
   }

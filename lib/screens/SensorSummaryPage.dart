@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
-import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class SensorSummaryPage extends StatelessWidget {
   final Sensor sensor;

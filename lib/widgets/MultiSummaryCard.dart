@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/Sensor.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/SummaryCard.dart';
 

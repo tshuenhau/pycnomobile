@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
+import 'package:pycnomobile/screens/auth/SplashPage.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -19,18 +20,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController controller = Get.put(AuthController());
-    return Obx(() => controller.isLoggedIn.value
+    return Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
         ? MaterialApp(
             theme: ThemeData(
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
             home: App())
-        : MaterialApp(
-            theme: ThemeData(
-              // is not restarted.
-              primarySwatch: Colors.blue,
-            ),
-            home: LoginPage()));
+        : controller.isLoggedIn.value == AuthState.loggedOut
+            ? MaterialApp(
+                theme: ThemeData(
+                  // is not restarted.
+                  primarySwatch: Colors.blue,
+                ),
+                home: LoginPage())
+            : SplashPage());
   }
 }

@@ -3,15 +3,29 @@ import 'package:http/http.dart' as http;
 import 'package:pycnomobile/storage/Preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
+import 'package:pycnomobile/model/User.dart';
+import 'dart:convert';
+
+enum AuthState { unknown, loggedIn, loggedOut }
 
 class AuthController extends GetxController {
   String token = "";
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-  Rx<bool> isLoggedIn = false.obs;
+  Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
 
+  User? user;
+
+  @override
   onInit() async {
-    isLoggedIn.value = await checkLoggedInStatus();
+    super.onInit();
+    isLoggedIn.value =
+        await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
+
+    if (isLoggedIn.value == AuthState.loggedIn) {
+      print("HELLO");
+      getAccount();
+    }
   }
 
   Future<bool> checkLoggedInStatus() async {
@@ -39,12 +53,12 @@ class AuthController extends GetxController {
     }
   }
 
-  getAccount(String token) async {
+  getAccount() async {
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co/api/v2/data/account.json?TK=$token'));
 
     if (response.statusCode == 200) {
-      print("get account details success");
+      user = User.fromJson(jsonDecode(response.body)["user"]);
     } else {
       throw Exception("Unable to get account details");
     }
