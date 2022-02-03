@@ -20,17 +20,31 @@ class GraphBottomSheet extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 60 / 100,
         child: Center(
             child: ListView(
-          children: buildGraphs,
+          // ! here we do a isLoaded? buildGraphs : loading widget
+          children: buildGraphs(context),
         )));
   }
 
-  List<Widget> get buildGraphs {
+  List<Widget> buildGraphs(BuildContext context) {
     List<Widget> graphsToDraw = [];
 
-    // if (graphs.length > 1) {
-    //   graphsToDraw.add(Text(
-    //       "Title")); //TODO: later for the multi summary card need to get the REAL TITLE
-    // }
+    graphsToDraw.add(Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text("Selected Date"),
+        ElevatedButton(
+            onPressed: () async {
+              DateTimeRange? _newDateRange = await showDateRangePicker(
+                  context: context,
+                  firstDate: DateTime(1800),
+                  lastDate: DateTime(3000));
+              Navigator.pop(context);
+              print(_newDateRange); //!graphBuilder with new dates
+            },
+            child: Icon(Icons.today)),
+        SizedBox(height: MediaQuery.of(context).size.height * 2 / 100)
+      ],
+    ));
     graphs.forEach((e) => {
           graphsToDraw.add(
               SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
