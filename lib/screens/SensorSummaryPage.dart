@@ -11,7 +11,7 @@ class SensorSummaryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(sensor.name ?? ""),
-        actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
+        //actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
       ),
       body: Center(
         child: Container(

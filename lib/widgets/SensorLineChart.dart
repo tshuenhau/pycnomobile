@@ -9,7 +9,7 @@ class SensorLineChart extends StatefulWidget {
       : super(key: key);
   final Map data;
   final String functionName;
-  //? time in milliseconds since 1970 thing: value
+  //? time in milliseconds since epoch thing: value
 
   @override
   _SensorLineChartState createState() => _SensorLineChartState();
@@ -103,7 +103,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
-        show: true,
+        show: false,
         getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
           radius: 2, //! Change dot size here
           color:
@@ -123,7 +123,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
   FlGridData _gridData() {
     return FlGridData(
       show: true,
-      drawVerticalLine: true,
+      drawVerticalLine: false,
+      drawHorizontalLine: false,
       getDrawingHorizontalLine: (value) {
         return FlLine(
           color: const Color(0xff37434d),
@@ -145,18 +146,17 @@ class _SensorLineChartState extends State<SensorLineChart> {
   SideTitles _leftTitles() {
     return SideTitles(
       showTitles: true,
-      getTextStyles: (context, value) => const TextStyle(
+      getTextStyles: (context, value) => TextStyle(
         color: Color(0xff67727d),
         fontWeight: FontWeight.bold,
-        fontSize: 15,
+        fontSize: MediaQuery.of(context).size.width * 3 / 100,
       ),
       getTitles: (value) {
         //print("Y value: " + value.toString());
-
         return value.toString();
       },
-      reservedSize: 32,
-      margin: 12,
+      reservedSize: MediaQuery.of(context).size.width * 10 / 100,
+      margin: MediaQuery.of(context).size.width * 1.5 / 100,
       interval: max(1, _leftTitlesInterval),
     );
   }
@@ -168,7 +168,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       getTextStyles: (context, value) => TextStyle(
           color: Color(0xff68737d),
           fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.width * 3.5 / 100,
+          fontSize: MediaQuery.of(context).size.width * 3 / 100,
           letterSpacing: -0.25,
           overflow: TextOverflow.clip),
       getTitles: (value) {
@@ -179,7 +179,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
         //print(value);
         return DateFormat.Hm().format(date);
       },
-      margin: 8,
+      margin: MediaQuery.of(context).size.width * 2 / 100,
+
       interval: max((_maxX - _minX) / 6, 1),
     );
   }
