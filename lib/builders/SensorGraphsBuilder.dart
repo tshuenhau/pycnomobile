@@ -55,6 +55,7 @@ Future<dynamic> buildSensorGraphs(
 
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return GraphBottomSheet(

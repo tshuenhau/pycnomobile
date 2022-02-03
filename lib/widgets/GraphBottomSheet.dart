@@ -30,7 +30,9 @@ class GraphBottomSheet extends StatelessWidget {
               topLeft: const Radius.circular(25.0),
               //topRight: const Radius.circular(10.0)
             )),
-        height: MediaQuery.of(context).size.height * 60 / 100,
+        height: graphs.length > 1
+            ? MediaQuery.of(context).size.height * 75 / 100
+            : MediaQuery.of(context).size.height * 50 / 100,
         child: Center(
             child: ListView(
           // ! here we do a isLoaded? buildGraphs : loading widget
