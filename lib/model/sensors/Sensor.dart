@@ -1,7 +1,7 @@
-import 'package:pycnomobile/model/sonicanemometer.dart';
-import 'package:pycnomobile/model/raingauge.dart';
-import 'package:pycnomobile/model/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/sonicanemometer.dart';
+import 'package:pycnomobile/model/sensors/raingauge.dart';
+import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 enum TYPE_OF_SENSOR {
