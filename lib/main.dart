@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                   primarySwatch: Colors.blue,
                 ),
                 home: LoginPage(),
-              )
+                builder: EasyLoading.init())
             : SplashPage());
   }
 }
