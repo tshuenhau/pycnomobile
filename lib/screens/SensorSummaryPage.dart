@@ -9,6 +9,7 @@ class SensorSummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(sensor.name ?? ""),
         //actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
@@ -20,12 +21,10 @@ class SensorSummaryPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Align(
             alignment: Alignment.topLeft,
-            child: Row(
-              // direction: Axis.horizontal,
-              // alignment: WrapAlignment.start,
-              // spacing: 2, // gap between adjacent chips
-              // runSpacing: 4.0, // gap between lines
-              children: buildSummaryCards(sensor: sensor, context: context),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                child: buildSummaryCards(sensor: sensor, context: context),
+              ),
             ),
           ),
         ),

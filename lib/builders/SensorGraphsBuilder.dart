@@ -9,7 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions,
-    {DateTimeRange? dateRange}) async {
+    [DateTimeRange? dateRange]) async {
   EasyLoading.show(status: 'loading...');
   bool isDismissed = false;
 
@@ -33,7 +33,8 @@ Future<dynamic> buildSensorGraphs(
     for (Functionality function in functions) {
       try {
         await controller.getTimeSeries(
-            DateTime.fromMillisecondsSinceEpoch(1643108878837),
+            DateTime.fromMillisecondsSinceEpoch(
+                1643108878837), //!probably change tis to the dateRange.start and dateRange.end
             DateTime.fromMillisecondsSinceEpoch(1827299202217),
             function.key,
             sensor);

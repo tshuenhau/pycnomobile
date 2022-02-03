@@ -4,6 +4,7 @@ import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
+import 'package:intl/intl.dart';
 
 class GraphBottomSheet extends StatelessWidget {
   const GraphBottomSheet(
@@ -39,24 +40,35 @@ class GraphBottomSheet extends StatelessWidget {
 
   List<Widget> buildGraphs(BuildContext context) {
     List<Widget> graphsToDraw = [];
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
-    graphsToDraw.add(Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text("Selected Date"),
-        ElevatedButton(
-            onPressed: () async {
-              DateTimeRange? _newDateRange = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(1800),
-                  lastDate: DateTime(3000));
-              Navigator.pop(context);
-              //print(_newDateRange); //!graphBuilder with new dates
-              buildSensorGraphs(context, sensor, functions);
-            },
-            child: Icon(Icons.today)),
-        SizedBox(height: MediaQuery.of(context).size.height * 2 / 100)
-      ],
+    graphsToDraw.add(
+      Text(
+          (dateRange?.duration.inDays == 0
+              ? dateFormat.format(dateRange!.start)
+              : (dateFormat.format(dateRange!.start) +
+                  " - " +
+                  dateFormat.format(dateRange!.end))),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
+
+      // ElevatedButton(
+      //     onPressed: () async {
+      //       DateTimeRange? _newDateRange = await showDateRangePicker(
+      //           context: context,
+      //           firstDate: DateTime(1800),
+      //           lastDate: DateTime(3000));
+      //       //print(_newDateRange); //!graphBuilder with new dates
+      //       if (_newDateRange != null) {
+      //         //! generatenew graphs with the new date range
+      //         buildSensorGraphs(context, sensor, functions, _newDateRange);
+      //       }
+      //     },
+      //     child: Icon(Icons.today)),
+    );
+    graphsToDraw.add(SizedBox(
+      height: MediaQuery.of(context).size.height * 2.5 / 100,
     ));
     graphs.forEach((e) => {
           graphsToDraw.add(

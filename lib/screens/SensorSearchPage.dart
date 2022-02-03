@@ -27,6 +27,7 @@ class SensorSearchPage extends StatelessWidget {
           ),
         ),
       )),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
