@@ -53,8 +53,7 @@ Widget buildSummaryCards(
     }
   }
 
-  return Expanded(
-      child: IntrinsicHeight(
+  return IntrinsicHeight(
     child: Row(
       children: [
         Column(
@@ -63,5 +62,5 @@ Widget buildSummaryCards(
             mainAxisAlignment: MainAxisAlignment.start, children: rightColumn)
       ],
     ),
-  ));
+  );
 }
