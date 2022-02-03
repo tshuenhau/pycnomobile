@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 class GraphBottomSheet extends StatelessWidget {
-  const GraphBottomSheet({Key? key, required this.graphs}) : super(key: key);
+  const GraphBottomSheet(
+      {Key? key,
+      required this.dateRange,
+      required this.graphs,
+      required this.sensor,
+      required this.functions})
+      : super(key: key);
   final List<TimeSeries> graphs;
+  final Sensor sensor;
+  final List<Functionality> functions;
+  final DateTimeRange? dateRange;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +51,8 @@ class GraphBottomSheet extends StatelessWidget {
                   firstDate: DateTime(1800),
                   lastDate: DateTime(3000));
               Navigator.pop(context);
-              print(_newDateRange); //!graphBuilder with new dates
+              //print(_newDateRange); //!graphBuilder with new dates
+              buildSensorGraphs(context, sensor, functions);
             },
             child: Icon(Icons.today)),
         SizedBox(height: MediaQuery.of(context).size.height * 2 / 100)

@@ -8,9 +8,14 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 Future<dynamic> buildSensorGraphs(
-    BuildContext context, Sensor sensor, List<Functionality> functions) async {
+    BuildContext context, Sensor sensor, List<Functionality> functions,
+    {DateTimeRange? dateRange}) async {
   EasyLoading.show(status: 'loading...');
   bool isDismissed = false;
+
+  if (dateRange == null) {
+    dateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
+  }
 
   final List<TimeSeries> graphs = [];
 
@@ -52,8 +57,10 @@ Future<dynamic> buildSensorGraphs(
         context: context,
         builder: (context) {
           return GraphBottomSheet(
-            graphs: graphs,
-          );
+              dateRange: dateRange,
+              graphs: graphs,
+              sensor: sensor,
+              functions: functions);
         });
   }
 }
