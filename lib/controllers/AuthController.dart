@@ -23,7 +23,6 @@ class AuthController extends GetxController {
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
 
     if (isLoggedIn.value == AuthState.loggedIn) {
-      print("HELLO");
       getAccount();
     }
   }

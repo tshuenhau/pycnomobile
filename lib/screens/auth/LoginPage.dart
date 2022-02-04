@@ -27,7 +27,8 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size.fromWidth(100)),
+                  fixedSize: MaterialStateProperty.all(
+                      Size.fromWidth(MediaQuery.of(context).size.width)),
                   alignment: Alignment.center,
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

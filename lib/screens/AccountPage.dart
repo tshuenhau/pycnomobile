@@ -10,7 +10,6 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(authController.getAccount());
     return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
             Widget>[
