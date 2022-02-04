@@ -74,6 +74,26 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   LineChartData mainData() {
     return LineChartData(
+      lineTouchData: LineTouchData(
+        enabled: true,
+        touchTooltipData: LineTouchTooltipData(
+            getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+          return touchedBarSpots.map((barSpot) {
+            final flSpot = barSpot;
+            if (flSpot.x == 0 || flSpot.x == 6) {
+              return null;
+            }
+
+            return LineTooltipItem(
+              flSpot.y.toStringAsFixed(2),
+              const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          }).toList();
+        }),
+      ),
       gridData: _gridData(),
       titlesData: FlTitlesData(
         show: true,

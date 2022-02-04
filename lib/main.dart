@@ -5,10 +5,29 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   await Hive.initFlutter();
   runApp(MyApp());
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.black.withOpacity(0.5)
+    ..userInteractions = false
+    ..dismissOnTap = true
+    ..boxShadow = <BoxShadow>[]
+    ..maskType = EasyLoadingMaskType.custom;
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +38,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    configLoading();
+
     AuthController controller = Get.put(AuthController());
     return Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
         ? MaterialApp(
@@ -26,14 +47,16 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            home: App())
+            home: App(),
+            builder: EasyLoading.init())
         : controller.isLoggedIn.value == AuthState.loggedOut
             ? MaterialApp(
                 theme: ThemeData(
                   // is not restarted.
                   primarySwatch: Colors.blue,
                 ),
-                home: LoginPage())
+                home: LoginPage(),
+                builder: EasyLoading.init())
             : SplashPage());
   }
 }
