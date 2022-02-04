@@ -11,7 +11,6 @@ Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions,
     [DateTimeRange? dateRange]) async {
   EasyLoading.show(status: 'loading...');
-  bool isDismissed = false;
 
   if (dateRange == null) {
     dateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
@@ -23,9 +22,7 @@ Future<dynamic> buildSensorGraphs(
 
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
-      print("dismiss");
-      isDismissed = true;
-      //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
+      return; //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
   if (sensor.functionalities != null) {
@@ -48,21 +45,51 @@ Future<dynamic> buildSensorGraphs(
       }
     }
   }
-  if (isDismissed) {
-    return;
-  } else {
-    EasyLoading.dismiss();
 
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return GraphBottomSheet(
-              dateRange: dateRange,
-              graphs: graphs,
-              sensor: sensor,
-              functions: functions);
-        });
+  EasyLoading.dismiss();
+
+  return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return GraphBottomSheet(
+            dateRange: dateRange,
+            graphs: graphs,
+            sensor: sensor,
+            functions: functions);
+      });
+}
+
+Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
+    Sensor sensor, List<Functionality> functions) async {
+  print(dateRange);
+  final List<TimeSeries> graphs = [];
+  EasyLoading.show(status: 'loading...');
+  EasyLoading.addStatusCallback((status) {
+    if (status == EasyLoadingStatus.dismiss) {
+      return null;
+    }
+  });
+
+  TimeSeriesController controller = Get.put(TimeSeriesController());
+
+  if (sensor.functionalities != null) {
+    //Multi so need to split up
+    for (Functionality function in functions) {
+      try {
+        await controller.getTimeSeries(
+            dateRange.start, dateRange.end, function.key, sensor);
+
+        if (controller.currentTimeSeries != null) {
+          graphs.add(controller.currentTimeSeries!);
+        }
+      } catch (e) {
+        // TODO: handle exception in the UI
+      }
+    }
   }
+
+  EasyLoading.dismiss();
+  return graphs;
 }

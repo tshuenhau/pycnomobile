@@ -41,22 +41,33 @@ class MyApp extends StatelessWidget {
     configLoading();
 
     AuthController controller = Get.put(AuthController());
-    return Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
-        ? MaterialApp(
-            theme: ThemeData(
-              // is not restarted.
-              primarySwatch: Colors.blue,
-            ),
-            home: App(),
-            builder: EasyLoading.init())
-        : controller.isLoggedIn.value == AuthState.loggedOut
-            ? MaterialApp(
-                theme: ThemeData(
-                  // is not restarted.
-                  primarySwatch: Colors.blue,
-                ),
-                home: LoginPage(),
-                builder: EasyLoading.init())
-            : SplashPage());
+    return MaterialApp(
+        theme: ThemeData(
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+            ? App()
+            : controller.isLoggedIn.value == AuthState.loggedOut
+                ? LoginPage()
+                : SplashPage()),
+        builder: EasyLoading.init());
+    // Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+    //     ? MaterialApp(
+    //         theme: ThemeData(
+    //           // is not restarted.
+    //           primarySwatch: Colors.blue,
+    //         ),
+    //         home: App(),
+    //         builder: EasyLoading.init())
+    //     : controller.isLoggedIn.value == AuthState.loggedOut
+    //         ? MaterialApp(
+    //             theme: ThemeData(
+    //               // is not restarted.
+    //               primarySwatch: Colors.blue,
+    //             ),
+    //             home: LoginPage(),
+    //             builder: EasyLoading.init())
+    //         : SplashPage());
   }
 }
