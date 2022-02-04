@@ -22,19 +22,43 @@ class GraphBottomSheet extends StatefulWidget {
 
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
-  late List<TimeSeries> graphs;
+  late List<TimeSeries> graphs = [];
+  List<Widget> graphsToDraw = <
+      Widget>[]; //! I think its because the number of widgets and the type remains the same so it does not update
 
   @override
   void initState() {
     super.initState();
-    //dateRange = widget.dateRange; // <==== IMPORTANT LINE
-    graphs = widget.graphs;
+    graphsToDraw = buildGraphs(context, widget.graphs);
   }
 
   @override
   void dispose() {
     super.dispose();
     graphs.clear();
+    graphsToDraw.clear();
+  }
+
+  List<Widget> buildGraphs(BuildContext context, List<TimeSeries> graphs) {
+    //graphsToDraw.clear();
+
+    if (graphs.length <= 0) {
+      graphsToDraw.add(Center(child: Text("No data for selected time period")));
+    }
+    graphs.forEach((e) => {
+          graphsToDraw.add(
+              SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
+        });
+    // graphs.forEach((key, value) {
+    //   graphsToDraw.add(SensorLineChart(data: value, function: key));
+    // });
+    return graphsToDraw;
+  }
+
+  void refresh(List<TimeSeries> graphs) {
+    setState(() {
+      graphsToDraw = buildGraphs(context, graphs);
+    });
   }
 
   @override
@@ -53,64 +77,40 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
             : MediaQuery.of(context).size.height * 50 / 100,
         child: Center(
             child: ListView(
-          children: buildGraphs(context),
-        )));
-  }
+          children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 4.5 / 100),
+                    ElevatedButton(
+                        onPressed: () async {
+                          DateTimeRange? _newDateRange =
+                              await showDateRangePicker(
+                                  context: context,
+                                  firstDate: DateTime(1800),
+                                  lastDate: DateTime(3000));
+                          if (_newDateRange != null) {
+                            List<TimeSeries>? result =
+                                await getGraphsForTimeRange(_newDateRange,
+                                    widget.sensor, widget.functions);
+                            setState(() {
+                              graphs = result!;
+                            });
+                            refresh(graphs);
 
-  List<Widget> buildGraphs(BuildContext context) {
-    print("drawing graphs");
-    print("new Graph1: " + graphs.toString());
-    List<Widget> graphsToDraw = [];
-    graphsToDraw.add(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Text(
-          //     (dateRange?.duration.inDays == 0
-          //         ? dateFormat.format(dateRange!.start)
-          //         : (dateFormat.format(dateRange!.start) +
-          //             " - " +
-          //             dateFormat.format(dateRange!.end))),
-          //     textAlign: TextAlign.center,
-          //     style: TextStyle(
-          //         fontSize: MediaQuery.of(context).size.height * 2 / 100)),
-          SizedBox(width: MediaQuery.of(context).size.width * 4.5 / 100),
-          ElevatedButton(
-              onPressed: () async {
-                DateTimeRange? _newDateRange = await showDateRangePicker(
-                    context: context,
-                    firstDate: DateTime(1800),
-                    lastDate: DateTime(3000));
-                if (_newDateRange != null) {
-                  print("hi");
-                  List<TimeSeries>? result = await getGraphsForTimeRange(
-                      _newDateRange, widget.sensor, widget.functions);
-                  print(result == graphs);
-                  setState(() {
-                    graphs = result!;
-                  });
-                  //buildSensorGraphs(context, sensor, functions, _newDateRange);
-                }
-              },
-              child: Icon(Icons.today)),
-        ],
-      ),
-    );
-    graphsToDraw.add(SizedBox(
-      height: MediaQuery.of(context).size.height * 2.5 / 100,
-    ));
-    if (graphs.length <= 0) {
-      graphsToDraw.add(Center(child: Text("No data for selected time period")));
-    }
-    graphs.forEach((e) => {
-          graphsToDraw.add(
-              SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
-        });
-    // graphs.forEach((key, value) {
-    //   graphsToDraw.add(SensorLineChart(data: value, function: key));
-    // });
-    print("return here");
-    return graphsToDraw;
+                            //buildSensorGraphs(context, sensor, functions, _newDateRange);
+                          }
+                        },
+                        child: Icon(Icons.today)),
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 2.5 / 100,
+                )
+              ] +
+              graphsToDraw,
+        )));
   }
 }

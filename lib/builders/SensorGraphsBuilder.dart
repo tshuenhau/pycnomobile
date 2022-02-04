@@ -11,11 +11,11 @@ Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions,
     [DateTimeRange? dateRange]) async {
   EasyLoading.show(status: 'loading...');
+  bool isDismissed = false;
 
   if (dateRange == null) {
     dateRange = new DateTimeRange(
         start: DateTime.now().add(Duration(hours: -24)), end: DateTime.now());
-    print(dateRange);
   }
 
   if (dateRange.duration.inDays <= 0) {
@@ -31,7 +31,8 @@ Future<dynamic> buildSensorGraphs(
 
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
-      return; //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
+      isDismissed = true;
+      //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
   if (sensor.functionalities != null) {
@@ -47,7 +48,6 @@ Future<dynamic> buildSensorGraphs(
 
         if (controller.currentTimeSeries != null) {
           graphs.add(controller.currentTimeSeries!);
-          print(graphs);
         }
       } catch (e) {
         // TODO: handle exception in the UI
@@ -56,24 +56,29 @@ Future<dynamic> buildSensorGraphs(
   }
 
   EasyLoading.dismiss();
-
-  return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return GraphBottomSheet(
-            graphs: graphs, sensor: sensor, functions: functions);
-      });
+  if (isDismissed) {
+    return;
+  } else
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return GraphBottomSheet(
+              graphs: graphs, sensor: sensor, functions: functions);
+        });
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     Sensor sensor, List<Functionality> functions) async {
   final List<TimeSeries> graphs = [];
   EasyLoading.show(status: 'loading...');
+  bool isDismissed = false;
+
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
-      return null;
+      isDismissed = true;
+      //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
   // if (dateRange.duration.inDays < 1) {
@@ -88,8 +93,8 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     //Multi so need to split up
     for (Functionality function in functions) {
       try {
-        await controller.getTimeSeries(
-            dateRange.start, dateRange.end, function.key, sensor);
+        await controller.getTimeSeries(dateRange.start,
+            dateRange.end.add(Duration(days: 1)), function.key, sensor);
 
         if (controller.currentTimeSeries != null) {
           graphs.add(controller.currentTimeSeries!);
@@ -101,5 +106,9 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   }
 
   EasyLoading.dismiss();
-  return graphs;
+
+  if (isDismissed) {
+    return null;
+  } else
+    return graphs;
 }
