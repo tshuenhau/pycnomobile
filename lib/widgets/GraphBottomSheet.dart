@@ -58,8 +58,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
     graphsToDraw.add(
-      Row(
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
               (dateRange?.duration.inDays == 0
@@ -69,7 +70,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                       dateFormat.format(dateRange!.end))),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
+                  fontSize: MediaQuery.of(context).size.height * 2 / 100)),
           SizedBox(width: MediaQuery.of(context).size.width * 4.5 / 100),
           ElevatedButton(
               onPressed: () async {
