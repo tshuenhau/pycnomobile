@@ -79,11 +79,7 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     for (Functionality function in functions) {
       try {
         await controller.getTimeSeries(
-            dateRange
-                .start, //!probably change tis to the dateRange.start and dateRange.end
-            dateRange.end,
-            function.key,
-            sensor);
+            dateRange.start, dateRange.end, function.key, sensor);
 
         if (controller.currentTimeSeries != null) {
           graphs.add(controller.currentTimeSeries!);
