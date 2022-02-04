@@ -70,6 +70,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
+          SizedBox(width: MediaQuery.of(context).size.width * 4.5 / 100),
           ElevatedButton(
               onPressed: () async {
                 DateTimeRange? _newDateRange = await showDateRangePicker(

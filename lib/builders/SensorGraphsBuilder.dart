@@ -83,7 +83,6 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
 
         if (controller.currentTimeSeries != null) {
           graphs.add(controller.currentTimeSeries!);
-          print(graphs);
         }
       } catch (e) {
         // TODO: handle exception in the UI
