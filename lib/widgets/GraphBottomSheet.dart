@@ -24,7 +24,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
   late List<TimeSeries> graphs = [];
   List<Widget> graphsToDraw = <
-      Widget>[]; //! I think its because the number of widgets and the type remains the same so it does not update
+      Widget>[]; //! I think its because the number of widgets and the type remains the same so it does not update. Printing this gives: [SensorLineChart].
+  //!So even if SensorLineChart changes, from the perspective of statemanagemnt it does not change
+  //! Might need to wrap this in ChangeNotifier then when the graphs get updated and api gets recalled we notifylistners.
 
   @override
   void initState() {
@@ -63,6 +65,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    print(graphsToDraw);
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * 2.5 / 100),
