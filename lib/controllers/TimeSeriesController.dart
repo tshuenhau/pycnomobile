@@ -16,12 +16,10 @@ class TimeSeriesController extends GetxController {
 
   Future<void> getTimeSeries(
       DateTime start, DateTime end, String key, Sensor sensor) async {
-    print(start);
-    print(end);
     final response = await http.get(Uri.parse(
         'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-    print(
-        'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
+    // print(
+    //     'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body)[0];
 
