@@ -4,12 +4,10 @@ import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
-import 'package:intl/intl.dart';
 
 class GraphBottomSheet extends StatefulWidget {
   GraphBottomSheet(
       {Key? key,
-      required this.dateRange,
       required this.graphs,
       required this.sensor,
       required this.functions})
@@ -17,20 +15,26 @@ class GraphBottomSheet extends StatefulWidget {
   List<TimeSeries> graphs;
   final Sensor sensor;
   final List<Functionality> functions;
-  DateTimeRange? dateRange;
 
   @override
   State<GraphBottomSheet> createState() => _GraphBottomSheetState();
 }
 
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
-  late DateTimeRange? dateRange = widget.dateRange;
-  late List<TimeSeries> graphs = widget.graphs;
+  //late DateTimeRange? dateRange;
+  late List<TimeSeries> graphs;
+
   @override
   void initState() {
     super.initState();
-    dateRange = widget.dateRange; // <==== IMPORTANT LINE
+    //dateRange = widget.dateRange; // <==== IMPORTANT LINE
     graphs = widget.graphs;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    graphs.clear();
   }
 
   @override
@@ -54,23 +58,23 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   List<Widget> buildGraphs(BuildContext context) {
+    print("drawing graphs");
+    print("new Graph1: " + graphs.toString());
     List<Widget> graphsToDraw = [];
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-
     graphsToDraw.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-              (dateRange?.duration.inDays == 0
-                  ? dateFormat.format(dateRange!.start)
-                  : (dateFormat.format(dateRange!.start) +
-                      " - " +
-                      dateFormat.format(dateRange!.end))),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 2 / 100)),
+          // Text(
+          //     (dateRange?.duration.inDays == 0
+          //         ? dateFormat.format(dateRange!.start)
+          //         : (dateFormat.format(dateRange!.start) +
+          //             " - " +
+          //             dateFormat.format(dateRange!.end))),
+          //     textAlign: TextAlign.center,
+          //     style: TextStyle(
+          //         fontSize: MediaQuery.of(context).size.height * 2 / 100)),
           SizedBox(width: MediaQuery.of(context).size.width * 4.5 / 100),
           ElevatedButton(
               onPressed: () async {
@@ -82,9 +86,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   print("hi");
                   List<TimeSeries>? result = await getGraphsForTimeRange(
                       _newDateRange, widget.sensor, widget.functions);
+                  print(result == graphs);
                   setState(() {
                     graphs = result!;
-                    dateRange = _newDateRange;
                   });
                   //buildSensorGraphs(context, sensor, functions, _newDateRange);
                 }
@@ -106,6 +110,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     // graphs.forEach((key, value) {
     //   graphsToDraw.add(SensorLineChart(data: value, function: key));
     // });
+    print("return here");
     return graphsToDraw;
   }
 }

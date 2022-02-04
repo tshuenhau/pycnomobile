@@ -12,7 +12,6 @@ class SensorLineChart extends StatefulWidget {
   }) : super(key: key);
   final Map data;
   final String functionName;
-  //? time in milliseconds since epoch thing: value
 
   @override
   _SensorLineChartState createState() => _SensorLineChartState();
@@ -207,7 +206,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                 .duration
                 .inDays >
             365) {
-          return DateFormat.Md().format(date);
+          return DateFormat.yMd().format(date);
         }
         if (DateTimeRange(
                     start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
