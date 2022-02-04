@@ -21,6 +21,8 @@ class SummaryCard extends StatelessWidget {
       child: Card(
           child: InkWell(
               onTap: () async {
+                //buildSensorGraphs(context, sensor, functions);
+
                 DateTimeRange? _newDateRange = await showDateRangePicker(
                     context: context,
                     initialDateRange: DateTimeRange(

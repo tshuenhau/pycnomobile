@@ -5,8 +5,11 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'dart:math';
 
 class SensorLineChart extends StatefulWidget {
-  SensorLineChart({Key? key, required this.data, required this.functionName})
-      : super(key: key);
+  SensorLineChart({
+    Key? key,
+    required this.data,
+    required this.functionName,
+  }) : super(key: key);
   final Map data;
   final String functionName;
   //? time in milliseconds since epoch thing: value
@@ -60,9 +63,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
     _maxY = (maxY / _divider).ceilToDouble() * _divider;
     _leftTitlesInterval =
         ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
-
-    print("max Y: " + _maxY.toString());
-    print("min Y: " + _minY.toString());
   }
 
   List<Color> gradientColors = [
@@ -197,6 +197,26 @@ class _SensorLineChartState extends State<SensorLineChart> {
         final DateTime date =
             DateTime.fromMillisecondsSinceEpoch(value.toInt());
         //print(value);
+        // if (widget.dateRange!.duration.inDays > 1) {
+        //   return DateFormat.Md().format(date);
+        // }
+
+        if (DateTimeRange(
+                    start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+                    end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                .duration
+                .inDays >
+            365) {
+          return DateFormat.Md().format(date);
+        }
+        if (DateTimeRange(
+                    start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+                    end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                .duration
+                .inDays >
+            1) {
+          return DateFormat.Md().format(date);
+        }
         return DateFormat.Hm().format(date);
       },
       margin: MediaQuery.of(context).size.width * 2 / 100,
@@ -213,6 +233,16 @@ class _SensorLineChartState extends State<SensorLineChart> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 1 / 100,
+        ),
+        Text(DateFormat.yMd()
+                .format(DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
+                .toString() +
+            " - " +
+            DateFormat.yMd()
+                .format(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                .toString()),
         Stack(
           children: <Widget>[
             AspectRatio(
@@ -227,7 +257,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                   padding: EdgeInsets.only(
                       right: MediaQuery.of(context).size.height * 2.5 / 100,
                       left: MediaQuery.of(context).size.height * 1.5 / 100,
-                      top: MediaQuery.of(context).size.height * 3.5 / 100,
+                      top: MediaQuery.of(context).size.height * 1.5 / 100,
                       bottom: MediaQuery.of(context).size.height * 1.5 / 100),
                   child: LineChart(
                     mainData(),

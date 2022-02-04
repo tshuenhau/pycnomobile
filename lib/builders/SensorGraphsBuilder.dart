@@ -13,7 +13,16 @@ Future<dynamic> buildSensorGraphs(
   EasyLoading.show(status: 'loading...');
 
   if (dateRange == null) {
-    dateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
+    dateRange = new DateTimeRange(
+        start: DateTime.now().add(Duration(hours: -24)), end: DateTime.now());
+    print(dateRange);
+  }
+
+  if (dateRange.duration.inDays <= 0) {
+    DateTime now = DateTime.now();
+    dateRange = DateTimeRange(
+        start: DateTime(now.year, now.month, now.day, 0, 0),
+        end: DateTime(now.year, now.month, now.day, 23, 59));
   }
 
   final List<TimeSeries> graphs = [];
@@ -63,7 +72,7 @@ Future<dynamic> buildSensorGraphs(
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     Sensor sensor, List<Functionality> functions) async {
-  print(dateRange);
+  print("date range : " + dateRange.toString());
   final List<TimeSeries> graphs = [];
   EasyLoading.show(status: 'loading...');
   EasyLoading.addStatusCallback((status) {
@@ -71,7 +80,12 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
       return null;
     }
   });
-
+  if (dateRange.duration.inDays <= 0) {
+    DateTime now = DateTime.now();
+    dateRange = DateTimeRange(
+        start: DateTime(now.year, now.month, now.day, 0, 0),
+        end: DateTime(now.year, now.month, now.day, 23, 59));
+  }
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {

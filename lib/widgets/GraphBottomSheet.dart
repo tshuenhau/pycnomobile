@@ -58,7 +58,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
     graphsToDraw.add(
-      Column(
+      Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -79,6 +79,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     firstDate: DateTime(1800),
                     lastDate: DateTime(3000));
                 if (_newDateRange != null) {
+                  print("hi");
                   List<TimeSeries>? result = await getGraphsForTimeRange(
                       _newDateRange, widget.sensor, widget.functions);
                   setState(() {
@@ -95,6 +96,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     graphsToDraw.add(SizedBox(
       height: MediaQuery.of(context).size.height * 2.5 / 100,
     ));
+    if (graphs.length <= 0) {
+      graphsToDraw.add(Center(child: Text("No data for selected time period")));
+    }
     graphs.forEach((e) => {
           graphsToDraw.add(
               SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
