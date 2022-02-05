@@ -22,7 +22,7 @@ class GraphBottomSheet extends StatefulWidget {
 
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
-  late List<TimeSeries> graphs = [];
+  List<TimeSeries> graphs = [];
   List<Widget> graphsToDraw = <
       Widget>[]; //! I think its because the number of widgets and the type remains the same so it does not update. Printing this gives: [SensorLineChart].
   //!So even if SensorLineChart changes, from the perspective of statemanagemnt it does not change
@@ -42,14 +42,14 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   List<Widget> buildGraphs(BuildContext context, List<TimeSeries> graphs) {
-    //graphsToDraw.clear();
+    graphsToDraw.clear();
 
     if (graphs.length <= 0) {
       graphsToDraw.add(Center(child: Text("No data for selected time period")));
     }
     graphs.forEach((e) => {
-          graphsToDraw.add(
-              SensorLineChart(data: e.getTimeSeries, functionName: e.getKey))
+          graphsToDraw.add(SensorLineChart(
+              key: UniqueKey(), data: e.getTimeSeries, functionName: e.getKey))
         });
     // graphs.forEach((key, value) {
     //   graphsToDraw.add(SensorLineChart(data: value, function: key));
