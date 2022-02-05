@@ -205,7 +205,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
                 .duration
                 .inDays >
-            365) {
+            365 * 6) {
           return DateFormat.yMd().format(date);
         }
         if (DateTimeRange(
@@ -213,14 +213,22 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
                 .duration
                 .inDays >
-            1) {
-          return DateFormat.Md().format(date);
+            4) {
+          return DateFormat("d/M").format(date);
         }
+        // if (DateTimeRange(
+        //             start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+        //             end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+        //         .duration
+        //         .inDays >
+        //     1) {
+        //   return DateFormat("d/M").format(date);
+        // }
         return DateFormat.Hm().format(date);
       },
       margin: MediaQuery.of(context).size.width * 2 / 100,
 
-      interval: max((_maxX - _minX) / 6, 1),
+      interval: max((_maxX - _minX) / 5, 1),
     );
   }
 
@@ -235,11 +243,11 @@ class _SensorLineChartState extends State<SensorLineChart> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 1 / 100,
         ),
-        Text(DateFormat.yMd()
+        Text(DateFormat("dd/MM/yy")
                 .format(DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
                 .toString() +
             " - " +
-            DateFormat.yMd()
+            DateFormat("dd/MM/yy")
                 .format(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
                 .toString()),
         Stack(

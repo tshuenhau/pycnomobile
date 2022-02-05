@@ -23,25 +23,20 @@ class GraphBottomSheet extends StatefulWidget {
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
   List<TimeSeries> graphs = [];
-  List<Widget> graphsToDraw = <
-      Widget>[]; //! I think its because the number of widgets and the type remains the same so it does not update. Printing this gives: [SensorLineChart].
-  //!So even if SensorLineChart changes, from the perspective of statemanagemnt it does not change
-  //! Might need to wrap this in ChangeNotifier then when the graphs get updated and api gets recalled we notifylistners.
-
   @override
   void initState() {
     super.initState();
-    graphsToDraw = buildGraphs(context, widget.graphs);
+    graphs = widget.graphs;
   }
 
   @override
   void dispose() {
     super.dispose();
     graphs.clear();
-    graphsToDraw.clear();
   }
 
-  List<Widget> buildGraphs(BuildContext context, List<TimeSeries> graphs) {
+  List<Widget> buildGraphs(BuildContext context) {
+    List<Widget> graphsToDraw = <Widget>[];
     graphsToDraw.clear();
 
     if (graphs.length <= 0) {
@@ -57,15 +52,8 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     return graphsToDraw;
   }
 
-  void refresh(List<TimeSeries> graphs) {
-    setState(() {
-      graphsToDraw = buildGraphs(context, graphs);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    print(graphsToDraw);
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * 2.5 / 100),
@@ -101,7 +89,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                             setState(() {
                               graphs = result!;
                             });
-                            refresh(graphs);
 
                             //buildSensorGraphs(context, sensor, functions, _newDateRange);
                           }
@@ -113,7 +100,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   height: MediaQuery.of(context).size.height * 2.5 / 100,
                 )
               ] +
-              graphsToDraw,
+              buildGraphs(context),
         )));
   }
 }
