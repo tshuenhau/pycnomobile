@@ -213,7 +213,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
                 .duration
                 .inDays >
-            4) {
+            3) {
           return DateFormat("d/M").format(date);
         }
         // if (DateTimeRange(
@@ -228,7 +228,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       },
       margin: MediaQuery.of(context).size.width * 2 / 100,
 
-      interval: max((_maxX - _minX) / 5, 1),
+      interval: max((_maxX - _minX) / 4, 1),
     );
   }
 
