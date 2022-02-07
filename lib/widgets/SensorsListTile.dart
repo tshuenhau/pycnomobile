@@ -22,9 +22,12 @@ class SensorsListTile extends StatelessWidget {
               builder: (context) => SensorSummaryPage(sensor: sensor)))
         },
         child: ListTile(
-            title: Text(
-              sensor.name ?? "",
-              overflow: TextOverflow.ellipsis,
+            title: SizedBox(
+              width: MediaQuery.of(context).size.width * 1 / 100,
+              child: Text(
+                sensor.name ?? "",
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             subtitle: Text(
               sensor.uid,
@@ -34,11 +37,29 @@ class SensorsListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.circle,
-                      color: sensor.isLive ?? false
-                          ? Colors.greenAccent.shade400
-                          : Colors.redAccent.shade400,
-                      size: MediaQuery.of(context).size.height * 2 / 100),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.circle,
+                          color: sensor.isLive == null
+                              ? Colors.grey.shade400
+                              : sensor.isLive!
+                                  ? Colors.greenAccent.shade400
+                                  : Colors.redAccent.shade400,
+                          size: MediaQuery.of(context).size.height * 2 / 100),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top:
+                                MediaQuery.of(context).size.height * 0.5 / 100),
+                        child: Text(sensor.readableAgo ?? "",
+                            style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width *
+                                    3 /
+                                    100)),
+                      )
+                    ],
+                  ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width *
                           (1 / 20)), // give it width

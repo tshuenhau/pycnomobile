@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
 
-  Rx<User?> user = null.obs;
+  Rxn<User> user = Rxn<User>();
 
   @override
   onInit() async {
@@ -58,7 +58,6 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       String tk = jsonDecode(response.body)["tk"];
       token = tk;
-      print(token);
       final preferences = await Preferences.getInstance();
       await preferences.setToken(tk);
       await getAccount();
@@ -74,6 +73,7 @@ class AuthController extends GetxController {
 
     if (response.statusCode == 200) {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
+      update();
     } else {
       throw Exception("Unable to get account details");
     }
