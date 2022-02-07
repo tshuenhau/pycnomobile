@@ -8,10 +8,11 @@ import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/logic/Commons.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 
 class ListOfSensorsController extends GetxController {
   RxList<Sensor> listOfSensors = List<Sensor>.empty().obs;
-
+  AuthController authController = Get.find();
   @override
   void onInit() async {
     super.onInit();
@@ -30,9 +31,11 @@ class ListOfSensorsController extends GetxController {
   void updateSensor(Sensor updatedSensor) {}
 
   Future<List<Sensor>>? getListOfSensors() async {
+    print(authController.token);
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=$token'));
-
+        'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
+    print(
+        "https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}");
     if (response.statusCode == 200) {
       listOfSensors.clear();
       var body = jsonDecode(response.body);
@@ -48,6 +51,7 @@ class ListOfSensorsController extends GetxController {
           addSensor(RainGauge.fromJson(body[i]));
         }
       }
+      print(listOfSensors.length);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }

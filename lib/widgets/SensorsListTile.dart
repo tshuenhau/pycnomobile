@@ -35,7 +35,7 @@ class SensorsListTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.circle,
-                      color: sensor.isLive
+                      color: sensor.isLive ?? false
                           ? Colors.greenAccent.shade400
                           : Colors.redAccent.shade400,
                       size: MediaQuery.of(context).size.height * 2 / 100),

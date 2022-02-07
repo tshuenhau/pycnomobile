@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
 
-  User? user;
+  Rx<User?> user = null.obs;
 
   @override
   onInit() async {
@@ -30,22 +30,38 @@ class AuthController extends GetxController {
   Future<bool> checkLoggedInStatus() async {
     final preferences = await Preferences.getInstance();
     token = preferences.getToken();
-    print(token);
     return token != "";
   }
 
-  login({required String username, required String password}) async {
-    print(username);
-    print(password);
-    final response = await http.post(Uri.parse(
-        'https://portal.pycno.co/login?username=$username&password=$password'));
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      //Store token to local storage
+  Future<void> login(
+      {required String username, required String password}) async {
+    String deviceModel = "";
+    String deviceId = "";
+    if (Platform.isAndroid) {
+      deviceModel = deviceData["model"];
+      deviceId = deviceData["id"];
+    } else if (Platform.isIOS) {
+      deviceModel = deviceData["name"];
+      deviceId = deviceData["identifierForVendor"];
+    }
+    // final response = await http.post(Uri.parse(
+    //     'https://portal.pycno.co/login?username=$username&password=$password'));
+    Map<String, dynamic> body = {
+      "username": username,
+      "password": password,
+      "deviceName": deviceModel,
+      "deviceID": deviceId
+    };
 
+    final response = await http
+        .post(Uri.parse("https://stage.pycno.co/api/v2/login"), body: body);
+    if (response.statusCode == 200) {
+      String tk = jsonDecode(response.body)["tk"];
+      token = tk;
+      print(token);
       final preferences = await Preferences.getInstance();
-      preferences.setToken(
-          'LqsxbuIEB8BqUAkXCaXMFfucjbgzDFb3'); //To be changed to dynamic token from reponse
+      await preferences.setToken(tk);
+      await getAccount();
       print("Login successful");
     } else {
       throw Exception("Unable to login");
@@ -53,11 +69,11 @@ class AuthController extends GetxController {
   }
 
   getAccount() async {
-    final response = await http.get(Uri.parse(
-        'https://portal.pycno.co/api/v2/data/account.json?TK=$token'));
+    final response = await http.get(
+        Uri.parse('https://stage.pycno.co/api/v2/data/account.json?TK=$token'));
 
     if (response.statusCode == 200) {
-      user = User.fromJson(jsonDecode(response.body)["user"]);
+      user.value = User.fromJson(jsonDecode(response.body)["user"]);
     } else {
       throw Exception("Unable to get account details");
     }
@@ -70,7 +86,7 @@ class AuthController extends GetxController {
     print(preferences.getToken());
   }
 
-  void setDeviceData() async {
+  Future<void> setDeviceData() async {
     if (Platform.isAndroid) {
       deviceData = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
     } else if (Platform.isIOS) {

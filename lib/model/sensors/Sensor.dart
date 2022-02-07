@@ -18,16 +18,16 @@ abstract class Sensor {
   String? name;
   String? img;
   String? address;
-  int epoch;
-  String site;
-  bool isLive;
-  int isLiveHealth;
-  DateTime isLiveTS;
-  DateTime updatedAt;
-  DateTime polledAt;
+  int? epoch;
+  String? site;
+  bool? isLive;
+  int? isLiveHealth;
+  DateTime? isLiveTS;
+  DateTime? updatedAt;
+  DateTime? polledAt;
   String? soilType;
-  String readableAgo;
-  String readableAgoFull;
+  String? readableAgo;
+  String? readableAgoFull;
   List<Functionality>? functionalities;
 
   Sensor(

@@ -6,26 +6,26 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
  */
 abstract class SoilSensor extends Sensor {
   String? txt;
-  int lfreq;
-  double ve;
+  int? lfreq;
+  double? ve;
   double? ns;
 
   SoilSensor(
       {required TYPE_OF_SENSOR type,
       required String uid,
-      required String name,
+      required String? name,
       required String? address,
       required String? img,
-      required int epoch,
-      required String site,
-      required bool isLive,
-      required int isLiveHealth,
-      required DateTime isLiveTS,
-      required DateTime updatedAt,
-      required DateTime polledAt,
+      required int? epoch,
+      required String? site,
+      required bool? isLive,
+      required int? isLiveHealth,
+      required DateTime? isLiveTS,
+      required DateTime? updatedAt,
+      required DateTime? polledAt,
       required String? soilType,
-      required String readableAgo,
-      required String readableAgoFull,
+      required String? readableAgo,
+      required String? readableAgoFull,
       required this.txt,
       required this.lfreq,
       required this.ve,
