@@ -7,6 +7,17 @@ class AccountDetailsPage extends StatelessWidget {
   AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return Container(child: Column(children: <Widget>[]));
+    return Scaffold(
+        body: Column(children: <Widget>[
+      Text("Username: "),
+      Text("Email: "),
+      Text("First Name: "),
+      Text("Last Name:"),
+      Text("Phone Number:"),
+      Text("Locale:"),
+      Text("Farm Name:"),
+      Text("Farm Type:"),
+      Text("Farm Address:")
+    ]));
   }
 }

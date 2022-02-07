@@ -21,10 +21,8 @@ class AccountPage extends StatelessWidget {
                       ? NetworkImage(
                           "https://pycno.co/${authController.user.value!.profilePic}")
                       : null,
-                  child: authController.user.value != null
-                      ? authController.user.value!.profilePic == null
-                          ? Icon(Icons.person, size: 50)
-                          : null
+                  child: authController.user.value!.profilePic == null
+                      ? Icon(Icons.person, size: 50)
                       : null),
           SizedBox(height: 10),
           Text(authController.user.value!.username,
@@ -35,10 +33,8 @@ class AccountPage extends StatelessWidget {
               ),
               icon: Icon(Icons.person),
               label: Text("Account Details"),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => AccountDetailsPage()));
-              }),
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => AccountDetailsPage()))),
           TextButton.icon(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
