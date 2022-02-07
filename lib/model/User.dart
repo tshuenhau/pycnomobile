@@ -44,4 +44,9 @@ class User {
         farmType: json["farmType"],
         farmAddr: json["farmAddress"]);
   }
+
+  @override
+  String toString() {
+    return "email: $email, status: $status, username: $username, name: $name, surname: $name, locale: $locale, profilePic: $profilePic, phoneNumber: $phoneNumber, loggedAt: $loggedAt, updatedAt: $updatedAt, farmName: $farmName, farmType: $farmType, farmAddress: $farmAddr";
+  }
 }

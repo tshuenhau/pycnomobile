@@ -31,7 +31,7 @@ class MasterSoilSensor extends SoilSensor {
 
   MasterSoilSensor(
       {required String uid,
-      required String name,
+      required String? name,
       required String? address,
       required String? img,
       required int epoch,
@@ -45,8 +45,8 @@ class MasterSoilSensor extends SoilSensor {
       required String readableAgo,
       required String readableAgoFull,
       required String? txt,
-      required int lfreq,
-      required double ve,
+      required int? lfreq,
+      required double? ve,
       required double? ns,
       required this.mdm,
       required this.gr,
@@ -100,7 +100,7 @@ class MasterSoilSensor extends SoilSensor {
       readableAgoFull: json["readableAgoFull"],
       txt: json["TXT"],
       lfreq: json["LFREQ"],
-      ve: json["VE"].toDouble(),
+      ve: json["VE"]?.toDouble(),
       ns: json["NS"]?.toDouble(),
       gr: json["GR"],
       mdm: json["MDM"]?.toDouble(),

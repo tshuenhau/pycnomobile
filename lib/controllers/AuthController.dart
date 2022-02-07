@@ -74,6 +74,7 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
       update();
+      print(user.value);
     } else {
       throw Exception("Unable to get account details");
     }

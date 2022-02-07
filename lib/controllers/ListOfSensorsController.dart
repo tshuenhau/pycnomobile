@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +13,9 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 
 class ListOfSensorsController extends GetxController {
   RxList<Sensor> listOfSensors = List<Sensor>.empty().obs;
+  TextEditingController searchController = new TextEditingController();
   AuthController authController = Get.find();
+
   @override
   void onInit() async {
     super.onInit();
@@ -34,8 +37,6 @@ class ListOfSensorsController extends GetxController {
     print(authController.token);
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
-    print(
-        "https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}");
     if (response.statusCode == 200) {
       listOfSensors.clear();
       var body = jsonDecode(response.body);
@@ -56,5 +57,24 @@ class ListOfSensorsController extends GetxController {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
     return listOfSensors;
+  }
+
+  List<Sensor> searchListOfSensors() {
+    List<Sensor> searchedListOfSensors = List<Sensor>.empty(growable: true);
+
+    String searchTerm = searchController.text;
+    for (Sensor sensor in listOfSensors) {
+      if (sensor.uid.contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      } else if (sensor.name != null &&
+          sensor.name!.contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      } else if (sensor.address != null &&
+          sensor.address!
+              .contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      }
+    }
+    return searchedListOfSensors;
   }
 }
