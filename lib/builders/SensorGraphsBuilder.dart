@@ -16,13 +16,16 @@ Future<dynamic> buildSensorGraphs(
   if (dateRange == null) {
     dateRange = new DateTimeRange(
         start: DateTime.now().add(Duration(hours: -24)), end: DateTime.now());
-  }
-
-  if (dateRange.duration.inDays <= 0) {
+  } else if (dateRange.duration.inDays <= 0) {
     DateTime now = DateTime.now();
     dateRange = DateTimeRange(
         start: DateTime(now.year, now.month, now.day, 0, 0),
         end: DateTime(now.year, now.month, now.day, 23, 59));
+  } else {
+    dateRange = DateTimeRange(
+        start: dateRange.start,
+        end: DateTime(dateRange.end.year, dateRange.end.month,
+            dateRange.end.day, 23, 59));
   }
 
   final List<TimeSeries> graphs = [];
