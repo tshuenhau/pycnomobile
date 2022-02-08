@@ -27,7 +27,7 @@ class _SearchState extends State<Search> {
 
     return Card(
       child: Container(
-        height: 42,
+        height: MediaQuery.of(context).size.height * 5 / 100,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -38,15 +38,19 @@ class _SearchState extends State<Search> {
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search),
+            prefixIcon:
+                FittedBox(fit: BoxFit.scaleDown, child: Icon(Icons.search)),
             suffixIcon: widget.text.isNotEmpty
-                ? IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      controller.clear();
-                      widget.onChanged('');
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
+                ? FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        controller.clear();
+                        widget.onChanged('');
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                    ),
                   )
                 : null,
             hintText: widget.hintText,
