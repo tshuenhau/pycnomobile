@@ -3,6 +3,7 @@ import 'package:pycnomobile/screens/BluetoothPage.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/AccountDetailsPage.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
@@ -28,22 +29,20 @@ class AccountPage extends StatelessWidget {
           Text(authController.user.value!.username,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
           TextButton.icon(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              icon: Icon(Icons.person),
-              label: Text("Account Details"),
-              onPressed: () => Navigator.of(context, rootNavigator: true).push(
-                    MaterialPageRoute(builder: (_) => AccountDetailsPage()),
-                  )),
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            ),
+            icon: Icon(Icons.person),
+            label: Text("Account Details"),
+            onPressed: () => Get.to(AccountDetailsPage()),
+          ),
           TextButton.icon(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               icon: Icon(Icons.radar),
               label: Text("Scan for devices"),
-              onPressed: () => Navigator.of(context, rootNavigator: true)
-                  .push(MaterialPageRoute(builder: (_) => BluetoothPage()))),
+              onPressed: () => Get.to(BluetoothPage())),
           TextButton.icon(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -52,10 +51,8 @@ class AccountPage extends StatelessWidget {
               label: Text("Logout"),
               onPressed: () {
                 authController.logout();
-                Get.reset();
-                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => LoginPage()),
-                    (_) => false);
+                Get.to(LoginPage());
+                Get.delete<ListOfSensorsController>();
               }),
         ]));
   }

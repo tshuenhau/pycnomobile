@@ -30,8 +30,7 @@ class _SensorListPageState extends State<SensorListPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => SensorSearchPage())),
+            onPressed: () => Get.to(SensorSearchPage()),
             icon: Icon(Icons.search)),
         title: Text("Sensor List"),
         actions: [
