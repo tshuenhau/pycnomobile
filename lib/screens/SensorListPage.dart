@@ -13,8 +13,6 @@ class SensorListPage extends StatefulWidget {
 }
 
 class _SensorListPageState extends State<SensorListPage> {
-  String query = ''; //! heres the query
-
   final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
 
@@ -26,14 +24,11 @@ class _SensorListPageState extends State<SensorListPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(query);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => SensorSearchPage())),
+            onPressed: () => Get.to(SensorSearchPage()),
             icon: Icon(Icons.search)),
         title: Text("Sensor List"),
         actions: [
@@ -44,13 +39,7 @@ class _SensorListPageState extends State<SensorListPage> {
         child: Column(
           children: [
             Search(
-              text: query,
               hintText: 'Search...',
-              onChanged: (text) {
-                setState(() {
-                  this.query = text;
-                });
-              },
             ),
             Expanded(
               child: RefreshIndicator(
@@ -58,10 +47,12 @@ class _SensorListPageState extends State<SensorListPage> {
                 child: Obx(
                   () => Center(
                     child: ListView.builder(
-                      itemCount: sensorsController.listOfSensors.length + 1,
+                      itemCount:
+                          sensorsController.filteredListOfSensors.length + 1,
                       physics: const AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        if (index == sensorsController.listOfSensors.length) {
+                        if (index ==
+                            sensorsController.filteredListOfSensors.length) {
                           return Center(
                               child: Padding(
                                   padding: EdgeInsets.symmetric(
@@ -73,7 +64,8 @@ class _SensorListPageState extends State<SensorListPage> {
                                     (DateTime.now().toString()),
                                   )));
                         }
-                        Sensor sensor = sensorsController.listOfSensors[index];
+                        Sensor sensor =
+                            sensorsController.filteredListOfSensors[index];
                         return SensorsListTile(sensor: sensor);
                       },
                     ),

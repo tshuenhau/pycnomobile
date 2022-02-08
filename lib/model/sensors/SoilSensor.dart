@@ -49,30 +49,6 @@ abstract class SoilSensor extends Sensor {
             readableAgoFull: readableAgoFull,
             functionalities: functionalities);
 
-  // This method may not be needed
-  void setLatestInfo(List<Map<String, dynamic>> result) {
-    Map<String, dynamic> response = result[0];
-    // this.temp = response["TEMP"];
-    // this.hum = response["HUM"];
-    // this.lw1 = response["LW1"];
-    // this.txt = response["TXT"];
-    // this.rainh = response["RAINH"];
-    // this.lfreq = response["LFREQ"];
-    // this.ve = response["VE"];
-    // this.bat = response["BAT"];
-    // this.rssi = response["RSSI"];
-    // this.ns = response["NS"];
-    // this.s1t = response["S1T"];
-    // this.s2t = response["S2T"];
-    // this.s3t = response["S3T"];
-    // this.s4t = response["S4T"];
-    // this.s5t = response["S5T"];
-    // this.s6t = response["S6T"];
-    // this.st1 = response["ST1"];
-    // this.st3 = response["ST3"];
-    // this.st5 = response["ST5"];
-  }
-
   @override
   String toString() {
     return super.toString();

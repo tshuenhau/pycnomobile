@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
+import 'package:get/get.dart';
 
 class SensorsListTile extends StatelessWidget {
   final Sensor sensor;
@@ -17,10 +18,7 @@ class SensorsListTile extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       child: InkWell(
-        onTap: () => {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SensorSummaryPage(sensor: sensor)))
-        },
+        onTap: () => Get.to(SensorSummaryPage(sensor: sensor)),
         child: ListTile(
             title: SizedBox(
               width: MediaQuery.of(context).size.width * 1 / 100,

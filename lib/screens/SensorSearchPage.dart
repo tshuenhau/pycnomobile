@@ -46,7 +46,6 @@ class _SensorSearchPageState extends State<SensorSearchPage> {
             color: Colors.white, borderRadius: BorderRadius.circular(5)),
         child: Center(
           child: TextField(
-            controller: controller.searchController,
             decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: IconButton(
@@ -57,10 +56,7 @@ class _SensorSearchPageState extends State<SensorSearchPage> {
                 ),
                 hintText: 'Search...',
                 border: InputBorder.none),
-            onChanged: (String searchTerms) {
-              List<Sensor> sensors = controller.searchListOfSensors();
-              print(sensors);
-            },
+            onChanged: (String searchTerms) {},
           ),
         ),
       )),

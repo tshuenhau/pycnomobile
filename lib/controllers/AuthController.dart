@@ -22,15 +22,25 @@ class AuthController extends GetxController {
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
 
-    if (isLoggedIn.value == AuthState.loggedIn) {
-      getAccount();
-    }
+    // if (isLoggedIn.value == AuthState.loggedIn) {
+    //   getAccount();
+    // }
   }
 
   Future<bool> checkLoggedInStatus() async {
     final preferences = await Preferences.getInstance();
     token = preferences.getToken();
-    return token != "";
+
+    if (token == "") {
+      return false;
+    }
+
+    try {
+      await getAccount();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<void> login(
@@ -82,9 +92,14 @@ class AuthController extends GetxController {
 
   void logout() async {
     //Delete token and send api post request to delete token
-    final preferences = await Preferences.getInstance();
-    await preferences.deleteToken();
-    print(preferences.getToken());
+    final response = await http
+        .get(Uri.parse('https://stage.pycno.co/api/v2/data/logout?TK=$token'));
+    if (response.statusCode == 200) {
+      final preferences = await Preferences.getInstance();
+      await preferences.deleteToken();
+    } else {
+      throw Exception("Unable to logout. Try again.");
+    }
   }
 
   Future<void> setDeviceData() async {

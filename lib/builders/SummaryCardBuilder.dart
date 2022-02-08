@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 Widget buildSummaryCards(
     {required Sensor sensor, required BuildContext context}) {
   List<Widget> leftColumn = [];
   List<Widget> rightColumn = [];
-  int leftCount = 0;
-  int rightCount = 0;
+
   /*
   leftColumn  rightColumn
       1           2

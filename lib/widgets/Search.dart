@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:get/get.dart';
 
-class Search extends StatefulWidget {
-  final String text;
-  final ValueChanged<String> onChanged;
+class Search extends StatelessWidget {
   final String hintText;
+  final ListOfSensorsController controller = Get.find();
 
-  const Search({
+  Search({
     Key? key,
-    required this.text,
-    required this.onChanged,
     required this.hintText,
   }) : super(key: key);
-
-  @override
-  _SearchState createState() => _SearchState();
-}
-
-class _SearchState extends State<Search> {
-  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final styleActive = TextStyle(color: Colors.black);
     final styleHint = TextStyle(color: Colors.black54);
-    final style = widget.text.isEmpty ? styleHint : styleActive;
-
+    final TextEditingController textController = new TextEditingController();
     return Card(
       child: Container(
         height: MediaQuery.of(context).size.height * 5 / 100,
@@ -35,29 +26,33 @@ class _SearchState extends State<Search> {
           border: Border.all(color: Colors.black26),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            prefixIcon:
-                FittedBox(fit: BoxFit.scaleDown, child: Icon(Icons.search)),
-            suffixIcon: widget.text.isNotEmpty
-                ? FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: IconButton(
+        child: Obx(
+          () => TextField(
+            controller: textController,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: controller.searchController.value.isNotEmpty
+                  ? IconButton(
                       icon: Icon(Icons.clear),
                       onPressed: () {
-                        controller.clear();
-                        widget.onChanged('');
+                        textController.clear();
+                        controller.searchController.value = "";
+                        controller.searchListOfSensors();
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                    ),
-                  )
-                : null,
-            hintText: widget.hintText,
-            border: InputBorder.none,
+                    )
+                  : null,
+              hintText: hintText,
+              border: InputBorder.none,
+            ),
+            style: controller.searchController.value.isEmpty
+                ? styleHint
+                : styleActive,
+            onChanged: (text) {
+              controller.searchController.value = text;
+              controller.searchListOfSensors();
+            },
           ),
-          style: style,
-          onChanged: widget.onChanged,
         ),
       ),
     );

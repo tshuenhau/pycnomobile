@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
   final TextEditingController usernameController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
-  final AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +41,7 @@ class LoginPage extends StatelessWidget {
                   await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => App()));
+                  Get.to(App());
                 } catch (e) {
                   print(e);
                 }
