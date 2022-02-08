@@ -8,8 +8,7 @@ Widget buildSummaryCards(
     {required Sensor sensor, required BuildContext context}) {
   List<Widget> leftColumn = [];
   List<Widget> rightColumn = [];
-  int leftCount = 0;
-  int rightCount = 0;
+
   /*
   leftColumn  rightColumn
       1           2
