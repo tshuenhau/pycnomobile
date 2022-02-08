@@ -26,6 +26,8 @@ class _SensorListPageState extends State<SensorListPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(query);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -42,7 +44,7 @@ class _SensorListPageState extends State<SensorListPage> {
         child: Column(
           children: [
             Search(
-              text: "query",
+              text: query,
               hintText: 'Search...',
               onChanged: (text) {
                 setState(() {
