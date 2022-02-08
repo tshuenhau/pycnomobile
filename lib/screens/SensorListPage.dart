@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
@@ -54,7 +55,7 @@ class SensorListPage extends StatelessWidget {
                                               2.5 /
                                               100),
                                   child: Text(
-                                    (DateTime.now().toString()),
+                                    (DateFormat.jms().format(DateTime.now())),
                                   )));
                         }
                         Sensor sensor =
