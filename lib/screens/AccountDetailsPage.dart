@@ -8,16 +8,20 @@ class AccountDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: <Widget>[
-      Text("Username: "),
-      Text("Email: "),
-      Text("First Name: "),
-      Text("Last Name:"),
-      Text("Phone Number:"),
-      Text("Locale:"),
-      Text("Farm Name:"),
-      Text("Farm Type:"),
-      Text("Farm Address:")
-    ]));
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+          BackButton(),
+          Text("Username: ${authController.user.value!.username}"),
+          Text("Email: ${authController.user.value!.username}"),
+          Text("First Name: ${authController.user.value!.name}"),
+          Text("Last Name: ${authController.user.value!.surname}"),
+          Text("Phone Number: ${authController.user.value!.phoneNumber}"),
+          Text("Locale: ${authController.user.value!.locale}"),
+          Text("Farm Name: ${authController.user.value!.farmName}"),
+          Text("Farm Type: ${authController.user.value!.farmType}"),
+          Text("Farm Address: ${authController.user.value!.farmAddr}")
+        ]));
   }
 }
