@@ -7,12 +7,7 @@ import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
-class SensorListPage extends StatefulWidget {
-  @override
-  State<SensorListPage> createState() => _SensorListPageState();
-}
-
-class _SensorListPageState extends State<SensorListPage> {
+class SensorListPage extends StatelessWidget {
   final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
 

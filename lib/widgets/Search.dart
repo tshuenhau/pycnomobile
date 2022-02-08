@@ -16,6 +16,8 @@ class Search extends StatelessWidget {
     final styleActive = TextStyle(color: Colors.black);
     final styleHint = TextStyle(color: Colors.black54);
     final TextEditingController textController = new TextEditingController();
+
+    textController.text = controller.searchController.value;
     return Card(
       child: Container(
         height: MediaQuery.of(context).size.height * 5 / 100,
