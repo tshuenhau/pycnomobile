@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,9 +9,12 @@ import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/logic/Commons.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 
 class ListOfSensorsController extends GetxController {
   RxList<Sensor> listOfSensors = List<Sensor>.empty().obs;
+  TextEditingController searchController = new TextEditingController();
+  AuthController authController = Get.find();
 
   @override
   void onInit() async {
@@ -30,9 +34,9 @@ class ListOfSensorsController extends GetxController {
   void updateSensor(Sensor updatedSensor) {}
 
   Future<List<Sensor>>? getListOfSensors() async {
+    print(authController.token);
     final response = await http.get(Uri.parse(
-        'https://portal.pycno.co.uk/api/v2/data/nodelist.json?TK=$token'));
-
+        'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
     if (response.statusCode == 200) {
       listOfSensors.clear();
       var body = jsonDecode(response.body);
@@ -48,9 +52,29 @@ class ListOfSensorsController extends GetxController {
           addSensor(RainGauge.fromJson(body[i]));
         }
       }
+      print(listOfSensors.length);
     } else {
       throw Exception("Failed to retrieve data"); //Ask UI to reload
     }
     return listOfSensors;
+  }
+
+  List<Sensor> searchListOfSensors() {
+    List<Sensor> searchedListOfSensors = List<Sensor>.empty(growable: true);
+
+    String searchTerm = searchController.text;
+    for (Sensor sensor in listOfSensors) {
+      if (sensor.uid.contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      } else if (sensor.name != null &&
+          sensor.name!.contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      } else if (sensor.address != null &&
+          sensor.address!
+              .contains(new RegExp(searchTerm, caseSensitive: false))) {
+        searchedListOfSensors.add(sensor);
+      }
+    }
+    return searchedListOfSensors;
   }
 }

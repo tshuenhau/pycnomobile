@@ -28,15 +28,17 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size.fromWidth(100)),
+                  fixedSize: MaterialStateProperty.all(
+                      Size.fromWidth(MediaQuery.of(context).size.width)),
                   alignment: Alignment.center,
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)))),
               child: Text('Login'),
-              onPressed: () {
+              onPressed: () async {
                 try {
-                  authController.login(
+                  await authController.setDeviceData();
+                  await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
                   Navigator.of(context)
