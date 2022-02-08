@@ -215,14 +215,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
             3) {
           return DateFormat("d/M").format(date);
         }
-        // if (DateTimeRange(
-        //             start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
-        //             end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-        //         .duration
-        //         .inDays >
-        //     1) {
-        //   return DateFormat("d/M").format(date);
-        // }
+
         return DateFormat.Hm().format(date);
       },
       margin: MediaQuery.of(context).size.width * 2 / 100,
@@ -242,13 +235,15 @@ class _SensorLineChartState extends State<SensorLineChart> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 1 / 100,
         ),
-        Text(DateFormat("dd/MM/yy")
-                .format(DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
-                .toString() +
-            " - " +
-            DateFormat("dd/MM/yy")
-                .format(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-                .toString()),
+        (isLast24()
+            ? Text("Last 24 Hours")
+            : Text((DateFormat("dd/MM/yy")
+                    .format(DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
+                    .toString() +
+                " - " +
+                DateFormat("dd/MM/yy")
+                    .format(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                    .toString()))),
         Stack(
           children: <Widget>[
             AspectRatio(
@@ -275,6 +270,44 @@ class _SensorLineChartState extends State<SensorLineChart> {
         ),
       ],
     );
+  }
+
+  bool isLast24() {
+    if (DateTime.now().day ==
+            DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()).day &&
+        DateTimeRange(
+                    start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+                    end: DateTime.now())
+                .duration
+                .inDays <
+            1) {
+      return true;
+    }
+
+    // if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
+    //             0, 0)
+    //         .isBefore(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt())) &&
+    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
+    //             0, 0)
+    //         .isAfter(DateTime.fromMillisecondsSinceEpoch(_minX.toInt())) &&
+    //     DateTimeRange(
+    //                 start: DateTime(DateTime.now().year, DateTime.now().month,
+    //                     DateTime.now().day, 0, 0),
+    //                 end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+    //             .duration
+    //             .inDays <=
+    //         0.5 &&
+    //     DateTimeRange(
+    //                 end: DateTime(DateTime.now().year, DateTime.now().month,
+    //                     DateTime.now().day, 0, 0),
+    //                 start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
+    //             .duration
+    //             .inDays <=
+    //         0.5) {
+    //   return true;
+    // }
+
+    return false;
   }
 }
 
