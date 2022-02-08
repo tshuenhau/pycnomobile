@@ -5,7 +5,7 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class SensorSearchPage extends StatelessWidget {
   SensorSearchPage({Key? key}) : super(key: key);
-  ListOfSensorsController controller = Get.find();
+  final ListOfSensorsController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

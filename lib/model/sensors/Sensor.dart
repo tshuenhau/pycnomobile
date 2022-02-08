@@ -1,5 +1,5 @@
-import 'package:pycnomobile/model/sensors/sonicanemometer.dart';
-import 'package:pycnomobile/model/sensors/raingauge.dart';
+import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
+import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';

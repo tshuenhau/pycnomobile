@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key}) : super(key: key);
-  AuthController authController = Get.find();
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:http/http.dart' as http;
-import 'package:pycnomobile/logic/Commons.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 

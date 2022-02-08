@@ -8,7 +8,6 @@ import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/logic/Commons.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 
 class ListOfSensorsController extends GetxController {

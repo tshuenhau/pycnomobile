@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'dart:math';
 
 class SensorLineChart extends StatefulWidget {
