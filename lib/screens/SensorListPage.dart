@@ -16,8 +16,6 @@ class _SensorListPageState extends State<SensorListPage> {
   final ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
 
-  var bottomNavigationBar;
-
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
   }
