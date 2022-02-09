@@ -7,17 +7,18 @@ import 'package:pycnomobile/screens/SensorSearchPage.dart';
 import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 
 class SensorListPage extends StatelessWidget {
-  final ListOfSensorsController sensorsController =
-      Get.put(ListOfSensorsController());
-
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
   }
 
   @override
   Widget build(BuildContext context) {
+    final ListOfSensorsController sensorsController =
+        Get.put(ListOfSensorsController());
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

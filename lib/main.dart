@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     configLoading();
-
     AuthController controller = Get.put(AuthController());
     return GetMaterialApp(
         theme: ThemeData(

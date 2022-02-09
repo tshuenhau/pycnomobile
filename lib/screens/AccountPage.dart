@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key}) : super(key: key);
-  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find();
+
     return Obx(() =>
         Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           authController.user.value == null
@@ -51,8 +52,7 @@ class AccountPage extends StatelessWidget {
               label: Text("Logout"),
               onPressed: () {
                 authController.logout();
-                Get.to(LoginPage());
-                Get.delete<ListOfSensorsController>();
+                Get.offAll(LoginPage());
               }),
         ]));
   }

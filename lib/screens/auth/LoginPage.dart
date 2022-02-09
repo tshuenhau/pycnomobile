@@ -5,12 +5,15 @@ import 'package:pycnomobile/App.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
-  final TextEditingController usernameController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController usernameController =
+        new TextEditingController();
+    final TextEditingController passwordController =
+        new TextEditingController();
+    final AuthController authController = Get.put(AuthController());
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
