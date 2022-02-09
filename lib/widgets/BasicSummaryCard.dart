@@ -21,7 +21,7 @@ class BasicSummaryCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 1 / 2 - 20,
           height: MediaQuery.of(context).size.height * 1 / 8 - 10,
           child: Center(
-            child: Row(children: [
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               SizedBox(width: MediaQuery.of(context).size.width * 3.5 / 100),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 10 / 100,
@@ -33,27 +33,33 @@ class BasicSummaryCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width * 2 / 100),
-              Row(
-                children: [
-                  AutoSizeText(
-                    function.value?.toStringAsFixed(2) ?? "-",
-                    maxLines: 1,
-                    textAlign: TextAlign.left,
-                    minFontSize: 20,
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 10 / 100,
+              SizedBox(width: MediaQuery.of(context).size.width * 5 / 100),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 25 / 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      function.value?.toStringAsFixed(2) ?? "-",
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                      minFontSize: 20,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 1 / 100,
-                          top: MediaQuery.of(context).size.height * 1 / 100),
+                          left: MediaQuery.of(context).size.width * 0.5 / 100),
                       child: AutoSizeText(
-                        " " + function.unit,
+                        function.unit,
                         maxLines: 1,
                         minFontSize: 1,
-                        textAlign: TextAlign.left,
-                      )),
-                ],
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               //trailing: Text(" °C")
             ]),
