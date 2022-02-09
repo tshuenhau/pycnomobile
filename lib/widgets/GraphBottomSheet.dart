@@ -60,9 +60,10 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
         decoration: new BoxDecoration(
             color: Colors.white,
             borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(25.0),
-              //topRight: const Radius.circular(10.0)
-            )),
+                topLeft: const Radius.circular(15.0),
+                topRight: const Radius.circular(15.0)
+                //topRight: const Radius.circular(10.0)
+                )),
         height: graphs.length > 1
             ? MediaQuery.of(context).size.height * 75 / 100
             : MediaQuery.of(context).size.height * 50 / 100,

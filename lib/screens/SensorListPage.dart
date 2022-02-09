@@ -22,10 +22,10 @@ class SensorListPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () => Get.to(SensorSearchPage()),
-              icon: Icon(Icons.search)),
-          title: Text("Sensor List"),
+          // leading: IconButton(
+          //     onPressed: () => Get.to(SensorSearchPage()),
+          //     icon: Icon(Icons.search)),
+          title: Text("My Sensors"),
           actions: [
             IconButton(onPressed: () => {}, icon: Icon(Icons.filter_list)),
           ],
