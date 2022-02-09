@@ -18,9 +18,13 @@ class Search extends StatelessWidget {
     final TextEditingController textController = new TextEditingController();
 
     textController.text = controller.searchController.value;
-    return Card(
-      //elevation: 2,
-      //margin: const EdgeInsets.fromLTRB(4, 4, 0, 4),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.black26.withOpacity(0.15),
+        ),
+      ),
       child: Container(
         height: MediaQuery.of(context).size.height * 5 / 100,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
