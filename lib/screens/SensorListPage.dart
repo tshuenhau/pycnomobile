@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,8 @@ class SensorListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EasyLoading.show(status: 'loading...');
+
     final ListOfSensorsController sensorsController =
         Get.put(ListOfSensorsController());
 
