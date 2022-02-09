@@ -20,9 +20,11 @@ class Search extends StatelessWidget {
     textController.text = controller.searchController.value;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
+        // borderRadius: BorderRadius.only(
+        //     bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
         border: Border.all(
-          color: Colors.black26.withOpacity(0.15),
+          color: Colors.black26.withOpacity(0.05),
         ),
       ),
       child: Container(
