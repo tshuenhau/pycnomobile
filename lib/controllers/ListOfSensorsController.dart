@@ -9,7 +9,8 @@ import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 
-class ListOfSensorsController extends GetxController {
+class ListOfSensorsController extends GetxController
+    with StateMixin<List<Sensor>> {
   RxList<Sensor> listOfSensors = List<Sensor>.empty(growable: true).obs;
   RxList<Sensor> filteredListOfSensors = List<Sensor>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
@@ -17,10 +18,23 @@ class ListOfSensorsController extends GetxController {
 
   @override
   void onInit() async {
+    super.onInit();
+
     authController = Get.find();
     print("Initating...");
-    super.onInit();
-    await getListOfSensors();
+    try {
+      change(null, status: RxStatus.loading());
+
+      await getListOfSensors();
+
+      if (listOfSensors.isEmpty) {
+        change(null, status: RxStatus.empty());
+      } else {
+        change(null, status: RxStatus.success());
+      }
+    } catch (err) {
+      change(null, status: RxStatus.error('$err'));
+    }
   }
 
   void addSensor(Sensor sensor) {
