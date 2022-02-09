@@ -9,7 +9,12 @@ import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
-class SensorListPage extends StatelessWidget {
+class SensorListPage extends StatefulWidget {
+  @override
+  State<SensorListPage> createState() => _SensorListPageState();
+}
+
+class _SensorListPageState extends State<SensorListPage> {
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
   }
@@ -23,7 +28,7 @@ class SensorListPage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           // leading: IconButton(
-          //     onPressed: () => Get.to(SensorSearchPage()),
+          //     onPressed: () => Navigator.of(context).push(SensorSearchPage()),
           //     icon: Icon(Icons.search)),
           title: Text("My Sensors"),
           actions: [

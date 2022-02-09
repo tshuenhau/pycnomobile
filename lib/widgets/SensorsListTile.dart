@@ -18,7 +18,8 @@ class SensorsListTile extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       child: InkWell(
-        onTap: () => Get.to(SensorSummaryPage(sensor: sensor)),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => SensorSummaryPage(sensor: sensor))),
         child: ListTile(
             title: SizedBox(
               width: MediaQuery.of(context).size.width * 1 / 100,

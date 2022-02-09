@@ -3,12 +3,10 @@ import 'package:pycnomobile/screens/BluetoothPage.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/AccountDetailsPage.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.find();
@@ -30,20 +28,22 @@ class AccountPage extends StatelessWidget {
           Text(authController.user.value!.username,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
           TextButton.icon(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            ),
-            icon: Icon(Icons.person),
-            label: Text("Account Details"),
-            onPressed: () => Get.to(AccountDetailsPage()),
-          ),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              icon: Icon(Icons.person),
+              label: Text("Account Details"),
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => AccountDetailsPage()),
+                  )),
           TextButton.icon(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               icon: Icon(Icons.radar),
               label: Text("Scan for devices"),
-              onPressed: () => Get.to(BluetoothPage())),
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => BluetoothPage()))),
           TextButton.icon(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -52,7 +52,9 @@ class AccountPage extends StatelessWidget {
               label: Text("Logout"),
               onPressed: () {
                 authController.logout();
-                Get.offAll(LoginPage());
+
+                Navigator.of(context, rootNavigator: true)
+                    .push(MaterialPageRoute(builder: (_) => LoginPage()));
               }),
         ]));
   }

@@ -12,6 +12,7 @@ class LoginPage extends StatelessWidget {
         new TextEditingController();
     final TextEditingController passwordController =
         new TextEditingController();
+
     final AuthController authController = Get.put(AuthController());
 
     return Scaffold(
@@ -44,7 +45,8 @@ class LoginPage extends StatelessWidget {
                   await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
-                  Get.to(App());
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => App()));
                 } catch (e) {
                   print(e);
                 }

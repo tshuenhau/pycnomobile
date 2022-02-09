@@ -27,7 +27,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       SensorListPage(),
       MapPage(),
       AlertsPage(),
-      AccountPage(),
+      //AccountPage(),
     ];
   }
 

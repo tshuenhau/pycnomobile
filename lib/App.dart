@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
-import 'package:pycnomobile/screens/MapPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
-import 'package:pycnomobile/screens/TodayPage.dart';
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  App({Key? key}) : super(key: key);
+  // final AuthState authState;
+  final AuthController authController = Get.put(AuthController());
 
   @override
   State<App> createState() => _AppState();
