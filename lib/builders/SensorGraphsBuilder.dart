@@ -35,6 +35,7 @@ Future<dynamic> buildSensorGraphs(
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
       isDismissed = true;
+      print("Dismissed");
       //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
@@ -81,6 +82,8 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
       isDismissed = true;
+      print("Dismissed");
+
       //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
