@@ -6,6 +6,7 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:async/async.dart';
 
 Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions,
@@ -32,13 +33,47 @@ Future<dynamic> buildSensorGraphs(
 
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
+  var cancellableOperation = CancelableOperation.fromFuture(
+      getTimeSeries(sensor, functions, controller, dateRange, graphs),
+      onCancel: () => {debugPrint('onCancel')});
+
   EasyLoading.addStatusCallback((status) {
     if (status == EasyLoadingStatus.dismiss) {
       isDismissed = true;
-      print("Dismissed");
-      //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
+      cancellableOperation
+          .cancel(); //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
     }
   });
+
+  cancellableOperation.asStream().listen(
+    (value) => {},
+    onDone: () {
+      if (controller.currentTimeSeries != null) {
+        graphs.add(controller.currentTimeSeries!);
+      }
+
+      EasyLoading.dismiss();
+
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          context: context,
+          builder: (context) {
+            return GraphBottomSheet(
+                graphs: graphs, sensor: sensor, functions: functions);
+          });
+    },
+  );
+
+  //EasyLoading.dismiss();
+}
+
+Future<void> getTimeSeries(
+    Sensor sensor,
+    List<Functionality<dynamic>> functions,
+    TimeSeriesController controller,
+    DateTimeRange dateRange,
+    List<TimeSeries> graphs) async {
   if (sensor.functionalities != null) {
     //Multi so need to split up
     for (Functionality function in functions) {
@@ -58,19 +93,6 @@ Future<dynamic> buildSensorGraphs(
       }
     }
   }
-
-  EasyLoading.dismiss();
-  if (isDismissed) {
-    return;
-  } else
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return GraphBottomSheet(
-              graphs: graphs, sensor: sensor, functions: functions);
-        });
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
