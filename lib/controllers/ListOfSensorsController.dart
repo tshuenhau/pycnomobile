@@ -13,10 +13,12 @@ class ListOfSensorsController extends GetxController {
   RxList<Sensor> listOfSensors = List<Sensor>.empty(growable: true).obs;
   RxList<Sensor> filteredListOfSensors = List<Sensor>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
-  AuthController authController = Get.find();
+  late AuthController authController;
 
   @override
   void onInit() async {
+    authController = Get.find();
+    print("Initating...");
     super.onInit();
     await getListOfSensors();
   }
@@ -26,8 +28,8 @@ class ListOfSensorsController extends GetxController {
     filteredListOfSensors.add(sensor);
   }
 
-  Future<List<Sensor>>? getListOfSensors() async {
-    print(authController.token);
+  Future<void>? getListOfSensors() async {
+    print(authController.token + " token, getting list of sensors!");
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
     if (response.statusCode == 200) {
@@ -48,9 +50,8 @@ class ListOfSensorsController extends GetxController {
         }
       }
     } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
+      throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
     }
-    return listOfSensors;
   }
 
   void searchListOfSensors() {

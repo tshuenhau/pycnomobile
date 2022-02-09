@@ -70,8 +70,8 @@ class AuthController extends GetxController {
       token = tk;
       final preferences = await Preferences.getInstance();
       await preferences.setToken(tk);
+      print("Login successful! Token: $token");
       await getAccount();
-      print("Login successful");
     } else {
       throw Exception("Unable to login");
     }
