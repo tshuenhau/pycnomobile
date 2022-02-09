@@ -16,8 +16,32 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  late bool isLoggedIn;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.authController.isLoggedIn.value == AuthState.loggedIn) {
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
+    }
+  }
+
+  void reset() {
+    setState(() {
+      isLoggedIn = false;
+      print("reset");
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
 //Screens for each nav items.
   List<Widget> _navScreens() {
@@ -26,7 +50,7 @@ class _AppState extends State<App> {
       SensorListPage(),
       //MapPage(),
       AlertsPage(),
-      AccountPage(),
+      AccountPage(resetFunction: reset),
     ];
   }
 

@@ -6,7 +6,8 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
-  AccountPage({Key? key}) : super(key: key);
+  AccountPage({Key? key, required this.resetFunction}) : super(key: key);
+  Function resetFunction;
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.find();
@@ -52,9 +53,10 @@ class AccountPage extends StatelessWidget {
               label: Text("Logout"),
               onPressed: () {
                 authController.logout();
-
-                Navigator.of(context, rootNavigator: true)
-                    .push(MaterialPageRoute(builder: (_) => LoginPage()));
+                Get.reset();
+                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => LoginPage()),
+                    (_) => false);
               }),
         ]));
   }
