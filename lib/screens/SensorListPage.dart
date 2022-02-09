@@ -16,8 +16,6 @@ class SensorListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EasyLoading.show(status: 'loading...');
-
     final ListOfSensorsController sensorsController =
         Get.put(ListOfSensorsController());
 
