@@ -23,26 +23,29 @@ class BasicSummaryCard extends StatelessWidget {
           child: Center(
             child: Row(children: [
               SizedBox(width: MediaQuery.of(context).size.width * 3.5 / 100),
-              Icon(
-                function.icon ?? Icons.help_center_outlined,
-                size: MediaQuery.of(context).size.width * 9 / 100,
-                color: function.color ?? Colors.black,
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 10 / 100,
+                child: FittedBox(
+                  child: Icon(
+                    function.icon ?? Icons.help_center_outlined,
+                    size: MediaQuery.of(context).size.width * 9 / 100,
+                    color: function.color ?? Colors.black,
+                  ),
+                ),
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 2 / 100),
               Row(
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 20 / 100,
-                    child: AutoSizeText(
-                      function.value?.toStringAsFixed(2) ?? "-",
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                      minFontSize: 20,
-                    ),
+                  AutoSizeText(
+                    function.value?.toStringAsFixed(2) ?? "-",
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                    minFontSize: 20,
                   ),
                   Container(
                       width: MediaQuery.of(context).size.width * 10 / 100,
                       padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 1 / 100,
                           top: MediaQuery.of(context).size.height * 1 / 100),
                       child: AutoSizeText(
                         " " + function.unit,
