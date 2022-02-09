@@ -26,20 +26,15 @@ class ListOfSensorsController extends GetxController {
     filteredListOfSensors.add(sensor);
   }
 
-  void removeSensor(Sensor sensorToRemove) {
-    listOfSensors
-        .removeWhere((Sensor sensor) => sensor.uid == sensorToRemove.uid);
-  }
-
-  void updateSensor(Sensor updatedSensor) {}
-
   Future<List<Sensor>>? getListOfSensors() async {
     print(authController.token);
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
     if (response.statusCode == 200) {
       listOfSensors.clear();
+      filteredListOfSensors.clear();
       var body = jsonDecode(response.body);
+
       for (var i = 0; i < body.length; i++) {
         TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
         if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
