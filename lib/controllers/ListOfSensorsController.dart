@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,21 +20,16 @@ class ListOfSensorsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-
     authController = Get.find();
     print("Initating...");
     try {
-      change(null, status: RxStatus.loading());
+      EasyLoading.show(status: 'loading...');
 
       await getListOfSensors();
 
-      if (listOfSensors.isEmpty) {
-        change(null, status: RxStatus.empty());
-      } else {
-        change(null, status: RxStatus.success());
-      }
+      EasyLoading.dismiss();
     } catch (err) {
-      change(null, status: RxStatus.error('$err'));
+      EasyLoading.showError('$err');
     }
   }
 
