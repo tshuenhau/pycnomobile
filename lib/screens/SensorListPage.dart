@@ -27,16 +27,11 @@ class _SensorListPageState extends State<SensorListPage> {
   @override
   void initState() {
     super.initState();
-
     var keyboardVisibilityController = KeyboardVisibilityController();
-    // Query
-    print(
-        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
 
     // Subscribe
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
-      print('Keyboard visibility update. Is visible: $visible');
       if (visible == false) {
         FocusScope.of(context).unfocus();
       }
