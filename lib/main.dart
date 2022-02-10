@@ -7,7 +7,6 @@ import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 void main() async {
@@ -15,11 +14,7 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Hive.initFlutter();
-  runApp(MultiProvider(providers: [
-    Provider<GlobalTheme>(
-      create: (context) => GlobalTheme(),
-    ),
-  ], child: MyApp()));
+  runApp(MyApp());
 }
 
 void configLoading() {
@@ -48,17 +43,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
-
     configLoading();
     AuthController controller = Get.put(AuthController());
-    return MaterialApp(
-        theme: globalTheme,
-        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
-            ? App()
-            : controller.isLoggedIn.value == AuthState.loggedOut
-                ? LoginPage()
-                : SplashPage()),
-        builder: EasyLoading.init());
+    return Listener(
+      onPointerDown: (_) {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.focusedChild?.unfocus();
+        }
+      },
+      child: MaterialApp(
+          theme: globalTheme,
+          home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+              ? App()
+              : controller.isLoggedIn.value == AuthState.loggedOut
+                  ? LoginPage()
+                  : SplashPage()),
+          builder: EasyLoading.init()),
+    );
   }
 }

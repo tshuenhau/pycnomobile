@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
@@ -57,8 +56,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   Widget returnRangePicker(BuildContext context) {
-    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
-
     return Theme(
       data: ThemeData(
           colorScheme: globalTheme.colorScheme.copyWith(
@@ -89,8 +86,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
-
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * 2.5 / 100),

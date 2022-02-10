@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const ColorScheme customColorScheme = ColorScheme(
+const customColorScheme = ColorScheme(
     brightness: Brightness.light,
     background: Color(0xFFf2f0e1),
     onBackground: Colors.black,
