@@ -60,7 +60,10 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
 
     return Theme(
-      data: ThemeData(colorScheme: globalTheme.colorScheme),
+      data: ThemeData(
+          colorScheme: globalTheme.colorScheme.copyWith(
+              primary: globalTheme.colorScheme.secondary,
+              secondary: globalTheme.colorScheme.primary)),
       child: Builder(
         builder: (context) => ElevatedButton(
             onPressed: () async {
