@@ -23,13 +23,13 @@ class Search extends StatelessWidget {
         color: Colors.transparent,
         // borderRadius: BorderRadius.only(
         //     bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-        border: Border.all(
-          color: Colors.black26.withOpacity(0.05),
-        ),
+        // border: Border.all(
+        //   color: Colors.black26.withOpacity(0.05),
+        // ),
       ),
       child: Container(
         height: MediaQuery.of(context).size.height * 5 / 100,
-        margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,

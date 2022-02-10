@@ -27,13 +27,9 @@ class _SensorListPageState extends State<SensorListPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          // leading: IconButton(
-          //     onPressed: () => Navigator.of(context).push(SensorSearchPage()),
-          //     icon: Icon(Icons.search)),
-          title: Text("My Sensors"),
-          actions: [
-            IconButton(onPressed: () => {}, icon: Icon(Icons.filter_list)),
-          ],
+          title: Text(
+            "My Sensors",
+          ),
         ),
         body: Center(
           child: Column(

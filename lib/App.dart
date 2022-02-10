@@ -63,6 +63,7 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.sensor_window),
         title: 'Sensors',
+        activeColorPrimary: Theme.of(context).primaryColor,
       ),
       // PersistentBottomNavBarItem(
       //   icon: Icon(Icons.map),
@@ -71,10 +72,12 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.notifications),
         title: 'Alerts',
+        activeColorPrimary: Theme.of(context).primaryColor,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: 'Account',
+        activeColorPrimary: Theme.of(context).primaryColor,
       ),
     ];
   }
@@ -88,7 +91,8 @@ class _AppState extends State<App> {
         screens: _navScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,
-        backgroundColor: Colors.white, // Default is Colors.white.
+        backgroundColor: Theme.of(context)
+            .scaffoldBackgroundColor, // Default is Colors.white.
         handleAndroidBackButtonPress: true, // Default is true.
         resizeToAvoidBottomInset:
             true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.

@@ -7,13 +7,19 @@ import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Hive.initFlutter();
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    Provider<GlobalTheme>(
+      create: (context) => GlobalTheme(),
+    )
+  ], child: MyApp()));
 }
 
 void configLoading() {
@@ -42,13 +48,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
+
     configLoading();
     AuthController controller = Get.put(AuthController());
-    return GetMaterialApp(
-        theme: ThemeData(
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
+    return MaterialApp(
+        theme: globalTheme,
         home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut

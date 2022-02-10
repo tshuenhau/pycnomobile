@@ -18,6 +18,9 @@ class SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: InkWell(
               onTap: () async {
                 buildSensorGraphs(context, sensor, functions);

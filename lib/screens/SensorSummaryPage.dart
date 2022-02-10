@@ -12,6 +12,7 @@ class SensorSummaryPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(sensor.name ?? ""),
+        elevation: 0,
         //actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
       ),
       body: Center(

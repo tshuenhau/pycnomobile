@@ -16,7 +16,10 @@ class SensorsListTile extends StatelessWidget {
     print("Image URL: " + ""); //! URL
 
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => SensorSummaryPage(sensor: sensor))),

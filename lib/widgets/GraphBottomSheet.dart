@@ -58,7 +58,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
         padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * 2.5 / 100),
         decoration: new BoxDecoration(
-            color: Colors.white,
+            //color: _customColorScheme.surface,
             borderRadius: new BorderRadius.only(
                 topLeft: const Radius.circular(15.0),
                 topRight: const Radius.circular(15.0)
