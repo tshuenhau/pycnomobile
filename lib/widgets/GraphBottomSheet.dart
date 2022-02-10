@@ -82,7 +82,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   children: [
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 4.5 / 100),
-                    ElevatedButton(
+                    OutlinedButton(
                         onPressed: () async {
                           DateTimeRange? _newDateRange =
                               await showDateRangePicker(

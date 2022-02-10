@@ -63,7 +63,8 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.sensor_window),
         title: 'Sensors',
-        activeColorPrimary: Theme.of(context).primaryColor,
+        activeColorPrimary: Theme.of(context).colorScheme.secondary,
+        inactiveColorPrimary: Theme.of(context).primaryColor,
       ),
       // PersistentBottomNavBarItem(
       //   icon: Icon(Icons.map),
@@ -72,12 +73,14 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.notifications),
         title: 'Alerts',
-        activeColorPrimary: Theme.of(context).primaryColor,
+        activeColorPrimary: Theme.of(context).colorScheme.secondary,
+        inactiveColorPrimary: Theme.of(context).primaryColor,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: 'Account',
-        activeColorPrimary: Theme.of(context).primaryColor,
+        activeColorPrimary: Theme.of(context).colorScheme.secondary,
+        inactiveColorPrimary: Theme.of(context).primaryColor,
       ),
     ];
   }

@@ -19,7 +19,7 @@ class SensorsListTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => SensorSummaryPage(sensor: sensor))),
