@@ -22,7 +22,7 @@ class GlobalTheme {
       )),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              primary: customColorScheme.surface,
+              primary: customColorScheme.onSecondary,
               onSurface: customColorScheme.secondary,
               backgroundColor: customColorScheme.secondary)),
       primaryColor: customColorScheme.primary,
