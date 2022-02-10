@@ -16,8 +16,8 @@ class GlobalTheme {
               fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black)),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-        primary: customColorScheme.surface,
-        onPrimary: customColorScheme.secondary,
+        primary: customColorScheme.secondary,
+        onPrimary: customColorScheme.onSecondary,
         elevation: 0,
       )),
       outlinedButtonTheme: OutlinedButtonThemeData(

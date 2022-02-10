@@ -56,6 +56,34 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     return graphsToDraw;
   }
 
+  Widget returnRangePicker(BuildContext context) {
+    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
+
+    return Theme(
+      data: ThemeData(colorScheme: globalTheme.colorScheme),
+      child: Builder(
+        builder: (context) => ElevatedButton(
+            onPressed: () async {
+              DateTimeRange? _newDateRange = await showDateRangePicker(
+                  context: context,
+                  firstDate: DateTime(1800),
+                  lastDate: DateTime(3000));
+
+              if (_newDateRange != null) {
+                List<TimeSeries>? result = await getGraphsForTimeRange(
+                    _newDateRange, widget.sensor, widget.functions);
+                setState(() {
+                  graphs = result!;
+                });
+
+                //buildSensorGraphs(context, sensor, functions, _newDateRange);
+              }
+            },
+            child: Icon(Icons.today)),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
@@ -82,25 +110,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   children: [
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 4.5 / 100),
-                    OutlinedButton(
-                        onPressed: () async {
-                          DateTimeRange? _newDateRange =
-                              await showDateRangePicker(
-                                  context: context,
-                                  firstDate: DateTime(1800),
-                                  lastDate: DateTime(3000));
-                          if (_newDateRange != null) {
-                            List<TimeSeries>? result =
-                                await getGraphsForTimeRange(_newDateRange,
-                                    widget.sensor, widget.functions);
-                            setState(() {
-                              graphs = result!;
-                            });
-
-                            //buildSensorGraphs(context, sensor, functions, _newDateRange);
-                          }
-                        },
-                        child: Icon(Icons.today)),
+                    returnRangePicker(context)
                   ],
                 ),
                 SizedBox(
