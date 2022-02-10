@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/App.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,6 +10,7 @@ import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,21 +48,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     configLoading();
     AuthController controller = Get.put(AuthController());
-    return Listener(
-      onPointerDown: (_) {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.focusedChild?.unfocus();
-        }
-      },
-      child: MaterialApp(
-          theme: globalTheme,
-          home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
-              ? App()
-              : controller.isLoggedIn.value == AuthState.loggedOut
-                  ? LoginPage()
-                  : SplashPage()),
-          builder: EasyLoading.init()),
-    );
+    return MaterialApp(
+        theme: globalTheme,
+        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+            ? App()
+            : controller.isLoggedIn.value == AuthState.loggedOut
+                ? LoginPage()
+                : SplashPage()),
+        builder: EasyLoading.init());
   }
 }

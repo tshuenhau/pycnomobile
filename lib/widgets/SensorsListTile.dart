@@ -21,8 +21,12 @@ class SensorsListTile extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => SensorSummaryPage(sensor: sensor))),
+        onTap: () {
+          FocusScope.of(context).unfocus();
+
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => SensorSummaryPage(sensor: sensor)));
+        },
         child: ListTile(
             title: SizedBox(
               width: MediaQuery.of(context).size.width * 1 / 100,
