@@ -18,7 +18,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     Provider<GlobalTheme>(
       create: (context) => GlobalTheme(),
-    )
+    ),
   ], child: MyApp()));
 }
 

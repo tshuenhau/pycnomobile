@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
+import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
+
     final TextEditingController usernameController =
         new TextEditingController();
     final TextEditingController passwordController =
@@ -24,11 +28,17 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             TextField(
                 controller: usernameController,
-                decoration: new InputDecoration(hintText: "username")),
+                decoration: new InputDecoration(
+                    fillColor: globalTheme.colorScheme.surface,
+                    filled: true,
+                    hintText: "username")),
             SizedBox(height: 5),
             TextField(
                 controller: passwordController,
-                decoration: new InputDecoration(hintText: "password")),
+                decoration: new InputDecoration(
+                    fillColor: globalTheme.colorScheme.surface,
+                    filled: true,
+                    hintText: "password")),
             SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(

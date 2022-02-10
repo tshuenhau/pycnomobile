@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
+
+import '../theme/GlobalTheme.dart';
 
 class GraphBottomSheet extends StatefulWidget {
   GraphBottomSheet(
@@ -54,11 +58,13 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData globalTheme = Provider.of<GlobalTheme>(context).globalTheme;
+
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * 2.5 / 100),
         decoration: new BoxDecoration(
-            //color: _customColorScheme.surface,
+            color: globalTheme.colorScheme.background,
             borderRadius: new BorderRadius.only(
                 topLeft: const Radius.circular(15.0),
                 topRight: const Radius.circular(15.0)

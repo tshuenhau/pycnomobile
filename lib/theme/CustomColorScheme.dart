@@ -6,9 +6,9 @@ const ColorScheme customColorScheme = ColorScheme(
     onBackground: Colors.black,
     error: Colors.black,
     onError: Colors.black,
-    onPrimary: Colors.black,
+    onPrimary: Colors.white,
     onSecondary: Colors.black,
-    onSurface: Colors.black,
+    onSurface: Colors.white,
     primary: Color(0xFF1C1D06),
     secondary: Colors.black,
     surface: Color(0xFFFFFCF3));

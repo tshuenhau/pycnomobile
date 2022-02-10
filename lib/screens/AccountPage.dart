@@ -33,29 +33,17 @@ class AccountPage extends StatelessWidget {
               Text(authController.user.value!.username,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextButton.icon(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
                   icon: Icon(Icons.person),
                   label: Text("Account Details"),
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => AccountDetailsPage()),
                       )),
               TextButton.icon(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
                   icon: Icon(Icons.radar),
                   label: Text("Scan for devices"),
                   onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => BluetoothPage()))),
               TextButton.icon(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
                   icon: Icon(Icons.logout),
                   label: Text("Logout"),
                   onPressed: () {
