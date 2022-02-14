@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/screens/AllGraphs.dart';
 
 class SensorSummaryPage extends StatelessWidget {
   final Sensor sensor;
@@ -20,14 +21,14 @@ class SensorSummaryPage extends StatelessWidget {
           //padding: EdgeInsets.symmetric(horizontal: 20),
           width: MediaQuery.of(context).size.width * 9.5 / 10,
           height: MediaQuery.of(context).size.height,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: SingleChildScrollView(
+          child: PageView(children: [
+            SingleChildScrollView(
               child: SizedBox(
                 child: buildSummaryCards(sensor: sensor, context: context),
               ),
             ),
-          ),
+            AllGraphs(sensor: sensor)
+          ]),
         ),
       ),
     );
