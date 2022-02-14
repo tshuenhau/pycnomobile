@@ -182,47 +182,43 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   SideTitles _bottomTitles() {
     return SideTitles(
-      showTitles: true,
-      //reservedSize: 22,
-      getTextStyles: (context, value) => TextStyle(
-          color: Color(0xff68737d),
-          fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.width * 3 / 100,
-          letterSpacing: -0.25,
-          overflow: TextOverflow.clip),
-      getTitles: (value) {
-        //print("X value: " + value.toString());
+        showTitles: true,
+        //reservedSize: 22,
+        getTextStyles: (context, value) => TextStyle(
+            color: Color(0xff68737d),
+            fontWeight: FontWeight.bold,
+            fontSize: MediaQuery.of(context).size.width * 3 / 100,
+            letterSpacing: 0,
+            overflow: TextOverflow.clip),
+        getTitles: (value) {
+          final DateTime date =
+              DateTime.fromMillisecondsSinceEpoch(value.toInt());
+          if (DateTimeRange(
+                      start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+                      end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                  .duration
+                  .inDays >
+              365 * 6) {
+            return DateFormat.yMMMd('en_US').format(date);
+          }
+          // else if (DateTimeRange(
+          //             start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
+          //             end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+          //         .duration
+          //         .inDays >
+          //     1) {
+          //   return DateFormat("MMM d").format(date);
+          // }
+          return DateFormat("MMM d", 'en_US').format(date) +
+              "\n" +
+              DateFormat("HH:mm", 'en_US').format(date);
 
-        final DateTime date =
-            DateTime.fromMillisecondsSinceEpoch(value.toInt());
-        //print(value);
-        // if (widget.dateRange!.duration.inDays > 1) {
-        //   return DateFormat.Md().format(date);
-        // }
-
-        if (DateTimeRange(
-                    start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
-                    end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-                .duration
-                .inDays >
-            365 * 6) {
-          return DateFormat.yMd().format(date);
-        }
-        if (DateTimeRange(
-                    start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()),
-                    end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-                .duration
-                .inDays >
-            3) {
-          return DateFormat("d/M").format(date);
-        }
-
-        return DateFormat.Hm().format(date);
-      },
-      margin: MediaQuery.of(context).size.width * 2 / 100,
-
-      interval: max((_maxX - _minX) / 4, 1),
-    );
+          //return dateText;
+        },
+        margin: MediaQuery.of(context).size.width * 3 / 100,
+        interval: max((_maxX - _minX) / 4, 1),
+        rotateAngle: 0,
+        textAlign: TextAlign.center);
   }
 
   @override
@@ -257,7 +253,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     color: Colors.transparent), //Color(0xff232d37)),
                 child: Padding(
                   padding: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.height * 2.5 / 100,
+                      right: MediaQuery.of(context).size.height * 3.5 / 100,
                       left: MediaQuery.of(context).size.height * 1.5 / 100,
                       top: MediaQuery.of(context).size.height * 1.5 / 100,
                       bottom: MediaQuery.of(context).size.height * 1.5 / 100),
