@@ -173,8 +173,11 @@ class _SensorLineChartState extends State<SensorLineChart> {
         //print("Y value: " + value.toString());
         return value.toString();
       },
-      reservedSize:
-          MediaQuery.of(context).size.width * _maxY.toString().length / 60,
+      reservedSize: MediaQuery.of(context).size.width *
+          (_maxY.toString().length > _minY.toString().length ? _maxY : _minY)
+              .toString()
+              .length /
+          60,
       margin: MediaQuery.of(context).size.width * 1.5 / 100,
       interval: max(1, _leftTitlesInterval),
     );
