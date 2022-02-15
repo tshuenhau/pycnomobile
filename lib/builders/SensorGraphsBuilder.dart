@@ -7,8 +7,8 @@ import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-Future<dynamic> buildSensorGraphs(
-    BuildContext context, Sensor sensor, List<Functionality> functions,
+Future<List<TimeSeries>> buildSensorGraphs(
+    Sensor sensor, List<Functionality> functions,
     [DateTimeRange? dateRange]) async {
   print("Functions " + functions.toString());
   EasyLoading.show(status: 'loading...');
@@ -66,14 +66,7 @@ Future<dynamic> buildSensorGraphs(
   // if (isDismissed) {
   //   return;
   // } else
-  return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return GraphBottomSheet(
-            graphs: graphs, sensor: sensor, functions: functions);
-      });
+  return graphs;
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,

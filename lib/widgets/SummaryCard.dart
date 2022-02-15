@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 
 class SummaryCard extends StatelessWidget {
   final Sensor sensor;
@@ -22,8 +23,15 @@ class SummaryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: InkWell(
-              onTap: () async {
-                buildSensorGraphs(context, sensor, functions);
+              onTap: () {
+                showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return GraphBottomSheet(
+                          sensor: sensor, functions: functions);
+                    });
 
                 // DateTimeRange? _newDateRange = await showDateRangePicker(
                 //     context: context,

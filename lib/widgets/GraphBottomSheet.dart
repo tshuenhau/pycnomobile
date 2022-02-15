@@ -10,13 +10,8 @@ import 'package:get/get.dart';
 import '../theme/GlobalTheme.dart';
 
 class GraphBottomSheet extends StatefulWidget {
-  GraphBottomSheet(
-      {Key? key,
-      required this.graphs,
-      required this.sensor,
-      required this.functions})
+  GraphBottomSheet({Key? key, required this.sensor, required this.functions})
       : super(key: key);
-  List<TimeSeries> graphs;
   final Sensor sensor;
   final List<Functionality> functions;
 
@@ -30,7 +25,11 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   @override
   void initState() {
     super.initState();
-    graphs = widget.graphs;
+    initData();
+  }
+
+  void initData() async {
+    graphs = await buildSensorGraphs(widget.sensor, widget.functions);
   }
 
   @override
