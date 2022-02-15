@@ -125,6 +125,7 @@ List<Widget> buildGraphs(BuildContext context) {
   List<Widget> graphsToDraw = <Widget>[];
   graphsToDraw.clear();
   if (controller.graphs.length <= 0) {
+    //TODO: need to change this to when we can figure out how many graphs tehere will be
     graphsToDraw.add(Center(child: Text("No data for selected time period")));
   }
   controller.graphs.forEach((e) => {
