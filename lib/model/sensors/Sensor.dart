@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
@@ -69,6 +70,14 @@ abstract class Sensor {
       // throw Exception("Invalid sensor");
       return TYPE_OF_SENSOR.PULSE; //temporary
     }
+  }
+
+  bool isActiveInLast24() {
+    if (DateTimeRange(start: polledAt!, end: DateTime.now()).duration.inHours <=
+        24) {
+      return true;
+    }
+    return false;
   }
 
   String toString() {
