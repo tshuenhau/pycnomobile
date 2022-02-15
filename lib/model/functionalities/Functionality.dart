@@ -6,16 +6,16 @@ class Functionality<T> {
   Color? color;
   IconData? icon;
   T value;
-  List<String>? multiKeys;
-  String key;
+  List<String> keys;
 
-  Functionality(
-      {required this.name,
-      required this.key,
-      required this.unit,
-      required this.color,
-      required this.icon,
-      required this.value});
+  Functionality({
+    required this.name,
+    required this.keys,
+    required this.unit,
+    required this.color,
+    required this.icon,
+    required this.value,
+  });
 
   @override
   String toString() {

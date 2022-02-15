@@ -5,7 +5,7 @@ class Bat extends Functionality {
   Bat(double? value)
       : super(
             name: "Battery",
-            key: 'BAT',
+            keys: ['BAT'],
             unit: "V",
             color: Colors.green,
             value: value,

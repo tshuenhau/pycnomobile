@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
@@ -31,7 +30,6 @@ abstract class Sensor {
   String? readableAgo;
   String? readableAgoFull;
   List<Functionality>? functionalities;
-  List<TimeSeries> timeSeriesList = List<TimeSeries>.empty(growable: true);
   Sensor({
     required this.type,
     required this.uid,

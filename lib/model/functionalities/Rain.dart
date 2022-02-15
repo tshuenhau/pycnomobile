@@ -6,7 +6,7 @@ class Rain extends Functionality<double?> {
   Rain(double? value)
       : super(
             name: "Rainfall",
-            key: "RAIN",
+            keys: ["RAIN"],
             unit: "mm",
             color: Colors.grey,
             value: value,
