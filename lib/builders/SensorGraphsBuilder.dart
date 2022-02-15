@@ -6,9 +6,10 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
-Future<dynamic> buildSensorGraphs(
-    BuildContext context, Sensor sensor, List<Functionality> functions,
+Future<List<TimeSeries>> buildSensorGraphs(
+    Sensor sensor, List<Functionality> functions,
     [DateTimeRange? dateRange]) async {
   print("Functions " + functions.toString());
   EasyLoading.show(status: 'loading...');
@@ -66,14 +67,7 @@ Future<dynamic> buildSensorGraphs(
   // if (isDismissed) {
   //   return;
   // } else
-  return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return GraphBottomSheet(
-            graphs: graphs, sensor: sensor, functions: functions);
-      });
+  return graphs;
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
@@ -124,4 +118,21 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     return null;
   } else
     return graphs;
+}
+
+List<Widget> buildGraphs(BuildContext context) {
+  TimeSeriesController controller = Get.find();
+  List<Widget> graphsToDraw = <Widget>[];
+  graphsToDraw.clear();
+  if (controller.graphs.length <= 0) {
+    graphsToDraw.add(Center(child: Text("No data for selected time period")));
+  }
+  controller.graphs.forEach((e) => {
+        graphsToDraw.add(SensorLineChart(
+            key: UniqueKey(), data: e.getTimeSeries, functionName: e.getKey))
+      });
+  // graphs.forEach((key, value) {
+  //   graphsToDraw.add(SensorLineChart(data: value, function: key));
+  // });
+  return graphsToDraw;
 }

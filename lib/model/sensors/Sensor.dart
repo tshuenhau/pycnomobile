@@ -70,7 +70,7 @@ abstract class Sensor {
     }
   }
 
-  bool isActiveInLast24() {
+  bool isActive() {
     if (DateTimeRange(start: polledAt!, end: DateTime.now()).duration.inHours <=
         24) {
       return true;
