@@ -3,9 +3,9 @@ import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphs.dart';
 
-class SensorSummaryPage extends StatelessWidget {
+class SensorPage extends StatelessWidget {
   final Sensor sensor;
-  const SensorSummaryPage({Key? key, required this.sensor}) : super(key: key);
+  const SensorPage({Key? key, required this.sensor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

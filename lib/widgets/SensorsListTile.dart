@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/screens/SensorSummaryPage.dart';
+import 'package:pycnomobile/screens/SensorPage.dart';
 import 'package:get/get.dart';
 
 class SensorsListTile extends StatelessWidget {
@@ -23,8 +23,8 @@ class SensorsListTile extends StatelessWidget {
         onTap: () {
           FocusScope.of(context).unfocus();
 
-          Navigator.of(context).push(CupertinoPageRoute(
-              builder: (_) => SensorSummaryPage(sensor: sensor)));
+          Navigator.of(context).push(
+              CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
         },
         child: ListTile(
             title: SizedBox(
