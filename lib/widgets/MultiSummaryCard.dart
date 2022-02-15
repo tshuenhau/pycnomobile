@@ -7,20 +7,20 @@ class MultiSummaryCard extends StatelessWidget {
   final Map data;
   final Sensor sensor;
   final Functionality function;
-  final List<Functionality> functions;
+  final List<Functionality?> subFunctions;
   MultiSummaryCard(
       {Key? key,
       required this.data,
       required this.sensor,
       required this.function,
-      required this.functions})
+      required this.subFunctions})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SummaryCard(
       sensor: sensor,
-      functions: functions,
+      functions: subFunctions,
       child: Container(
           width: MediaQuery.of(context).size.width * 1 / 2 - 20,
           child: Padding(
@@ -51,7 +51,7 @@ class MultiSummaryCard extends StatelessWidget {
     List<DataPoint> dataPoints = [];
     for (final mapEntry in data.entries) {
       final key = mapEntry.key.toString();
-      final value = mapEntry.value?.toStringAsFixed(2) ?? "-";
+      final value = mapEntry.value.toStringAsFixed(2);
       dataPoints.add(new DataPoint(label: key, value: value));
     }
     return dataPoints;

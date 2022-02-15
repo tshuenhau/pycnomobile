@@ -27,14 +27,17 @@ Widget buildSummaryCards(
 
   if (sensor.functionalities != null) {
     for (Functionality func in sensor.functionalities!) {
-      if (func.value is List<Functionality>) {
+      if (func.value is List<Functionality?>) {
+        print("subfunctions " + func.value.toString());
+        List<Functionality?> subFunctions = func.value; // like s1t, s2t
+
         add(new MultiSummaryCard(
-            //! Maybeb do a check here? for whether the stuff in List<Functionality> has a graph or not
-            data: Map.fromIterable(func.value,
+            //! Maybe do a check here? for whether the stuff in List<Functionality> has a graph or not
+            data: Map.fromIterable(subFunctions.where((e) => e != null),
                 key: (e) => e.name, value: (e) => e.value),
             sensor: sensor,
             function: func,
-            functions: func.value));
+            subFunctions: subFunctions));
       } else {
         add(new BasicSummaryCard(
             //TODO: Refactor these stuff especially the func.icon, func.color bs, just pass one func is enough.

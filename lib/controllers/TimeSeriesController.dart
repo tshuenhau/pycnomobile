@@ -11,6 +11,7 @@ class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
   RxList<TimeSeries> graphs = RxList<TimeSeries>.empty();
+  Rx<int> howManyGraphs = 0.obs;
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -47,32 +48,78 @@ class TimeSeriesController extends GetxController {
   }
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
-      List<Functionality> functions, Sensor sensor) async {
+      List<Functionality?> functions, Sensor sensor) async {
     graphs.clear();
-    for (Functionality function in functions) {
-      for (String key in function.keys) {
-        print("key: $key");
-        final response = await http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-        print("status code ${response.statusCode}");
-        if (response.statusCode == 200) {
-          if (jsonDecode(response.body).length <= 0) {
-            continue;
-          }
-          var body = jsonDecode(response.body)[0];
+    for (Functionality? function in functions) {
+      if (function != null) {
+        if (function.value is List) {
+          //multi value
+          List func = function.value;
 
-          String color = body['color'];
-          String key = body['key'];
-          if (body["values"] == null) {
-            continue;
+          for (Functionality? subfunc in func) {
+            if (subfunc != null) {
+              final response = await http.get(Uri.parse(
+                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+              if (response.statusCode == 200) {
+                if (jsonDecode(response.body).length <= 0) {
+                  continue;
+                }
+                var body = jsonDecode(response.body)[0];
+
+                String color = body['color'];
+                String key = body['key'];
+                if (body["values"] == null) {
+                  continue;
+                }
+                Map<int, double> timeSeries = convertListToMap(body['values']);
+                graphs.add(new TimeSeries(
+                    key: key, color: color, timeSeries: timeSeries));
+              } else {
+                throw Exception("Failed to retrieve data"); //Ask UI to reload
+              }
+            }
           }
-          Map<int, double> timeSeries = convertListToMap(body['values']);
-          graphs.add(
-              new TimeSeries(key: key, color: color, timeSeries: timeSeries));
         } else {
-          throw Exception("Failed to retrieve data"); //Ask UI to reload
+          final response = await http.get(Uri.parse(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          if (response.statusCode == 200) {
+            if (jsonDecode(response.body).length <= 0) {
+              continue;
+            }
+            var body = jsonDecode(response.body)[0];
+
+            String color = body['color'];
+            String key = body['key'];
+            if (body["values"] == null) {
+              continue;
+            }
+            Map<int, double> timeSeries = convertListToMap(body['values']);
+            graphs.add(
+                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+          } else {
+            throw Exception("Failed to retrieve data"); //Ask UI to reload
+          }
         }
       }
     }
+  }
+
+  int countNumberOfGraphs(List<Functionality?> functions) {
+    int count = 0;
+    for (Functionality? function in functions) {
+      if (function == null) {
+        continue;
+      }
+      if (function.value is List) {
+        List<Functionality?> subFunc = function.value;
+        List<Functionality?> nonNullFunctions =
+            subFunc.where((e) => e != null).toList();
+
+        count += nonNullFunctions.length;
+      } else {
+        count += 1;
+      }
+    }
+    return count;
   }
 }

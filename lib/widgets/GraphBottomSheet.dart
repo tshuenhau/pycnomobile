@@ -13,7 +13,7 @@ class GraphBottomSheet extends StatefulWidget {
   GraphBottomSheet({Key? key, required this.sensor, required this.functions})
       : super(key: key);
   final Sensor sensor;
-  final List<Functionality> functions;
+  final List<Functionality?> functions;
 
   @override
   State<GraphBottomSheet> createState() => _GraphBottomSheetState();

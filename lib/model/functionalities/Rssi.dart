@@ -5,7 +5,7 @@ class Rssi extends Functionality<double?> {
   Rssi(double? value)
       : super(
             name: "Signal Strength",
-            keys: ["RSSI"],
+            key: "RSSI",
             unit: "dBm",
             color: Colors.grey,
             value: value,

@@ -5,7 +5,7 @@ class Lx1 extends Functionality<double?> {
   Lx1(double? value)
       : super(
             name: "Luminosity",
-            keys: ["LX1"],
+            key: "LX1",
             unit: "Lux",
             color: Colors.yellow,
             icon: Icons.wb_sunny,

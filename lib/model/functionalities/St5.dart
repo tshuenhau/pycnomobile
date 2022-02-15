@@ -4,7 +4,7 @@ class St5 extends Functionality<double?> {
   St5(double? value)
       : super(
             name: "70cm",
-            keys: ["ST5"],
+            key: "ST5",
             unit: "ºC",
             color: null,
             icon: null,

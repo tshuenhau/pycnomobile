@@ -7,7 +7,7 @@ class Gst extends Functionality<double?> {
       : super(
             name: "Gust Speed",
             unit: "m/s",
-            keys: ["GST"],
+            key: "GST",
             color: Colors.green,
             value: value,
             icon: FontAwesomeIcons.fan);

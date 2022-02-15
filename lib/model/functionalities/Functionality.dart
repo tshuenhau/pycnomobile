@@ -6,11 +6,11 @@ class Functionality<T> {
   Color? color;
   IconData? icon;
   T value;
-  List<String> keys;
+  String key;
 
   Functionality({
     required this.name,
-    required this.keys,
+    required this.key,
     required this.unit,
     required this.color,
     required this.icon,

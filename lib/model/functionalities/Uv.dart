@@ -6,7 +6,7 @@ class Uv extends Functionality<double?> {
   Uv(double? value)
       : super(
             name: "UV radiation",
-            keys: ["UV"],
+            key: "UV",
             unit: "mW/cm2",
             color: Colors.orange,
             icon: FontAwesomeIcons.radiationAlt,

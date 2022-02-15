@@ -9,7 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 Future<List<TimeSeries>> buildSensorGraphs(
-    Sensor sensor, List<Functionality> functions,
+    Sensor sensor, List<Functionality?> functions,
     [DateTimeRange? dateRange]) async {
   print("Functions " + functions.toString());
   EasyLoading.show(status: 'loading...');
@@ -43,6 +43,8 @@ Future<List<TimeSeries>> buildSensorGraphs(
   });
   if (sensor.functionalities != null) {
     //Multi so need to split up
+    print("number of graphs " +
+        controller.countNumberOfGraphs(functions).toString());
     controller.getMultiTimeSeries(
         dateRange.start, dateRange.end, functions, sensor);
     // for (Functionality function in functions) {
@@ -71,7 +73,7 @@ Future<List<TimeSeries>> buildSensorGraphs(
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
-    Sensor sensor, List<Functionality> functions) async {
+    Sensor sensor, List<Functionality?> functions) async {
   final List<TimeSeries> graphs = [];
   EasyLoading.show(status: 'loading...');
   bool isDismissed = false;
