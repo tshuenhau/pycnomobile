@@ -2,48 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
+import 'package:page_view_indicators/page_view_indicators.dart';
+import 'package:pycnomobile/screens/SensorSummaryPage.dart';
+import 'package:pycnomobile/theme/GlobalTheme.dart';
 
-class SensorPage extends StatelessWidget {
+class SensorPage extends StatefulWidget {
   final Sensor sensor;
-  const SensorPage({Key? key, required this.sensor}) : super(key: key);
+  SensorPage({Key? key, required this.sensor}) : super(key: key);
+
+  @override
+  State<SensorPage> createState() => _SensorPageState();
+}
+
+class _SensorPageState extends State<SensorPage> {
+  final _pageController = PageController();
+
+  final _currentPageNotifier = ValueNotifier<int>(0);
+
+  List<Widget> _screens = [];
+
+  void initData() {
+    _screens.add(SensorSummaryPage(sensor: widget.sensor));
+    _screens.add(AllGraphsPage(sensor: widget.sensor));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(sensor.name ?? ""),
+        title: Text(widget.sensor.name ?? ""),
         elevation: 0,
-        //actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
+        backgroundColor: globalTheme.colorScheme.background.withOpacity(0.95),
+        actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
       ),
       body: Center(
         child: Container(
-          //padding: EdgeInsets.symmetric(horizontal: 20),
           width: MediaQuery.of(context).size.width * 9.5 / 10,
           height: MediaQuery.of(context).size.height,
-          child: PageView(children: [
-            SensorSummaryPage(sensor: sensor),
-            AllGraphsPage(sensor: sensor)
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // SizedBox(height: MediaQuery.of(context).size.height * 12.5 / 100),
+              _buildCircleIndicator(),
+              _buildPageView(),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class SensorSummaryPage extends StatelessWidget {
-  const SensorSummaryPage({
-    Key? key,
-    required this.sensor,
-  }) : super(key: key);
+  _buildPageView() {
+    return Expanded(
+        child: PageView.builder(
+            itemCount: _screens.length,
+            controller: _pageController,
+            itemBuilder: (BuildContext context, int index) {
+              return _screens[index];
+            },
+            onPageChanged: (int index) {
+              _currentPageNotifier.value = index;
+            }));
+  }
 
-  final Sensor sensor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        child: buildSummaryCards(sensor: sensor, context: context),
+  _buildCircleIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CirclePageIndicator(
+        itemCount: _screens.length,
+        currentPageNotifier: _currentPageNotifier,
       ),
     );
   }

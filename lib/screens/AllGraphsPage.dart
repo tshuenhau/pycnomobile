@@ -65,20 +65,15 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
             width: MediaQuery.of(context).size.width * 9.5 / 10,
             height: MediaQuery.of(context).size.height,
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.topCenter,
               child: Obx(
                 () => ListView(
+                  padding: EdgeInsets.all(0),
                   children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width *
-                                    4.5 /
-                                    100),
-                            DateRangeSelector(context)
-                          ],
+                          children: [DateRangeSelector(context)],
                         ),
                         SizedBox(
                           height:

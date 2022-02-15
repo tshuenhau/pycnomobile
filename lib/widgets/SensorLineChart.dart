@@ -268,6 +268,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
             ),
           ],
         ),
+        SizedBox(height: MediaQuery.of(context).size.height * 2.5 / 100)
       ],
     );
   }
