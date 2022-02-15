@@ -4,7 +4,7 @@ class St3 extends Functionality<double?> {
   St3(double? value)
       : super(
             name: "40cm",
-            key: "ST3",
+            keys: ["ST3"],
             unit: "ºC",
             color: null,
             icon: null,

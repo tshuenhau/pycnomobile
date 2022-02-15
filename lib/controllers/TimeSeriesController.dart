@@ -50,26 +50,28 @@ class TimeSeriesController extends GetxController {
       List<Functionality> functions, Sensor sensor) async {
     graphs.clear();
     for (Functionality function in functions) {
-      print("key: ${function.key}");
-      final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-      print("status code ${response.statusCode}");
-      if (response.statusCode == 200) {
-        if (jsonDecode(response.body).length <= 0) {
-          continue;
-        }
-        var body = jsonDecode(response.body)[0];
+      for (String key in function.keys) {
+        print("key: $key");
+        final response = await http.get(Uri.parse(
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+        print("status code ${response.statusCode}");
+        if (response.statusCode == 200) {
+          if (jsonDecode(response.body).length <= 0) {
+            continue;
+          }
+          var body = jsonDecode(response.body)[0];
 
-        String color = body['color'];
-        String key = body['key'];
-        if (body["values"] == null) {
-          continue;
+          String color = body['color'];
+          String key = body['key'];
+          if (body["values"] == null) {
+            continue;
+          }
+          Map<int, double> timeSeries = convertListToMap(body['values']);
+          graphs.add(
+              new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+        } else {
+          throw Exception("Failed to retrieve data"); //Ask UI to reload
         }
-        Map<int, double> timeSeries = convertListToMap(body['values']);
-        graphs.add(
-            new TimeSeries(key: key, color: color, timeSeries: timeSeries));
-      } else {
-        throw Exception("Failed to retrieve data"); //Ask UI to reload
       }
     }
   }
