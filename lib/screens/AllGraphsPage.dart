@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 
-class AllGraphs extends StatefulWidget {
+class AllGraphsPage extends StatefulWidget {
   final Sensor sensor;
-  const AllGraphs({Key? key, required this.sensor}) : super(key: key);
+  const AllGraphsPage({Key? key, required this.sensor}) : super(key: key);
 
   @override
-  State<AllGraphs> createState() => _AllGraphsState();
+  State<AllGraphsPage> createState() => _AllGraphsPageState();
 }
 
-class _AllGraphsState extends State<AllGraphs> {
+class _AllGraphsPageState extends State<AllGraphsPage> {
   List<TimeSeries> graphs = [];
   @override
   void initState() {
