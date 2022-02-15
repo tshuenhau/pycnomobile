@@ -14,8 +14,6 @@ class SensorsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Image URL: " + ""); //! URL
-
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),

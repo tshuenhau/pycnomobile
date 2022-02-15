@@ -2,20 +2,26 @@ import 'dart:convert';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
   RxList<Sensor> listOfSensors = List<Sensor>.empty(growable: true).obs;
   RxList<Sensor> filteredListOfSensors = List<Sensor>.empty(growable: true).obs;
+  RxList<TimeSeries> listOfTimeSeries =
+      List<TimeSeries>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
   late AuthController authController;
+  TimeSeriesController timeSeriesController = Get.put(TimeSeriesController());
 
   @override
   void onInit() async {
@@ -42,6 +48,9 @@ class ListOfSensorsController extends GetxController
     print(authController.token + " token, getting list of sensors!");
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
+
+    print(
+        'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}');
     if (response.statusCode == 200) {
       listOfSensors.clear();
       filteredListOfSensors.clear();
@@ -49,6 +58,7 @@ class ListOfSensorsController extends GetxController
 
       for (var i = 0; i < body.length; i++) {
         TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
+
         if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
           addSensor(MasterSoilSensor.fromJson(body[i]));
         } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
@@ -59,6 +69,10 @@ class ListOfSensorsController extends GetxController
           addSensor(RainGauge.fromJson(body[i]));
         }
       }
+      filteredListOfSensors.sort((a, b) =>
+          a.polledAt != null && b.polledAt != null
+              ? b.polledAt!.compareTo(a.polledAt!)
+              : 0);
     } else {
       throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
     }

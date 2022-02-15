@@ -5,7 +5,8 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
-
+import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+import 'package:get/get.dart';
 import '../theme/GlobalTheme.dart';
 
 class GraphBottomSheet extends StatefulWidget {
@@ -39,13 +40,13 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   List<Widget> buildGraphs(BuildContext context) {
+    TimeSeriesController controller = Get.find();
     List<Widget> graphsToDraw = <Widget>[];
     graphsToDraw.clear();
-
-    if (graphs.length <= 0) {
+    if (controller.graphs.length <= 0) {
       graphsToDraw.add(Center(child: Text("No data for selected time period")));
     }
-    graphs.forEach((e) => {
+    controller.graphs.forEach((e) => {
           graphsToDraw.add(SensorLineChart(
               key: UniqueKey(), data: e.getTimeSeries, functionName: e.getKey))
         });
@@ -87,35 +88,39 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 2.5 / 100),
-        decoration: new BoxDecoration(
-            color: globalTheme.colorScheme.background,
-            borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(15.0),
-                topRight: const Radius.circular(15.0)
-                //topRight: const Radius.circular(10.0)
-                )),
-        height: graphs.length > 1
-            ? MediaQuery.of(context).size.height * 75 / 100
-            : MediaQuery.of(context).size.height * 50 / 100,
-        child: Center(
-            child: ListView(
-          children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * 4.5 / 100),
-                    returnRangePicker(context)
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 2.5 / 100,
-                )
-              ] +
-              buildGraphs(context),
-        )));
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 2.5 / 100),
+      decoration: new BoxDecoration(
+          color: globalTheme.colorScheme.background,
+          borderRadius: new BorderRadius.only(
+              topLeft: const Radius.circular(15.0),
+              topRight: const Radius.circular(15.0)
+              //topRight: const Radius.circular(10.0)
+              )),
+      height: graphs.length > 1
+          ? MediaQuery.of(context).size.height * 75 / 100
+          : MediaQuery.of(context).size.height * 50 / 100,
+      child: Center(
+        child: Obx(
+          () => ListView(
+            children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 4.5 / 100),
+                      returnRangePicker(context)
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 2.5 / 100,
+                  )
+                ] +
+                buildGraphs(context),
+          ),
+        ),
+      ),
+    );
   }
 }
