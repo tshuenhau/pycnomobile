@@ -3,6 +3,7 @@ import 'package:pycnomobile/model/functionalities/Bat.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
 import 'package:pycnomobile/model/functionalities/Rain.dart';
 import 'package:pycnomobile/model/functionalities/Rssi.dart';
+import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/functionalities/Temp.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
@@ -27,22 +28,23 @@ class RainGauge extends Sensor {
     required List<Functionality>? functionalities,
     required this.pw,
   }) : super(
-            type: TYPE_OF_SENSOR.RAIN_GAUGE,
-            uid: uid,
-            name: name,
-            address: address,
-            img: img,
-            epoch: epoch,
-            site: site,
-            isLive: isLive,
-            isLiveTS: isLiveTS,
-            isLiveHealth: isLiveHealth,
-            updatedAt: updatedAt,
-            polledAt: polledAt,
-            soilType: soilType,
-            readableAgo: readableAgo,
-            readableAgoFull: readableAgoFull,
-            functionalities: functionalities);
+          type: TYPE_OF_SENSOR.RAIN_GAUGE,
+          uid: uid,
+          name: name,
+          address: address,
+          img: img,
+          epoch: epoch,
+          site: site,
+          isLive: isLive,
+          isLiveTS: isLiveTS,
+          isLiveHealth: isLiveHealth,
+          updatedAt: updatedAt,
+          polledAt: polledAt,
+          soilType: soilType,
+          readableAgo: readableAgo,
+          readableAgoFull: readableAgoFull,
+          functionalities: functionalities,
+        );
 
   static bool isRainGauge(String uid) {
     return uid.startsWith("K40");

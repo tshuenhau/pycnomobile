@@ -16,4 +16,9 @@ class Functionality<T> {
       required this.color,
       required this.icon,
       required this.value});
+
+  @override
+  String toString() {
+    return 'name: $name, value: $value';
+  }
 }

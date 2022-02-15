@@ -10,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 Future<dynamic> buildSensorGraphs(
     BuildContext context, Sensor sensor, List<Functionality> functions,
     [DateTimeRange? dateRange]) async {
+  print("Functions " + functions.toString());
   EasyLoading.show(status: 'loading...');
   bool isDismissed = false;
 
@@ -41,36 +42,38 @@ Future<dynamic> buildSensorGraphs(
   });
   if (sensor.functionalities != null) {
     //Multi so need to split up
-    for (Functionality function in functions) {
-      try {
-        await controller.getTimeSeries(
-            dateRange
-                .start, //!probably change tis to the dateRange.start and dateRange.end
-            dateRange.end,
-            function.key,
-            sensor);
+    controller.getMultiTimeSeries(
+        dateRange.start, dateRange.end, functions, sensor);
+    // for (Functionality function in functions) {
+    //   //This needs to be async
+    //   if (function.value != null) {
+    //     try {
+    //       // Future<void> futureGetTimeSeries = controller.getTimeSeries(
+    //       //     dateRange.start, dateRange.end, function.key, sensor);
+    //       // futureGetTimeSeries.whenComplete(() => EasyLoading.dismiss());
+    //       await controller.getTimeSeries(
+    //           dateRange.start, dateRange.end, function.key, sensor);
+    //     } catch (e) {
+    //       // TODO: handle exception in the UI
+    //     }
+    //   }
+    // }
+    // graphs.addAll(sensor.timeSeriesList); //TODO: this will be the future flow
 
-        if (controller.currentTimeSeries != null) {
-          graphs.add(controller.currentTimeSeries!);
-        }
-      } catch (e) {
-        // TODO: handle exception in the UI
-      }
-    }
   }
 
   EasyLoading.dismiss();
-  if (isDismissed) {
-    return;
-  } else
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return GraphBottomSheet(
-              graphs: graphs, sensor: sensor, functions: functions);
-        });
+  // if (isDismissed) {
+  //   return;
+  // } else
+  return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return GraphBottomSheet(
+            graphs: graphs, sensor: sensor, functions: functions);
+      });
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
@@ -97,18 +100,22 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
 
   if (sensor.functionalities != null) {
     //Multi so need to split up
-    for (Functionality function in functions) {
-      try {
-        await controller.getTimeSeries(dateRange.start,
-            dateRange.end.add(Duration(days: 1)), function.key, sensor);
+    controller.getMultiTimeSeries(dateRange.start,
+        dateRange.end.add(Duration(days: 1)), functions, sensor);
+    // for (Functionality function in functions) {
+    //   if (function.value != null) {
+    //     try {
+    //       await controller.getTimeSeries(dateRange.start,
+    //           dateRange.end.add(Duration(days: 1)), function.key, sensor);
 
-        if (controller.currentTimeSeries != null) {
-          graphs.add(controller.currentTimeSeries!);
-        }
-      } catch (e) {
-        // TODO: handle exception in the UI
-      }
-    }
+    //       if (controller.currentTimeSeries != null) {
+    //         graphs.add(controller.currentTimeSeries!);
+    //       }
+    //     } catch (e) {
+    //       // TODO: handle exception in the UI
+    //     }
+    //   }
+    // }
   }
 
   EasyLoading.dismiss();
