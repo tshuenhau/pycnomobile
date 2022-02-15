@@ -6,7 +6,7 @@ class Hum extends Functionality<double?> {
   Hum(double? value)
       : super(
             name: "Humidity",
-            keys: ["HUM"],
+            key: "HUM",
             unit: "RH%",
             color: Colors.blue,
             value: value,

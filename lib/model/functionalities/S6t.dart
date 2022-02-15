@@ -4,7 +4,7 @@ class S6t extends Functionality<double?> {
   S6t(double? value)
       : super(
             name: "85cm",
-            keys: ["S6T"],
+            key: "S6T",
             unit: "mm",
             color: null,
             icon: null,

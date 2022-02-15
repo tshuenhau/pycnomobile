@@ -101,17 +101,17 @@ class NodeSoilSensor extends SoilSensor {
           new Lx1(json["LX1"]?.toDouble()),
           new Rssi(json["RSSI"]?.toDouble()),
           new S123456t([
-            new S1t(json["S1T"]?.toDouble()),
-            new S2t(json["S2T"]?.toDouble()),
-            new S3t(json["S3T"]?.toDouble()),
-            new S4t(json["S4T"]?.toDouble()),
-            new S5t(json["S5T"]?.toDouble()),
-            new S6t(json["S6T"]?.toDouble()),
+            json.containsKey("S1T") ? new S1t(json["S1T"]?.toDouble()) : null,
+            json.containsKey("S2T") ? new S2t(json["S2T"]?.toDouble()) : null,
+            json.containsKey("S3T") ? new S3t(json["S3T"]?.toDouble()) : null,
+            json.containsKey("S4T") ? new S4t(json["S4T"]?.toDouble()) : null,
+            json.containsKey("S5T") ? new S5t(json["S5T"]?.toDouble()) : null,
+            json.containsKey("S6T") ? new S6t(json["S6T"]?.toDouble()) : null,
           ]),
           new St135([
-            new St1(json["ST1"]?.toDouble()),
-            new St3(json["ST3"]?.toDouble()),
-            new St5(json["ST5"]?.toDouble())
+            json.containsKey("ST1") ? new St1(json["ST1"]?.toDouble()) : null,
+            json.containsKey("ST3") ? new St3(json["ST3"]?.toDouble()) : null,
+            json.containsKey("ST5") ? new St5(json["ST5"]?.toDouble()) : null
           ])
         ],
       );

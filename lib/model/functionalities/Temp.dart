@@ -5,7 +5,7 @@ class Temp extends Functionality<double?> {
   Temp(double? value)
       : super(
             name: "Temperature",
-            keys: ["TEMP"],
+            key: "TEMP",
             unit: "ºC",
             color: Colors.red,
             value: value,

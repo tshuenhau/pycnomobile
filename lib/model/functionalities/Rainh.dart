@@ -6,7 +6,7 @@ class Rainh extends Functionality<double?> {
   Rainh(double? value)
       : super(
             name: "Rainfall intensity",
-            keys: ["RAINH"],
+            key: "RAINH",
             unit: "mm/h",
             color: Colors.grey,
             value: value,
