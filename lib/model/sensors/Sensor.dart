@@ -71,6 +71,11 @@ abstract class Sensor {
   }
 
   bool isActive() {
+    print("start: " + DateTime.fromMillisecondsSinceEpoch(epoch!).toString());
+    print(DateTime.now());
+    if (DateTime.now().isBefore(DateTime.fromMillisecondsSinceEpoch(epoch!))) {
+      return true;
+    }
     if (DateTimeRange(
                 start: DateTime.fromMillisecondsSinceEpoch(epoch!),
                 end: DateTime.now())
