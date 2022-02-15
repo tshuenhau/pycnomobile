@@ -38,24 +38,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     graphs.clear();
   }
 
-  List<Widget> buildGraphs(BuildContext context) {
-    TimeSeriesController controller = Get.find();
-    List<Widget> graphsToDraw = <Widget>[];
-    graphsToDraw.clear();
-    if (controller.graphs.length <= 0) {
-      graphsToDraw.add(Center(child: Text("No data for selected time period")));
-    }
-    controller.graphs.forEach((e) => {
-          graphsToDraw.add(SensorLineChart(
-              key: UniqueKey(), data: e.getTimeSeries, functionName: e.getKey))
-        });
-    // graphs.forEach((key, value) {
-    //   graphsToDraw.add(SensorLineChart(data: value, function: key));
-    // });
-    return graphsToDraw;
-  }
-
-  Widget returnRangePicker(BuildContext context) {
+  Widget DateRangeSelector(BuildContext context) {
     return Theme(
       data: ThemeData(
           colorScheme: globalTheme.colorScheme.copyWith(
@@ -109,7 +92,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     children: [
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 4.5 / 100),
-                      returnRangePicker(context)
+                      DateRangeSelector(context)
                     ],
                   ),
                   SizedBox(
