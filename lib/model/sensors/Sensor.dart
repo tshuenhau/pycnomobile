@@ -71,7 +71,11 @@ abstract class Sensor {
   }
 
   bool isActive() {
-    if (DateTimeRange(start: polledAt!, end: DateTime.now()).duration.inHours <=
+    if (DateTimeRange(
+                start: DateTime.fromMillisecondsSinceEpoch(epoch!),
+                end: DateTime.now())
+            .duration
+            .inHours <=
         24) {
       return true;
     }
