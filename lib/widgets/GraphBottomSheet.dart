@@ -99,7 +99,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     height: MediaQuery.of(context).size.height * 2.5 / 100,
                   )
                 ] +
-                buildGraphs(context),
+                buildGraphs(context, widget.functions),
           ),
         ),
       ),

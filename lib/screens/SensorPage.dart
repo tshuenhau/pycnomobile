@@ -41,7 +41,7 @@ class _SensorPageState extends State<SensorPage> {
         title: Text(widget.sensor.name ?? ""),
         elevation: 0,
         backgroundColor: globalTheme.colorScheme.background.withOpacity(0.95),
-        actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
+        // actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
       ),
       body: Center(
         child: Container(
@@ -61,8 +61,12 @@ class _SensorPageState extends State<SensorPage> {
   }
 
   _buildPageView() {
+    print(_currentPageNotifier.value);
     return Expanded(
         child: PageView.builder(
+            physics: _currentPageNotifier.value == 1
+                ? NeverScrollableScrollPhysics()
+                : AlwaysScrollableScrollPhysics(),
             itemCount: _screens.length,
             controller: _pageController,
             itemBuilder: (BuildContext context, int index) {
