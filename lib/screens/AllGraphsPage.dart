@@ -38,7 +38,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
               DateTimeRange? _newDateRange = await showDateRangePicker(
                   context: context,
                   firstDate: DateTime(1800),
-                  lastDate: DateTime(3000));
+                  lastDate: DateTime.now());
 
               if (_newDateRange != null) {
                 List<TimeSeries>? result = await getGraphsForTimeRange(
