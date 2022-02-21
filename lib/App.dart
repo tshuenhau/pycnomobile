@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -71,7 +72,11 @@ class _AppState extends State<App> {
       //   title: 'Map',
       // ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.notifications),
+        //TODO: Notification counter
+        icon: Badge(
+            badgeContent: Text("3"),
+            badgeColor: Colors.red,
+            child: Icon(Icons.notifications)),
         title: 'Alerts',
         activeColorPrimary: Theme.of(context).colorScheme.secondary,
         inactiveColorPrimary: Theme.of(context).primaryColor,
