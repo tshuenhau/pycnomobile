@@ -73,7 +73,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
   int toDrawCount = 0;
-  int currCount = 0;
 
   toDrawCount = controller.countNumberOfGraphs(functions);
 
@@ -93,14 +92,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
     //return LoadingIndicator();
   }
 
-  if (controller.graphs.length <= 0) {
-    toDrawCount = 0;
-  }
-  if (toDrawCount <= 0) {
-    //TODO: need to change this to when we can figure out how many graphs tehere will be
-    graphsToDraw.add(Center(child: Text("No data")));
-  }
-
   controller.graphs.forEach((e) {
     drawnCount += 1;
     graphsToDraw.add(SensorLineChart(
@@ -109,11 +100,18 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
+
+  if (controller.graphs.length <= 0) {
+    toDrawCount = 0;
+  }
+  if (toDrawCount <= 0) {
+    //TODO: need to change this to when we can figure out how many graphs tehere will be
+    graphsToDraw.add(Center(child: Text("No data")));
+  }
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator(context)
   ];
-  print(controller.graphs);
 
   return result;
 }
