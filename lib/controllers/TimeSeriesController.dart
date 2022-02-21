@@ -18,34 +18,34 @@ class TimeSeriesController extends GetxController {
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
-  Future<void> getTimeSeries(
-      DateTime start, DateTime end, String key, Sensor sensor) async {
-    graphs.clear();
-    final response = await http.get(Uri.parse(
-        'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-    // print(
-    //     'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
-    // print(
-    //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
-    print("key: $key");
-    print("status code ${response.statusCode}");
-    if (response.statusCode == 200) {
-      var body = jsonDecode(response.body)[0];
+  // Future<void> getTimeSeries(
+  //     DateTime start, DateTime end, String key, Sensor sensor) async {
+  //   graphs.clear();
+  //   final response = await http.get(Uri.parse(
+  //       'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+  //   // print(
+  //   //     'https://portal.pycno.co.uk/api/v2/data/1?TK=$token&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
+  //   // print(
+  //   //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$key&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
+  //   print("key: $key");
+  //   print("status code ${response.statusCode}");
+  //   if (response.statusCode == 200) {
+  //     var body = jsonDecode(response.body)[0];
 
-      String color = body['color'];
-      String key = body['key'];
-      if (body["values"] == null) {
-        return;
-      }
-      Map<int, double> timeSeries = convertListToMap(body['values']);
-      graphs
-          .add(new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+  //     String color = body['color'];
+  //     String key = body['key'];
+  //     if (body["values"] == null) {
+  //       return;
+  //     }
+  //     Map<int, double> timeSeries = convertListToMap(body['values']);
+  //     graphs
+  //         .add(new TimeSeries(key: key, color: color, timeSeries: timeSeries));
 
-      return;
-    } else {
-      throw Exception("Failed to retrieve data"); //Ask UI to reload
-    }
-  }
+  //     return;
+  //   } else {
+  //     throw Exception("Failed to retrieve data"); //Ask UI to reload
+  //   }
+  // }
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor) async {
@@ -64,7 +64,6 @@ class TimeSeriesController extends GetxController {
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
               if (response.statusCode == 200) {
                 if (jsonDecode(response.body).length <= 0) {
-                  graphs.add(null);
                   continue;
                 }
                 var body = jsonDecode(response.body)[0];
@@ -72,6 +71,7 @@ class TimeSeriesController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
+                  graphs.add(null);
                   continue;
                 }
                 Map<int, double> timeSeries = convertListToMap(body['values']);
