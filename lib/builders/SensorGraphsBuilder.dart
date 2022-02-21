@@ -101,13 +101,13 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
 
-  if (controller.graphs.length <= 0) {
-    toDrawCount = 0;
-  }
-  if (toDrawCount <= 0) {
-    //TODO: need to change this to when we can figure out how many graphs tehere will be
-    graphsToDraw.add(Center(child: Text("No data")));
-  }
+  // if (controller.graphs.length <= 0) {
+  //   toDrawCount = 0;
+  // }
+  // if (toDrawCount <= 0) {
+  //   //TODO: need to change this to when we can figure out how many graphs tehere will be
+  //   graphsToDraw.add(Center(child: Text("No data")));
+  // }
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator(context)
