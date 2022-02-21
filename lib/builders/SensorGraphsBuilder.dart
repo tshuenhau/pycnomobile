@@ -94,12 +94,15 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
     graphsToDraw.add(Center(child: Text("No data")));
   }
   controller.graphs.forEach((e) {
+    //!ZQ u need to make sure this is iterating or else it will load forever
     drawnCount += 1;
-    graphsToDraw.add(SensorLineChart(
-        key: UniqueKey(),
-        data: e!.getTimeSeries,
-        functionName: e
-            .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+    if (e != null) {
+      graphsToDraw.add(SensorLineChart(
+          key: UniqueKey(),
+          data: e!.getTimeSeries,
+          functionName: e
+              .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+    }
   });
   print(controller.graphs);
   // graphs.forEach((key, value) {
