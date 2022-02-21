@@ -101,6 +101,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
         functionName: e
             .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
   });
+  print(controller.graphs);
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
