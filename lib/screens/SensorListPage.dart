@@ -21,6 +21,7 @@ class _SensorListPageState extends State<SensorListPage> {
 
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
+    sensorsController.searchListOfSensors();
   }
 
   @override
