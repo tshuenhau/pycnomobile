@@ -51,7 +51,7 @@ class MultiSummaryCard extends StatelessWidget {
     List<DataPoint> dataPoints = [];
     for (final mapEntry in data.entries) {
       final key = mapEntry.key.toString();
-      final value = mapEntry.value.toStringAsFixed(2);
+      final value = mapEntry.value?.toStringAsFixed(2) ?? "-";
       dataPoints.add(new DataPoint(label: key, value: value));
     }
     return dataPoints;
