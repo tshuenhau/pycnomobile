@@ -72,12 +72,10 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   TimeSeriesController controller = Get.find();
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
-  int toDrawCount = 0;
-
-  toDrawCount = controller.countNumberOfGraphs(functions);
+  int currCount = 0;
 
   Widget buildLoadingIndicator(BuildContext context) {
-    if (drawnCount == toDrawCount) {
+    if (drawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
     }
     List<Widget> loadingIndicators = [];
@@ -92,6 +90,9 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
     //return LoadingIndicator();
   }
 
+  if (controller.countNumberOfGraphs(functions) <= 0) {
+    graphsToDraw.add(Center(child: Text("No data")));
+  }
   controller.graphs.forEach((e) {
     drawnCount += 1;
     graphsToDraw.add(SensorLineChart(
@@ -100,14 +101,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
-
-  // if (controller.graphs.length <= 0) {
-  //   toDrawCount = 0;
-  // }
-  // if (toDrawCount <= 0) {
-  //   //TODO: need to change this to when we can figure out how many graphs tehere will be
-  //   graphsToDraw.add(Center(child: Text("No data")));
-  // }
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator(context)
