@@ -96,7 +96,10 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   controller.graphs.forEach((e) {
     drawnCount += 1;
     graphsToDraw.add(SensorLineChart(
-        key: UniqueKey(), data: e.getTimeSeries, functionName: e.getKey));
+        key: UniqueKey(),
+        data: e!.getTimeSeries,
+        functionName: e
+            .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
   });
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
