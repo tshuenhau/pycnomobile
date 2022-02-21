@@ -18,6 +18,7 @@ List<Widget> buildAlerts() {
   - also need a global function/boolean to tell if there is any notification with severity > 3 and state == 0
   - the AlertListTile class is not updated to accept Notification class yet.
   - Once u build the api call to get List<Notification> then u can stop alr, ill handle the rest.
+  - Actually we kinda need to call this api right at the start of the app launching so I can put the total number of notifications on the bottom nav bar
 
   Basically we need a List<Notification> which we iterate and build a List<AlertListTile>, then we gucci
 
