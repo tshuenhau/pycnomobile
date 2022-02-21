@@ -3,6 +3,7 @@ import 'package:pycnomobile/widgets/AlertListTile.dart';
 
 List<Widget> buildAlerts() {
   /*
+  api here : https://stage.pycno.co/api/v2/notifications.json?TK=fGXiDK9cnC52V3uaBLLg1G7l4LodjyX4&UID=M2DBCBCC1A31A19D5&S2T
   minimum needed for Notification class
    Notification{
     String/int/double/wtv notificationId;
