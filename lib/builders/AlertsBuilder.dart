@@ -34,23 +34,10 @@ List<Widget> buildAlerts() {
   //call function to get all notifications then return the list of AlertListTile
   List<AlertListTile> alerts = [];
 
-  List<NotificationData> notifications = controller.notifications;
+  print("number of notifs: " + controller.notifications.length.toString());
   controller.notifications.forEach((e) {
     print(e.desc);
     alerts.add(AlertListTile(notification: e));
   });
-  return [
-    // AlertListTile(
-    //     icon: Icon(Icons.ac_unit), // based on event_frost/event_low_battery
-    //     notificationId: "840995",
-    //     sensor: ,
-    //     description: "Temperature is below 2ºC. High frost probability.",
-    //     timeAgo: "4 hours ago"),
-    // AlertListTile(
-    //     icon: Icon(Icons.battery_alert),
-    //     notificationId: "840995",
-    //     sensor:,
-    //     description: "Battery is below 10%.",
-    //     timeAgo: "4 hours ago"),
-  ];
+  return alerts;
 }
