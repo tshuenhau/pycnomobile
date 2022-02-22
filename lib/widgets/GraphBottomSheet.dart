@@ -69,6 +69,8 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    TimeSeriesController controller = Get.put(TimeSeriesController());
+
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 2.5 / 100),
@@ -79,7 +81,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               topRight: const Radius.circular(15.0)
               //topRight: const Radius.circular(10.0)
               )),
-      height: graphs.length > 1
+      height: controller.countNumberOfGraphs(widget.functions) > 1
           ? MediaQuery.of(context).size.height * 75 / 100
           : MediaQuery.of(context).size.height * 50 / 100,
       child: Center(
