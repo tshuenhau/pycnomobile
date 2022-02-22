@@ -12,6 +12,7 @@ class AlertListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(notification.desc);
     return Dismissible(
       key: Key(this.notification.id.toString()),
       onDismissed: (notificationId) {
@@ -35,11 +36,14 @@ class AlertListTile extends StatelessWidget {
                     leading: Container(
                       height: double.infinity,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 2 / 100),
-                        child: Icon(Icons.ac_unit),
-                      ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 2 / 100),
+                          child: Icon(notification.key == "event_frost"
+                              ? Icons.ac_unit
+                              : notification.key == "event_low_battery"
+                                  ? Icons.battery_alert
+                                  : Icons.warning)),
                     ),
                     //title: Text(sensor.name ?? sensor.uid),
                     title: Text(notification.uid),
