@@ -91,10 +91,9 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   }
 
   if (controller.countNumberOfGraphs(functions) <= 0) {
-    graphsToDraw.add(Center(child: Text("No data")));
+    graphsToDraw.add(NoGraphData());
   }
   controller.graphs.forEach((e) {
-    //!ZQ u need to make sure this is iterating or else it will load forever
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(
@@ -102,18 +101,37 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
           data: e.getTimeSeries,
           functionName: e
               .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+    } else {
+      graphsToDraw.add(NoGraphData());
     }
   });
   print(controller.graphs);
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
+
+  // if (graphsToDraw.length <= 0) {
+  //   graphsToDraw.add(Text("No Data"));
+  // }
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator(context)
   ];
 
   return result;
+}
+
+class NoGraphData extends StatelessWidget {
+  const NoGraphData({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: MediaQuery.of(context).size.height * 15 / 100,
+        child: Center(child: Text("No Data")));
+  }
 }
 
 class LoadingIndicator extends StatelessWidget {

@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/model/Notification.dart';
+import 'package:pycnomobile/model/NotificationData.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
-  RxList<Notification> notifications = RxList.empty();
+  RxList<NotificationData> notifications = RxList.empty();
   int alertCounter = 0;
   bool isSevere = false;
 
@@ -22,7 +22,7 @@ class NotificationsController extends GetxController {
       print(body);
       print(body.length);
       for (var i = 0; i < body.length; i++) {
-        Notification notif = Notification.fromJson(body[i]);
+        NotificationData notif = NotificationData.fromJson(body[i]);
         if (notif.severity > 0 && notif.state == 0) {
           notifications.add(notif);
           if (notif.severity > 3) {
@@ -36,4 +36,6 @@ class NotificationsController extends GetxController {
       throw Exception("Unable to get notifications");
     }
   }
+
+  getSensorFromNotifs(String uid) {}
 }
