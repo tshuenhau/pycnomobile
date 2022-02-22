@@ -32,7 +32,7 @@ void configLoading() {
     ..textColor = Colors.yellow
     ..maskColor = Colors.black.withOpacity(0.5)
     ..userInteractions = false
-    ..dismissOnTap = true
+    ..dismissOnTap = false
     ..boxShadow = <BoxShadow>[]
     ..maskType = EasyLoadingMaskType.custom;
 }

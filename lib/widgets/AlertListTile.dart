@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
@@ -32,8 +33,10 @@ class AlertListTile extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   FocusScope.of(context).unfocus();
+                  EasyLoading.show(status: "Loading");
                   Sensor sensor = await controller
                       .getSensorFromNotifs(this.notification.uid);
+                  EasyLoading.dismiss();
                   Navigator.of(context).push(CupertinoPageRoute(
                       builder: (_) => SensorPage(sensor: sensor)));
                 },

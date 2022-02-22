@@ -81,6 +81,7 @@ class _AppState extends State<App> {
         icon: Obx(() => Badge(
             badgeContent: Text(controller.alertCounter.value.toString()),
             badgeColor: controller.isSevere.value ? Colors.red : Colors.amber,
+            showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),
         title: 'Alerts',
         activeColorPrimary: Theme.of(context).colorScheme.secondary,
