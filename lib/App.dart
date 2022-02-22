@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
@@ -20,6 +21,8 @@ class _AppState extends State<App> {
   late bool isLoggedIn;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+
+  NotificationsController controller = Get.put(NotificationsController());
 
   @override
   void initState() {
@@ -74,8 +77,8 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         //TODO: Notification counter
         icon: Badge(
-            badgeContent: Text("3"),
-            badgeColor: Colors.red,
+            badgeContent: Text(controller.alertCounter.toString()),
+            badgeColor: controller.isSevere ? Colors.red : Colors.amber,
             child: Icon(Icons.notifications)),
         title: 'Alerts',
         activeColorPrimary: Theme.of(context).colorScheme.secondary,
