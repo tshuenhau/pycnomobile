@@ -10,7 +10,7 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
-  RxList<TimeSeries?> graphs = RxList<TimeSeries>.empty();
+  RxList<TimeSeries?> graphs = RxList<TimeSeries?>.empty();
   Rx<int> howManyGraphs = 0.obs;
 
   static Map<int, double> convertListToMap(List list) {
@@ -60,8 +60,8 @@ class TimeSeriesController extends GetxController {
             if (subfunc != null) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-              print(
-                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
+              // print(
+              //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
               if (response.statusCode == 200) {
                 if (jsonDecode(response.body).length <= 0) {
                   continue;
@@ -71,6 +71,7 @@ class TimeSeriesController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
+                  print("HELLO");
                   graphs.add(null);
                   continue;
                 }
@@ -85,6 +86,7 @@ class TimeSeriesController extends GetxController {
         } else {
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          print(response.body);
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -94,6 +96,7 @@ class TimeSeriesController extends GetxController {
             String color = body['color'];
             String key = body['key'];
             if (body["values"] == null) {
+              graphs.add(null);
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);
