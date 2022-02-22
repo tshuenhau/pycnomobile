@@ -47,7 +47,7 @@ class AlertListTile extends StatelessWidget {
                     ),
                     //title: Text(sensor.name ?? sensor.uid),
                     title: Text(notification.uid),
-                    subtitle: Text(notification.desc ?? ""),
+                    subtitle: Text(notification.descText ?? ""),
                     trailing: Text(
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
                             notification.epoch)),
