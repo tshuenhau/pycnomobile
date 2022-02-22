@@ -12,9 +12,13 @@ class SensorSummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        child: buildSummaryCards(sensor: sensor, context: context),
+    return Align(
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 95 / 100,
+          height: MediaQuery.of(context).size.height,
+          child: buildSummaryCards(sensor: sensor, context: context),
+        ),
       ),
     );
   }

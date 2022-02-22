@@ -64,6 +64,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
             //padding: EdgeInsets.symmetric(horizontal: 20),
             width: MediaQuery.of(context).size.width * 9.5 / 10,
             height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 1 / 100),
             child: Align(
               alignment: Alignment.topCenter,
               child: Obx(

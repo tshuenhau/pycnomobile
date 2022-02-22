@@ -51,58 +51,57 @@ class _SensorListPageState extends State<SensorListPage> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(
-            "My Sensors",
-          ),
-        ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Center(
-            child: Column(
-              children: [
-                Search(
-                  hintText: 'Search...',
-                ),
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _refreshData,
-                    child: Obx(
-                      () => Center(
-                        child: ListView.builder(
-                          itemCount:
-                              sensorsController.filteredListOfSensors.length +
-                                  1,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            if (index ==
-                                sensorsController
-                                    .filteredListOfSensors.length) {
-                              return Center(
-                                  child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              2.5 /
-                                              100),
-                                      child: Text(
-                                        (DateFormat.jms()
-                                            .format(DateTime.now())),
-                                      )));
-                            }
-                            Sensor sensor =
-                                sensorsController.filteredListOfSensors[index];
-                            return SensorsListTile(sensor: sensor);
-                          },
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 3 / 100),
+            child: Center(
+              child: Column(
+                children: [
+                  Search(
+                    hintText: 'Search...',
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: _refreshData,
+                      child: Obx(
+                        () => Center(
+                          child: ListView.builder(
+                            itemCount:
+                                sensorsController.filteredListOfSensors.length +
+                                    1,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              if (index ==
+                                  sensorsController
+                                      .filteredListOfSensors.length) {
+                                return Center(
+                                    child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                2.5 /
+                                                100),
+                                        child: Text(
+                                          (DateFormat.jms()
+                                              .format(DateTime.now())),
+                                        )));
+                              }
+                              Sensor sensor = sensorsController
+                                  .filteredListOfSensors[index];
+                              return SensorsListTile(sensor: sensor);
+                            },
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));

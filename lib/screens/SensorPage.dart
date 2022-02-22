@@ -15,10 +15,6 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
-  final _pageController = PageController();
-
-  final _currentPageNotifier = ValueNotifier<int>(0);
-
   List<Widget> _screens = [];
 
   void initData() {
@@ -34,55 +30,66 @@ class _SensorPageState extends State<SensorPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // extendBodyBehindAppBar: true,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(widget.sensor.name ?? ""),
-        elevation: 0,
-        backgroundColor: globalTheme.colorScheme.background.withOpacity(0.95),
-        // actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
-      ),
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 9.5 / 10,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              // SizedBox(height: MediaQuery.of(context).size.height * 12.5 / 100),
-              _buildCircleIndicator(),
-              _buildPageView(),
-            ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        // extendBodyBehindAppBar: true,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(widget.sensor.name ?? ""),
+          elevation: 0,
+          backgroundColor: globalTheme.colorScheme.background.withOpacity(0.95),
+          bottom: PreferredSize(
+            preferredSize: new Size(
+                double.infinity, MediaQuery.of(context).size.height * 5 / 100),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 1.5 / 100),
+              height: MediaQuery.of(context).size.height * 5 / 100,
+              child: TabBar(
+                  labelPadding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 2 / 100),
+                  labelColor: globalTheme.colorScheme.secondary,
+                  unselectedLabelColor: globalTheme.primaryColor,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicator: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      color: globalTheme.colorScheme.surface),
+                  tabs: [
+                    Tab(
+                      child: SizedBox(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Summary"),
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("All Graphs"),
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+          // actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
+        ),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.5 / 100),
+            child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  SensorSummaryPage(sensor: widget.sensor),
+                  AllGraphsPage(sensor: widget.sensor)
+                ]),
           ),
         ),
-      ),
-    );
-  }
-
-  _buildPageView() {
-    print(_currentPageNotifier.value);
-    return Expanded(
-        child: PageView.builder(
-            physics: _currentPageNotifier.value == 1
-                ? NeverScrollableScrollPhysics()
-                : AlwaysScrollableScrollPhysics(),
-            itemCount: _screens.length,
-            controller: _pageController,
-            itemBuilder: (BuildContext context, int index) {
-              return _screens[index];
-            },
-            onPageChanged: (int index) {
-              _currentPageNotifier.value = index;
-            }));
-  }
-
-  _buildCircleIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CirclePageIndicator(
-        itemCount: _screens.length,
-        currentPageNotifier: _currentPageNotifier,
       ),
     );
   }
