@@ -51,8 +51,12 @@ class AlertListTile extends StatelessWidget {
                                   : Icons.warning)),
                     ),
                     //title: Text(sensor.name ?? sensor.uid),
-                    title: Text(notification.uid),
-                    subtitle: Text(notification.descText ?? ""),
+                    title: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 1 / 100),
+                      child: Text(notification.descText ?? ""),
+                    ),
+                    subtitle: Text(notification.uid),
                     trailing: Text(
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
                             notification.epoch)),
