@@ -4,11 +4,14 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:get/get.dart';
+import 'package:pycnomobile/controllers/NotificationsController.dart';
 
 class AlertListTile extends StatelessWidget {
-  const AlertListTile({Key? key, required this.notification}) : super(key: key);
+  AlertListTile({Key? key, required this.notification}) : super(key: key);
 
   final NotificationData notification;
+  final NotificationsController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +30,12 @@ class AlertListTile extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 10 / 100,
             child: Center(
               child: InkWell(
-                onTap: () {
+                onTap: () async {
                   FocusScope.of(context).unfocus();
-                  // Navigator.of(context).push(CupertinoPageRoute(
-                  //     builder: (_) => SensorPage(sensor: sensor)));
+                  Sensor sensor = await controller
+                      .getSensorFromNotifs(this.notification.uid);
+                  Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (_) => SensorPage(sensor: sensor)));
                 },
                 child: ListTile(
                     leading: Container(
