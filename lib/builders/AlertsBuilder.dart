@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/widgets/AlertListTile.dart';
+import 'package:pycnomobile/controllers/NotificationsController.dart';
+import 'package:get/get.dart';
 
 List<Widget> buildAlerts() {
+  NotificationsController controller = Get.put(NotificationsController());
+
   /*
   api here : https://stage.pycno.co/api/v2/notifications.json?TK=fGXiDK9cnC52V3uaBLLg1G7l4LodjyX4&UID=M2DBCBCC1A31A19D5&S2T
   minimum needed for Notification class
@@ -15,8 +19,8 @@ List<Widget> buildAlerts() {
     int severity;
    }
 
-  - need some global counter to get total number of notification with severity> 0 and state == 0 to show how many notifs total ( its for the "number of alerts" badge on bottomnavbar)
-  - also need a global function/boolean to tell if there is any notification with severity > 3 and state == 0
+  - need some global counter to get total number of notification with severity> 0 and state == 0 to show how many notifs total ( its for the "number of alerts" badge on bottomnavbar) (ZQ: controller.alertCount)
+  - also need a global function/boolean to tell if there is any notification with severity > 3 and state == 0 (ZQ: controller.isSevere)
   - the AlertListTile class is not updated to accept Notification class yet.
   - Once u build the api call to get List<Notification> then u can stop alr, ill handle the rest.
   - Actually we kinda need to call this api right at the start of the app launching so I can put the total number of notifications on the bottom nav bar
