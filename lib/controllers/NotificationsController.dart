@@ -23,8 +23,8 @@ class NotificationsController extends GetxController {
       print(body.length);
       for (var i = 0; i < body.length; i++) {
         Notification notif = Notification.fromJson(body[i]);
-        notifications.add(notif);
         if (notif.severity > 0 && notif.state == 0) {
+          notifications.add(notif);
           if (notif.severity > 3) {
             isSevere = true;
           }
