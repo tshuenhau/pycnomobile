@@ -10,6 +10,7 @@ import 'package:pycnomobile/screens/SensorSearchPage.dart';
 import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:pycnomobile/controllers/NotificationsController.dart';
 
 class SensorListPage extends StatefulWidget {
   @override

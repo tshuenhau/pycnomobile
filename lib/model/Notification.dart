@@ -5,12 +5,12 @@ class Notification {
   String uid;
   int epoch;
   String? site;
-  DateTime? dismissedTS;
+  String? dismissedTS;
   String? userId;
   String? desc;
   String? title;
   String? descText;
-  String id;
+  int id;
 
   Notification(
       {required this.key,

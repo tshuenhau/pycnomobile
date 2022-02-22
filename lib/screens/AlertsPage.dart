@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/AlertsBuilder.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:pycnomobile/widgets/AlertListTile.dart';
+import 'package:get/get.dart';
 
 class AlertsPage extends StatefulWidget {
   const AlertsPage({Key? key}) : super(key: key);
