@@ -28,6 +28,8 @@ class _AppState extends State<App> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller.getNotifications();
+
     if (widget.authController.isLoggedIn.value == AuthState.loggedIn) {
       isLoggedIn = true;
     } else {
