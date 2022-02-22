@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/widgets/AlertListTile.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:get/get.dart';
 
 List<Widget> buildAlerts() {
   NotificationsController controller = Get.put(NotificationsController());
+  controller.getNotifications();
 
   /*
   api here : https://stage.pycno.co/api/v2/notifications.json?TK=fGXiDK9cnC52V3uaBLLg1G7l4LodjyX4&UID=M2DBCBCC1A31A19D5&S2T
@@ -30,8 +32,13 @@ List<Widget> buildAlerts() {
    */
 
   //call function to get all notifications then return the list of AlertListTile
-
   List<AlertListTile> alerts = [];
+
+  List<NotificationData> notifications = controller.notifications;
+  controller.notifications.forEach((e) {
+    print(e.desc);
+    alerts.add(AlertListTile(notification: e));
+  });
   return [
     // AlertListTile(
     //     icon: Icon(Icons.ac_unit), // based on event_frost/event_low_battery

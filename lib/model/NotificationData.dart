@@ -1,4 +1,4 @@
-class Notification {
+class NotificationData {
   String key;
   int state;
   int severity;
@@ -12,7 +12,7 @@ class Notification {
   String? descText;
   int id;
 
-  Notification(
+  NotificationData(
       {required this.key,
       required this.state,
       required this.severity,
@@ -30,8 +30,8 @@ class Notification {
     this.state = 1;
   }
 
-  factory Notification.fromJson(Map<String, dynamic> json) {
-    return Notification(
+  factory NotificationData.fromJson(Map<String, dynamic> json) {
+    return NotificationData(
         key: json["key"],
         state: json['state'],
         severity: json['severity'],
