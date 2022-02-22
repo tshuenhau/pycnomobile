@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class AlertListTile extends StatelessWidget {
   const AlertListTile({Key? key, required this.notification}) : super(key: key);
@@ -44,8 +45,8 @@ class AlertListTile extends StatelessWidget {
                     title: Text(notification.uid),
                     subtitle: Text(notification.desc ?? ""),
                     trailing: Text(
-                        DateTime.fromMillisecondsSinceEpoch(notification.epoch)
-                            .toString(),
+                        timeago.format(DateTime.fromMillisecondsSinceEpoch(
+                            notification.epoch)),
                         style: TextStyle(
                             fontSize:
                                 MediaQuery.of(context).size.width * 3 / 100))),
