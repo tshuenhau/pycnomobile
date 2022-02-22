@@ -78,10 +78,10 @@ class _AppState extends State<App> {
       // ),
       PersistentBottomNavBarItem(
         //TODO: Notification counter
-        icon: Badge(
-            badgeContent: Text(controller.alertCounter.toString()),
-            badgeColor: controller.isSevere ? Colors.red : Colors.amber,
-            child: Icon(Icons.notifications)),
+        icon: Obx(() => Badge(
+            badgeContent: Text(controller.alertCounter.value.toString()),
+            badgeColor: controller.isSevere.value ? Colors.red : Colors.amber,
+            child: Icon(Icons.notifications))),
         title: 'Alerts',
         activeColorPrimary: Theme.of(context).colorScheme.secondary,
         inactiveColorPrimary: Theme.of(context).primaryColor,
