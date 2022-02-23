@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'dart:convert';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
@@ -11,32 +12,53 @@ import 'package:pycnomobile/model/sensors/RainGauge.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
-  RxList<NotificationData> notifications = RxList.empty();
+  RxList<NotificationData> unreadNotifications = RxList.empty();
+  RxList<NotificationData> readNotifications = RxList.empty();
   Rx<int> alertCounter = 0.obs;
   Rx<bool> isSevere = false.obs;
+
+  void onInit() async {
+    super.onInit();
+    // await this.reload();
+  }
+
+  Future<void> reload() async {
+    Timer.periodic(new Duration(seconds: 10), (timer) async {
+      print("refresh notifs");
+      await this.getNotifications();
+    });
+  }
+
+  void dismissNotification(NotificationData notif) {
+    notif.markAsRead();
+    unreadNotifications.removeWhere((x) => x.uid == notif.uid);
+    readNotifications.add(notif);
+    readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
+  }
 
   Future<void> getNotifications() async {
     alertCounter.value = 0;
     isSevere.value = false;
-    notifications.clear();
+    unreadNotifications.clear();
+    readNotifications.clear();
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
-    print(
-        'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
+    // print(
+    //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
     if (response.statusCode >= 200) {
       var body = jsonDecode(response.body);
       for (var i = 0; i < body.length; i++) {
         NotificationData notif = NotificationData.fromJson(body[i]);
         if (notif.severity > 0 && notif.state == 0) {
-          notifications.add(notif);
+          unreadNotifications.add(notif);
           if (notif.severity > 3) {
             isSevere.value = true;
           }
           alertCounter.value++;
+        } else if (notif.state == 1) {
+          readNotifications.add(notif);
         }
       }
-      print(alertCounter);
-      print(notifications);
     } else {
       throw Exception("Unable to get notifications");
     }

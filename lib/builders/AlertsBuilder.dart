@@ -4,28 +4,41 @@ import 'package:pycnomobile/widgets/AlertListTile.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:get/get.dart';
 
-List<Widget> buildAlerts() {
+List<Widget> buildAlerts({required bool isRead}) {
   NotificationsController controller = Get.put(NotificationsController());
   // controller.getNotifications();
   List<AlertListTile> alerts = [];
 
-  print("number of notifs: " + controller.notifications.length.toString());
-  controller.notifications.forEach((e) {
-    print(e.desc);
-    alerts.add(AlertListTile(notification: e));
-  });
+  if (isRead) {
+    controller.readNotifications.forEach((e) {
+      print(e.desc);
+      alerts.add(AlertListTile(notification: e));
+    });
+  } else {
+    controller.unreadNotifications.forEach((e) {
+      print(e.desc);
+      alerts.add(AlertListTile(notification: e));
+    });
+  }
   return alerts;
 }
 
-List<Widget> refreshAlerts() {
+List<Widget> refreshAlerts({required bool isRead}) {
   NotificationsController controller = Get.put(NotificationsController());
   controller.getNotifications();
   List<AlertListTile> alerts = [];
 
-  print("number of notifs: " + controller.notifications.length.toString());
-  controller.notifications.forEach((e) {
-    print(e.desc);
-    alerts.add(AlertListTile(notification: e));
-  });
+  if (isRead) {
+    controller.readNotifications.forEach((e) {
+      print(e.desc);
+      alerts.add(AlertListTile(notification: e));
+    });
+  } else {
+    controller.unreadNotifications.forEach((e) {
+      print(e.desc);
+      alerts.add(AlertListTile(notification: e));
+    });
+  }
+
   return alerts;
 }

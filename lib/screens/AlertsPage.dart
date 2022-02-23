@@ -12,7 +12,7 @@ class AlertsPage extends StatefulWidget {
 }
 
 class _AlertsPageState extends State<AlertsPage> {
-  List<Widget> unreadNotifications = buildAlerts();
+  // List<Widget> unreadNotifications = buildAlerts();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -59,14 +59,16 @@ class _AlertsPageState extends State<AlertsPage> {
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
             child: TabBarView(children: [
-              RefreshIndicator(
-                  onRefresh: () async {
-                    setState(() {
-                      unreadNotifications = buildAlerts();
-                    });
-                  },
-                  child: ListView(children: unreadNotifications)),
-              ListView(children: buildAlerts()),
+              Obx(() => ListView(children: buildAlerts(isRead: false))),
+              Obx(() => ListView(children: buildAlerts(isRead: true))),
+              // RefreshIndicator(
+              //     onRefresh: () async {
+              //       setState(() {
+              //         unreadNotifications = buildAlerts(isRead: false);
+              //       });
+              //     },
+              //     child: ListView(children: unreadNotifications)),
+              // ListView(children: buildAlerts()),
             ]),
           ),
         ));
