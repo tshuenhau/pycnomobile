@@ -21,6 +21,7 @@ class AlertListTile extends StatelessWidget {
       key: Key(this.notification.id.toString()),
       onDismissed: (notificationId) {
         //delete the notification
+        controller.dismissNotification(this.notification);
       },
       child: Card(
           shape: RoundedRectangleBorder(
@@ -39,6 +40,7 @@ class AlertListTile extends StatelessWidget {
                   EasyLoading.dismiss();
                   Navigator.of(context).push(CupertinoPageRoute(
                       builder: (_) => SensorPage(sensor: sensor)));
+                  controller.dismissNotification(this.notification);
                 },
                 child: ListTile(
                     leading: Container(

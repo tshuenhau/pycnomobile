@@ -58,8 +58,8 @@ class _AlertsPageState extends State<AlertsPage> {
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
             child: TabBarView(children: [
-              Obx(() => ListView(children: buildAlerts())),
-              Obx(() => ListView(children: buildAlerts())),
+              Obx(() => ListView(children: buildAlerts(isRead: false))),
+              Obx(() => ListView(children: buildAlerts(isRead: true))),
             ]),
           ),
         ));
