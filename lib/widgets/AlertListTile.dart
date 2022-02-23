@@ -75,9 +75,8 @@ class AlertListTile extends StatelessWidget {
                     subtitle: Text(notification.uid),
                     trailing: Text(
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
-                                notification.epoch,
-                                isUtc: true)
-                            .toLocal()),
+                          notification.epoch,
+                        )),
                         style: TextStyle(
                             fontSize:
                                 MediaQuery.of(context).size.width * 3 / 100))),
