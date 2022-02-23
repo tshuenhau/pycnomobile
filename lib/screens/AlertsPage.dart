@@ -13,8 +13,6 @@ class AlertsPage extends StatefulWidget {
 }
 
 class _AlertsPageState extends State<AlertsPage> {
-  // List<Widget> unreadNotifications = buildAlerts(isRead: false);
-  // List<Widget> readNotifications = buildAlerts(isRead: true);
   final NotificationsController notificationsController =
       Get.put(NotificationsController());
 
