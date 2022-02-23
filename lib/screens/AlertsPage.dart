@@ -17,6 +17,7 @@ class _AlertsPageState extends State<AlertsPage> {
   List<Widget> readNotifications = buildAlerts(isRead: true);
   final NotificationsController notificationsController =
       Get.put(NotificationsController());
+
   Future _refreshData() async {
     await notificationsController.getNotifications();
   }
@@ -71,7 +72,17 @@ class _AlertsPageState extends State<AlertsPage> {
                   onRefresh: _refreshData,
                   child: Obx(
                       () => ListView(children: buildAlerts(isRead: false)))),
-              Obx(() => ListView(children: buildAlerts(isRead: true))),
+              RefreshIndicator(
+                onRefresh: _refreshData,
+                child: Obx(() => ListView.builder(
+                    itemCount: notificationsController.readNotifications.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return AlertListTile(
+                          notification:
+                              notificationsController.readNotifications[index]);
+                    })),
+              ),
             ]),
           ),
         ));
