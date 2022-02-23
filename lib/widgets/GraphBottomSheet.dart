@@ -83,7 +83,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               )),
       height: controller.countNumberOfGraphs(widget.functions) > 1
           ? MediaQuery.of(context).size.height * 75 / 100
-          : MediaQuery.of(context).size.height * 50 / 100,
+          : MediaQuery.of(context).size.height * 55 / 100,
       child: Center(
         child: Obx(
           () => ListView(
