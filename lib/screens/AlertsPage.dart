@@ -13,8 +13,8 @@ class AlertsPage extends StatefulWidget {
 }
 
 class _AlertsPageState extends State<AlertsPage> {
-  List<Widget> unreadNotifications = buildAlerts(isRead: false);
-  List<Widget> readNotifications = buildAlerts(isRead: true);
+  // List<Widget> unreadNotifications = buildAlerts(isRead: false);
+  // List<Widget> readNotifications = buildAlerts(isRead: true);
   final NotificationsController notificationsController =
       Get.put(NotificationsController());
 
@@ -69,9 +69,17 @@ class _AlertsPageState extends State<AlertsPage> {
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
             child: TabBarView(children: [
               RefreshIndicator(
-                  onRefresh: _refreshData,
-                  child: Obx(
-                      () => ListView(children: buildAlerts(isRead: false)))),
+                onRefresh: _refreshData,
+                child: Obx(() => ListView.builder(
+                    itemCount:
+                        notificationsController.unreadNotifications.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return AlertListTile(
+                          notification: notificationsController
+                              .unreadNotifications[index]);
+                    })),
+              ),
               RefreshIndicator(
                 onRefresh: _refreshData,
                 child: Obx(() => ListView.builder(
