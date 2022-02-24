@@ -31,21 +31,21 @@ class NotificationsController extends GetxController {
 
   void dismissNotification(NotificationData notif) {
     notif.markAsRead();
-    unreadNotifications.removeWhere((x) => x.uid == notif.uid);
+    unreadNotifications.removeWhere((x) => x.id == notif.id);
     readNotifications.add(notif);
     readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
   }
 
   Future<void> getNotifications() async {
-    alertCounter.value = 0;
-    isSevere.value = false;
-    unreadNotifications.clear();
-    readNotifications.clear();
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
     // print(
     //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
     if (response.statusCode >= 200) {
+      alertCounter.value = 0;
+      isSevere.value = false;
+      unreadNotifications.clear();
+      readNotifications.clear();
       var body = jsonDecode(response.body);
       for (var i = 0; i < body.length; i++) {
         NotificationData notif = NotificationData.fromJson(body[i]);
