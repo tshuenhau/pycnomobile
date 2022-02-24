@@ -65,7 +65,8 @@ class _AlertsPageState extends State<AlertsPage> {
           body: Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
-            child: TabBarView(children: [
+            child:
+                TabBarView(physics: NeverScrollableScrollPhysics(), children: [
               RefreshIndicator(
                 onRefresh: _refreshData,
                 child: Obx(() => ListView.builder(

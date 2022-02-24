@@ -7,6 +7,7 @@ import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
+import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
@@ -80,7 +81,12 @@ class _AppState extends State<App> {
         //TODO: Notification counter
         icon: Obx(() => Badge(
             badgeContent: Text(controller.alertCounter.value.toString()),
-            badgeColor: controller.isSevere.value ? Colors.red : Colors.amber,
+            // position: BadgePosition.topEnd(
+            //     end: -MediaQuery.of(context).size.width * 3 / 100,
+            //     top: -MediaQuery.of(context).size.height * 1.5 / 100),
+            badgeColor: controller.isSevere.value
+                ? Colors.red
+                : globalTheme.colorScheme.surface,
             showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),
         title: 'Alerts',
