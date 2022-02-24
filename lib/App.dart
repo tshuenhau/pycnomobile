@@ -81,12 +81,12 @@ class _AppState extends State<App> {
         //TODO: Notification counter
         icon: Obx(() => Badge(
             badgeContent: Text(controller.alertCounter.value.toString()),
+            animationType: BadgeAnimationType.slide,
             // position: BadgePosition.topEnd(
             //     end: -MediaQuery.of(context).size.width * 3 / 100,
             //     top: -MediaQuery.of(context).size.height * 1.5 / 100),
-            badgeColor: controller.isSevere.value
-                ? Colors.red
-                : globalTheme.colorScheme.surface,
+            badgeColor:
+                controller.isSevere.value ? Colors.red : Colors.orange.shade200,
             showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),
         title: 'Alerts',
