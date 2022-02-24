@@ -79,8 +79,11 @@ class ListOfSensorsController extends GetxController
   }
 
   void searchListOfSensors() {
-    filteredListOfSensors.clear();
     String searchTerm = searchController.value;
+    if (searchTerm == "") {
+      return;
+    }
+    filteredListOfSensors.clear();
     for (Sensor sensor in listOfSensors) {
       if (sensor.uid.contains(new RegExp(searchTerm, caseSensitive: false))) {
         filteredListOfSensors.add(sensor);
