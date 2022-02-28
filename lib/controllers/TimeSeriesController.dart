@@ -114,7 +114,7 @@ class TimeSeriesController extends GetxController {
     }
     print(graphs.length);
     if (graphs.length > 1) {
-      graphs.removeAt(0);
+      graphs.removeRange(0, graphs.length - 1);
     }
     print(graphs.last);
   }
