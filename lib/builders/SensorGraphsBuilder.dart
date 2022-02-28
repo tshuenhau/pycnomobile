@@ -4,6 +4,7 @@ import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
@@ -50,7 +51,7 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    controller.getMultiTimeSeries(dateRange.start,
+    await controller.getMultiTimeSeries(dateRange.start,
         dateRange.end.add(Duration(days: 1)), functions, sensor);
   }
 
@@ -85,7 +86,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   if (controller.countNumberOfGraphs(functions) <= 0) {
     graphsToDraw.add(NoGraphData());
   }
-  controller.graphs.forEach((e) {
+  controller.graphs.last.forEach((e) {
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(

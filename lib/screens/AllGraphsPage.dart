@@ -14,7 +14,6 @@ class AllGraphsPage extends StatefulWidget {
 }
 
 class _AllGraphsPageState extends State<AllGraphsPage> {
-  List<TimeSeries> graphs = [];
   @override
   void initState() {
     super.initState();
@@ -44,10 +43,6 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                     _newDateRange,
                     widget.sensor,
                     widget.sensor.functionalities!);
-                setState(() {
-                  graphs = result!;
-                });
-
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },

@@ -37,7 +37,7 @@ dependencies:
   device_info_plus: ^3.2.1
   flutter_easyloading: ^3.0.3
   badges: ^2.0.2
-
+  async: ^2.8.2
   flutter:
     sdk: flutter
 
