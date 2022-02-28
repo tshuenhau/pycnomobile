@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-
+import 'package:async/async.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/model/TimeSeries.dart';
@@ -10,8 +10,9 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
-  RxList<TimeSeries?> graphs = RxList<TimeSeries?>.empty();
+  RxList<List<TimeSeries?>> graphs = RxList<List<TimeSeries?>>.empty();
   Rx<int> howManyGraphs = 0.obs;
+  CancelableOperation? cancelableTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -49,7 +50,9 @@ class TimeSeriesController extends GetxController {
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor) async {
-    graphs.clear();
+    List<TimeSeries?> instanceList = List.empty(growable: true);
+    graphs.add(instanceList);
+
     for (Functionality? function in functions) {
       if (function != null) {
         if (function.value is List) {
@@ -57,6 +60,7 @@ class TimeSeriesController extends GetxController {
           List func = function.value;
 
           for (Functionality? subfunc in func) {
+            print(subfunc);
             if (subfunc != null) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
@@ -71,12 +75,11 @@ class TimeSeriesController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
-                  print("HELLO");
-                  graphs.add(null);
+                  instanceList.add(null);
                   continue;
                 }
                 Map<int, double> timeSeries = convertListToMap(body['values']);
-                graphs.add(new TimeSeries(
+                instanceList.add(new TimeSeries(
                     key: key, color: color, timeSeries: timeSeries));
               } else {
                 throw Exception("Failed to retrieve data"); //Ask UI to reload
@@ -84,9 +87,10 @@ class TimeSeriesController extends GetxController {
             }
           }
         } else {
+          print(function.key);
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-          print(response.body);
+
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -96,11 +100,11 @@ class TimeSeriesController extends GetxController {
             String color = body['color'];
             String key = body['key'];
             if (body["values"] == null) {
-              graphs.add(null);
+              instanceList.add(null);
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);
-            graphs.add(
+            instanceList.add(
                 new TimeSeries(key: key, color: color, timeSeries: timeSeries));
           } else {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
@@ -108,6 +112,20 @@ class TimeSeriesController extends GetxController {
         }
       }
     }
+    if (graphs.length > 1) {
+      graphs.removeRange(0, graphs.length);
+    }
+  }
+
+  Future<void> createCancelableTimeSeries(DateTime start, DateTime end,
+      List<Functionality?> functions, Sensor sensor) async {
+    cancelableTimeSeries?.cancel();
+    cancelableTimeSeries = CancelableOperation.fromFuture(
+        getMultiTimeSeries(start, end, functions, sensor), onCancel: () {
+      print("Operation cancelled");
+      graphs.clear();
+      print(graphs);
+    });
   }
 
   int countNumberOfGraphs(List<Functionality?> functions) {

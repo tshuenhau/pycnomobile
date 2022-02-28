@@ -4,11 +4,11 @@ import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
-Future<List<TimeSeries>> buildSensorGraphs(
-    Sensor sensor, List<Functionality?> functions,
+Future<void> buildSensorGraphs(Sensor sensor, List<Functionality?> functions,
     [DateTimeRange? dateRange]) async {
   if (dateRange == null) {
     dateRange = new DateTimeRange(
@@ -25,17 +25,14 @@ Future<List<TimeSeries>> buildSensorGraphs(
             dateRange.end.day, 23, 59));
   }
 
-  final List<TimeSeries> graphs = [];
-
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
     print("number of graphs " +
         controller.countNumberOfGraphs(functions).toString());
-    controller.getMultiTimeSeries(
+    controller.createCancelableTimeSeries(
         dateRange.start, dateRange.end, functions, sensor);
   }
-  return graphs;
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
@@ -56,7 +53,7 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    controller.getMultiTimeSeries(dateRange.start,
+    await controller.createCancelableTimeSeries(dateRange.start,
         dateRange.end.add(Duration(days: 1)), functions, sensor);
   }
 
@@ -93,7 +90,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   if (controller.countNumberOfGraphs(functions) <= 0) {
     graphsToDraw.add(NoGraphData());
   }
-  controller.graphs.forEach((e) {
+  controller.graphs.last.forEach((e) {
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(
@@ -105,7 +102,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
       graphsToDraw.add(NoGraphData());
     }
   });
-  print(controller.graphs);
+  // print(controller.graphs);
   // graphs.forEach((key, value) {
   //   graphsToDraw.add(SensorLineChart(data: value, function: key));
   // });
