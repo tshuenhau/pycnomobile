@@ -29,7 +29,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    graphs = await buildSensorGraphs(widget.sensor, widget.functions);
+    await initGraphs(widget.sensor, widget.functions);
   }
 
   @override

@@ -7,8 +7,7 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
-Future<List<TimeSeries>> buildSensorGraphs(
-    Sensor sensor, List<Functionality?> functions,
+Future<void> initGraphs(Sensor sensor, List<Functionality?> functions,
     [DateTimeRange? dateRange]) async {
   if (dateRange == null) {
     dateRange = new DateTimeRange(
@@ -25,17 +24,12 @@ Future<List<TimeSeries>> buildSensorGraphs(
             dateRange.end.day, 23, 59));
   }
 
-  final List<TimeSeries> graphs = [];
-
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    print("number of graphs " +
-        controller.countNumberOfGraphs(functions).toString());
     controller.getMultiTimeSeries(
         dateRange.start, dateRange.end, functions, sensor);
   }
-  return graphs;
 }
 
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
@@ -72,8 +66,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
   TimeSeriesController controller = Get.find();
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
-  int currCount = 0;
-
   Widget buildLoadingIndicator(BuildContext context) {
     if (drawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
@@ -106,13 +98,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
     }
   });
   print(controller.graphs);
-  // graphs.forEach((key, value) {
-  //   graphsToDraw.add(SensorLineChart(data: value, function: key));
-  // });
 
-  // if (graphsToDraw.length <= 0) {
-  //   graphsToDraw.add(Text("No Data"));
-  // }
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator(context)
