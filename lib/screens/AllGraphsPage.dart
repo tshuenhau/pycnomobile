@@ -21,7 +21,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
   }
 
   void initData() async {
-    await buildSensorGraphs(widget.sensor, widget.sensor.functionalities!);
+    await initGraphs(widget.sensor, widget.sensor.functionalities!);
   }
 
   Widget DateRangeSelector(BuildContext context) {
@@ -75,19 +75,6 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                           height:
                               MediaQuery.of(context).size.height * 2.5 / 100,
                         ),
-
-                        // Center(
-                        //   child: Padding(
-                        //     padding: EdgeInsets.only(
-                        //         top: MediaQuery.of(context).size.height * 2.5 / 100,
-                        //         bottom:
-                        //             MediaQuery.of(context).size.height * 9 / 100),
-                        //     child: SizedBox(
-                        //         height: MediaQuery.of(context).size.width * 5 / 100,
-                        //         width: MediaQuery.of(context).size.width * 5 / 100,
-                        //         child: CircularProgressIndicator()),
-                        //   ),
-                        // )
                       ] +
                       buildGraphs(context, widget.sensor.functionalities!),
                 ),

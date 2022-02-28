@@ -53,6 +53,7 @@ Widget buildSummaryCards(
 
   return IntrinsicHeight(
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
             mainAxisAlignment: MainAxisAlignment.start, children: leftColumn),

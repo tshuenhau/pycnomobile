@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -73,13 +74,19 @@ class AlertListTile extends StatelessWidget {
                       child: Text(notification.descText ?? ""),
                     ),
                     subtitle: Text(notification.uid),
-                    trailing: Text(
-                        timeago.format(DateTime.fromMillisecondsSinceEpoch(
-                          notification.epoch,
-                        )),
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.width * 3 / 100))),
+                    trailing: SizedBox(
+                      width: MediaQuery.of(context).size.width * 20 / 100,
+                      child: AutoSizeText(
+                          // "about an hour ago"
+                          timeago.format(DateTime.fromMillisecondsSinceEpoch(
+                            notification.epoch,
+                          )),
+                          maxLines: 2,
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 3 / 100)),
+                    )),
               ),
             ),
           )),

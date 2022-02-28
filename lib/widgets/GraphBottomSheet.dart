@@ -21,7 +21,7 @@ class GraphBottomSheet extends StatefulWidget {
 
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
-  List<TimeSeries> graphs = [];
+  // List<TimeSeries> graphs = [];
   @override
   void initState() {
     super.initState();
@@ -29,13 +29,13 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    await buildSensorGraphs(widget.sensor, widget.functions);
+    await initGraphs(widget.sensor, widget.functions);
   }
 
   @override
   void dispose() {
     super.dispose();
-    graphs.clear();
+    // graphs.clear();
   }
 
   Widget DateRangeSelector(BuildContext context) {
@@ -55,9 +55,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               if (_newDateRange != null) {
                 List<TimeSeries>? result = await getGraphsForTimeRange(
                     _newDateRange, widget.sensor, widget.functions);
-                setState(() {
-                  graphs = result!;
-                });
+                // setState(() {
+                //   graphs = result!;
+                // });
 
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }

@@ -10,7 +10,7 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
-  RxList<List<TimeSeries?>> graphs = RxList<List<TimeSeries?>>.empty();
+  RxList<RxList<TimeSeries?>> graphs = RxList<RxList<TimeSeries?>>.empty();
   Rx<int> howManyGraphs = 0.obs;
   CancelableOperation? cancelableTimeSeries;
 
@@ -50,7 +50,7 @@ class TimeSeriesController extends GetxController {
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor) async {
-    List<TimeSeries?> instanceList = List.empty(growable: true);
+    RxList<TimeSeries?> instanceList = RxList.empty(growable: true);
     graphs.add(instanceList);
 
     for (Functionality? function in functions) {
@@ -112,21 +112,23 @@ class TimeSeriesController extends GetxController {
         }
       }
     }
+    print(graphs.length);
     if (graphs.length > 1) {
-      graphs.removeRange(0, graphs.length);
+      graphs.removeAt(0);
     }
+    print(graphs.last);
   }
 
-  Future<void> createCancelableTimeSeries(DateTime start, DateTime end,
-      List<Functionality?> functions, Sensor sensor) async {
-    cancelableTimeSeries?.cancel();
-    cancelableTimeSeries = CancelableOperation.fromFuture(
-        getMultiTimeSeries(start, end, functions, sensor), onCancel: () {
-      print("Operation cancelled");
-      graphs.clear();
-      print(graphs);
-    });
-  }
+  // Future<void> createCancelableTimeSeries(DateTime start, DateTime end,
+  //     List<Functionality?> functions, Sensor sensor) async {
+  //   cancelableTimeSeries?.cancel();
+  //   cancelableTimeSeries = CancelableOperation.fromFuture(
+  //       getMultiTimeSeries(start, end, functions, sensor), onCancel: () {
+  //     print("Operation cancelled");
+  //     graphs.clear();
+  //     print(graphs);
+  //   });
+  // }
 
   int countNumberOfGraphs(List<Functionality?> functions) {
     int count = 0;
