@@ -10,6 +10,7 @@ import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
