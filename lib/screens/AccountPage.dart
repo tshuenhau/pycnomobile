@@ -22,65 +22,65 @@ class AccountPage extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 2.5 / 100),
+                      height: MediaQuery.of(context).size.height * 3.5 / 100),
                   Container(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                        Column(
-                          children: [
-                            Text(authController.user.value!.username,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 25)),
-                            SizedBox(
-                                height: MediaQuery.of(context).size.height *
-                                    2.5 /
-                                    100),
-                            authController.user.value == null
-                                ? CircularProgressIndicator()
-                                : CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: authController
-                                                .user.value!.profilePic !=
-                                            null
-                                        ? NetworkImage(
-                                            "https://pycno.co/${authController.user.value!.profilePic}")
-                                        : null,
-                                    child:
-                                        authController.user.value!.profilePic ==
-                                                null
-                                            ? Icon(Icons.person, size: 50)
-                                            : null),
-                          ],
-                        ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      child: IntrinsicHeight(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
                             children: [
+                              authController.user.value == null
+                                  ? CircularProgressIndicator()
+                                  : CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: authController
+                                                  .user.value!.profilePic !=
+                                              null
+                                          ? NetworkImage(
+                                              "https://pycno.co/${authController.user.value!.profilePic}")
+                                          : null,
+                                      child: authController
+                                                  .user.value!.profilePic ==
+                                              null
+                                          ? Icon(Icons.person, size: 50)
+                                          : null),
                               SizedBox(
-                                  height: 25 +
-                                      MediaQuery.of(context).size.height *
-                                          2.5 /
-                                          100),
-                              TextButton.icon(
-                                  icon: Icon(Icons.radar),
-                                  label: Text("Scan for devices"),
-                                  onPressed: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (_) => BluetoothPage()))),
-                              TextButton.icon(
-                                  icon: Icon(Icons.logout),
-                                  label: Text("Logout"),
-                                  onPressed: () {
-                                    authController.logout();
-                                    Get.reset();
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                                builder: (_) => LoginPage()),
-                                            (_) => false);
-                                  }),
-                            ]),
-                      ])),
+                                  height: MediaQuery.of(context).size.height *
+                                      2 /
+                                      100),
+                              Text(authController.user.value!.username,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25)),
+                            ],
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                TextButton.icon(
+                                    icon: Icon(Icons.radar),
+                                    label: Text("Scan for devices"),
+                                    onPressed: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) => BluetoothPage()))),
+                                TextButton.icon(
+                                    icon: Icon(Icons.logout),
+                                    label: Text("Logout"),
+                                    onPressed: () {
+                                      authController.logout();
+                                      Get.reset();
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pushAndRemoveUntil(
+                                              MaterialPageRoute(
+                                                  builder: (_) => LoginPage()),
+                                              (_) => false);
+                                    }),
+                              ]),
+                        ]),
+                  )),
                   // TextButton.icon(
                   //     icon: Icon(Icons.person),
                   //     label: Text("Account Details"),
