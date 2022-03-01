@@ -8,20 +8,30 @@ class AccountDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: Align(
+      alignment: Alignment.center,
+      child: Expanded(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-          BackButton(),
-          Text("Username: ${authController.user.value!.username}"),
-          Text("Email: ${authController.user.value!.username}"),
-          Text("First Name: ${authController.user.value!.name}"),
-          Text("Last Name: ${authController.user.value!.surname}"),
-          Text("Phone Number: ${authController.user.value!.phoneNumber}"),
-          Text("Locale: ${authController.user.value!.locale}"),
-          Text("Farm Name: ${authController.user.value!.farmName}"),
-          Text("Farm Type: ${authController.user.value!.farmType}"),
-          Text("Farm Address: ${authController.user.value!.farmAddr}")
-        ]));
+              // BackButton(),
+              Card(
+                  child: ListTile(
+                      title: Text("Username: "),
+                      trailing:
+                          Text("${authController.user.value!.username}"))),
+              Text("Email: ${authController.user.value!.username}"),
+              Text("First Name: ${authController.user.value!.name}"),
+              Text("Last Name: ${authController.user.value!.surname}"),
+              Text("Phone Number: ${authController.user.value!.phoneNumber}"),
+              Text("Locale: ${authController.user.value!.locale}"),
+              Text("Farm Name: ${authController.user.value!.farmName}"),
+              Text("Farm Type: ${authController.user.value!.farmType}"),
+              Text("Farm Address: ${authController.user.value!.farmAddr}")
+            ]),
+      ),
+    ));
   }
 }
