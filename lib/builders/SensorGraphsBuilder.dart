@@ -36,17 +36,6 @@ Future<void> initGraphs(Sensor sensor, List<Functionality?> functions,
 Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
     Sensor sensor, List<Functionality?> functions) async {
   final List<TimeSeries> graphs = [];
-  EasyLoading.show(status: 'loading...');
-  bool isDismissed = false;
-
-  EasyLoading.addStatusCallback((status) {
-    if (status == EasyLoadingStatus.dismiss) {
-      isDismissed = true;
-      print("Dismissed");
-
-      //!Need to try to stop the async await function here since we "dismissed" the loading and no longer want the graph
-    }
-  });
 
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
@@ -57,10 +46,7 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
 
   EasyLoading.dismiss();
 
-  if (isDismissed) {
-    return null;
-  } else
-    return graphs;
+  return graphs;
 }
 
 List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
