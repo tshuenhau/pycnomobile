@@ -98,7 +98,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
       graphsToDraw.add(NoGraphData());
     }
   });
-  print(controller.graphs);
 
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
