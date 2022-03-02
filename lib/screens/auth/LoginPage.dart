@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
@@ -48,13 +49,16 @@ class LoginPage extends StatelessWidget {
               child: Text('Login'),
               onPressed: () async {
                 try {
+                  EasyLoading.show(status: "Logging in...");
                   await authController.setDeviceData();
                   await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
+                  EasyLoading.dismiss();
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => App()));
                 } catch (e) {
+                  EasyLoading.showError("invalid username/password");
                   print(e);
                 }
               },
