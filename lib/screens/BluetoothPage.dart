@@ -10,9 +10,8 @@ import 'package:pycnomobile/widgets/BluetoothWidgets.dart';
 class BluetoothPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: Colors.lightBlue,
-      home: StreamBuilder<BluetoothState>(
+    return Scaffold(
+      body: StreamBuilder<BluetoothState>(
           stream: FlutterBlue.instance.state,
           initialData: BluetoothState.unknown,
           builder: (c, snapshot) {
@@ -34,7 +33,6 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -42,14 +40,10 @@ class BluetoothOffScreen extends StatelessWidget {
             Icon(
               Icons.bluetooth_disabled,
               size: 200.0,
-              color: Colors.white54,
+              color: Colors.lightBlueAccent,
             ),
             Text(
               'Bluetooth Adapter is ${state != null ? state.toString().substring(15) : 'not available'}.',
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .subtitle2
-                  ?.copyWith(color: Colors.white),
             ),
             ElevatedButton(
               child: Text('TURN ON'),
