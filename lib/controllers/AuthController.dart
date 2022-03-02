@@ -78,6 +78,7 @@ class AuthController extends GetxController {
   }
 
   getAccount() async {
+    print('https://stage.pycno.co/api/v2/data/account.json?TK=$token');
     final response = await http.get(
         Uri.parse('https://stage.pycno.co/api/v2/data/account.json?TK=$token'));
 
