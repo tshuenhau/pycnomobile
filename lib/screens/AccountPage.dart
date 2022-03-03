@@ -90,61 +90,57 @@ class AccountPage extends StatelessWidget {
                   //         )),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 2.5 / 100),
-                  Expanded(
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: globalTheme.colorScheme.background,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(30))),
-                        child: Column(children: [
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 2 / 100),
-                          AccountListTile(
-                              title: "Username",
-                              value: "${authController.user.value!.username}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Email",
-                              value:
-                                  "${authController.user.value!.username}@pycno.co",
-                              authController: authController),
-                          AccountListTile(
-                              title: "First Name",
-                              value: "${authController.user.value!.name}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Last Name",
-                              value: "${authController.user.value!.surname}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Phone Number",
-                              value:
-                                  "${authController.user.value!.phoneNumber}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Locale",
-                              value: "${authController.user.value!.locale}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Farm Name",
-                              value: "${authController.user.value!.farmName}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Farm Type",
-                              value: "${authController.user.value!.farmType}",
-                              authController: authController),
-                          AccountListTile(
-                              title: "Farm Address",
-                              value: "${authController.user.value!.farmAddr}",
-                              authController: authController),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height *
-                                  2.5 /
-                                  100),
-                        ])),
-                  )
+                  Container(
+                      decoration: BoxDecoration(
+                          color: globalTheme.colorScheme.background,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(30))),
+                      child: Column(children: [
+                        SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 2 / 100),
+                        AccountListTile(
+                            title: "Username",
+                            value: "${authController.user.value!.username}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Email",
+                            value:
+                                "${authController.user.value!.username}@pycno.co",
+                            authController: authController),
+                        AccountListTile(
+                            title: "First Name",
+                            value: "${authController.user.value!.name}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Last Name",
+                            value: "${authController.user.value!.surname}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Phone Number",
+                            value: "${authController.user.value!.phoneNumber}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Locale",
+                            value: "${authController.user.value!.locale}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Farm Name",
+                            value: "${authController.user.value!.farmName}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Farm Type",
+                            value: "${authController.user.value!.farmType}",
+                            authController: authController),
+                        AccountListTile(
+                            title: "Farm Address",
+                            value: "${authController.user.value!.farmAddr}",
+                            authController: authController),
+                        SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 2.5 / 100),
+                      ]))
                 ]),
           ),
         ));
