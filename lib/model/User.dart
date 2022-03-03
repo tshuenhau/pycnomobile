@@ -40,9 +40,9 @@ class User {
         phoneNumber: json["phoneNumber"],
         loggedAt: DateTime.parse(json["loggedAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        farmName: json["farmName"],
-        farmType: json["farmType"],
-        farmAddr: json["farmAddress"]);
+        farmName: json["farmname"],
+        farmType: json["farmtype"],
+        farmAddr: json["farmaddress"]);
   }
 
   @override
