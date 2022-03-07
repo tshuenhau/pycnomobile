@@ -48,7 +48,7 @@ class User {
         colorScheme: {
           "companyColors1": {
             "light": {"background": "#00FF00", "primary": "#ffffff"},
-            "dark": {"background": "#000000", "primary": "#ffffff"}
+            "dark": {"background": "#0000FF", "primary": "#ffffff"}
           },
           "companyColors2": {
             "light": {"background": "#f2f0e1", "primary": "#ffffff"},
