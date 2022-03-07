@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 
-final globalTheme = ThemeData(
+var globalTheme = ThemeData(
     colorScheme: customColorScheme,
     appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -29,3 +29,33 @@ final globalTheme = ThemeData(
     scaffoldBackgroundColor: customColorScheme.background,
     textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
     primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
+
+ThemeData getTheme(Map? colorScheme, bool isLight) {
+  print("Getting account theme");
+  return ThemeData(
+      colorScheme: getColorScheme(colorScheme!, isLight),
+      appBarTheme: AppBarTheme(
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.black),
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          centerTitle: false,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black)),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+        primary: customColorScheme.secondary,
+        onPrimary: customColorScheme.onSecondary,
+        elevation: 0,
+      )),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+              primary: customColorScheme.onSecondary,
+              onSurface: customColorScheme.secondary,
+              backgroundColor: customColorScheme.secondary)),
+      primaryColor: customColorScheme.primary,
+      cardTheme: CardTheme(color: customColorScheme.surface, elevation: 0),
+      scaffoldBackgroundColor: customColorScheme.background,
+      textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
+      primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
+}

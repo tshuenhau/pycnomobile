@@ -1,0 +1,25 @@
+{
+    "companyColors1": {
+        "light" : {
+            "background": "#000000",
+            "primary" : "#ffffff"
+        },
+
+        "dark" : {
+            "background": "#000000",
+            "primary" : "#ffffff"
+        }
+    },
+
+    "companyColors2": {
+        "light" : {
+            "background": "#f2f0e1",
+            "primary" : "#ffffff"
+        },
+
+        "dark" : {
+            "background": "#f2f0e1",
+            "primary" : "#000000"
+        }
+    }
+}

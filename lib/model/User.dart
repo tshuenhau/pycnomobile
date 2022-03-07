@@ -12,6 +12,7 @@ class User {
   String? farmName;
   String? farmType;
   String? farmAddr;
+  Map? colorScheme;
 
   User(
       {required this.username,
@@ -26,7 +27,8 @@ class User {
       required this.updatedAt,
       required this.farmName,
       required this.farmType,
-      required this.farmAddr});
+      required this.farmAddr,
+      required this.colorScheme});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -42,7 +44,17 @@ class User {
         updatedAt: DateTime.parse(json["updatedAt"]),
         farmName: json["farmname"],
         farmType: json["farmtype"],
-        farmAddr: json["farmaddress"]);
+        farmAddr: json["farmaddress"],
+        colorScheme: {
+          "companyColors1": {
+            "light": {"background": "000000", "primary": "ffffff"},
+            "dark": {"background": "000000", "primary": "ffffff"}
+          },
+          "companyColors2": {
+            "light": {"background": "f2f0e1", "primary": "ffffff"},
+            "dark": {"background": "f2f0e1", "primary": "000000"}
+          }
+        });
   }
 
   @override

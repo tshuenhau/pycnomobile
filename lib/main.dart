@@ -9,6 +9,7 @@ import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
+import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -48,8 +49,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     configLoading();
     AuthController controller = Get.put(AuthController());
-    return MaterialApp(
-        theme: globalTheme,
+    return GetMaterialApp(
+        theme: controller.user.value?.colorScheme == null
+            ? globalTheme
+            : getTheme(controller.user.value?.colorScheme, true),
         home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
