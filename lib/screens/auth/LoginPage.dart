@@ -25,6 +25,23 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
+                onSubmitted: (s) async {
+                  try {
+                    EasyLoading.show(status: "Logging in...");
+                    await authController.setDeviceData();
+                    await authController.login(
+                        username: usernameController.text,
+                        password: passwordController.text);
+                    EasyLoading.dismiss();
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => App()));
+                  } catch (e) {
+                    EasyLoading.showError("invalid username/password");
+                    print(e);
+                  }
+                },
+                textInputAction: TextInputAction.go,
+                obscureText: true,
                 controller: usernameController,
                 decoration: new InputDecoration(
                     fillColor: globalTheme.colorScheme.surface,
@@ -32,6 +49,21 @@ class LoginPage extends StatelessWidget {
                     hintText: "username")),
             SizedBox(height: 5),
             TextField(
+                onSubmitted: (s) async {
+                  try {
+                    EasyLoading.show(status: "Logging in...");
+                    await authController.setDeviceData();
+                    await authController.login(
+                        username: usernameController.text,
+                        password: passwordController.text);
+                    EasyLoading.dismiss();
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => App()));
+                  } catch (e) {
+                    EasyLoading.showError("invalid username/password");
+                    print(e);
+                  }
+                },
                 controller: passwordController,
                 decoration: new InputDecoration(
                     fillColor: globalTheme.colorScheme.surface,

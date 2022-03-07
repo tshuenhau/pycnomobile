@@ -18,6 +18,7 @@ var customColorScheme = ColorScheme(
     surface: Color(0xFFfffcf3));
 
 Color hexToColor(String code) {
+  print(code);
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
 
