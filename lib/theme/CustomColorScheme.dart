@@ -39,7 +39,8 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         primary: hexToColor(colorScheme["companyColors1"]["light"]["primary"]),
         secondary: Color(0xFF6c6c65),
         tertiary: Color(0xFF757c49),
-        surface: Color(0xFFfffcf3));
+        surface:
+            hexToColor(colorScheme["companyColors1"]["light"]["background"]));
   } else {
     return ColorScheme(
         brightness: Brightness.light,
@@ -55,6 +56,6 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         primary: hexToColor(colorScheme["companyColors1"]["dark"]["primary"]),
         secondary: Color(0xFF6c6c65),
         tertiary: Color(0xFF757c49),
-        surface: Color(0xFFfffcf3));
+        surface: hexToColor(colorScheme["companyColors1"]["dark"]["primary"]));
   }
 }

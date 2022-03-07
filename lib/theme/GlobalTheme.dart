@@ -32,7 +32,15 @@ var globalTheme = ThemeData(
 
 ThemeData getTheme(Map? colorScheme, bool isLight) {
   print("Getting account theme");
+  ColorScheme myColorScheme;
+  if (colorScheme == null) {
+    myColorScheme = customColorScheme;
+  } else {
+    myColorScheme = getColorScheme(colorScheme, isLight);
+  }
+  print(colorScheme);
   return ThemeData(
+      colorScheme: myColorScheme,
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(color: Colors.black),
