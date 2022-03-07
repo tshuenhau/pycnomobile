@@ -60,7 +60,6 @@ class TimeSeriesController extends GetxController {
           List func = function.value;
 
           for (Functionality? subfunc in func) {
-            print(subfunc);
             if (subfunc != null) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
@@ -87,7 +86,6 @@ class TimeSeriesController extends GetxController {
             }
           }
         } else {
-          print(function.key);
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
 
@@ -112,11 +110,9 @@ class TimeSeriesController extends GetxController {
         }
       }
     }
-    print(graphs.length);
     if (graphs.length > 1) {
       graphs.removeRange(0, graphs.length - 1);
     }
-    print(graphs.last);
   }
 
   // Future<void> createCancelableTimeSeries(DateTime start, DateTime end,

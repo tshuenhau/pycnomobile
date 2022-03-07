@@ -69,16 +69,7 @@ class SonicAnemometer extends Sensor {
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
         pw: json["PW"]?.toDouble(),
-        functionalities: [
-          new Temp(json["TEMP"]?.toDouble()),
-          new Hum(json["HUM"]?.toDouble()),
-          new Bat(json["BAT"]?.toDouble()),
-          new Lx1(json["LX1"]?.toDouble()),
-          new Uv(json["UV"]?.toDouble()),
-          new Wnd(json["WND"]?.toDouble()),
-          new Wndr(json["WNDR"]?.toDouble()),
-          new Gst(json["GST"]?.toDouble()),
-          new Rssi(json["RSSI"]?.toDouble()),
-        ]);
+        functionalities:
+            Sensor.getFunctionalities(json, TYPE_OF_SENSOR.SONIC_ANEMOMETER));
   }
 }
