@@ -43,7 +43,7 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
             hexToColor(colorScheme["companyColors1"]["light"]["background"]));
   } else {
     return ColorScheme(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         background:
             hexToColor(colorScheme["companyColors1"]["dark"]["background"]),
         onBackground: Colors.black,
