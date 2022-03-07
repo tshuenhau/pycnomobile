@@ -19,11 +19,11 @@ class NotificationsController extends GetxController {
 
   void onInit() async {
     super.onInit();
-    // await this.reload();
+    await this.reload();
   }
 
   Future<void> reload() async {
-    Timer.periodic(new Duration(seconds: 10), (timer) async {
+    Timer.periodic(new Duration(seconds: 1800), (timer) async {
       print("refresh notifs");
       await this.getNotifications();
     });

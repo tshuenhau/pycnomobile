@@ -30,9 +30,10 @@ Widget buildSummaryCards(
       if (func.value is List<Functionality?>) {
         print("subfunctions " + func.value.toString());
         List<Functionality?> subFunctions = func.value; // like s1t, s2t
-
+        if (subFunctions.isEmpty) {
+          continue;
+        }
         add(new MultiSummaryCard(
-            //! Maybe do a check here? for whether the stuff in List<Functionality> has a graph or not
             data: Map.fromIterable(subFunctions.where((e) => e != null),
                 key: (e) => e.name, value: (e) => e.value),
             sensor: sensor,

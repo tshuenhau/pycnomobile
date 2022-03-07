@@ -10,13 +10,15 @@ import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SensorListPage extends StatefulWidget {
   @override
   State<SensorListPage> createState() => _SensorListPageState();
 }
 
-class _SensorListPageState extends State<SensorListPage> {
+class _SensorListPageState extends State<SensorListPage>
+    with WidgetsBindingObserver {
   late StreamSubscription<bool> keyboardSubscription;
 
   Future _refreshData() async {
@@ -27,6 +29,8 @@ class _SensorListPageState extends State<SensorListPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+
     var keyboardVisibilityController = KeyboardVisibilityController();
 
     // Subscribe
@@ -40,8 +44,21 @@ class _SensorListPageState extends State<SensorListPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+
     keyboardSubscription.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      print("RELOAD");
+      EasyLoading.show(status: "Loading");
+      await _refreshData();
+      EasyLoading.dismiss();
+    }
   }
 
   @override

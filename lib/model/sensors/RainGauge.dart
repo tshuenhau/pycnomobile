@@ -67,12 +67,7 @@ class RainGauge extends Sensor {
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
         pw: json["PW"]?.toDouble(),
-        functionalities: [
-          new Temp(json["TEMP"]?.toDouble()),
-          new Hum(json["HUM"]?.toDouble()),
-          new Bat(json["BAT"]?.toDouble()),
-          new Rain(json["RAIN"]?.toDouble()),
-          new Rssi(json["RSSI"]?.toDouble()),
-        ]);
+        functionalities:
+            Sensor.getFunctionalities(json, TYPE_OF_SENSOR.RAIN_GAUGE));
   }
 }

@@ -73,51 +73,51 @@ class NodeSoilSensor extends SoilSensor {
   }
 
   factory NodeSoilSensor.fromJson(Map<String, dynamic> json) => NodeSoilSensor(
-        uid: json["UID"],
-        name: json["name"],
-        address: json["address"],
-        img: json["img"],
-        epoch: json["epoch"],
-        site: json["site"],
-        isLive: json["isLive"] == "YES",
-        isLiveHealth: json["isLiveHealth"],
-        isLiveTS: DateTime.parse(json["isLiveTS"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        polledAt: DateTime.parse(json["polledAt"]),
-        soilType: json["soilType"],
-        readableAgo: json["readableAgo"],
-        readableAgoFull: json["readableAgoFull"],
-        txt: json["TXT"],
-        lfreq: json["LFREQ"],
-        ve: json["VE"],
-        ns: json["NS"]?.toDouble(),
-        pw: json["PW"]?.toDouble(),
-        functionalities: [
-          new Temp(json["TEMP"]?.toDouble()),
-          new Hum(json["HUM"]?.toDouble()),
-          new Bat(json["BAT"]?.toDouble()),
-          new Rainh(json["RAINH"]?.toDouble()),
-          new Lw1(json["LW1"]?.toDouble()),
-          new Lx1(json["LX1"]?.toDouble()),
-          new Rssi(json["RSSI"]?.toDouble()),
-          new S123456t([
-            json.containsKey("S1T") ? new S1t(json["S1T"]?.toDouble()) : null,
-            json.containsKey("S2T") ? new S2t(json["S2T"]?.toDouble()) : null,
-            json.containsKey("S3T") ? new S3t(json["S3T"]?.toDouble()) : null,
-            json.containsKey("S4T") ? new S4t(json["S4T"]?.toDouble()) : null,
-            json.containsKey("S5T") ? new S5t(json["S5T"]?.toDouble()) : null,
-            json.containsKey("S6T") ? new S6t(json["S6T"]?.toDouble()) : null,
-          ]),
-          new St135([
-            json.containsKey("ST1") ? new St1(json["ST1"]?.toDouble()) : null,
-            json.containsKey("ST3") ? new St3(json["ST3"]?.toDouble()) : null,
-            json.containsKey("ST5") ? new St5(json["ST5"]?.toDouble()) : null
-          ])
-        ],
-      );
+      uid: json["UID"],
+      name: json["name"],
+      address: json["address"],
+      img: json["img"],
+      epoch: json["epoch"],
+      site: json["site"],
+      isLive: json["isLive"] == "YES",
+      isLiveHealth: json["isLiveHealth"],
+      isLiveTS: DateTime.parse(json["isLiveTS"]),
+      updatedAt: DateTime.parse(json["updatedAt"]),
+      polledAt: DateTime.parse(json["polledAt"]),
+      soilType: json["soilType"],
+      readableAgo: json["readableAgo"],
+      readableAgoFull: json["readableAgoFull"],
+      txt: json["TXT"],
+      lfreq: json["LFREQ"],
+      ve: json["VE"],
+      ns: json["NS"]?.toDouble(),
+      pw: json["PW"]?.toDouble(),
+      functionalities:
+          Sensor.getFunctionalities(json, TYPE_OF_SENSOR.NODE_SOIL_SENSOR));
 
   @override
   String toString() {
     return "Node Soil Sensor: " + super.toString() + ", PW: $pw";
   }
+
+  // getFunctionalities(Map<String, dynamic> json) {
+  //   List<Functionality> functionalities = List.empty(growable: true);
+  //   for (var i = 0; i < json["plottable"].length; i++) {
+  //     if (json["plottable"][i] == "TEMP") {
+  //       functionalities.add(new Temp(json["TEMP"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "HUM") {
+  //       functionalities.add(new Hum(json["HUM"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "BAT") {
+  //       functionalities.add(new Bat(json["BAT"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "RAINH") {
+  //       functionalities.add(new Rainh(json["RAINH"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "LW1") {
+  //       functionalities.add(new Lw1(json["LW1"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "LX1") {
+  //       functionalities.add(new Lx1(json["LX1"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "RSSI") {
+  //       functionalities.add(new Rssi(json["RSSI"]?.toDouble()));
+  //     }
+  //   }
+  // }
 }
