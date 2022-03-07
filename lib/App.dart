@@ -7,7 +7,6 @@ import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);

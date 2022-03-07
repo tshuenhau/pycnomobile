@@ -1,14 +1,14 @@
 // import 'package:flutter/material.dart';
 // import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 // import 'package:pycnomobile/model/TimeSeries.dart';
-// import 'package:pycnomobile/theme/GlobalTheme.dart';
+// import 'package:pycnomobile/theme/Theme.of(context).dart';
 
 // Widget DateRangeSelector(BuildContext context) {
 //   return Theme(
 //     data: ThemeData(
-//         colorScheme: globalTheme.colorScheme.copyWith(
-//             primary: globalTheme.colorScheme.secondary,
-//             secondary: globalTheme.colorScheme.primary)),
+//         colorScheme: Theme.of(context).colorScheme.copyWith(
+//             primary: Theme.of(context).colorScheme.secondary,
+//             secondary: Theme.of(context).colorScheme.primary)),
 //     child: Builder(
 //       builder: (context) => ElevatedButton(
 //           onPressed: () async {

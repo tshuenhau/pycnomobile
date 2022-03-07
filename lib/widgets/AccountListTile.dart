@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class AccountListTile extends StatelessWidget {
   const AccountListTile({
@@ -19,7 +18,7 @@ class AccountListTile extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
           // side: BorderSide(
-          //   color: globalTheme.colorScheme.tertiary.withOpacity(0.20),
+          //   color: Theme.of(context).colorScheme.tertiary.withOpacity(0.20),
           //   width: 1,
           // ),
         ),

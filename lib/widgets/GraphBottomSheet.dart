@@ -7,7 +7,6 @@ import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:get/get.dart';
-import '../theme/GlobalTheme.dart';
 
 class GraphBottomSheet extends StatefulWidget {
   GraphBottomSheet({Key? key, required this.sensor, required this.functions})
@@ -41,9 +40,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   Widget DateRangeSelector(BuildContext context) {
     return Theme(
       data: ThemeData(
-          colorScheme: globalTheme.colorScheme.copyWith(
-              primary: globalTheme.colorScheme.secondary,
-              secondary: globalTheme.colorScheme.primary)),
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Theme.of(context).colorScheme.secondary,
+              secondary: Theme.of(context).colorScheme.primary)),
       child: Builder(
         builder: (context) => ElevatedButton(
             onPressed: () async {
@@ -75,7 +74,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 2.5 / 100),
       decoration: new BoxDecoration(
-          color: globalTheme.colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: new BorderRadius.only(
               topLeft: const Radius.circular(15.0),
               topRight: const Radius.circular(15.0)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/builders/AlertsBuilder.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:pycnomobile/widgets/AlertListTile.dart';
 import 'package:get/get.dart';
 
@@ -28,21 +27,21 @@ class _AlertsPageState extends State<AlertsPage> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor:
-                globalTheme.colorScheme.background.withOpacity(0.95),
+                Theme.of(context).colorScheme.background.withOpacity(0.95),
             bottom: PreferredSize(
               preferredSize: new Size(double.infinity,
                   MediaQuery.of(context).size.height * 0.9 / 100),
               child: Container(
                 height: MediaQuery.of(context).size.height * 5 / 100,
                 child: TabBar(
-                    labelColor: globalTheme.colorScheme.secondary,
-                    unselectedLabelColor: globalTheme.primaryColor,
+                    labelColor: Theme.of(context).colorScheme.secondary,
+                    unselectedLabelColor: Theme.of(context).primaryColor,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicator: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10)),
-                        color: globalTheme.colorScheme.surface),
+                        color: Theme.of(context).colorScheme.surface),
                     tabs: [
                       Tab(
                         child: SizedBox(
