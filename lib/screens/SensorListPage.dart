@@ -62,6 +62,8 @@ class _SensorListPageState extends State<SensorListPage>
 
   @override
   Widget build(BuildContext context) {
+    print("route" + ModalRoute.of(context)!.settings.name.toString());
+
     final ListOfSensorsController sensorsController =
         Get.put(ListOfSensorsController());
 
