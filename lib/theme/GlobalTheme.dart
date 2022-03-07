@@ -38,7 +38,7 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
   } else {
     myColorScheme = getColorScheme(colorScheme, isLight);
   }
-  print(colorScheme);
+  print(myColorScheme);
   return ThemeData(
       colorScheme: myColorScheme,
       appBarTheme: AppBarTheme(
