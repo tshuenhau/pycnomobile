@@ -12,7 +12,7 @@ class User {
   String? farmName;
   String? farmType;
   String? farmAddr;
-  Map? colorScheme;
+  Map<dynamic, dynamic>? colorScheme;
 
   User(
       {required this.username,

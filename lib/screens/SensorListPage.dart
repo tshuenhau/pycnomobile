@@ -54,7 +54,6 @@ class _SensorListPageState extends State<SensorListPage>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
-      print("RELOAD");
       EasyLoading.show(status: "Loading");
       await _refreshData();
       EasyLoading.dismiss();
