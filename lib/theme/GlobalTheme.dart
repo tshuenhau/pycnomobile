@@ -52,18 +52,18 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
               fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black)),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-        primary: customColorScheme.secondary,
-        onPrimary: customColorScheme.onSecondary,
+        primary: myColorScheme.secondary,
+        onPrimary: myColorScheme.onSecondary,
         elevation: 0,
       )),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              primary: customColorScheme.onSecondary,
-              onSurface: customColorScheme.secondary,
-              backgroundColor: customColorScheme.secondary)),
-      primaryColor: customColorScheme.primary,
-      cardTheme: CardTheme(color: customColorScheme.surface, elevation: 0),
-      scaffoldBackgroundColor: customColorScheme.background,
+              primary: myColorScheme.onSecondary,
+              onSurface: myColorScheme.secondary,
+              backgroundColor: myColorScheme.secondary)),
+      primaryColor: myColorScheme.primary,
+      cardTheme: CardTheme(color: myColorScheme.surface, elevation: 0),
+      scaffoldBackgroundColor: myColorScheme.background,
       textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
       primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
 }
