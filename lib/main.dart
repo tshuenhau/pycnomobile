@@ -54,11 +54,11 @@ class MyApp extends StatelessWidget {
         theme: controller.user.value?.colorScheme == null
             ? globalTheme
             : getTheme(controller.user.value?.colorScheme, true),
-        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+        home: controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
                 ? LoginPage()
-                : SplashPage()),
+                : SplashPage(),
         builder: EasyLoading.init(),
       ),
     );
