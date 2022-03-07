@@ -4,7 +4,6 @@ import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/AccountDetailsPage.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:pycnomobile/widgets/AccountListTile.dart';
 
 class AccountPage extends StatelessWidget {
@@ -15,13 +14,13 @@ class AccountPage extends StatelessWidget {
     final AuthController authController = Get.find();
 
     return Obx(() => Scaffold(
-          backgroundColor: globalTheme.colorScheme.surface,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: CustomScrollView(
               // mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.center,
               slivers: <Widget>[
                 SliverAppBar(
-                  backgroundColor: globalTheme.colorScheme.surface,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   pinned: true,
                   snap: true,
                   floating: true,
@@ -161,7 +160,7 @@ class AccountPage extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Container(
                       decoration: BoxDecoration(
-                          color: globalTheme.colorScheme.background,
+                          color: Theme.of(context).colorScheme.background,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(0),
                               topRight: Radius.circular(30))),

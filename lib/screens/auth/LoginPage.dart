@@ -3,7 +3,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -44,7 +43,7 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
                 controller: usernameController,
                 decoration: new InputDecoration(
-                    fillColor: globalTheme.colorScheme.surface,
+                    fillColor: Theme.of(context).colorScheme.surface,
                     filled: true,
                     hintText: "username")),
             SizedBox(height: 5),
@@ -66,7 +65,7 @@ class LoginPage extends StatelessWidget {
                 },
                 controller: passwordController,
                 decoration: new InputDecoration(
-                    fillColor: globalTheme.colorScheme.surface,
+                    fillColor: Theme.of(context).colorScheme.surface,
                     filled: true,
                     hintText: "password")),
             SizedBox(height: 20),

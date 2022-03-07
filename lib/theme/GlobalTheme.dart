@@ -32,13 +32,14 @@ var globalTheme = ThemeData(
 
 ThemeData getTheme(Map? colorScheme, bool isLight) {
   print("Getting account theme");
+  print(colorScheme);
+
   ColorScheme myColorScheme;
   if (colorScheme == null) {
     myColorScheme = customColorScheme;
   } else {
     myColorScheme = getColorScheme(colorScheme, isLight);
   }
-  print(myColorScheme);
   return ThemeData(
       colorScheme: myColorScheme,
       appBarTheme: AppBarTheme(

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/SummaryCardBuilder.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
-import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
@@ -38,7 +35,8 @@ class _SensorPageState extends State<SensorPage> {
         appBar: AppBar(
           title: Text(widget.sensor.name ?? ""),
           elevation: 0,
-          backgroundColor: globalTheme.colorScheme.background.withOpacity(0.95),
+          backgroundColor:
+              Theme.of(context).colorScheme.background.withOpacity(0.95),
           bottom: PreferredSize(
             preferredSize: new Size(
                 double.infinity, MediaQuery.of(context).size.height * 5 / 100),
@@ -49,15 +47,15 @@ class _SensorPageState extends State<SensorPage> {
               child: TabBar(
                   labelPadding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 2 / 100),
-                  labelColor: globalTheme.colorScheme.secondary,
-                  unselectedLabelColor: globalTheme.primaryColor,
+                  labelColor: Theme.of(context).colorScheme.secondary,
+                  unselectedLabelColor: Theme.of(context).primaryColor,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      color: globalTheme.colorScheme.surface),
+                      color: Theme.of(context).colorScheme.surface),
                   tabs: [
                     Tab(
                       child: SizedBox(
