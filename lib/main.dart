@@ -50,18 +50,20 @@ class MyApp extends StatelessWidget {
     configLoading();
     AuthController controller = Get.put(AuthController());
     return GetMaterialApp(
-      theme: controller.user.value?.colorScheme == null
-          ? globalTheme
-          : getTheme(controller.user.value?.colorScheme, false),
       home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
           ? App()
           : controller.isLoggedIn.value == AuthState.loggedOut
               ? LoginPage()
               : SplashPage()),
       builder: EasyLoading.init(),
-      routingCallback: (routing) => WidgetsBinding.instance!
-          .addPostFrameCallback((_) => Get.changeTheme(
-              getTheme(controller.user.value?.colorScheme, true))),
+      routingCallback: (routing) =>
+          WidgetsBinding.instance!.addPersistentFrameCallback((_) {
+        print("GETTING THEME");
+        print(getTheme(controller.user.value?.colorScheme, false));
+
+        return Get.changeTheme(
+            getTheme(controller.user.value?.colorScheme, false));
+      }),
     );
   }
 }
