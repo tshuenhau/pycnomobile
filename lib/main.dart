@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
       () => GetMaterialApp(
         theme: controller.user.value?.colorScheme == null
             ? globalTheme
-            : getTheme(controller.user.value?.colorScheme, true),
+            : globalTheme,
+        //getTheme(controller.user.value?.colorScheme, false),
         home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
