@@ -12,7 +12,6 @@ import 'package:pycnomobile/theme/GlobalTheme.dart';
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
   // final AuthState authState;
-  final AuthController authController = Get.put(AuthController());
 
   @override
   State<App> createState() => _AppState();
@@ -22,16 +21,18 @@ class _AppState extends State<App> {
   late bool isLoggedIn;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+  final AuthController authController = Get.find();
 
   NotificationsController controller = Get.put(NotificationsController());
 
   @override
   void initState() {
+    print("HELLO");
     // TODO: implement initState
     super.initState();
+    // getTheme(authController.user.value?.colorScheme, true)
     controller.getNotifications();
-
-    if (widget.authController.isLoggedIn.value == AuthState.loggedIn) {
+    if (authController.isLoggedIn.value == AuthState.loggedIn) {
       isLoggedIn = true;
     } else {
       isLoggedIn = false;
