@@ -18,7 +18,8 @@ var customColorScheme = ColorScheme(
     surface: Color(0xFFfffcf3));
 
 Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 6), radix: 16) + 0xFF000000);
+  print(code);
+  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
 
 ColorScheme getColorScheme(Map colorScheme, bool isLight) {
