@@ -68,11 +68,12 @@ class _AppState extends State<App> {
       //   title: 'Today',
       // ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.sensor_window),
-        title: 'Sensors',
-        activeColorPrimary: Theme.of(context).colorScheme.secondary,
-        inactiveColorPrimary: Theme.of(context).primaryColor,
-      ),
+          icon: Icon(Icons.sensor_window),
+          title: 'Sensors',
+          activeColorPrimary: Theme.of(context).colorScheme.secondary,
+          inactiveColorPrimary: Theme.of(context).primaryColor,
+          routeAndNavigatorSettings:
+              RouteAndNavigatorSettings(initialRoute: '/sensors')),
       // PersistentBottomNavBarItem(
       //   icon: Icon(Icons.map),
       //   title: 'Map',
