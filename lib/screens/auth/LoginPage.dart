@@ -40,7 +40,6 @@ class LoginPage extends StatelessWidget {
                   }
                 },
                 textInputAction: TextInputAction.go,
-                obscureText: true,
                 controller: usernameController,
                 decoration: new InputDecoration(
                     fillColor: Theme.of(context).colorScheme.surface,
@@ -48,6 +47,7 @@ class LoginPage extends StatelessWidget {
                     hintText: "username")),
             SizedBox(height: 5),
             TextField(
+                obscureText: true,
                 onSubmitted: (s) async {
                   try {
                     EasyLoading.show(status: "Logging in...");

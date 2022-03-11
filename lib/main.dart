@@ -55,12 +55,17 @@ class MyApp extends StatelessWidget {
         theme: controller.user.value?.colorScheme == null
             ? globalTheme
             : globalTheme,
+        //getTheme(controller.user.value?.colorScheme, true),
+        darkTheme: controller.user.value?.colorScheme == null
+            ? globalTheme
+            : globalTheme,
         //getTheme(controller.user.value?.colorScheme, false),
-        home: controller.isLoggedIn.value == AuthState.loggedIn
+        themeMode: ThemeMode.system,
+        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
                 ? LoginPage()
-                : SplashPage(),
+                : SplashPage()),
         builder: EasyLoading.init(),
       ),
     );

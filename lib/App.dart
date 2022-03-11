@@ -72,9 +72,7 @@ class _AppState extends State<App> {
           activeColorPrimary: Theme.of(context).colorScheme.secondary,
           inactiveColorPrimary: Theme.of(context).primaryColor,
           routeAndNavigatorSettings:
-              RouteAndNavigatorSettings(initialRoute: '/sensors', routes: {
-            '/sensors': (context) => SensorListPage(),
-          })),
+              RouteAndNavigatorSettings(initialRoute: '/sensors')),
       // PersistentBottomNavBarItem(
       //   icon: Icon(Icons.map),
       //   title: 'Map',

@@ -44,7 +44,6 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
       colorScheme: myColorScheme,
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black),
           actionsIconTheme: IconThemeData(color: Colors.black),
           centerTitle: false,
           elevation: 0,
@@ -61,6 +60,11 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
               primary: myColorScheme.onSecondary,
               onSurface: myColorScheme.secondary,
               backgroundColor: myColorScheme.secondary)),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: Colors.white, // This is a custom color variable
+        ),
+      ),
       primaryColor: myColorScheme.primary,
       cardTheme: CardTheme(color: myColorScheme.surface, elevation: 0),
       scaffoldBackgroundColor: myColorScheme.background,
