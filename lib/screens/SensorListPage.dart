@@ -32,6 +32,7 @@ class _SensorListPageState extends State<SensorListPage>
   @override
   void initState() {
     super.initState();
+    sensorsController.context = context;
     WidgetsBinding.instance!.addObserver(this);
 
     var keyboardVisibilityController = KeyboardVisibilityController();
@@ -43,6 +44,8 @@ class _SensorListPageState extends State<SensorListPage>
         FocusScope.of(context).unfocus();
       }
     });
+    // sensorsController.reload(ModalRoute.of(context)!.isCurrent,
+    //     authController.currentTab.value == 0);
   }
 
   @override
