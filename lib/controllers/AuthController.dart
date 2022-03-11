@@ -14,6 +14,8 @@ class AuthController extends GetxController {
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
 
+  Rx<int> currentTab = 0.obs;
+
   Rxn<User> user = Rxn<User>();
 
   @override

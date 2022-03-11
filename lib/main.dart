@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:pycnomobile/screens/SensorListPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

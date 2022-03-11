@@ -7,6 +7,7 @@ class AccountDetailsPage extends StatelessWidget {
   final AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
+    print("route" + ModalRoute.of(context)!.settings.name.toString());
     return Scaffold(
         body: Align(
       alignment: Alignment.center,

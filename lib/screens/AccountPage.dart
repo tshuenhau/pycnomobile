@@ -11,6 +11,7 @@ class AccountPage extends StatelessWidget {
   Function resetFunction;
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)?.settings.name);
     final AuthController authController = Get.find();
 
     return Obx(() => Scaffold(
