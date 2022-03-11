@@ -3,7 +3,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/SensorSearchPage.dart';
 import 'package:pycnomobile/widgets/Search.dart';
@@ -11,8 +11,11 @@ import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 
 class SensorListPage extends StatefulWidget {
+  const SensorListPage({Key? key}) : super(key: key);
+
   @override
   State<SensorListPage> createState() => _SensorListPageState();
 }
@@ -20,7 +23,7 @@ class SensorListPage extends StatefulWidget {
 class _SensorListPageState extends State<SensorListPage>
     with WidgetsBindingObserver {
   late StreamSubscription<bool> keyboardSubscription;
-
+  AuthController authController = Get.find();
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
     sensorsController.searchListOfSensors();
@@ -53,7 +56,9 @@ class _SensorListPageState extends State<SensorListPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed &&
+        ModalRoute.of(context)!.isCurrent &&
+        authController.currentTab.value == 0) {
       EasyLoading.show(status: "Loading");
       await _refreshData();
       EasyLoading.dismiss();
@@ -62,8 +67,6 @@ class _SensorListPageState extends State<SensorListPage>
 
   @override
   Widget build(BuildContext context) {
-    print("route" + ModalRoute.of(context)!.settings.name.toString());
-
     final ListOfSensorsController sensorsController =
         Get.put(ListOfSensorsController());
 
@@ -80,7 +83,7 @@ class _SensorListPageState extends State<SensorListPage>
               child: Column(
                 children: [
                   Search(
-                    hintText: 'Search...',
+                    hintText: "Search...",
                   ),
                   Expanded(
                     child: RefreshIndicator(
@@ -104,9 +107,10 @@ class _SensorListPageState extends State<SensorListPage>
                                                     .height *
                                                 2.5 /
                                                 100),
-                                        child: Text(
-                                          (DateFormat.jms()
-                                              .format(DateTime.now())),
+                                        child: Obx(
+                                          () => Text(DateFormat.jms().format(
+                                              sensorsController
+                                                  .lastRefreshTime.value)),
                                         )));
                               }
                               Sensor sensor = sensorsController

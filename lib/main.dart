@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:pycnomobile/screens/SensorListPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
       () => GetMaterialApp(
         theme: controller.user.value?.colorScheme == null
             ? globalTheme
-            : getTheme(controller.user.value?.colorScheme, true),
+            : globalTheme,
+        //getTheme(controller.user.value?.colorScheme, false),
         home: controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut

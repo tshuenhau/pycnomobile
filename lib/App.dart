@@ -26,7 +26,6 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    print("HELLO");
     // TODO: implement initState
     super.initState();
     // getTheme(authController.user.value?.colorScheme, true)
@@ -68,11 +67,14 @@ class _AppState extends State<App> {
       //   title: 'Today',
       // ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.sensor_window),
-        title: 'Sensors',
-        activeColorPrimary: Theme.of(context).colorScheme.secondary,
-        inactiveColorPrimary: Theme.of(context).primaryColor,
-      ),
+          icon: Icon(Icons.sensor_window),
+          title: 'Sensors',
+          activeColorPrimary: Theme.of(context).colorScheme.secondary,
+          inactiveColorPrimary: Theme.of(context).primaryColor,
+          routeAndNavigatorSettings:
+              RouteAndNavigatorSettings(initialRoute: '/sensors', routes: {
+            '/sensors': (context) => SensorListPage(),
+          })),
       // PersistentBottomNavBarItem(
       //   icon: Icon(Icons.map),
       //   title: 'Map',
@@ -139,6 +141,9 @@ class _AppState extends State<App> {
           ),
           navBarStyle: NavBarStyle
               .style3, // Choose the nav bar style with this property.
+          onItemSelected: (int i) {
+            authController.currentTab.value = i;
+          },
         ),
       ),
     );

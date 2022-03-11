@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
@@ -19,6 +21,8 @@ class ListOfSensorsController extends GetxController
   RxList<TimeSeries> listOfTimeSeries =
       List<TimeSeries>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
+  Rx<DateTime> lastRefreshTime = DateTime.now().obs;
+
   late AuthController authController;
   TimeSeriesController timeSeriesController = Get.put(TimeSeriesController());
 
@@ -35,6 +39,22 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
+    // await this.reload();
+  }
+
+  Future<void> reload() async {
+    Timer.periodic(new Duration(seconds: 3), (timer) async {
+      print("refresh sensors");
+      try {
+        EasyLoading.show(status: 'loading...');
+
+        await getListOfSensors();
+
+        EasyLoading.dismiss();
+      } catch (err) {
+        EasyLoading.showError('$err');
+      }
+    });
   }
 
   void addSensor(Sensor sensor) {
@@ -71,6 +91,8 @@ class ListOfSensorsController extends GetxController
           a.polledAt != null && b.polledAt != null
               ? b.polledAt!.compareTo(a.polledAt!)
               : 0);
+
+      this.lastRefreshTime.value = DateTime.now();
     } else {
       throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
     }

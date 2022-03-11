@@ -76,7 +76,6 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(
-          key: UniqueKey(),
           data: e.getTimeSeries,
           functionName: e
               .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
