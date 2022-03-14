@@ -38,28 +38,32 @@ class _SensorSearchPageState extends State<SensorSearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          iconTheme: IconThemeData(
+            color:
+                Theme.of(context).colorScheme.primary, //change your color here
+          ),
           // The search area here
           title: Container(
-        width: double.infinity,
-        height: 40,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(5)),
-        child: Center(
-          child: TextField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    /* Clear the search field */
-                  },
-                ),
-                hintText: 'Search...',
-                border: InputBorder.none),
-            onChanged: (String searchTerms) {},
-          ),
-        ),
-      )),
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        /* Clear the search field */
+                      },
+                    ),
+                    hintText: 'Search...',
+                    border: InputBorder.none),
+                onChanged: (String searchTerms) {},
+              ),
+            ),
+          )),
       body: Center(
         child: ListView.builder(
           itemCount: sensorsController.listOfSensors.length,

@@ -47,8 +47,8 @@ class User {
         farmAddr: json["farmaddress"],
         colorScheme: {
           "companyColors1": {
-            "light": {"background": "#000000", "primary": "#ffffff"},
-            "dark": {"background": "#ffffff", "primary": "#000000"}
+            "light": {"background": "#F2F2F2", "accent": "#32C732"},
+            "dark": {"background": "#222222", "accent": "#32C732"}
           },
           "companyColors2": {
             "light": {"background": "#f2f0e1", "primary": "#ffffff"},

@@ -62,12 +62,13 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
               backgroundColor: myColorScheme.secondary)),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: Colors.white, // This is a custom color variable
+          primary: myColorScheme.primary, // This is a custom color variable
         ),
       ),
       primaryColor: myColorScheme.primary,
       cardTheme: CardTheme(color: myColorScheme.surface, elevation: 0),
       scaffoldBackgroundColor: myColorScheme.background,
-      textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
-      primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
+      textTheme: TextTheme(bodyText2: TextStyle(color: myColorScheme.primary)),
+      primaryTextTheme:
+          TextTheme(headline6: TextStyle(color: myColorScheme.primary)));
 }

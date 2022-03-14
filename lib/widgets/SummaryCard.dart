@@ -21,6 +21,10 @@ class SummaryCard extends StatelessWidget {
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
+            // side: BorderSide(
+            //     color:
+            //         Theme.of(context).colorScheme.secondary.withOpacity(0.25),
+            //     width: 1)
           ),
           child: InkWell(
               onTap: () {
@@ -32,23 +36,7 @@ class SummaryCard extends StatelessWidget {
                       return GraphBottomSheet(
                           sensor: sensor, functions: functions);
                     });
-
-                // DateTimeRange? _newDateRange = await showDateRangePicker(
-                //     context: context,
-                //     initialDateRange: DateTimeRange(
-                //         start: DateTime.now(), end: DateTime.now()),
-                //     firstDate: DateTime(1800),
-                //     lastDate: DateTime(3000),
-                //     builder: (context, child) {
-                //       return child!;
-                //     });
-                // //print(_newDateRange); //!graphBuilder with new dates
-                // if (_newDateRange != null) {
-                //   //! generatenew graphs with the new date range
-                //   buildSensorGraphs(context, sensor, functions, _newDateRange);
-                // }
               },
-              //buildSensorGraphs(context, sensor, functions)},
               child: child)),
     );
   }

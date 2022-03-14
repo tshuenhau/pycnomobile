@@ -33,6 +33,10 @@ class _SensorPageState extends State<SensorPage> {
         // extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color:
+                Theme.of(context).colorScheme.primary, //change your color here
+          ),
           title: Text(widget.sensor.name ?? ""),
           elevation: 0,
           backgroundColor:
@@ -47,7 +51,7 @@ class _SensorPageState extends State<SensorPage> {
               child: TabBar(
                   labelPadding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 2 / 100),
-                  labelColor: Theme.of(context).colorScheme.secondary,
+                  labelColor: Theme.of(context).colorScheme.tertiary,
                   unselectedLabelColor: Theme.of(context).primaryColor,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(

@@ -69,7 +69,7 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
           icon: Icon(Icons.sensor_window),
           title: 'Sensors',
-          activeColorPrimary: Theme.of(context).colorScheme.secondary,
+          activeColorPrimary: Theme.of(context).colorScheme.tertiary,
           inactiveColorPrimary: Theme.of(context).primaryColor,
           routeAndNavigatorSettings:
               RouteAndNavigatorSettings(initialRoute: '/sensors')),
@@ -80,23 +80,27 @@ class _AppState extends State<App> {
       PersistentBottomNavBarItem(
         //TODO: Notification counter
         icon: Obx(() => Badge(
-            badgeContent: Text(controller.alertCounter.value.toString()),
+            badgeContent: Text(
+              controller.alertCounter.value.toString(),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            ),
             animationType: BadgeAnimationType.slide,
             // position: BadgePosition.topEnd(
             //     end: -MediaQuery.of(context).size.width * 3 / 100,
             //     top: -MediaQuery.of(context).size.height * 1.5 / 100),
-            badgeColor:
-                controller.isSevere.value ? Colors.red : Colors.orange.shade200,
+            badgeColor: controller.isSevere.value
+                ? Colors.red
+                : Color.fromARGB(255, 151, 91, 1),
             showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),
         title: 'Alerts',
-        activeColorPrimary: Theme.of(context).colorScheme.secondary,
+        activeColorPrimary: Theme.of(context).colorScheme.tertiary,
         inactiveColorPrimary: Theme.of(context).primaryColor,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: 'Account',
-        activeColorPrimary: Theme.of(context).colorScheme.secondary,
+        activeColorPrimary: Theme.of(context).colorScheme.tertiary,
         inactiveColorPrimary: Theme.of(context).primaryColor,
       ),
     ];
@@ -122,7 +126,7 @@ class _AppState extends State<App> {
               true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            colorBehindNavBar: Colors.white,
+            colorBehindNavBar: Theme.of(context).colorScheme.background,
           ),
           popAllScreensOnTapOfSelectedTab: true,
           popActionScreens: PopActionScreensType.all,

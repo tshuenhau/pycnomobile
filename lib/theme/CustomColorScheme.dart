@@ -36,11 +36,10 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         onSecondary: Color(0xFFfdfdf5),
         onTertiary: Color(0xFFfdfdf5),
         onSurface: Color(0xFF252a20),
-        primary: hexToColor(colorScheme["companyColors1"]["light"]["primary"]),
-        secondary: Color(0xFF6c6c65),
-        tertiary: Color(0xFF757c49),
-        surface:
-            hexToColor(colorScheme["companyColors1"]["light"]["background"]));
+        primary: Colors.black,
+        secondary: Colors.black,
+        tertiary: hexToColor(colorScheme["companyColors1"]["light"]["accent"]),
+        surface: Colors.white.withOpacity(0.85));
   } else {
     return ColorScheme(
         brightness: Brightness.dark,
@@ -53,9 +52,9 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         onSecondary: Color(0xFFfdfdf5),
         onTertiary: Color(0xFFfdfdf5),
         onSurface: Color(0xFF252a20),
-        primary: hexToColor(colorScheme["companyColors1"]["dark"]["primary"]),
-        secondary: Color(0xFF6c6c65),
-        tertiary: Color(0xFF757c49),
-        surface: hexToColor(colorScheme["companyColors1"]["dark"]["primary"]));
+        primary: Colors.white,
+        secondary: Colors.white,
+        tertiary: hexToColor(colorScheme["companyColors1"]["dark"]["accent"]),
+        surface: Colors.black.withOpacity(0.85));
   }
 }
