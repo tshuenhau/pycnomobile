@@ -44,25 +44,25 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               primary: Theme.of(context).colorScheme.secondary,
               secondary: Theme.of(context).colorScheme.primary)),
       child: Builder(
-        builder: (context) => ElevatedButton(
-            onPressed: () async {
-              DateTimeRange? _newDateRange = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(1800),
-                  lastDate: DateTime.now());
+          builder: (context) => ElevatedButton(
+              onPressed: () async {
+                DateTimeRange? _newDateRange = await showDateRangePicker(
+                    context: context,
+                    firstDate: DateTime(1800),
+                    lastDate: DateTime.now());
 
-              if (_newDateRange != null) {
-                List<TimeSeries>? result = await getGraphsForTimeRange(
-                    _newDateRange, widget.sensor, widget.functions);
-                // setState(() {
-                //   graphs = result!;
-                // });
+                if (_newDateRange != null) {
+                  List<TimeSeries>? result = await getGraphsForTimeRange(
+                      _newDateRange, widget.sensor, widget.functions);
+                  // setState(() {
+                  //   graphs = result!;
+                  // });
 
-                //buildSensorGraphs(context, sensor, functions, _newDateRange);
-              }
-            },
-            child: Icon(Icons.today)),
-      ),
+                  //buildSensorGraphs(context, sensor, functions, _newDateRange);
+                }
+              },
+              child: Icon(Icons.today,
+                  color: Theme.of(context).colorScheme.background))),
     );
   }
 

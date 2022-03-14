@@ -51,7 +51,7 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         onPrimary: Color(0xFFe2e2c4),
         onSecondary: Color(0xFFfdfdf5),
         onTertiary: Color(0xFFfdfdf5),
-        onSurface: Color(0xFF252a20),
+        onSurface: Colors.white,
         primary: Colors.white,
         secondary: Colors.white,
         tertiary: hexToColor(colorScheme["companyColors1"]["dark"]["accent"]),

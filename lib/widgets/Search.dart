@@ -32,7 +32,7 @@ class Search extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface.withOpacity(0.75),
           border: Border.all(color: Colors.black26),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 8),

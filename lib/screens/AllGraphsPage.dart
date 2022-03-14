@@ -45,7 +45,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },
-            child: Icon(Icons.today)),
+            child: Icon(Icons.today,
+                color: Theme.of(context).colorScheme.background)),
       ),
     );
   }
