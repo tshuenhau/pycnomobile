@@ -17,6 +17,9 @@ class SensorsListTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
+        // side: BorderSide(
+        //     color: Theme.of(context).colorScheme.secondary.withOpacity(0.35),
+        //     width: 1)
       ),
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: InkWell(

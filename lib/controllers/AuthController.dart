@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
-
+  RxMap<dynamic, dynamic> theme = RxMap<dynamic, dynamic>({});
   Rx<int> currentTab = 0.obs;
 
   Rxn<User> user = Rxn<User>();
@@ -21,6 +21,7 @@ class AuthController extends GetxController {
   @override
   onInit() async {
     super.onInit();
+    await getTheme();
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
 
@@ -29,10 +30,15 @@ class AuthController extends GetxController {
     // }
   }
 
+  Future<void> getTheme() async {
+    final preferences = await Preferences.getInstance();
+    theme.value = preferences.getTheme();
+    print("THEME " + theme.toString());
+  }
+
   Future<bool> checkLoggedInStatus() async {
     final preferences = await Preferences.getInstance();
     token = preferences.getToken();
-
     if (token == "") {
       return false;
     }
@@ -74,6 +80,10 @@ class AuthController extends GetxController {
       await preferences.setToken(tk);
       print("Login successful! Token: $token");
       await getAccount();
+      if (user.value != null) {
+        await preferences.setTheme(user.value!.colorScheme);
+        print("theme saved");
+      }
     } else {
       throw Exception("Unable to login");
     }
@@ -87,7 +97,6 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
       update();
-      print(user.value);
     } else {
       throw Exception("Unable to get account details");
     }

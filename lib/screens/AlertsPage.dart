@@ -25,6 +25,11 @@ class _AlertsPageState extends State<AlertsPage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Theme.of(context)
+                  .colorScheme
+                  .primary, //change your color here
+            ),
             elevation: 0,
             backgroundColor:
                 Theme.of(context).colorScheme.background.withOpacity(0.95),
@@ -34,7 +39,7 @@ class _AlertsPageState extends State<AlertsPage> {
               child: Container(
                 height: MediaQuery.of(context).size.height * 5 / 100,
                 child: TabBar(
-                    labelColor: Theme.of(context).colorScheme.secondary,
+                    labelColor: Theme.of(context).colorScheme.tertiary,
                     unselectedLabelColor: Theme.of(context).primaryColor,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicator: BoxDecoration(

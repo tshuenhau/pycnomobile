@@ -31,9 +31,6 @@ var globalTheme = ThemeData(
     primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
 
 ThemeData getTheme(Map? colorScheme, bool isLight) {
-  print("Getting account theme");
-  print(colorScheme);
-
   ColorScheme myColorScheme;
   if (colorScheme == null) {
     myColorScheme = customColorScheme;
@@ -41,33 +38,38 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
     myColorScheme = getColorScheme(colorScheme, isLight);
   }
   return ThemeData(
-      colorScheme: myColorScheme,
-      appBarTheme: AppBarTheme(
-          backgroundColor: Colors.transparent,
-          actionsIconTheme: IconThemeData(color: Colors.black),
-          centerTitle: false,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black)),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-        primary: myColorScheme.secondary,
-        onPrimary: myColorScheme.onSecondary,
+    colorScheme: myColorScheme,
+    appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        actionsIconTheme: IconThemeData(color: myColorScheme.primary),
+        centerTitle: false,
         elevation: 0,
-      )),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-              primary: myColorScheme.onSecondary,
-              onSurface: myColorScheme.secondary,
-              backgroundColor: myColorScheme.secondary)),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          primary: Colors.white, // This is a custom color variable
-        ),
+        titleTextStyle: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+            color: myColorScheme.primary)),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+      primary: myColorScheme.background,
+      onPrimary: myColorScheme.background,
+      onSurface: myColorScheme.background,
+      elevation: 0,
+    )),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+            primary: myColorScheme.background,
+            onSurface: myColorScheme.background,
+            backgroundColor: myColorScheme.background)),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        primary: myColorScheme.primary, // This is a custom color variable
       ),
-      primaryColor: myColorScheme.primary,
-      cardTheme: CardTheme(color: myColorScheme.surface, elevation: 0),
-      scaffoldBackgroundColor: myColorScheme.background,
-      textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
-      primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
+    ),
+    primaryColor: myColorScheme.primary,
+    cardTheme: CardTheme(color: myColorScheme.surface, elevation: 0),
+    scaffoldBackgroundColor: myColorScheme.background,
+    textTheme: TextTheme(bodyText2: TextStyle(color: myColorScheme.primary)),
+    primaryTextTheme:
+        TextTheme(headline6: TextStyle(color: myColorScheme.primary)),
+  );
 }

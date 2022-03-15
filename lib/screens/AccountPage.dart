@@ -67,6 +67,17 @@ class AccountPage extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (_) => BluetoothPage()))),
                                 TextButton.icon(
+                                    icon: Icon(Icons.palette_outlined),
+                                    label: Text("Change Theme"),
+                                    onPressed: () {
+                                      if (Theme.of(context).brightness ==
+                                          Brightness.dark) {
+                                        Get.changeThemeMode(ThemeMode.light);
+                                      } else {
+                                        Get.changeThemeMode(ThemeMode.dark);
+                                      }
+                                    }),
+                                TextButton.icon(
                                     icon: Icon(Icons.logout),
                                     label: Text("Logout"),
                                     onPressed: () {
