@@ -75,22 +75,23 @@ class _SensorLineChartState extends State<SensorLineChart> {
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
+            tooltipBgColor: Theme.of(context).colorScheme.primary,
             getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
-          return touchedBarSpots.map((barSpot) {
-            final flSpot = barSpot;
-            if (flSpot.x == 0 || flSpot.x == 6) {
-              return null;
-            }
+              return touchedBarSpots.map((barSpot) {
+                final flSpot = barSpot;
+                if (flSpot.x == 0 || flSpot.x == 6) {
+                  return null;
+                }
 
-            return LineTooltipItem(
-              flSpot.y.toStringAsFixed(2),
-              const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          }).toList();
-        }),
+                return LineTooltipItem(
+                  flSpot.y.toStringAsFixed(2),
+                  TextStyle(
+                    color: Theme.of(context).colorScheme.background,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              }).toList();
+            }),
       ),
       gridData: _gridData(),
       titlesData: FlTitlesData(
@@ -102,7 +103,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
       ),
       borderData: FlBorderData(
           show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.55),
+              width: 1)),
       minX: _minX,
       maxX: _maxX,
       minY: _minY,
@@ -127,7 +130,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
           color:
               lerpGradient(barData.colors, barData.colorStops!, percent / 100),
           strokeWidth: 0.5, //!Change dot outline size here
-          strokeColor: Colors.black,
+          strokeColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
         ),
       ),
       colorStops: [0.1, 0.4, 0.9],
@@ -165,7 +168,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return SideTitles(
       showTitles: true,
       getTextStyles: (context, value) => TextStyle(
-        color: Color(0xff67727d),
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.75),
         fontWeight: FontWeight.bold,
         fontSize: MediaQuery.of(context).size.width * 3 / 100,
       ),
@@ -188,7 +191,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
         showTitles: true,
         //reservedSize: 22,
         getTextStyles: (context, value) => TextStyle(
-            color: Color(0xff68737d),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.75),
             fontWeight: FontWeight.bold,
             fontSize: MediaQuery.of(context).size.width * 3 / 100,
             letterSpacing: 0,

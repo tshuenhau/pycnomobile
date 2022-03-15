@@ -51,8 +51,8 @@ class SensorsListTile extends StatelessWidget {
                     children: [
                       Icon(Icons.circle,
                           color: sensor.isActive()
-                              ? Colors.greenAccent.shade400
-                              : Colors.redAccent.shade400,
+                              ? Colors.greenAccent.shade700
+                              : Colors.redAccent.shade700,
                           size: MediaQuery.of(context).size.height * 2 / 100),
                       Padding(
                         padding: EdgeInsets.only(

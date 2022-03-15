@@ -82,7 +82,7 @@ class _AppState extends State<App> {
         icon: Obx(() => Badge(
             badgeContent: Text(
               controller.alertCounter.value.toString(),
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              style: TextStyle(color: Theme.of(context).colorScheme.background),
             ),
             animationType: BadgeAnimationType.slide,
             // position: BadgePosition.topEnd(
@@ -90,7 +90,7 @@ class _AppState extends State<App> {
             //     top: -MediaQuery.of(context).size.height * 1.5 / 100),
             badgeColor: controller.isSevere.value
                 ? Colors.red
-                : Color.fromARGB(255, 151, 91, 1),
+                : Theme.of(context).colorScheme.tertiary,
             showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),
         title: 'Alerts',

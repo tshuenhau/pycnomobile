@@ -45,15 +45,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("rebuild main");
     configLoading();
     AuthController controller = Get.put(AuthController());
     return Obx(
       () => GetMaterialApp(
         theme: controller.user.value?.colorScheme == null
             ? globalTheme
-            :
-            //globalTheme,
-            getTheme(controller.user.value?.colorScheme, true),
+            : getTheme(controller.user.value?.colorScheme, true),
         darkTheme: controller.user.value?.colorScheme == null
             ? globalTheme
             :
