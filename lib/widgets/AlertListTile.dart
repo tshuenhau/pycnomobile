@@ -51,7 +51,8 @@ class AlertListTile extends StatelessWidget {
                       .getSensorFromNotifs(this.notification.uid);
                   EasyLoading.dismiss();
                   Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (_) => SensorPage(sensor: sensor)));
+                      builder: (_) =>
+                          SensorPage(sensor: sensor, key: UniqueKey())));
                   controller.dismissNotification(this.notification);
                 },
                 child: ListTile(

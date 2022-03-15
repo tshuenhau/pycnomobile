@@ -26,8 +26,8 @@ class SensorsListTile extends StatelessWidget {
         onTap: () {
           FocusScope.of(context).unfocus();
 
-          Navigator.of(context).push(
-              CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
+          Navigator.of(context).push(CupertinoPageRoute(
+              builder: (_) => SensorPage(sensor: sensor, key: UniqueKey())));
         },
         child: ListTile(
             title: SizedBox(
