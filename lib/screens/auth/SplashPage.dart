@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
     AuthController controller = Get.find();
     return Obx(() => Container(
         color: controller.theme["companyColors1"] == null
-            ? Colors.grey
+            ? Colors.black
             : HexColor(controller.theme["companyColors1"]['dark']['background']
                 .toString()),
         child: controller.theme["companyColors1"] == null
