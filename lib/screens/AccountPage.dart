@@ -70,14 +70,10 @@ class AccountPage extends StatelessWidget {
                                     icon: Icon(Icons.palette_outlined),
                                     label: Text("Change Theme"),
                                     onPressed: () {
-                                      print("Change theme");
                                       if (Theme.of(context).brightness ==
                                           Brightness.dark) {
-                                        print("Change to light");
                                         Get.changeThemeMode(ThemeMode.light);
                                       } else {
-                                        print("Change to dark");
-
                                         Get.changeThemeMode(ThemeMode.dark);
                                       }
                                     }),
