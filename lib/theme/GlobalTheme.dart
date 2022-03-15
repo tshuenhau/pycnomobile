@@ -50,7 +50,7 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
             color: myColorScheme.primary)),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-      primary: myColorScheme.background,
+      primary: myColorScheme.primary,
       onPrimary: myColorScheme.background,
       onSurface: myColorScheme.background,
       elevation: 0,
