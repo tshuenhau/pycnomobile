@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/App.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,8 +10,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:pycnomobile/screens/SensorListPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
