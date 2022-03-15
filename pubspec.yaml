@@ -49,6 +49,7 @@ dependencies:
   timeago: ^3.2.2
   flutter_native_splash: ^2.0.5
   json_theme: ^3.3.1
+  hexcolor: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +67,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     -  assets/images/pycno_logo.png
+    - assets/images/pycno_logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -95,7 +96,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
   # Customize the parameters below, and run the following command in the terminal:

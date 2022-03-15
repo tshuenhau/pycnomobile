@@ -29,11 +29,27 @@ class NotificationsController extends GetxController {
     });
   }
 
-  void dismissNotification(NotificationData notif) {
-    notif.markAsRead();
-    unreadNotifications.removeWhere((x) => x.id == notif.id);
-    readNotifications.add(notif);
-    readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
+  void dismissNotification(NotificationData notif) async {
+    print(
+        'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}');
+    final response = await http.put(
+        Uri.parse(
+            'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}'),
+        headers: {
+          "content-type": "application/json",
+        },
+        body: json.encode({"state": 1}));
+    print("RESPONSE " + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      print("success");
+      notif.markAsRead();
+      // unreadNotifications.removeWhere((x) => x.id == notif.id);
+      // readNotifications.add(notif);
+      // readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
+      await getNotifications();
+    } else {
+      throw Exception("Could not mark as read. Try again!");
+    }
   }
 
   Future<void> getNotifications() async {
@@ -41,7 +57,7 @@ class NotificationsController extends GetxController {
         'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
     // print(
     //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
-    if (response.statusCode >= 200) {
+    if (response.statusCode == 200) {
       alertCounter.value = 0;
       isSevere.value = false;
       unreadNotifications.clear();
@@ -69,7 +85,7 @@ class NotificationsController extends GetxController {
         'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}'));
     print(
         'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}');
-    if (response.statusCode >= 200) {
+    if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body["UID"]);
 

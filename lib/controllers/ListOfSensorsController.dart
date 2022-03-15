@@ -22,7 +22,7 @@ class ListOfSensorsController extends GetxController
       List<TimeSeries>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
-
+  late BuildContext context;
   late AuthController authController;
   TimeSeriesController timeSeriesController = Get.put(TimeSeriesController());
 
@@ -39,20 +39,25 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
-    // await this.reload();
+    await this.reload();
   }
 
   Future<void> reload() async {
-    Timer.periodic(new Duration(seconds: 3), (timer) async {
-      print("refresh sensors");
-      try {
-        EasyLoading.show(status: 'loading...');
+    Timer.periodic(new Duration(seconds: 5), (timer) async {
+      if (ModalRoute.of(context)!.isCurrent &&
+          authController.currentTab.value == 0 &&
+          lastRefreshTime.value
+              .isBefore(DateTime.now().add(const Duration(seconds: -6000)))) {
+        print("refresh sensors");
+        try {
+          EasyLoading.show(status: 'loading...');
 
-        await getListOfSensors();
+          await getListOfSensors();
 
-        EasyLoading.dismiss();
-      } catch (err) {
-        EasyLoading.showError('$err');
+          EasyLoading.dismiss();
+        } catch (err) {
+          EasyLoading.showError('$err');
+        }
       }
     });
   }

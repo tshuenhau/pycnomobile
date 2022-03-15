@@ -23,7 +23,6 @@ Color hexToColor(String code) {
 }
 
 ColorScheme getColorScheme(Map colorScheme, bool isLight) {
-  print("Getting account colorScheme");
   if (isLight) {
     return ColorScheme(
         brightness: Brightness.light,

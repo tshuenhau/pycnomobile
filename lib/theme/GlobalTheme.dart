@@ -31,9 +31,6 @@ var globalTheme = ThemeData(
     primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
 
 ThemeData getTheme(Map? colorScheme, bool isLight) {
-  print("Getting account theme");
-  print(colorScheme);
-
   ColorScheme myColorScheme;
   if (colorScheme == null) {
     myColorScheme = customColorScheme;
