@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -49,11 +50,12 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   return graphs;
 }
 
-List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
+List<Widget> buildGraphs(List<Functionality?> functions) {
   TimeSeriesController controller = Get.find();
+  AuthController auth = Get.find();
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
-  Widget buildLoadingIndicator(BuildContext context) {
+  Widget buildLoadingIndicator() {
     if (drawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
     }
@@ -86,7 +88,7 @@ List<Widget> buildGraphs(BuildContext context, List<Functionality?> functions) {
 
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
-    buildLoadingIndicator(context)
+    buildLoadingIndicator()
   ];
 
   return result;

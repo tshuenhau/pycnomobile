@@ -105,10 +105,16 @@ class ListOfSensorsController extends GetxController
 
   void searchListOfSensors() {
     String searchTerm = searchController.value;
+    filteredListOfSensors.clear();
     if (searchTerm == "") {
+      List<Sensor> tempList = List<Sensor>.empty(growable: true);
+      for (Sensor sensor in listOfSensors) {
+        tempList.add(sensor);
+      }
+      filteredListOfSensors.value = tempList.reversed.toList();
       return;
     }
-    filteredListOfSensors.clear();
+
     for (Sensor sensor in listOfSensors) {
       if (sensor.uid.contains(new RegExp(searchTerm, caseSensitive: false))) {
         filteredListOfSensors.add(sensor);

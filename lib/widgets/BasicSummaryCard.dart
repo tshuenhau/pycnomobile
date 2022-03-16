@@ -7,7 +7,6 @@ import 'package:pycnomobile/widgets/SummaryCard.dart';
 class BasicSummaryCard extends StatelessWidget {
   final Sensor sensor;
   final Functionality function;
-
   const BasicSummaryCard(
       {Key? key, required this.sensor, required this.function})
       : super(key: key);

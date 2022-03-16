@@ -5,7 +5,9 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 
 class SensorSearchPage extends StatefulWidget {
-  const SensorSearchPage({Key? key}) : super(key: key);
+  const SensorSearchPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SensorSearchPage> createState() => _SensorSearchPageState();

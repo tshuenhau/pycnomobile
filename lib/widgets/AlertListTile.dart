@@ -17,18 +17,18 @@ class AlertListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(notification.desc);
-    print("notification time UTC: " +
-        DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-            .toUtc()
-            .toString());
-    print("notification time Local: " +
-        DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-            .toLocal()
-            .toString());
-    print(DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-        .timeZoneOffset);
-    print(DateTime.now());
+    // print(notification.desc);
+    // print("notification time UTC: " +
+    //     DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //         .toUtc()
+    //         .toString());
+    // print("notification time Local: " +
+    //     DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //         .toLocal()
+    //         .toString());
+    // print(DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //     .timeZoneOffset);
+    // print(DateTime.now());
     return Dismissible(
       key: Key(this.notification.id.toString()),
       onDismissed: (notificationId) {

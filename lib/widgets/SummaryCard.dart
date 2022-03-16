@@ -7,13 +7,14 @@ import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 class SummaryCard extends StatelessWidget {
   final Sensor sensor;
   final Widget child;
+
   final List<Functionality?> functions;
-  const SummaryCard(
-      {Key? key,
-      required this.child,
-      required this.sensor,
-      required this.functions})
-      : super(key: key);
+  const SummaryCard({
+    Key? key,
+    required this.child,
+    required this.sensor,
+    required this.functions,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
