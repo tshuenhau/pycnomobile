@@ -17,18 +17,18 @@ class AlertListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(notification.desc);
-    print("notification time UTC: " +
-        DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-            .toUtc()
-            .toString());
-    print("notification time Local: " +
-        DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-            .toLocal()
-            .toString());
-    print(DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
-        .timeZoneOffset);
-    print(DateTime.now());
+    // print(notification.desc);
+    // print("notification time UTC: " +
+    //     DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //         .toUtc()
+    //         .toString());
+    // print("notification time Local: " +
+    //     DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //         .toLocal()
+    //         .toString());
+    // print(DateTime.fromMillisecondsSinceEpoch(notification.epoch, isUtc: true)
+    //     .timeZoneOffset);
+    // print(DateTime.now());
     return Dismissible(
       key: Key(this.notification.id.toString()),
       onDismissed: (notificationId) {
@@ -51,8 +51,7 @@ class AlertListTile extends StatelessWidget {
                       .getSensorFromNotifs(this.notification.uid);
                   EasyLoading.dismiss();
                   Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (_) =>
-                          SensorPage(sensor: sensor, key: UniqueKey())));
+                      builder: (_) => SensorPage(sensor: sensor)));
                   controller.dismissNotification(this.notification);
                 },
                 child: ListTile(

@@ -15,8 +15,12 @@ class _SensorPageState extends State<SensorPage> {
   List<Widget> _screens = [];
 
   void initData() {
-    _screens.add(SensorSummaryPage(sensor: widget.sensor));
-    _screens.add(AllGraphsPage(sensor: widget.sensor));
+    _screens.add(SensorSummaryPage(
+      sensor: widget.sensor,
+    ));
+    _screens.add(AllGraphsPage(
+      sensor: widget.sensor,
+    ));
   }
 
   @override

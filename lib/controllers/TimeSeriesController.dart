@@ -11,7 +11,6 @@ class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
   RxList<RxList<TimeSeries?>> graphs = RxList<RxList<TimeSeries?>>.empty();
-  Rx<int> howManyGraphs = 0.obs;
   CancelableOperation? cancelableTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
