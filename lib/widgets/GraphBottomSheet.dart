@@ -6,12 +6,17 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:get/get.dart';
 
 class GraphBottomSheet extends StatefulWidget {
-  GraphBottomSheet({Key? key, required this.sensor, required this.functions})
-      : super(key: key);
+  GraphBottomSheet({
+    Key? key,
+    required this.sensor,
+    required this.functions,
+  }) : super(key: key);
   final Sensor sensor;
+
   final List<Functionality?> functions;
 
   @override
@@ -68,8 +73,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    TimeSeriesController controller = Get.put(TimeSeriesController());
-
+    TimeSeriesController controller = Get.find();
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 2.5 / 100),
@@ -100,7 +104,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     height: MediaQuery.of(context).size.height * 2.5 / 100,
                   )
                 ] +
-                buildGraphs(context, widget.functions),
+                buildGraphs(widget.functions),
           ),
         ),
       ),

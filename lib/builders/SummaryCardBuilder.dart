@@ -28,7 +28,6 @@ Widget buildSummaryCards(
   if (sensor.functionalities != null) {
     for (Functionality func in sensor.functionalities!) {
       if (func.value is List<Functionality?>) {
-        print("subfunctions " + func.value.toString());
         List<Functionality?> subFunctions = func.value; // like s1t, s2t
         if (subFunctions.isEmpty) {
           continue;

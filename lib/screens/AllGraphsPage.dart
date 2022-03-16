@@ -6,7 +6,10 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class AllGraphsPage extends StatefulWidget {
   final Sensor sensor;
-  const AllGraphsPage({Key? key, required this.sensor}) : super(key: key);
+  const AllGraphsPage({
+    Key? key,
+    required this.sensor,
+  }) : super(key: key);
 
   @override
   State<AllGraphsPage> createState() => _AllGraphsPageState();
@@ -76,7 +79,9 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                               MediaQuery.of(context).size.height * 2.5 / 100,
                         ),
                       ] +
-                      buildGraphs(context, widget.sensor.functionalities!),
+                      buildGraphs(
+                        widget.sensor.functionalities!,
+                      ),
                 ),
               ),
             )));
