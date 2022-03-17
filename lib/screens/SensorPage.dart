@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:get/get.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
@@ -22,7 +21,6 @@ class _SensorPageState extends State<SensorPage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthController auth = Get.find();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -50,12 +48,12 @@ class _SensorPageState extends State<SensorPage> {
                   labelColor: Theme.of(context).colorScheme.tertiary,
                   unselectedLabelColor: Theme.of(context).primaryColor,
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicator: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                      color: Theme.of(context).colorScheme.surface),
+                  indicator: DotIndicator(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    distanceFromCenter: -16,
+                    radius: 3,
+                    paintingStyle: PaintingStyle.fill,
+                  ),
                   tabs: [
                     Tab(
                       child: SizedBox(

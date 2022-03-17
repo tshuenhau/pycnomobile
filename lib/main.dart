@@ -10,12 +10,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
+import 'package:pycnomobile/storage/Preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Hive.initFlutter();
+
   runApp(MyApp());
 }
 
@@ -48,6 +50,7 @@ class MyApp extends StatelessWidget {
     print("rebuild main");
     configLoading();
     AuthController controller = Get.put(AuthController());
+
     return Obx(
       () => GetMaterialApp(
         theme: controller.user.value?.colorScheme == null
@@ -58,7 +61,7 @@ class MyApp extends StatelessWidget {
             :
             //globalTheme,
             getTheme(controller.user.value?.colorScheme, false),
-        themeMode: ThemeMode.light,
+        themeMode: controller.isDark.value ? ThemeMode.dark : ThemeMode.light,
         home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut

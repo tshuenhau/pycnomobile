@@ -52,7 +52,6 @@ Future<void> getGraphsForTimeRange(DateTimeRange dateRange, Sensor sensor,
 
 List<Widget> buildGraphs(
     Sensor sensor, List<Functionality?> functions, BuildContext context) {
-  //PROBLEM IS THIS FUNCTION
   print("BUILD GRAPHS");
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
@@ -80,6 +79,7 @@ List<Widget> buildGraphs(
   }
 
   if (auth.currentTab.value == 0) {
+    print("SENSOR");
     controller.graphs.last.forEach((e) {
       drawnCount += 1;
       if (e != null) {
@@ -92,6 +92,7 @@ List<Widget> buildGraphs(
       }
     });
   } else {
+    print("ALERT");
     controller.alertGraphs.last.forEach((e) {
       drawnCount += 1;
       if (e != null) {

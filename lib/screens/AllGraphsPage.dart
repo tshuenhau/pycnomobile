@@ -5,9 +5,29 @@ import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 
-class AllGraphsPage extends StatelessWidget {
+class AllGraphsPage extends StatefulWidget {
   final Sensor sensor;
-  const AllGraphsPage({Key? key, required this.sensor}) : super(key: key);
+  const AllGraphsPage({
+    Key? key,
+    required this.sensor,
+  }) : super(key: key);
+
+  @override
+  State<AllGraphsPage> createState() => _AllGraphsPageState();
+}
+
+class _AllGraphsPageState extends State<AllGraphsPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      initData();
+    });
+  }
+
+  void initData() async {
+    await initGraphs(widget.sensor, widget.sensor.functionalities!);
+  }
 
   Widget DateRangeSelector(BuildContext context) {
     return Theme(
@@ -24,8 +44,8 @@ class AllGraphsPage extends StatelessWidget {
                   lastDate: DateTime.now());
 
               if (_newDateRange != null) {
-                await getGraphsForTimeRange(
-                    _newDateRange, sensor, sensor.functionalities!);
+                await getGraphsForTimeRange(_newDateRange, widget.sensor,
+                    widget.sensor.functionalities!);
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },
@@ -64,7 +84,8 @@ class AllGraphsPage extends StatelessWidget {
                               MediaQuery.of(context).size.height * 2.5 / 100,
                         ),
                       ] +
-                      buildGraphs(sensor, sensor.functionalities!, context),
+                      buildGraphs(widget.sensor, widget.sensor.functionalities!,
+                          context),
                 ),
               ),
             )));

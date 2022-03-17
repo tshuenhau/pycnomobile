@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'package:pycnomobile/model/User.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut }
 
@@ -15,12 +16,14 @@ class AuthController extends GetxController {
   var deviceData = <String, dynamic>{};
   RxMap<dynamic, dynamic> theme = RxMap<dynamic, dynamic>({});
   Rx<int> currentTab = 0.obs;
-
+  Rx<bool> isDark = false.obs;
+  late Preferences preferences;
   Rxn<User> user = Rxn<User>();
 
   @override
   onInit() async {
-    super.onInit();
+    preferences = await Preferences.getInstance();
+    await getIsDark();
     await getTheme();
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
@@ -28,16 +31,26 @@ class AuthController extends GetxController {
     // if (isLoggedIn.value == AuthState.loggedIn) {
     //   getAccount();
     // }
+    super.onInit();
   }
 
   Future<void> getTheme() async {
-    final preferences = await Preferences.getInstance();
     theme.value = preferences.getTheme();
     print("THEME " + theme.toString());
   }
 
-  Future<bool> checkLoggedInStatus() async {
+  Future<void> getIsDark() async {
+    isDark.value = preferences.getIsDark();
+    print('IS DARK ' + isDark.value.toString());
+  }
+
+  Future<void> setIsDark(bool isDark) async {
     final preferences = await Preferences.getInstance();
+    preferences.setIsDark(isDark);
+    print("SET IS DARK " + isDark.toString());
+  }
+
+  Future<bool> checkLoggedInStatus() async {
     token = preferences.getToken();
     if (token == "") {
       return false;

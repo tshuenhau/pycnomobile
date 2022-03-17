@@ -3,6 +3,7 @@ import 'package:pycnomobile/builders/AlertsBuilder.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/widgets/AlertListTile.dart';
 import 'package:get/get.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class AlertsPage extends StatefulWidget {
   const AlertsPage({Key? key}) : super(key: key);
@@ -42,11 +43,12 @@ class _AlertsPageState extends State<AlertsPage> {
                     labelColor: Theme.of(context).colorScheme.tertiary,
                     unselectedLabelColor: Theme.of(context).primaryColor,
                     indicatorSize: TabBarIndicatorSize.label,
-                    indicator: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10)),
-                        color: Theme.of(context).colorScheme.surface),
+                    indicator: DotIndicator(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      distanceFromCenter: -16,
+                      radius: 3,
+                      paintingStyle: PaintingStyle.fill,
+                    ),
                     tabs: [
                       Tab(
                         child: SizedBox(

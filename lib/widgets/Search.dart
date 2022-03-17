@@ -13,8 +13,10 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styleActive = TextStyle(color: Colors.black);
-    final styleHint = TextStyle(color: Colors.black54);
+    final styleActive = TextStyle(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.90));
+    final styleHint = TextStyle(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.65));
     final TextEditingController textController = new TextEditingController();
 
     textController.text = controller.searchController.value;
