@@ -59,7 +59,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     lastDate: DateTime.now());
 
                 if (_newDateRange != null) {
-                  List<TimeSeries>? result = await getGraphsForTimeRange(
+                  await getGraphsForTimeRange(
                       _newDateRange, widget.sensor, widget.functions);
                   // setState(() {
                   //   graphs = result!;
@@ -106,7 +106,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     height: MediaQuery.of(context).size.height * 2.5 / 100,
                   )
                 ] +
-                buildGraphs(widget.functions),
+                buildGraphs(widget.sensor, widget.functions, context),
           ),
         ),
       ),

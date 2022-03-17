@@ -13,21 +13,10 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
-  List<Widget> _screens = [];
-
-  void initData() {
-    _screens.add(SensorSummaryPage(
-      sensor: widget.sensor,
-    ));
-    _screens.add(AllGraphsPage(
-      sensor: widget.sensor,
-    ));
-  }
-
   @override
   void initState() {
     super.initState();
-    initData();
+    // initData();
   }
 
   @override
@@ -89,12 +78,13 @@ class _SensorPageState extends State<SensorPage> {
           child: Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
-            child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  SensorSummaryPage(sensor: widget.sensor),
-                  AllGraphsPage(sensor: widget.sensor)
-                ]),
+            child:
+                TabBarView(physics: NeverScrollableScrollPhysics(), children: [
+              SensorSummaryPage(sensor: widget.sensor),
+              AllGraphsPage(
+                sensor: widget.sensor,
+              )
+            ]),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ class Preferences {
   static const _preferencesBox = '_preferencesBox';
   static const _tokenKey = '_tokenKey';
   static const _themeKey = '_themeKey';
+  static const _isDarkKey = '_isDarkKey';
 
   final Box<dynamic> _box;
   Preferences._(this._box);
@@ -17,11 +18,12 @@ class Preferences {
 
   Future<void> setTheme(Map<dynamic, dynamic> theme) =>
       _setValue(_themeKey, theme);
+  Future<void> setIsDark(bool isDark) => _setValue(_isDarkKey, isDark);
 
   String getToken() => _getValue<String>('_tokenKey', '');
   Map<dynamic, dynamic> getTheme() =>
       _getValue<Map<dynamic, dynamic>>('_themeKey', {});
-
+  bool getIsDark() => _getValue<bool>('_isDarkKey', false);
   T _getValue<T>(dynamic key, T defaultValue) =>
       _box.get(key, defaultValue: defaultValue) as T;
 

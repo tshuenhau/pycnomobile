@@ -73,8 +73,10 @@ class AccountPage extends StatelessWidget {
                                       if (Theme.of(context).brightness ==
                                           Brightness.dark) {
                                         Get.changeThemeMode(ThemeMode.light);
+                                        authController.setIsDark(false);
                                       } else {
                                         Get.changeThemeMode(ThemeMode.dark);
+                                        authController.setIsDark(true);
                                       }
                                     }),
                                 TextButton.icon(
