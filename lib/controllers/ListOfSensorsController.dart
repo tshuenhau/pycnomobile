@@ -12,7 +12,6 @@ import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
@@ -24,7 +23,6 @@ class ListOfSensorsController extends GetxController
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
   late BuildContext context;
   late AuthController authController;
-  TimeSeriesController timeSeriesController = Get.put(TimeSeriesController());
 
   @override
   void onInit() async {

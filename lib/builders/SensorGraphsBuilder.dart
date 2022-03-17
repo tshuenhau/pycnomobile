@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
@@ -26,17 +27,18 @@ Future<void> initGraphs(Sensor sensor, List<Functionality?> functions,
             dateRange.end.day, 23, 59));
   }
 
-  TimeSeriesController controller = Get.put(TimeSeriesController());
+  AuthController auth = Get.find();
 
   if (sensor.functionalities != null) {
+    TimeSeriesController controller = Get.put(TimeSeriesController());
     controller.getMultiTimeSeries(
         dateRange.start, dateRange.end, functions, sensor);
   }
 }
 
-Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
-    Sensor sensor, List<Functionality?> functions) async {
-  final List<TimeSeries> graphs = [];
+Future<void> getGraphsForTimeRange(DateTimeRange dateRange, Sensor sensor,
+    List<Functionality?> functions) async {
+  print("GET GRAPHS FOR TIME RANGE");
 
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
@@ -46,12 +48,14 @@ Future<List<TimeSeries>?> getGraphsForTimeRange(DateTimeRange dateRange,
   }
 
   EasyLoading.dismiss();
-
-  return graphs;
 }
 
-List<Widget> buildGraphs(List<Functionality?> functions) {
-  TimeSeriesController controller = Get.find();
+List<Widget> buildGraphs(
+    Sensor sensor, List<Functionality?> functions, BuildContext context) {
+  //PROBLEM IS THIS FUNCTION
+  print("BUILD GRAPHS");
+  TimeSeriesController controller = Get.put(TimeSeriesController());
+
   AuthController auth = Get.find();
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
@@ -63,7 +67,7 @@ List<Widget> buildGraphs(List<Functionality?> functions) {
     for (int i = drawnCount;
         i < controller.countNumberOfGraphs(functions);
         i++) {
-      loadingIndicators.add(LoadingIndicator());
+      loadingIndicators.add(LoadingIndicator(context));
     }
     return Column(
       children: <Widget>[] + loadingIndicators,
@@ -72,19 +76,34 @@ List<Widget> buildGraphs(List<Functionality?> functions) {
   }
 
   if (controller.countNumberOfGraphs(functions) <= 0) {
-    graphsToDraw.add(NoGraphData());
+    graphsToDraw.add(NoGraphData(context));
   }
-  controller.graphs.last.forEach((e) {
-    drawnCount += 1;
-    if (e != null) {
-      graphsToDraw.add(SensorLineChart(
-          data: e.getTimeSeries,
-          functionName: e
-              .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
-    } else {
-      graphsToDraw.add(NoGraphData());
-    }
-  });
+
+  if (auth.currentTab.value == 0) {
+    controller.graphs.last.forEach((e) {
+      drawnCount += 1;
+      if (e != null) {
+        graphsToDraw.add(SensorLineChart(
+            data: e.getTimeSeries,
+            functionName: e
+                .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+      } else {
+        graphsToDraw.add(NoGraphData(context));
+      }
+    });
+  } else {
+    controller.alertGraphs.last.forEach((e) {
+      drawnCount += 1;
+      if (e != null) {
+        graphsToDraw.add(SensorLineChart(
+            data: e.getTimeSeries,
+            functionName: e
+                .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+      } else {
+        graphsToDraw.add(NoGraphData(context));
+      }
+    });
+  }
 
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
@@ -94,36 +113,56 @@ List<Widget> buildGraphs(List<Functionality?> functions) {
   return result;
 }
 
-class NoGraphData extends StatelessWidget {
-  const NoGraphData({
-    Key? key,
-  }) : super(key: key);
+// class NoGraphData extends StatelessWidget {
+//   const NoGraphData({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height * 15 / 100,
-        child: Center(child: Text("No Data")));
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//         height: MediaQuery.of(context).size.height * 15 / 100,
+//         child: Center(child: Text("No Data")));
+//   }
+// }
+
+Widget NoGraphData(BuildContext context) {
+  return SizedBox(
+      height: MediaQuery.of(context).size.height * 15 / 100,
+      child: Center(child: Text("No Data")));
 }
 
-class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 7.5 / 100,
-            bottom: MediaQuery.of(context).size.height * 10 / 100),
-        child: SizedBox(
-            height: MediaQuery.of(context).size.width * 5 / 100,
-            width: MediaQuery.of(context).size.width * 5 / 100,
-            child: CircularProgressIndicator()),
-      ),
-    );
-  }
+Widget LoadingIndicator(BuildContext context) {
+  return Center(
+    child: Padding(
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 7.5 / 100,
+          bottom: MediaQuery.of(context).size.height * 10 / 100),
+      child: SizedBox(
+          height: MediaQuery.of(context).size.width * 5 / 100,
+          width: MediaQuery.of(context).size.width * 5 / 100,
+          child: CircularProgressIndicator()),
+    ),
+  );
 }
+
+// class LoadingIndicator extends StatelessWidget {
+//   const LoadingIndicator({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Padding(
+//         padding: EdgeInsets.only(
+//             top: MediaQuery.of(context).size.height * 7.5 / 100,
+//             bottom: MediaQuery.of(context).size.height * 10 / 100),
+//         child: SizedBox(
+//             height: MediaQuery.of(context).size.width * 5 / 100,
+//             width: MediaQuery.of(context).size.width * 5 / 100,
+//             child: CircularProgressIndicator()),
+//       ),
+//     );
+//   }
+// }

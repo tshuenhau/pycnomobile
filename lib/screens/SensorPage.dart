@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:get/get.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
@@ -12,25 +14,15 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
-  List<Widget> _screens = [];
-
-  void initData() {
-    _screens.add(SensorSummaryPage(
-      sensor: widget.sensor,
-    ));
-    _screens.add(AllGraphsPage(
-      sensor: widget.sensor,
-    ));
-  }
-
   @override
   void initState() {
     super.initState();
-    initData();
+    // initData();
   }
 
   @override
   Widget build(BuildContext context) {
+    AuthController auth = Get.find();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -88,12 +80,13 @@ class _SensorPageState extends State<SensorPage> {
           child: Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
-            child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  SensorSummaryPage(sensor: widget.sensor),
-                  AllGraphsPage(sensor: widget.sensor)
-                ]),
+            child:
+                TabBarView(physics: NeverScrollableScrollPhysics(), children: [
+              SensorSummaryPage(sensor: widget.sensor),
+              AllGraphsPage(
+                sensor: widget.sensor,
+              )
+            ]),
           ),
         ),
       ),
