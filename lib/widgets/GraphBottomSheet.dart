@@ -29,7 +29,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   @override
   void initState() {
     super.initState();
-    initData();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      initData();
+    });
   }
 
   void initData() async {
