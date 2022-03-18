@@ -13,9 +13,6 @@ class SensorSearchPage extends StatefulWidget {
   State<SensorSearchPage> createState() => _SensorSearchPageState();
 }
 
-final ListOfSensorsController sensorsController =
-    Get.put(ListOfSensorsController());
-
 var bottomNavigationBar;
 
 class _SensorSearchPageState extends State<SensorSearchPage> {
@@ -38,6 +35,9 @@ class _SensorSearchPageState extends State<SensorSearchPage> {
   ListOfSensorsController controller = Get.find();
   @override
   Widget build(BuildContext context) {
+    final ListOfSensorsController sensorsController =
+        Get.put(ListOfSensorsController());
+
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(

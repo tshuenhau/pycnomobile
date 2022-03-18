@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:pycnomobile/model/User.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/model/ThemeService.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut }
 
@@ -22,16 +23,24 @@ class AuthController extends GetxController {
 
   @override
   onInit() async {
+    super.onInit();
     preferences = await Preferences.getInstance();
-    await getIsDark();
+
     await getTheme();
+    await getIsDark();
+
+    if (isDark.value) {
+      Get.changeThemeMode(ThemeMode.dark);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+    }
+
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
 
     // if (isLoggedIn.value == AuthState.loggedIn) {
     //   getAccount();
     // }
-    super.onInit();
   }
 
   Future<void> getTheme() async {
@@ -94,7 +103,8 @@ class AuthController extends GetxController {
       print("Login successful! Token: $token");
       await getAccount();
       if (user.value != null) {
-        await preferences.setTheme(user.value!.colorScheme);
+        // await preferences.setTheme(user.value!.colorScheme);
+        ThemeService().saveColorScheme(user.value!.colorScheme);
         print("theme saved");
       }
     } else {

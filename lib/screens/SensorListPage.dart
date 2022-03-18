@@ -3,13 +3,10 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/screens/SensorSearchPage.dart';
 import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 
@@ -24,15 +21,13 @@ class _SensorListPageState extends State<SensorListPage>
     with WidgetsBindingObserver {
   late StreamSubscription<bool> keyboardSubscription;
   AuthController authController = Get.find();
-  Future _refreshData() async {
-    await sensorsController.getListOfSensors();
-    sensorsController.searchListOfSensors();
-  }
+  final ListOfSensorsController sensorsController =
+      Get.put(ListOfSensorsController());
 
   @override
   void initState() {
-    super.initState();
     sensorsController.context = context;
+    super.initState();
     WidgetsBinding.instance!.addObserver(this);
 
     var keyboardVisibilityController = KeyboardVisibilityController();
@@ -44,8 +39,6 @@ class _SensorListPageState extends State<SensorListPage>
         FocusScope.of(context).unfocus();
       }
     });
-    // sensorsController.reload(ModalRoute.of(context)!.isCurrent,
-    //     authController.currentTab.value == 0);
   }
 
   @override
@@ -68,11 +61,13 @@ class _SensorListPageState extends State<SensorListPage>
     }
   }
 
+  Future _refreshData() async {
+    await sensorsController.getListOfSensors();
+    sensorsController.searchListOfSensors();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ListOfSensorsController sensorsController =
-        Get.put(ListOfSensorsController());
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: GestureDetector(

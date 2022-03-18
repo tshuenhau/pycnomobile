@@ -5,6 +5,7 @@ import 'package:pycnomobile/screens/AccountDetailsPage.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/widgets/AccountListTile.dart';
+import 'package:pycnomobile/model/ThemeService.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key, required this.resetFunction}) : super(key: key);
@@ -70,6 +71,9 @@ class AccountPage extends StatelessWidget {
                                     icon: Icon(Icons.palette_outlined),
                                     label: Text("Change Theme"),
                                     onPressed: () {
+                                      print("SWITCH THEME");
+                                      // ThemeService().switchTheme();
+
                                       if (Theme.of(context).brightness ==
                                           Brightness.dark) {
                                         Get.changeThemeMode(ThemeMode.light);
@@ -84,6 +88,7 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Logout"),
                                     onPressed: () {
                                       authController.logout();
+
                                       Navigator.of(context, rootNavigator: true)
                                           .pushAndRemoveUntil(
                                               MaterialPageRoute(
