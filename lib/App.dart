@@ -53,7 +53,7 @@ class _AppState extends State<App> {
   List<Widget> _navScreens() {
     return [
       //TodayPage(),
-      SensorListPage(),
+      new SensorListPage(key: UniqueKey()),
       //MapPage(),
       AlertsPage(),
       AccountPage(resetFunction: reset),

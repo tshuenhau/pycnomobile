@@ -15,13 +15,14 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
+  late BuildContext context;
   RxList<Sensor> listOfSensors = List<Sensor>.empty(growable: true).obs;
   RxList<Sensor> filteredListOfSensors = List<Sensor>.empty(growable: true).obs;
   RxList<TimeSeries> listOfTimeSeries =
       List<TimeSeries>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
-  late BuildContext context;
+
   late AuthController authController;
 
   @override
@@ -40,8 +41,16 @@ class ListOfSensorsController extends GetxController
     await this.reload();
   }
 
+  @override
+  void dispose() {
+    Get.delete<ListOfSensorsController>();
+    print("DISPOSED");
+    super.dispose();
+  }
+
   Future<void> reload() async {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
+      print(context);
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value

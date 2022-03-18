@@ -8,15 +8,16 @@ import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
-import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
-import 'package:pycnomobile/storage/Preferences.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pycnomobile/model/ThemeService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Hive.initFlutter();
+  await GetStorage.init(); // add this
 
   runApp(MyApp());
 }
@@ -41,6 +42,7 @@ void configLoading() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   void dispose() {
     Hive.close();
   }
@@ -53,20 +55,18 @@ class MyApp extends StatelessWidget {
 
     return Obx(
       () => GetMaterialApp(
-        theme: controller.user.value?.colorScheme == null
+        theme: ThemeService().colorScheme.isEmpty
             ? globalTheme
-            : getTheme(controller.user.value?.colorScheme, true),
-        darkTheme: controller.user.value?.colorScheme == null
+            : getTheme(ThemeService().colorScheme, true),
+        darkTheme: ThemeService().colorScheme.isEmpty
             ? globalTheme
-            :
-            //globalTheme,
-            getTheme(controller.user.value?.colorScheme, false),
-        themeMode: controller.isDark.value ? ThemeMode.dark : ThemeMode.light,
-        home: Obx(() => controller.isLoggedIn.value == AuthState.loggedIn
+            : getTheme(ThemeService().colorScheme, false),
+        themeMode: ThemeService().theme,
+        home: controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
                 ? LoginPage()
-                : SplashPage()),
+                : SplashPage(),
         builder: EasyLoading.init(),
       ),
     );

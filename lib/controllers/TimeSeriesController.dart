@@ -28,6 +28,12 @@ class TimeSeriesController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    Get.delete<TimeSeriesController>();
+    super.dispose();
+  }
+
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor) async {
     RxList<TimeSeries?> instanceList = new RxList.empty(growable: true);
