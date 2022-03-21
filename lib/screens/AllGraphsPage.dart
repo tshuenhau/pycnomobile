@@ -4,7 +4,6 @@ import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/controllers/AlertTimeSeriesController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 
 class AllGraphsPage extends StatefulWidget {

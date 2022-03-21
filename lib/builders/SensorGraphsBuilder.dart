@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/controllers/AlertTimeSeriesController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
