@@ -11,11 +11,10 @@ import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class TimeSeriesController extends GetxController {
+class AlertTimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
   RxList<RxList<TimeSeries?>> graphs = RxList<RxList<TimeSeries?>>.empty();
-  RxList<RxList<TimeSeries?>> alertGraphs = RxList<RxList<TimeSeries?>>.empty();
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -29,20 +28,17 @@ class TimeSeriesController extends GetxController {
 
   @override
   void onClose() {
-    Get.delete<TimeSeriesController>();
+    Get.delete<AlertTimeSeriesController>();
     super.onClose();
   }
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
-      List<Functionality?> functions, Sensor sensor, bool isAlert) async {
-    print('is alert ' + isAlert.toString());
-    RxList<TimeSeries?> instanceList = RxList.empty(growable: true);
+      List<Functionality?> functions, Sensor sensor) async {
+    RxList<TimeSeries?> instanceList = new RxList.empty(growable: true);
 
-    if (!isAlert) {
-      graphs.add(instanceList);
-    } else {
-      alertGraphs.add(instanceList);
-    }
+    print("GET ALERT TIME SERIES");
+
+    graphs.add(instanceList);
 
     for (Functionality? function in functions) {
       if (function != null) {
@@ -101,10 +97,8 @@ class TimeSeriesController extends GetxController {
         }
       }
     }
-    if (graphs.length > 1 && !isAlert) {
+    if (graphs.length > 1) {
       graphs.removeRange(0, graphs.length - 1);
-    } else if (alertGraphs.length > 1) {
-      alertGraphs.removeRange(0, alertGraphs.length - 1);
     }
   }
 

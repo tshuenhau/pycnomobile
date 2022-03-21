@@ -20,7 +20,6 @@ class AuthController extends GetxController {
   Rx<bool> isDark = false.obs;
   late Preferences preferences;
   Rxn<User> user = Rxn<User>();
-
   @override
   onInit() async {
     super.onInit();

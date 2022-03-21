@@ -45,7 +45,7 @@ class _SensorListPageState extends State<SensorListPage>
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-
+    sensorsController.dispose();
     keyboardSubscription.cancel();
     super.dispose();
   }

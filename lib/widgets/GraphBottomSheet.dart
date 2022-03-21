@@ -35,7 +35,8 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    await initGraphs(widget.sensor, widget.functions);
+    await initGraphs(
+        true, widget.sensor, widget.functions); //TODO : change to isAlert
   }
 
   @override
@@ -106,7 +107,11 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     height: MediaQuery.of(context).size.height * 2.5 / 100,
                   )
                 ] +
-                buildGraphs(widget.sensor, widget.functions, context),
+                buildGraphs(
+                  widget.sensor,
+                  widget.functions,
+                  context,
+                ), //TODO: change to isAlert
           ),
         ),
       ),

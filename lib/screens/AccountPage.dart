@@ -3,6 +3,9 @@ import 'package:pycnomobile/screens/BluetoothPage.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/AccountDetailsPage.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:pycnomobile/controllers/NotificationsController.dart';
+import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/widgets/AccountListTile.dart';
 import 'package:pycnomobile/model/ThemeService.dart';
@@ -88,6 +91,9 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Logout"),
                                     onPressed: () {
                                       authController.logout();
+                                      Get.delete<TimeSeriesController>();
+                                      Get.delete<NotificationsController>();
+                                      Get.delete<ListOfSensorsController>();
                                       Navigator.of(context, rootNavigator: true)
                                           .pushAndRemoveUntil(
                                               MaterialPageRoute(
