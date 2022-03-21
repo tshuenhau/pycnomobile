@@ -47,7 +47,6 @@ class Search extends StatelessWidget {
                   ? IconButton(
                       icon: Icon(Icons.clear),
                       onPressed: () {
-                        print("focs");
                         textController.clear();
                         controller.searchController.value = "";
                         controller.searchListOfSensors();

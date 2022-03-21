@@ -60,7 +60,6 @@ class LoginPage extends StatelessWidget {
                         .push(MaterialPageRoute(builder: (context) => App()));
                   } catch (e) {
                     EasyLoading.showError("invalid username/password");
-                    print(e);
                   }
                 },
                 controller: passwordController,

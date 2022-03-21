@@ -40,7 +40,6 @@ class _AppState extends State<App> {
   void reset() {
     setState(() {
       isLoggedIn = false;
-      print("reset");
     });
   }
 

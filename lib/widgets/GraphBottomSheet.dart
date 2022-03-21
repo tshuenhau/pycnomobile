@@ -75,7 +75,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    TimeSeriesController controller = Get.find();
+    TimeSeriesController controller = Get.put(TimeSeriesController());
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 2.5 / 100),

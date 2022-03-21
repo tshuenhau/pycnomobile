@@ -31,9 +31,7 @@ class ListOfSensorsController extends GetxController
     authController = Get.find();
     try {
       EasyLoading.show(status: 'loading...');
-
       await getListOfSensors();
-
       EasyLoading.dismiss();
     } catch (err) {
       EasyLoading.showError('$err');
@@ -43,14 +41,11 @@ class ListOfSensorsController extends GetxController
 
   @override
   void dispose() {
-    Get.delete<ListOfSensorsController>();
-    print("DISPOSED");
     super.dispose();
   }
 
   Future<void> reload() async {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
-      print(context);
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value

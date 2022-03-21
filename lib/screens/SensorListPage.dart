@@ -26,6 +26,7 @@ class _SensorListPageState extends State<SensorListPage>
 
   @override
   void initState() {
+    print("authController TOKEN " + authController.token);
     sensorsController.context = context;
     super.initState();
     WidgetsBinding.instance!.addObserver(this);

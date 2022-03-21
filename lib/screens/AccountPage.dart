@@ -88,7 +88,6 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Logout"),
                                     onPressed: () {
                                       authController.logout();
-
                                       Navigator.of(context, rootNavigator: true)
                                           .pushAndRemoveUntil(
                                               MaterialPageRoute(

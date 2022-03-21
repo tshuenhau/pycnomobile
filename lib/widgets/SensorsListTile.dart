@@ -72,10 +72,11 @@ class SensorsListTile extends StatelessWidget {
                   Container(
                       width: MediaQuery.of(context).size.height * 1 / 15,
                       height: MediaQuery.of(context).size.height * 1 / 15,
-                      child: Image(
-                          image: NetworkImage(sensor.img == null
-                              ? ""
-                              : "https://pycno.co/${sensor.img}")))
+                      child: (sensor.img == null || sensor.img == "")
+                          ? Image.asset("assets/images/pycno_logo.png")
+                          : Image(
+                              image: NetworkImage(
+                                  "https://pycno.co/${sensor.img}")))
                 ])),
       ),
     );
