@@ -20,7 +20,6 @@ class AuthController extends GetxController {
   Rx<bool> isDark = false.obs;
   late Preferences preferences;
   Rxn<User> user = Rxn<User>();
-
   @override
   onInit() async {
     super.onInit();
@@ -45,18 +44,15 @@ class AuthController extends GetxController {
 
   Future<void> getTheme() async {
     theme.value = preferences.getTheme();
-    print("THEME " + theme.toString());
   }
 
   Future<void> getIsDark() async {
     isDark.value = preferences.getIsDark();
-    print('IS DARK ' + isDark.value.toString());
   }
 
   Future<void> setIsDark(bool isDark) async {
     final preferences = await Preferences.getInstance();
     preferences.setIsDark(isDark);
-    print("SET IS DARK " + isDark.toString());
   }
 
   Future<bool> checkLoggedInStatus() async {
@@ -105,7 +101,6 @@ class AuthController extends GetxController {
       if (user.value != null) {
         // await preferences.setTheme(user.value!.colorScheme);
         ThemeService().saveColorScheme(user.value!.colorScheme);
-        print("theme saved");
       }
     } else {
       throw Exception("Unable to login");
@@ -113,7 +108,6 @@ class AuthController extends GetxController {
   }
 
   getAccount() async {
-    print('https://stage.pycno.co/api/v2/data/account.json?TK=$token');
     final response = await http.get(
         Uri.parse('https://stage.pycno.co/api/v2/data/account.json?TK=$token'));
 
@@ -132,6 +126,11 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       final preferences = await Preferences.getInstance();
       await preferences.deleteToken();
+      token = "";
+      isLoggedIn.value = AuthState.loggedOut;
+      currentTab.value = 0;
+      isDark.value = false;
+      theme.value = {};
     } else {
       throw Exception("Unable to logout. Try again.");
     }

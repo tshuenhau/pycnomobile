@@ -23,14 +23,13 @@ class NotificationsController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     Get.delete<NotificationsController>();
-    super.dispose();
+    super.onClose();
   }
 
   Future<void> reload() async {
     Timer.periodic(new Duration(seconds: 1800), (timer) async {
-      print("refresh notifs");
       await this.getNotifications();
     });
   }

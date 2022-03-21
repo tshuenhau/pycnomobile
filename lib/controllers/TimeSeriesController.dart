@@ -16,7 +16,6 @@ class TimeSeriesController extends GetxController {
   AuthController authController = Get.find();
   RxList<RxList<TimeSeries?>> graphs = RxList<RxList<TimeSeries?>>.empty();
   RxList<RxList<TimeSeries?>> alertGraphs = RxList<RxList<TimeSeries?>>.empty();
-  CancelableOperation? cancelableTimeSeries;
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -29,20 +28,19 @@ class TimeSeriesController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     Get.delete<TimeSeriesController>();
-    super.dispose();
+    super.onClose();
   }
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
-      List<Functionality?> functions, Sensor sensor) async {
-    RxList<TimeSeries?> instanceList = new RxList.empty(growable: true);
+      List<Functionality?> functions, Sensor sensor, bool isAlert) async {
+    print('is alert ' + isAlert.toString());
+    RxList<TimeSeries?> instanceList = RxList.empty(growable: true);
 
-    if (authController.currentTab.value == 0) {
-      print("SENSORS");
+    if (!isAlert) {
       graphs.add(instanceList);
     } else {
-      print("ALERTS");
       alertGraphs.add(instanceList);
     }
 
@@ -103,10 +101,10 @@ class TimeSeriesController extends GetxController {
         }
       }
     }
-    if (graphs.length > 1) {
+    if (graphs.length > 1 && !isAlert) {
       graphs.removeRange(0, graphs.length - 1);
-    } else {
-      alertGraphs.removeRange(0, graphs.length - 1);
+    } else if (alertGraphs.length > 1) {
+      alertGraphs.removeRange(0, alertGraphs.length - 1);
     }
   }
 

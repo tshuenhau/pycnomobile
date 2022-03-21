@@ -23,17 +23,14 @@ class ListOfSensorsController extends GetxController
   Rx<String> searchController = ''.obs;
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
 
-  late AuthController authController;
+  AuthController authController = Get.find();
 
   @override
   void onInit() async {
     super.onInit();
-    authController = Get.find();
     try {
       EasyLoading.show(status: 'loading...');
-
       await getListOfSensors();
-
       EasyLoading.dismiss();
     } catch (err) {
       EasyLoading.showError('$err');
@@ -42,15 +39,13 @@ class ListOfSensorsController extends GetxController
   }
 
   @override
-  void dispose() {
+  void onClose() {
     Get.delete<ListOfSensorsController>();
-    print("DISPOSED");
-    super.dispose();
+    super.onClose();
   }
 
   Future<void> reload() async {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
-      print(context);
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
@@ -58,9 +53,7 @@ class ListOfSensorsController extends GetxController
         print("refresh sensors");
         try {
           EasyLoading.show(status: 'loading...');
-
           await getListOfSensors();
-
           EasyLoading.dismiss();
         } catch (err) {
           EasyLoading.showError('$err');

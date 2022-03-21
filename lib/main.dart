@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("rebuild main");
     configLoading();
     AuthController controller = Get.put(AuthController());
 

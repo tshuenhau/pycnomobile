@@ -3,6 +3,8 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:get/get.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
@@ -82,6 +84,7 @@ class _SensorPageState extends State<SensorPage> {
                 TabBarView(physics: NeverScrollableScrollPhysics(), children: [
               SensorSummaryPage(sensor: widget.sensor),
               AllGraphsPage(
+                key: widget.key,
                 sensor: widget.sensor,
               )
             ]),

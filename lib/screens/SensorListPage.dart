@@ -26,6 +26,7 @@ class _SensorListPageState extends State<SensorListPage>
 
   @override
   void initState() {
+    print("authController TOKEN " + authController.token);
     sensorsController.context = context;
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
@@ -44,7 +45,7 @@ class _SensorListPageState extends State<SensorListPage>
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-
+    sensorsController.dispose();
     keyboardSubscription.cancel();
     super.dispose();
   }

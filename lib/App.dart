@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
@@ -23,6 +24,8 @@ class _AppState extends State<App> {
   final AuthController authController = Get.find();
 
   NotificationsController controller = Get.put(NotificationsController());
+  ListOfSensorsController sensorsController =
+      Get.put(ListOfSensorsController());
 
   @override
   void initState() {
@@ -40,7 +43,6 @@ class _AppState extends State<App> {
   void reset() {
     setState(() {
       isLoggedIn = false;
-      print("reset");
     });
   }
 
@@ -53,7 +55,7 @@ class _AppState extends State<App> {
   List<Widget> _navScreens() {
     return [
       //TodayPage(),
-      new SensorListPage(key: UniqueKey()),
+      SensorListPage(),
       //MapPage(),
       AlertsPage(),
       AccountPage(resetFunction: reset),
