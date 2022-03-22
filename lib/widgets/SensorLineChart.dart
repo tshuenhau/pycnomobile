@@ -70,7 +70,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   List<Color> gradientColors() {
     Color midPoint = HexColor(widget.timeSeries.getColor);
-    int interval = 16;
+    int interval = 50;
     Color start = Color.fromARGB(
         180, midPoint.red, midPoint.green - interval, midPoint.blue);
     Color end = Color.fromARGB(
