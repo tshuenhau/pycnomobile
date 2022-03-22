@@ -91,15 +91,20 @@ class ListOfSensorsController extends GetxController
           addSensor(RainGauge.fromJson(body[i]));
         }
       }
-      filteredListOfSensors.sort((a, b) =>
-          a.polledAt != null && b.polledAt != null
-              ? b.polledAt!.compareTo(a.polledAt!)
-              : 0);
+
+      sortSensors();
 
       this.lastRefreshTime.value = DateTime.now();
     } else {
       throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
     }
+  }
+
+  void sortSensors() {
+    filteredListOfSensors.sort((a, b) =>
+        a.polledAt != null && b.polledAt != null
+            ? b.polledAt!.compareTo(a.polledAt!)
+            : 0);
   }
 
   void searchListOfSensors() {
@@ -111,6 +116,7 @@ class ListOfSensorsController extends GetxController
         tempList.add(sensor);
       }
       filteredListOfSensors.value = tempList.reversed.toList();
+      sortSensors();
       return;
     }
 
