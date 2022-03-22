@@ -25,10 +25,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
     super.initState();
     // WidgetsBinding.instance!.addPostFrameCallback((_) {
     if (auth.currentTab.value == 0) {
-      print("IS SENSORS");
       isAlert = false;
     } else {
-      print("IS ALERTS");
       isAlert = true;
     }
     initData(isAlert);

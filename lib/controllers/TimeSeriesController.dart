@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:async/async.dart';
+import 'dart:async';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/model/TimeSeries.dart';

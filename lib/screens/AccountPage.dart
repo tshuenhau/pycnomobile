@@ -75,16 +75,16 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Change Theme"),
                                     onPressed: () {
                                       print("SWITCH THEME");
-                                      // ThemeService().switchTheme();
+                                      ThemeService().switchTheme();
 
-                                      if (Theme.of(context).brightness ==
-                                          Brightness.dark) {
-                                        Get.changeThemeMode(ThemeMode.light);
-                                        authController.setIsDark(false);
-                                      } else {
-                                        Get.changeThemeMode(ThemeMode.dark);
-                                        authController.setIsDark(true);
-                                      }
+                                      // if (Theme.of(context).brightness ==
+                                      //     Brightness.dark) {
+                                      //   Get.changeThemeMode(ThemeMode.light);
+                                      //   authController.setIsDark(false);
+                                      // } else {
+                                      //   Get.changeThemeMode(ThemeMode.dark);
+                                      //   authController.setIsDark(true);
+                                      // }
                                     }),
                                 TextButton.icon(
                                     icon: Icon(Icons.logout),

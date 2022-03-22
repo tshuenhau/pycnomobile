@@ -1,16 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
+
+import 'package:pycnomobile/model/TimeSeries.dart';
 
 class SensorLineChart extends StatefulWidget {
   SensorLineChart({
     Key? key,
-    required this.data,
-    required this.functionName,
+    required this.timeSeries,
   }) : super(key: key);
-  final Map data;
-  final String functionName;
+  final TimeSeries timeSeries;
 
   @override
   _SensorLineChartState createState() => _SensorLineChartState();
@@ -34,7 +35,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   }
 
   void _prepareData() {
-    processData(widget.data);
+    processData(widget.timeSeries.getTimeSeries);
     setState(() {});
   }
 
@@ -63,10 +64,20 @@ class _SensorLineChartState extends State<SensorLineChart> {
         ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
   }
 
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
+  // List<Color> get gradientColors => [
+  //       HexColor(widget.timeSeries.getColor).withOpacity(0.65),
+  //     ];
+
+  List<Color> gradientColors() {
+    Color midPoint = HexColor(widget.timeSeries.getColor);
+    int interval = 16;
+    Color start = Color.fromARGB(
+        180, midPoint.red, midPoint.green - interval, midPoint.blue);
+    Color end = Color.fromARGB(
+        75, midPoint.red, midPoint.green + interval, midPoint.blue);
+
+    return [start, end];
+  }
 
   bool showAvg = false;
 
@@ -120,7 +131,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return LineChartBarData(
       spots: _values,
       isCurved: false,
-      colors: gradientColors,
+      colors: gradientColors(),
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
@@ -136,7 +147,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        colors: gradientColors().map((e) => e.withOpacity(0.35)).toList(),
       ),
     );
   }
@@ -231,7 +242,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.functionName,
+        Text(widget.timeSeries.getKey,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
@@ -287,29 +298,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
             1) {
       return true;
     }
-
-    // if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
-    //             0, 0)
-    //         .isBefore(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt())) &&
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
-    //             0, 0)
-    //         .isAfter(DateTime.fromMillisecondsSinceEpoch(_minX.toInt())) &&
-    //     DateTimeRange(
-    //                 start: DateTime(DateTime.now().year, DateTime.now().month,
-    //                     DateTime.now().day, 0, 0),
-    //                 end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-    //             .duration
-    //             .inDays <=
-    //         0.5 &&
-    //     DateTimeRange(
-    //                 end: DateTime(DateTime.now().year, DateTime.now().month,
-    //                     DateTime.now().day, 0, 0),
-    //                 start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
-    //             .duration
-    //             .inDays <=
-    //         0.5) {
-    //   return true;
-    // }
 
     return false;
   }

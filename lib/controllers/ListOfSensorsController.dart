@@ -40,7 +40,6 @@ class ListOfSensorsController extends GetxController
 
   @override
   void onClose() {
-    Get.delete<ListOfSensorsController>();
     super.onClose();
   }
 
