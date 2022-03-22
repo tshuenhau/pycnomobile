@@ -77,9 +77,24 @@ class _AlertsPageState extends State<AlertsPage> {
                 onRefresh: _refreshData,
                 child: Obx(() => ListView.builder(
                     itemCount:
-                        notificationsController.unreadNotifications.length,
+                        notificationsController.unreadNotifications.length == 0
+                            ? 1
+                            : notificationsController
+                                .unreadNotifications.length,
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
+                      if (notificationsController.unreadNotifications.length ==
+                          0) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height *
+                                  2.5 /
+                                  100),
+                          child: Center(
+                              child: Container(
+                                  child: Text("No New Notifications"))),
+                        );
+                      }
                       return AlertListTile(
                           notification: notificationsController
                               .unreadNotifications[index]);

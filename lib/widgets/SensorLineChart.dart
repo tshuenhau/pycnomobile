@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
+import 'package:pycnomobile/model/TimeSeries.dart';
+
 class SensorLineChart extends StatefulWidget {
   SensorLineChart({
     Key? key,
-    required this.data,
-    required this.functionName,
+    required this.timeSeries,
   }) : super(key: key);
-  final Map data;
-  final String functionName;
+  final TimeSeries timeSeries;
 
   @override
   _SensorLineChartState createState() => _SensorLineChartState();
@@ -34,7 +34,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   }
 
   void _prepareData() {
-    processData(widget.data);
+    processData(widget.timeSeries.getTimeSeries);
     setState(() {});
   }
 
@@ -231,7 +231,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.functionName,
+        Text(widget.timeSeries.getKey,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
@@ -287,29 +287,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
             1) {
       return true;
     }
-
-    // if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
-    //             0, 0)
-    //         .isBefore(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt())) &&
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day,
-    //             0, 0)
-    //         .isAfter(DateTime.fromMillisecondsSinceEpoch(_minX.toInt())) &&
-    //     DateTimeRange(
-    //                 start: DateTime(DateTime.now().year, DateTime.now().month,
-    //                     DateTime.now().day, 0, 0),
-    //                 end: DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-    //             .duration
-    //             .inDays <=
-    //         0.5 &&
-    //     DateTimeRange(
-    //                 end: DateTime(DateTime.now().year, DateTime.now().month,
-    //                     DateTime.now().day, 0, 0),
-    //                 start: DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
-    //             .duration
-    //             .inDays <=
-    //         0.5) {
-    //   return true;
-    // }
 
     return false;
   }

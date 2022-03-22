@@ -35,34 +35,8 @@ Future<void> initGraphs(
   }
 }
 
-// Future<void> initAlertGraphs(Sensor sensor, List<Functionality?> functions,
-//     [DateTimeRange? dateRange]) async {
-//   print('init alert graphs');
-//   if (dateRange == null) {
-//     dateRange = new DateTimeRange(
-//         start: DateTime.now().add(Duration(hours: -24)), end: DateTime.now());
-//   } else if (dateRange.duration.inDays <= 0) {
-//     DateTime now = DateTime.now();
-//     dateRange = DateTimeRange(
-//         start: DateTime(now.year, now.month, now.day, 0, 0),
-//         end: DateTime(now.year, now.month, now.day, 23, 59));
-//   } else {
-//     dateRange = DateTimeRange(
-//         start: dateRange.start,
-//         end: DateTime(dateRange.end.year, dateRange.end.month,
-//             dateRange.end.day, 23, 59));
-//   }
-//   if (sensor.functionalities != null) {
-//     AlertTimeSeriesController controller = Get.put(AlertTimeSeriesController());
-//     controller.getMultiTimeSeries(
-//         dateRange.start, dateRange.end, functions, sensor);
-//   }
-// }
-
 Future<void> getGraphsForTimeRange(DateTimeRange dateRange, Sensor sensor,
     List<Functionality?> functions) async {
-  print("GET GRAPHS FOR TIME RANGE");
-
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
@@ -107,9 +81,8 @@ List<Widget> buildGraphs(
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(
-          data: e.getTimeSeries,
-          functionName: e
-              .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+        timeSeries: e,
+      )); //I put ! behind the e just to avoid error, idk if will have any bugs
     } else {
       graphsToDraw.add(NoGraphData());
     }
@@ -154,9 +127,8 @@ List<Widget> buildAlertGraphs(
     drawnCount += 1;
     if (e != null) {
       graphsToDraw.add(SensorLineChart(
-          data: e.getTimeSeries,
-          functionName: e
-              .getKey)); //I put ! behind the e just to avoid error, idk if will have any bugs
+        timeSeries: e,
+      )); //I put ! behind the e just to avoid error, idk if will have any bugs
     } else {
       graphsToDraw.add(NoGraphData());
     }
