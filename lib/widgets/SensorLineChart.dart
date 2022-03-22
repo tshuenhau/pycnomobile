@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -70,12 +72,78 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   List<Color> gradientColors() {
     Color midPoint = HexColor(widget.timeSeries.getColor);
-    int interval = 50;
-    Color start = Color.fromARGB(
-        180, midPoint.red, midPoint.green - interval, midPoint.blue);
-    Color end = Color.fromARGB(
-        75, midPoint.red, midPoint.green + interval, midPoint.blue);
+    int interval = 80;
+    int minRed = midPoint.red;
+    int maxRed = midPoint.red;
 
+    int minBlue = midPoint.blue;
+    int maxBlue = midPoint.blue;
+
+    int minGreen = midPoint.green;
+    int maxGreen = midPoint.green;
+
+    if (midPoint.red > 100 &&
+        midPoint.red >= midPoint.green &&
+        midPoint.red >= midPoint.blue) {
+      minRed -= interval;
+      maxRed += interval;
+    } else if (midPoint.green > 100 &&
+        midPoint.green >= midPoint.red &&
+        midPoint.green >= midPoint.blue) {
+      minGreen -= interval;
+      maxGreen += interval;
+    } else if (midPoint.blue > 100 &&
+        midPoint.blue >= midPoint.red &&
+        midPoint.blue >= midPoint.blue) {
+      minBlue -= interval;
+      maxBlue += interval;
+    } else {
+      minRed -= interval;
+      maxRed += interval;
+      minGreen -= interval;
+      maxGreen += interval;
+      minBlue -= interval;
+      maxBlue += interval;
+    }
+
+    double minLuminance =
+        0.2126 * minRed + 0.7152 * minGreen + 0.0722 * minBlue;
+    double maxLuminance =
+        0.2126 * maxRed + 0.7152 * maxGreen + 0.0722 * maxBlue;
+    int luminanceAdjustment = 60;
+
+    if (minLuminance < 64) {
+      //closer to black
+      if (Theme.of(context).brightness == Brightness.dark) {
+        minRed += luminanceAdjustment;
+        minGreen += luminanceAdjustment;
+        minBlue += luminanceAdjustment;
+      }
+    } else if (maxLuminance > 192) {
+      // closer to white
+      if (Theme.of(context).brightness == Brightness.light) {
+        maxRed -= luminanceAdjustment;
+        maxGreen -= luminanceAdjustment;
+        maxBlue -= luminanceAdjustment;
+      }
+    }
+    Color start =
+        Color.fromARGB(180, max(minRed, 0), max(minGreen, 0), max(minBlue, 0));
+    Color end = Color.fromARGB(
+        140, min(maxRed, 255), min(maxGreen, 255), min(maxBlue, 255));
+    // print("min RGB: " +
+    //     minRed.toString() +
+    //     " " +
+    //     minGreen.toString() +
+    //     " " +
+    //     minBlue.toString());
+
+    // print("max RGB: " +
+    //     maxRed.toString() +
+    //     " " +
+    //     maxGreen.toString() +
+    //     " " +
+    //     maxBlue.toString());
     return [start, end];
   }
 
