@@ -35,7 +35,6 @@ class TimeSeriesController extends GetxController {
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
-    print('is alert ' + isAlert.toString());
     RxList<TimeSeries?> instanceList = RxList.empty(growable: true);
 
     if (!isAlert) {

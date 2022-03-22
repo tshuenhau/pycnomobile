@@ -59,8 +59,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                   lastDate: DateTime.now());
 
               if (_newDateRange != null) {
-                await getGraphsForTimeRange(_newDateRange, widget.sensor,
-                    widget.sensor.functionalities!);
+                await getGraphsForTimeRange(isAlert, _newDateRange,
+                    widget.sensor, widget.sensor.functionalities!);
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },
