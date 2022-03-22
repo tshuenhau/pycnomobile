@@ -28,11 +28,7 @@ class AuthController extends GetxController {
     await getTheme();
     await getIsDark();
 
-    if (isDark.value) {
-      Get.changeThemeMode(ThemeMode.dark);
-    } else {
-      Get.changeThemeMode(ThemeMode.light);
-    }
+    changeTheme();
 
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
@@ -40,6 +36,14 @@ class AuthController extends GetxController {
     // if (isLoggedIn.value == AuthState.loggedIn) {
     //   getAccount();
     // }
+  }
+
+  changeTheme() {
+    if (isDark.value) {
+      Get.changeThemeMode(ThemeMode.dark);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+    }
   }
 
   Future<void> getTheme() async {
