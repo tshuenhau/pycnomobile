@@ -132,7 +132,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       spots: _values,
       isCurved: false,
       colors: gradientColors(),
-      barWidth: 2.5,
+      barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
@@ -147,7 +147,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: gradientColors().toList(),
+        colors: gradientColors().map((e) => e.withOpacity(0.35)).toList(),
       ),
     );
   }
