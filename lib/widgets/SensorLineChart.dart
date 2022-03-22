@@ -106,18 +106,42 @@ class _SensorLineChartState extends State<SensorLineChart> {
       maxBlue += interval;
     }
 
+    double midLuminance = 0.2126 * midPoint.red +
+        0.7152 * midPoint.green +
+        0.0722 * midPoint.blue;
     double minLuminance =
         0.2126 * minRed + 0.7152 * minGreen + 0.0722 * minBlue;
     double maxLuminance =
         0.2126 * maxRed + 0.7152 * maxGreen + 0.0722 * maxBlue;
     int luminanceAdjustment = 60;
+    int brightnessAdjustment = 20;
 
+    if (midLuminance > 128 &&
+        Theme.of(context).brightness == Brightness.light) {
+      // minRed -= brightnessAdjustment;
+      // minGreen -= brightnessAdjustment;
+      // minBlue -= brightnessAdjustment;
+      // maxRed -= brightnessAdjustment;
+      // maxGreen -= brightnessAdjustment;
+      // maxBlue -= brightnessAdjustment;
+      // theme is light mode and graph is too bright
+    } else if (midLuminance < 128 &&
+        Theme.of(context).brightness == Brightness.dark) {
+      // theme is dark mode and graph is too dark
+
+    }
     if (minLuminance < 64) {
       //closer to black
       if (Theme.of(context).brightness == Brightness.dark) {
         minRed += luminanceAdjustment;
         minGreen += luminanceAdjustment;
         minBlue += luminanceAdjustment;
+        minRed += brightnessAdjustment;
+        minGreen += brightnessAdjustment;
+        minBlue += brightnessAdjustment;
+        maxRed += brightnessAdjustment;
+        maxGreen += brightnessAdjustment;
+        maxBlue += brightnessAdjustment;
       }
     } else if (maxLuminance > 192) {
       // closer to white
@@ -125,8 +149,15 @@ class _SensorLineChartState extends State<SensorLineChart> {
         maxRed -= luminanceAdjustment;
         maxGreen -= luminanceAdjustment;
         maxBlue -= luminanceAdjustment;
+        minRed -= brightnessAdjustment;
+        minGreen -= brightnessAdjustment;
+        minBlue -= brightnessAdjustment;
+        maxRed -= brightnessAdjustment;
+        maxGreen -= brightnessAdjustment;
+        maxBlue -= brightnessAdjustment;
       }
     }
+
     Color start =
         Color.fromARGB(180, max(minRed, 0), max(minGreen, 0), max(minBlue, 0));
     Color end = Color.fromARGB(
