@@ -29,14 +29,15 @@ class AccountListTile extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: MediaQuery.of(context).size.height * 0.35 / 100),
           child: ListTile(
-              horizontalTitleGap: MediaQuery.of(context).size.width * 5 / 100,
-              dense: true,
-              leading: SizedBox(
-                  width: MediaQuery.of(context).size.width * 25 / 100,
-                  child: Text(title,
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              title: Text(value),
-              trailing: Icon(Icons.edit)),
+            horizontalTitleGap: MediaQuery.of(context).size.width * 5 / 100,
+            dense: true,
+            leading: SizedBox(
+                width: MediaQuery.of(context).size.width * 25 / 100,
+                child:
+                    Text(title, style: TextStyle(fontWeight: FontWeight.bold))),
+            title: Text(value),
+            // trailing: Icon(Icons.edit)
+          ),
         ));
   }
 }
