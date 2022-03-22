@@ -91,6 +91,7 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Logout"),
                                     onPressed: () {
                                       authController.logout();
+                                      Get.changeThemeMode(ThemeMode.light);
                                       Get.delete<TimeSeriesController>();
                                       Get.delete<NotificationsController>();
                                       Get.delete<ListOfSensorsController>();
