@@ -85,6 +85,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
     if (midPoint.red > 100 &&
         midPoint.red >= midPoint.green &&
         midPoint.red >= midPoint.blue) {
+      print("red");
       minRed -= interval;
       maxRed += interval;
     } else if (midPoint.green > 100 &&
@@ -136,9 +137,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
         minRed += luminanceAdjustment;
         minGreen += luminanceAdjustment;
         minBlue += luminanceAdjustment;
-        minRed += brightnessAdjustment;
-        minGreen += brightnessAdjustment;
-        minBlue += brightnessAdjustment;
+        // minRed += brightnessAdjustment;
+        // minGreen += brightnessAdjustment;
+        // minBlue += brightnessAdjustment;
         maxRed += brightnessAdjustment;
         maxGreen += brightnessAdjustment;
         maxBlue += brightnessAdjustment;
@@ -149,9 +150,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
         maxRed -= luminanceAdjustment;
         maxGreen -= luminanceAdjustment;
         maxBlue -= luminanceAdjustment;
-        minRed -= brightnessAdjustment;
-        minGreen -= brightnessAdjustment;
-        minBlue -= brightnessAdjustment;
+        // minRed -= brightnessAdjustment;
+        // minGreen -= brightnessAdjustment;
+        // minBlue -= brightnessAdjustment;
         maxRed -= brightnessAdjustment;
         maxGreen -= brightnessAdjustment;
         maxBlue -= brightnessAdjustment;
@@ -159,22 +160,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
     }
 
     Color start =
-        Color.fromARGB(180, max(minRed, 0), max(minGreen, 0), max(minBlue, 0));
+        Color.fromARGB(200, max(minRed, 0), max(minGreen, 0), max(minBlue, 0));
     Color end = Color.fromARGB(
-        140, min(maxRed, 255), min(maxGreen, 255), min(maxBlue, 255));
-    // print("min RGB: " +
-    //     minRed.toString() +
-    //     " " +
-    //     minGreen.toString() +
-    //     " " +
-    //     minBlue.toString());
-
-    // print("max RGB: " +
-    //     maxRed.toString() +
-    //     " " +
-    //     maxGreen.toString() +
-    //     " " +
-    //     maxBlue.toString());
+        200, min(maxRed, 255), min(maxGreen, 255), min(maxBlue, 255));
     return [start, end];
   }
 
