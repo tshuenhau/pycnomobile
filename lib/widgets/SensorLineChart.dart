@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
@@ -63,10 +64,20 @@ class _SensorLineChartState extends State<SensorLineChart> {
         ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
   }
 
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
+  // List<Color> get gradientColors => [
+  //       HexColor(widget.timeSeries.getColor).withOpacity(0.65),
+  //     ];
+
+  List<Color> gradientColors() {
+    Color midPoint = HexColor(widget.timeSeries.getColor);
+    int interval = 16;
+    Color start = Color.fromARGB(
+        180, midPoint.red, midPoint.green - interval, midPoint.blue);
+    Color end = Color.fromARGB(
+        75, midPoint.red, midPoint.green + interval, midPoint.blue);
+
+    return [start, end];
+  }
 
   bool showAvg = false;
 
@@ -120,8 +131,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return LineChartBarData(
       spots: _values,
       isCurved: false,
-      colors: gradientColors,
-      barWidth: 2,
+      colors: gradientColors(),
+      barWidth: 2.5,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
@@ -136,7 +147,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        colors: gradientColors().toList(),
       ),
     );
   }
