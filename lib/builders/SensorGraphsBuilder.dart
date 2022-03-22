@@ -12,7 +12,6 @@ import 'package:pycnomobile/widgets/SensorLineChart.dart';
 Future<void> initGraphs(
     bool isAlert, Sensor sensor, List<Functionality?> functions,
     [DateTimeRange? dateRange]) async {
-  print('init graphs');
   if (dateRange == null) {
     dateRange = new DateTimeRange(
         start: DateTime.now().add(Duration(hours: -24 * 7)),
@@ -36,17 +35,13 @@ Future<void> initGraphs(
   }
 }
 
-Future<void> getGraphsForTimeRange(DateTimeRange dateRange, Sensor sensor,
-    List<Functionality?> functions) async {
+Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
+    Sensor sensor, List<Functionality?> functions) async {
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    await controller.getMultiTimeSeries(
-        dateRange.start,
-        dateRange.end.add(Duration(days: 1)),
-        functions,
-        sensor,
-        true); //TODO: CHANGE TRUE TO isALERT
+    await controller.getMultiTimeSeries(dateRange.start,
+        dateRange.end.add(Duration(days: 1)), functions, sensor, isAlert);
   }
 
   EasyLoading.dismiss();
@@ -99,7 +94,6 @@ List<Widget> buildGraphs(
 
 List<Widget> buildAlertGraphs(
     Sensor sensor, List<Functionality?> functions, BuildContext context) {
-  print("BUILD ALERT GRAPHS");
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   List<Widget> graphsToDraw = <Widget>[];

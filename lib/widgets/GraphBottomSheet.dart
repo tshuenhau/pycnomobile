@@ -6,7 +6,7 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/theme/CustomColorScheme.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 class GraphBottomSheet extends StatefulWidget {
@@ -26,17 +26,22 @@ class GraphBottomSheet extends StatefulWidget {
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
   //late DateTimeRange? dateRange;
   // List<TimeSeries> graphs = [];
+  late bool isAlert;
+  AuthController auth = Get.find();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      initData();
-    });
+    if (auth.currentTab.value == 0) {
+      isAlert = false;
+    } else {
+      isAlert = true;
+    }
+
+    initData();
   }
 
   void initData() async {
-    await initGraphs(
-        true, widget.sensor, widget.functions); //TODO : change to isAlert
+    await initGraphs(isAlert, widget.sensor, widget.functions);
   }
 
   @override
@@ -61,7 +66,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
                 if (_newDateRange != null) {
                   await getGraphsForTimeRange(
-                      _newDateRange, widget.sensor, widget.functions);
+                      isAlert, _newDateRange, widget.sensor, widget.functions);
                   // setState(() {
                   //   graphs = result!;
                   // });
@@ -107,11 +112,10 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     height: MediaQuery.of(context).size.height * 2.5 / 100,
                   )
                 ] +
-                buildGraphs(
-                  widget.sensor,
-                  widget.functions,
-                  context,
-                ), //TODO: change to isAlert
+                (!isAlert
+                    ? buildGraphs(widget.sensor, widget.functions, context)
+                    : buildAlertGraphs(
+                        widget.sensor, widget.functions, context)),
           ),
         ),
       ),

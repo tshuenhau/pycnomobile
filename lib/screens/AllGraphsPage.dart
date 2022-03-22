@@ -25,10 +25,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
     super.initState();
     // WidgetsBinding.instance!.addPostFrameCallback((_) {
     if (auth.currentTab.value == 0) {
-      print("IS SENSORS");
       isAlert = false;
     } else {
-      print("IS ALERTS");
       isAlert = true;
     }
     initData(isAlert);
@@ -59,8 +57,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                   lastDate: DateTime.now());
 
               if (_newDateRange != null) {
-                await getGraphsForTimeRange(_newDateRange, widget.sensor,
-                    widget.sensor.functionalities!);
+                await getGraphsForTimeRange(isAlert, _newDateRange,
+                    widget.sensor, widget.sensor.functionalities!);
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },
@@ -87,7 +85,6 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
             () => ListView(
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
-                      Text("is alert " + isAlert.toString()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
