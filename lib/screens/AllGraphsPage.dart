@@ -87,7 +87,6 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
             () => ListView(
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
-                      Text("is alert " + isAlert.toString()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

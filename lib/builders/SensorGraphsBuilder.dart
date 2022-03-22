@@ -65,12 +65,8 @@ Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    await controller.getMultiTimeSeries(
-        dateRange.start,
-        dateRange.end.add(Duration(days: 1)),
-        functions,
-        sensor,
-        isAlert); //TODO: CHANGE TRUE TO isALERT
+    await controller.getMultiTimeSeries(dateRange.start,
+        dateRange.end.add(Duration(days: 1)), functions, sensor, isAlert);
   }
 
   EasyLoading.dismiss();
