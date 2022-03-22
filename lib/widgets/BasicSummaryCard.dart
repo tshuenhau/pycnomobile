@@ -38,6 +38,7 @@ class BasicSummaryCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     AutoSizeText(
                       function.value?.toStringAsFixed(2) ?? "-",
@@ -48,12 +49,12 @@ class BasicSummaryCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.5 / 100),
+                          left: MediaQuery.of(context).size.width * 0.25 / 100),
                       child: AutoSizeText(
                         function.unit,
                         maxLines: 1,
                         minFontSize: 1,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

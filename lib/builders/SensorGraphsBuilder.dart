@@ -15,7 +15,8 @@ Future<void> initGraphs(
   print('init graphs');
   if (dateRange == null) {
     dateRange = new DateTimeRange(
-        start: DateTime.now().add(Duration(hours: -24)), end: DateTime.now());
+        start: DateTime.now().add(Duration(hours: -24 * 7)),
+        end: DateTime.now());
   } else if (dateRange.duration.inDays <= 0) {
     DateTime now = DateTime.now();
     dateRange = DateTimeRange(
