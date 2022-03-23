@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pycnomobile/model/ThemeService.dart';
+import 'package:pycnomobile/theme/ThemeService.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);

@@ -16,14 +16,16 @@ class Preferences {
 
   Future<void> setToken(String token) => _setValue(_tokenKey, token);
 
-  Future<void> setTheme(Map<dynamic, dynamic> theme) =>
-      _setValue(_themeKey, theme);
-  Future<void> setIsDark(bool isDark) => _setValue(_isDarkKey, isDark);
+  // Future<void> setTheme(Map<dynamic, dynamic> theme) =>
+  //     _setValue(_themeKey, theme);
+  // Future<void> setIsDark(bool isDark) => _setValue(_isDarkKey, isDark);
 
   String getToken() => _getValue<String>('_tokenKey', '');
-  Map<dynamic, dynamic> getTheme() =>
-      _getValue<Map<dynamic, dynamic>>('_themeKey', {});
-  bool getIsDark() => _getValue<bool>('_isDarkKey', false);
+  // Map<dynamic, dynamic> getTheme() =>
+  //     _getValue<Map<dynamic, dynamic>>('_themeKey', {});
+
+  // bool getIsDark() => _getValue<bool>('_isDarkKey', false);
+
   T _getValue<T>(dynamic key, T defaultValue) =>
       _box.get(key, defaultValue: defaultValue) as T;
 

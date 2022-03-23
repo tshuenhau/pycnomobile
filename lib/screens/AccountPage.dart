@@ -8,14 +8,13 @@ import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/widgets/AccountListTile.dart';
-import 'package:pycnomobile/model/ThemeService.dart';
+import 'package:pycnomobile/theme/ThemeService.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key, required this.resetFunction}) : super(key: key);
   Function resetFunction;
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)?.settings.name);
     final AuthController authController = Get.find();
 
     return Obx(() => Scaffold(
@@ -91,6 +90,8 @@ class AccountPage extends StatelessWidget {
                                     label: Text("Logout"),
                                     onPressed: () {
                                       authController.logout();
+                                      ThemeService().deleteColorScheme();
+                                      ThemeService().deleteTheme();
                                       Get.changeThemeMode(ThemeMode.light);
                                       Get.delete<TimeSeriesController>();
                                       Get.delete<NotificationsController>();
