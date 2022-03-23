@@ -20,8 +20,9 @@ class ThemeService {
   void switchTheme() {
     _saveThemeToBox(!_loadThemeFromBox());
     print(theme);
-    print("changing theme mode");
-    Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
+    print("changing theme mode " + _loadThemeFromBox().toString());
+    Get.changeThemeMode(
+        !_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
   }
 
   Map<dynamic, dynamic> _loadColorSchemeFromBox() =>
@@ -32,7 +33,19 @@ class ThemeService {
   _saveColorSchemeToBox(Map<dynamic, dynamic> colorScheme) =>
       _box.write(_csKey, colorScheme);
 
+  void saveTheme(bool isDark) {
+    _saveThemeToBox(isDark);
+  }
+
   void saveColorScheme(Map<dynamic, dynamic> colorScheme) {
     _saveColorSchemeToBox(colorScheme);
+  }
+
+  void deleteColorScheme() {
+    _box.remove(_csKey);
+  }
+
+  void deleteTheme() {
+    _box.remove(_key);
   }
 }

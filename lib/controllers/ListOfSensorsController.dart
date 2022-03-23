@@ -35,7 +35,7 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
-    await this.reload();
+    // await this.reload();
   }
 
   @override

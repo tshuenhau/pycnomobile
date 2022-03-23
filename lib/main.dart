@@ -10,7 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pycnomobile/model/ThemeService.dart';
+import 'package:pycnomobile/theme/ThemeService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,10 +51,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     configLoading();
     AuthController controller = Get.put(AuthController());
-
     return Obx(
       () => GetMaterialApp(
-        theme: ThemeService().colorScheme.isEmpty
+        theme: controller.colorScheme.isEmpty
             ? globalTheme
             : getTheme(ThemeService().colorScheme, true),
         darkTheme: ThemeService().colorScheme.isEmpty

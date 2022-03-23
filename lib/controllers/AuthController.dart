@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:pycnomobile/model/User.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/ThemeService.dart';
+import 'package:pycnomobile/theme/ThemeService.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut }
 
@@ -15,20 +15,19 @@ class AuthController extends GetxController {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
-  RxMap<dynamic, dynamic> theme = RxMap<dynamic, dynamic>({});
   Rx<int> currentTab = 0.obs;
-  Rx<bool> isDark = false.obs;
   late Preferences preferences;
   Rxn<User> user = Rxn<User>();
+  RxMap<dynamic, dynamic> colorScheme = {}.obs;
   @override
   onInit() async {
     super.onInit();
     preferences = await Preferences.getInstance();
 
-    await getTheme();
-    await getIsDark();
+    // await getTheme();
+    // await getIsDark();
 
-    changeTheme();
+    // changeTheme();
 
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
@@ -38,26 +37,26 @@ class AuthController extends GetxController {
     // }
   }
 
-  changeTheme() {
-    if (isDark.value) {
-      Get.changeThemeMode(ThemeMode.dark);
-    } else {
-      Get.changeThemeMode(ThemeMode.light);
-    }
-  }
+  // changeTheme() {
+  //   if (isDark.value) {
+  //     Get.changeThemeMode(ThemeMode.dark);
+  //   } else {
+  //     Get.changeThemeMode(ThemeMode.light);
+  //   }
+  // }
 
-  Future<void> getTheme() async {
-    theme.value = preferences.getTheme();
-  }
+  // Future<void> getTheme() async {
+  //   theme.value = preferences.getTheme();
+  // }
 
-  Future<void> getIsDark() async {
-    isDark.value = preferences.getIsDark();
-  }
+  // Future<void> getIsDark() async {
+  //   isDark.value = preferences.getIsDark();
+  // }
 
-  Future<void> setIsDark(bool isDark) async {
-    final preferences = await Preferences.getInstance();
-    preferences.setIsDark(isDark);
-  }
+  // Future<void> setIsDark(bool isDark) async {
+  //   final preferences = await Preferences.getInstance();
+  //   preferences.setIsDark(isDark);
+  // }
 
   Future<bool> checkLoggedInStatus() async {
     token = preferences.getToken();
@@ -104,7 +103,11 @@ class AuthController extends GetxController {
       await getAccount();
       if (user.value != null) {
         // await preferences.setTheme(user.value!.colorScheme);
+        this.colorScheme.value = user.value!.colorScheme;
         ThemeService().saveColorScheme(user.value!.colorScheme);
+        print("SAVE THEME!");
+        ThemeService().saveTheme(true);
+        ThemeService().switchTheme();
       }
     } else {
       throw Exception("Unable to login");
@@ -133,8 +136,6 @@ class AuthController extends GetxController {
       token = "";
       isLoggedIn.value = AuthState.loggedOut;
       currentTab.value = 0;
-      isDark.value = false;
-      theme.value = {};
     } else {
       throw Exception("Unable to logout. Try again.");
     }
