@@ -84,14 +84,16 @@ class _AppState extends State<App> {
         icon: Obx(() => Badge(
             badgeContent: Text(
               controller.alertCounter.value.toString(),
-              style: TextStyle(color: Theme.of(context).colorScheme.background),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
+                  fontWeight: FontWeight.bold),
             ),
             animationType: BadgeAnimationType.slide,
             // position: BadgePosition.topEnd(
             //     end: -MediaQuery.of(context).size.width * 3 / 100,
             //     top: -MediaQuery.of(context).size.height * 1.5 / 100),
             badgeColor: controller.isSevere.value
-                ? Colors.red
+                ? Colors.red.shade700
                 : Theme.of(context).colorScheme.tertiary,
             showBadge: controller.alertCounter.value > 0 ? true : false,
             child: Icon(Icons.notifications))),

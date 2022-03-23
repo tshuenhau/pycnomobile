@@ -86,22 +86,47 @@ class AccountPage extends StatelessWidget {
                                       // }
                                     }),
                                 TextButton.icon(
-                                    icon: Icon(Icons.logout),
-                                    label: Text("Logout"),
-                                    onPressed: () {
-                                      authController.logout();
-                                      ThemeService().deleteColorScheme();
-                                      ThemeService().deleteTheme();
-                                      Get.changeThemeMode(ThemeMode.light);
-                                      Get.delete<TimeSeriesController>();
-                                      Get.delete<NotificationsController>();
-                                      Get.delete<ListOfSensorsController>();
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pushAndRemoveUntil(
-                                              MaterialPageRoute(
-                                                  builder: (_) => LoginPage()),
-                                              (_) => false);
-                                    }),
+                                  icon: Icon(Icons.logout),
+                                  label: Text("Logout"),
+                                  onPressed: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Log Out?'),
+                                      content: const Text(
+                                          'Are you sure you want to log out?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            authController.logout();
+                                            ThemeService().deleteColorScheme();
+                                            ThemeService().deleteTheme();
+                                            Get.changeThemeMode(
+                                                ThemeMode.light);
+                                            Get.delete<TimeSeriesController>();
+                                            Get.delete<
+                                                NotificationsController>();
+                                            Get.delete<
+                                                ListOfSensorsController>();
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            LoginPage()),
+                                                    (_) => false);
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ]),
                         ]),
                   )),

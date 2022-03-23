@@ -85,7 +85,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
     if (midPoint.red > 100 &&
         midPoint.red >= midPoint.green &&
         midPoint.red >= midPoint.blue) {
-      print("red");
       minRed -= interval;
       maxRed += interval;
     } else if (midPoint.green > 100 &&
