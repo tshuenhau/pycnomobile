@@ -81,16 +81,19 @@ class _AccountPageState extends State<AccountPage> {
                                     icon: Icon(Icons.palette_outlined),
                                     label: Text("Change Theme"),
                                     onPressed: () {
-                                      // if (Theme.of(context).brightness ==
-                                      //     Brightness.light) {
-                                      //   themeIndex = 0;
-                                      // } else {
-                                      //   themeIndex = 1;
-                                      // }
+                                      if (Theme.of(context).brightness ==
+                                          Brightness.light) {
+                                        themeIndex = 0;
+                                      } else {
+                                        themeIndex = 1;
+                                      }
                                       showDialog<String>(
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
                                           title: const Text('Select Theme'),
                                           content: SingleChildScrollView(
                                               child: Column(
@@ -124,16 +127,17 @@ class _AccountPageState extends State<AccountPage> {
                                             ],
                                           )),
                                           actions: <Widget>[
+                                            // TextButton(
+                                            //   onPressed: () {
+                                            //     ThemeService().switchTheme();
+                                            //     Navigator.pop(
+                                            //         context, 'Cancel');
+                                            //   },
+                                            //   child: const Text('Cancel'),
+                                            // ),
                                             TextButton(
-                                              onPressed: () {
-                                                ThemeService().switchTheme();
-                                                Navigator.pop(
-                                                    context, 'Cancel');
-                                              },
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {},
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
                                               child: const Text('OK'),
                                             ),
                                           ],
@@ -161,6 +165,9 @@ class _AccountPageState extends State<AccountPage> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15))),
                                       title: const Text('Log Out?'),
                                       content: const Text(
                                           'Are you sure you want to log out?'),
