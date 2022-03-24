@@ -42,6 +42,12 @@ class AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(notification.epoch.toString() +
+        " " +
+        timeago.format(DateTime.fromMillisecondsSinceEpoch(
+          notification.epoch,
+        )));
+
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -86,9 +92,10 @@ class AlertCard extends StatelessWidget {
                     child: AutoSizeText(
                         // "about an hour ago"
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
-                          notification.epoch,
-                        )),
-                        maxLines: 2,
+                                notification.epoch,
+                                isUtc: true)) +
+                            notification.epoch.toString(),
+                        maxLines: 3,
                         textAlign: TextAlign.end,
                         style: TextStyle(
                             fontSize:
