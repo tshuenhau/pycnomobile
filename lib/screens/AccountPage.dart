@@ -10,9 +10,17 @@ import 'package:get/get.dart';
 import 'package:pycnomobile/widgets/AccountListTile.dart';
 import 'package:pycnomobile/theme/ThemeService.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   AccountPage({Key? key, required this.resetFunction}) : super(key: key);
   Function resetFunction;
+
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  late int? themeIndex;
+
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.find();
@@ -73,18 +81,79 @@ class AccountPage extends StatelessWidget {
                                     icon: Icon(Icons.palette_outlined),
                                     label: Text("Change Theme"),
                                     onPressed: () {
-                                      print("SWITCH THEME");
-                                      ThemeService().switchTheme();
-
                                       // if (Theme.of(context).brightness ==
-                                      //     Brightness.dark) {
-                                      //   Get.changeThemeMode(ThemeMode.light);
-                                      //   authController.setIsDark(false);
+                                      //     Brightness.light) {
+                                      //   themeIndex = 0;
                                       // } else {
-                                      //   Get.changeThemeMode(ThemeMode.dark);
-                                      //   authController.setIsDark(true);
+                                      //   themeIndex = 1;
                                       // }
-                                    }),
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: const Text('Select Theme'),
+                                          content: SingleChildScrollView(
+                                              child: Column(
+                                            children: [
+                                              RadioListTile(
+                                                  title:
+                                                      const Text("Light Mode"),
+                                                  value: 0,
+                                                  groupValue: themeIndex,
+                                                  onChanged: (int? value) {
+                                                    setState(() {
+                                                      print(themeIndex);
+
+                                                      themeIndex = value;
+                                                      ThemeService()
+                                                          .switchTheme();
+                                                    });
+                                                  }),
+                                              RadioListTile(
+                                                  title:
+                                                      const Text("Dark Mode"),
+                                                  value: 1,
+                                                  groupValue: themeIndex,
+                                                  onChanged: (int? value) {
+                                                    setState(() {
+                                                      themeIndex = value;
+                                                      ThemeService()
+                                                          .switchTheme();
+                                                    });
+                                                  })
+                                            ],
+                                          )),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                ThemeService().switchTheme();
+                                                Navigator.pop(
+                                                    context, 'Cancel');
+                                              },
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {},
+                                              child: const Text('OK'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                    // onPressed: () {
+
+                                    //   //ThemeService().switchTheme();
+
+                                    //   // if (Theme.of(context).brightness ==
+                                    //   //     Brightness.dark) {
+                                    //   //   Get.changeThemeMode(ThemeMode.light);
+                                    //   //   authController.setIsDark(false);
+                                    //   // } else {
+                                    //   //   Get.changeThemeMode(ThemeMode.dark);
+                                    //   //   authController.setIsDark(true);
+                                    //   // }
+                                    // }
+                                    ),
                                 TextButton.icon(
                                   icon: Icon(Icons.logout),
                                   label: Text("Logout"),
