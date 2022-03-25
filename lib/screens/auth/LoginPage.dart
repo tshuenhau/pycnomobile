@@ -85,8 +85,8 @@ class LoginPage extends StatelessWidget {
                       username: usernameController.text,
                       password: passwordController.text);
                   EasyLoading.dismiss();
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => App()));
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => App()));
                 } catch (e) {
                   EasyLoading.showError("invalid username/password");
                   print(e);

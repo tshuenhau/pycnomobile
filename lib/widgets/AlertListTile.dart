@@ -92,10 +92,11 @@ class AlertCard extends StatelessWidget {
                     child: AutoSizeText(
                         // "about an hour ago"
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
-                                notification.epoch,
-                                isUtc: true)) +
-                            notification.epoch.toString(),
-                        maxLines: 3,
+                            notification.epoch,
+                            isUtc: true))
+                        // + notification.epoch.toString()
+                        ,
+                        maxLines: 2,
                         textAlign: TextAlign.end,
                         style: TextStyle(
                             fontSize:
