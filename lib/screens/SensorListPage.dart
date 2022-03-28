@@ -20,8 +20,8 @@ class SensorListPage extends StatefulWidget {
 class _SensorListPageState extends State<SensorListPage>
     with WidgetsBindingObserver {
   late StreamSubscription<bool> keyboardSubscription;
-  AuthController authController = Get.find();
-  final ListOfSensorsController sensorsController =
+  late AuthController authController = Get.find();
+  late ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
 
   @override
@@ -45,7 +45,6 @@ class _SensorListPageState extends State<SensorListPage>
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-    sensorsController.dispose();
     keyboardSubscription.cancel();
     super.dispose();
   }

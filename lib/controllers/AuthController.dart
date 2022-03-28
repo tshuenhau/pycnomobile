@@ -23,7 +23,8 @@ class AuthController extends GetxController {
   onInit() async {
     super.onInit();
     preferences = await Preferences.getInstance();
-
+    print(this.colorScheme);
+    print(ThemeService().colorScheme);
     // await getTheme();
     // await getIsDark();
 
@@ -133,6 +134,7 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       final preferences = await Preferences.getInstance();
       await preferences.deleteToken();
+      this.colorScheme.value = {};
       token = "";
       isLoggedIn.value = AuthState.loggedOut;
       currentTab.value = 0;

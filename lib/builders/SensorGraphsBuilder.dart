@@ -73,9 +73,9 @@ List<Widget> buildGraphs(
     graphsToDraw.add(NoGraphData());
   }
 
-  controller.graphs.last.forEach((e) {
+  controller.graphs.last.forEach((TimeSeries e) {
     drawnCount += 1;
-    if (e != null) {
+    if (e.getTimeSeries != null) {
       graphsToDraw.add(SensorLineChart(
         timeSeries: e,
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
@@ -120,7 +120,7 @@ List<Widget> buildAlertGraphs(
 
   controller.alertGraphs.last.forEach((e) {
     drawnCount += 1;
-    if (e != null) {
+    if (e.getTimeSeries != null) {
       graphsToDraw.add(SensorLineChart(
         timeSeries: e,
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
