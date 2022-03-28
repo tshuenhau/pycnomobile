@@ -104,7 +104,7 @@ class AuthController extends GetxController {
       await getAccount();
       if (user.value != null) {
         // await preferences.setTheme(user.value!.colorScheme);
-        this.colorScheme.value = user.value!.colorScheme;
+
         ThemeService().saveColorScheme(user.value!.colorScheme);
         print("SAVE THEME!");
         ThemeService().saveTheme(true);
@@ -121,6 +121,10 @@ class AuthController extends GetxController {
 
     if (response.statusCode == 200) {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
+      if (user.value != null) {
+        this.colorScheme.value = user.value!.colorScheme;
+      }
+
       update();
     } else {
       throw Exception("Unable to get account details");
