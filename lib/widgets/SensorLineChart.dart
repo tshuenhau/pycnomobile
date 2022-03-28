@@ -37,7 +37,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   }
 
   void _prepareData() {
-    processData(widget.timeSeries.getTimeSeries);
+    processData(widget.timeSeries.getTimeSeries!);
     setState(() {});
   }
 

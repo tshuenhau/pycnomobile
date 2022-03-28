@@ -24,7 +24,6 @@ class NotificationsController extends GetxController {
 
   @override
   void onClose() {
-    Get.delete<NotificationsController>();
     super.onClose();
   }
 

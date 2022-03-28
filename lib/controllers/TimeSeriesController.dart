@@ -14,8 +14,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
-  RxList<RxList<TimeSeries?>> graphs = RxList<RxList<TimeSeries?>>.empty();
-  RxList<RxList<TimeSeries?>> alertGraphs = RxList<RxList<TimeSeries?>>.empty();
+  RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
+  RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -35,7 +35,7 @@ class TimeSeriesController extends GetxController {
 
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
-    RxList<TimeSeries?> instanceList = RxList.empty(growable: true);
+    RxList<TimeSeries> instanceList = RxList.empty(growable: true);
 
     if (!isAlert) {
       graphs.add(instanceList);
@@ -64,7 +64,8 @@ class TimeSeriesController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
-                  instanceList.add(null);
+                  instanceList.add(
+                      new TimeSeries(key: key, color: color, timeSeries: null));
                   continue;
                 }
                 Map<int, double> timeSeries = convertListToMap(body['values']);
@@ -88,7 +89,8 @@ class TimeSeriesController extends GetxController {
             String color = body['color'];
             String key = body['key'];
             if (body["values"] == null) {
-              instanceList.add(null);
+              instanceList.add(
+                  new TimeSeries(key: key, color: color, timeSeries: null));
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);

@@ -1,11 +1,11 @@
 class TimeSeries {
-  Map<int, double> _timeSeries;
+  Map<int, double>? _timeSeries;
   String _color;
   String _key;
   TimeSeries(
       {required String key,
       required String color,
-      required Map<int, double> timeSeries})
+      required Map<int, double>? timeSeries})
       : _key = key,
         _color = color,
         _timeSeries = timeSeries;
@@ -18,7 +18,7 @@ class TimeSeries {
     return _color;
   }
 
-  Map<int, double> get getTimeSeries {
+  Map<int, double>? get getTimeSeries {
     return _timeSeries;
   }
 

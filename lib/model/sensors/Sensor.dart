@@ -3,6 +3,7 @@ import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
@@ -87,9 +88,11 @@ abstract class Sensor {
       return TYPE_OF_SENSOR.MASTER_SOIL_SENSOR;
     } else if (NodeSoilSensor.isNodeSoilSensor(uid)) {
       return TYPE_OF_SENSOR.NODE_SOIL_SENSOR;
+    } else if (Pulse.isPulse(uid)) {
+      return TYPE_OF_SENSOR.PULSE;
     } else {
       // throw Exception("Invalid sensor");
-      return TYPE_OF_SENSOR.PULSE; //temporary
+      return TYPE_OF_SENSOR.NODE_SOIL_SENSOR; //temporary
     }
   }
 
