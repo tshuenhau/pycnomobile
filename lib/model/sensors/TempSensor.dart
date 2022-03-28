@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/RainGauge.dart';
-import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';
 import 'package:pycnomobile/model/functionalities/Hum.dart';
@@ -27,17 +21,9 @@ import 'package:pycnomobile/model/functionalities/Rain.dart';
 import 'package:pycnomobile/model/functionalities/Uv.dart';
 import 'package:pycnomobile/model/functionalities/Wnd.dart';
 import 'package:pycnomobile/model/functionalities/Wndr.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
 
-enum TYPE_OF_SENSOR {
-  SONIC_ANEMOMETER,
-  RAIN_GAUGE,
-  MASTER_SOIL_SENSOR,
-  NODE_SOIL_SENSOR,
-  PULSE
-}
-
-abstract class Sensor {
-  // TYPE_OF_SENSOR type;
+class TempSensor extends Sensor {
   String uid;
   String? name;
   String? img;
@@ -53,8 +39,8 @@ abstract class Sensor {
   String? readableAgo;
   String? readableAgoFull;
   List<Functionality>? functionalities;
-  Sensor({
-    // required this.type,
+
+  TempSensor({
     required this.uid,
     required this.name,
     required this.img,
@@ -70,49 +56,24 @@ abstract class Sensor {
     required this.readableAgo,
     required this.readableAgoFull,
     required this.functionalities,
-  });
+  }) : super(
+            uid: uid,
+            name: name,
+            address: address,
+            img: img,
+            epoch: epoch,
+            site: site,
+            isLive: isLive,
+            isLiveHealth: isLiveHealth,
+            isLiveTS: isLiveTS,
+            updatedAt: updatedAt,
+            polledAt: polledAt,
+            soilType: soilType,
+            readableAgo: readableAgo,
+            readableAgoFull: readableAgoFull,
+            functionalities: functionalities);
 
-  // Sonic Anemometer: K80xxxxx
-  // Rain Gauge: K40xxxxx
-  // Master Soil Sensor: Mxxx
-  // Node Soil Sensor: Kxxx
-  // Pulse: Pxxx
-  //
-  // static TYPE_OF_SENSOR getTypeOfSensor(String uid) {
-  //   if (SonicAnemometer.isSonicAnemometer(uid)) {
-  //     return TYPE_OF_SENSOR.SONIC_ANEMOMETER;
-  //   } else if (RainGauge.isRainGauge(uid)) {
-  //     return TYPE_OF_SENSOR.RAIN_GAUGE;
-  //   } else if (MasterSoilSensor.isMasterSoilSensor(uid)) {
-  //     return TYPE_OF_SENSOR.MASTER_SOIL_SENSOR;
-  //   } else if (NodeSoilSensor.isNodeSoilSensor(uid)) {
-  //     return TYPE_OF_SENSOR.NODE_SOIL_SENSOR;
-  //   } else if (Pulse.isPulse(uid)) {
-  //     return TYPE_OF_SENSOR.PULSE;
-  //   } else {
-  //     // throw Exception("Invalid sensor");
-  //     return TYPE_OF_SENSOR.NODE_SOIL_SENSOR; //temporary
-  //   }
-  // }
-
-  bool isActive() {
-    // print("start: " + DateTime.fromMillisecondsSinceEpoch(epoch!).toString());
-    // print(DateTime.now());
-    if (DateTime.now().isBefore(DateTime.fromMillisecondsSinceEpoch(epoch!))) {
-      return true;
-    }
-    if (DateTimeRange(
-                start: DateTime.fromMillisecondsSinceEpoch(epoch!),
-                end: DateTime.now())
-            .duration
-            .inHours <=
-        24) {
-      return true;
-    }
-    return false;
-  }
-
-  static getFunctionalities(Map<String, dynamic> json, TYPE_OF_SENSOR type) {
+  static getFunctionalities(Map<String, dynamic> json) {
     List<Functionality> functionalities = List.empty(growable: true);
     List<Functionality> soilMoisture = List.empty(growable: true);
     List<Functionality> soilTemp = List.empty(growable: true);
@@ -159,8 +120,7 @@ abstract class Sensor {
         soilTemp.add(new S6t(json["S6T"]?.toDouble()));
       }
     }
-    if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR ||
-        type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+    if (soilTemp.length > 0 || soilMoisture.length > 0) {
       functionalities.add(new S123456t(soilTemp));
       functionalities.add(new St135(soilMoisture));
     }
@@ -168,8 +128,22 @@ abstract class Sensor {
     return functionalities;
   }
 
-  String toString() {
-    // return "UID: $uid, Name: $name, Img: $img, Address: $address, Epoch: $epoch, Site: $site, IsLive?: $isLive, IsLiveHealth: $isLiveHealth, IsLiveTS: $isLiveTS, UpdatedAt: $updatedAt, PolledAt: $polledAt, SoilType: $soilType, ReadableAgo: $readableAgo, ReadableAgoFull: $readableAgoFull";
-    return "name: $name, polledAt: $polledAt";
+  factory TempSensor.fromJson(Map<String, dynamic> json) {
+    return TempSensor(
+        uid: json["UID"],
+        name: json["name"],
+        address: json["address"],
+        img: json["img"],
+        epoch: json["epoch"],
+        site: json["site"],
+        isLive: json["isLive"] == "YES",
+        isLiveHealth: json["isLiveHealth"],
+        isLiveTS: DateTime.parse(json["isLiveTS"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        polledAt: DateTime.parse(json["polledAt"]),
+        soilType: json["soilType"],
+        readableAgo: json["readableAgo"],
+        readableAgoFull: json["readableAgoFull"],
+        functionalities: getFunctionalities(json));
   }
 }

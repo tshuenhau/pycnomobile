@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/TempSensor.dart';
 import 'package:pycnomobile/model/sensors/RainGauge.dart';
+import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
@@ -79,17 +81,25 @@ class ListOfSensorsController extends GetxController
       var body = jsonDecode(response.body);
 
       for (var i = 0; i < body.length; i++) {
-        TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
-
-        if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
-          addSensor(MasterSoilSensor.fromJson(body[i]));
-        } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
-          addSensor(NodeSoilSensor.fromJson(body[i]));
-        } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
-          addSensor(SonicAnemometer.fromJson(body[i]));
-        } else if (type == TYPE_OF_SENSOR.RAIN_GAUGE) {
-          addSensor(RainGauge.fromJson(body[i]));
+        if (body[i]["SLI"] != null) {
+          //PULSE
+        } else {
+          addSensor(TempSensor.fromJson(body[i]));
         }
+        // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
+        // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
+        //   addSensor(MasterSoilSensor.fromJson(body[i]));
+        // } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+        //   addSensor(NodeSoilSensor.fromJson(body[i]));
+        // } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
+        //   addSensor(SonicAnemometer.fromJson(body[i]));
+        // } else if (type == TYPE_OF_SENSOR.RAIN_GAUGE) {
+        //   addSensor(RainGauge.fromJson(body[i]));
+        // } else if (type == TYPE_OF_SENSOR.PULSE) {
+        //   addSensor(Pulse.fromJson(body[i]));
+        // } else {
+        //   addSensor(NodeSoilSensor.fromJson(body[i]));
+        // }
       }
 
       sortSensors();
