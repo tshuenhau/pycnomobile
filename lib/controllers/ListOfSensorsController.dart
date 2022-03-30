@@ -5,11 +5,9 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/TempSensor.dart';
-import 'package:pycnomobile/model/sensors/RainGauge.dart';
+import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
+import 'package:pycnomobile/model/sensors/FixSensor.dart';
+import 'package:pycnomobile/model/sensors/notinuse/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
@@ -84,7 +82,7 @@ class ListOfSensorsController extends GetxController
         if (body[i]["SLI"] != null) {
           //PULSE
         } else {
-          addSensor(TempSensor.fromJson(body[i]));
+          addSensor(FixSensor.fromJson(body[i]));
         }
         // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
         // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {

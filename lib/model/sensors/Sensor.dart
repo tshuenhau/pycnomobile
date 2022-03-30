@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/RainGauge.dart';
-import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
+import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
+import 'package:pycnomobile/model/sensors/notinuse/RainGauge.dart';
+// import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
+// import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/model/functionalities/Bat.dart';

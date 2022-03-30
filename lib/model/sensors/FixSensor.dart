@@ -23,39 +23,23 @@ import 'package:pycnomobile/model/functionalities/Wnd.dart';
 import 'package:pycnomobile/model/functionalities/Wndr.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 
-class TempSensor extends Sensor {
-  String uid;
-  String? name;
-  String? img;
-  String? address;
-  int? epoch;
-  String? site;
-  bool? isLive;
-  int? isLiveHealth;
-  DateTime? isLiveTS;
-  DateTime? updatedAt;
-  DateTime? polledAt;
-  String? soilType;
-  String? readableAgo;
-  String? readableAgoFull;
-  List<Functionality>? functionalities;
-
-  TempSensor({
-    required this.uid,
-    required this.name,
-    required this.img,
-    required this.address,
-    required this.epoch,
-    required this.site,
-    required this.isLive,
-    required this.isLiveTS,
-    required this.isLiveHealth,
-    required this.updatedAt,
-    required this.polledAt,
-    required this.soilType,
-    required this.readableAgo,
-    required this.readableAgoFull,
-    required this.functionalities,
+class FixSensor extends Sensor {
+  FixSensor({
+    required uid,
+    required name,
+    required img,
+    required address,
+    required epoch,
+    required site,
+    required isLive,
+    required isLiveTS,
+    required isLiveHealth,
+    required updatedAt,
+    required polledAt,
+    required soilType,
+    required readableAgo,
+    required readableAgoFull,
+    required functionalities,
   }) : super(
             uid: uid,
             name: name,
@@ -128,8 +112,8 @@ class TempSensor extends Sensor {
     return functionalities;
   }
 
-  factory TempSensor.fromJson(Map<String, dynamic> json) {
-    return TempSensor(
+  factory FixSensor.fromJson(Map<String, dynamic> json) {
+    return FixSensor(
         uid: json["UID"],
         name: json["name"],
         address: json["address"],
