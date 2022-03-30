@@ -6,8 +6,6 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/sensors/FixSensor.dart';
-import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/notinuse/RainGauge.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
