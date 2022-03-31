@@ -4,6 +4,7 @@ import 'package:pycnomobile/App.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
+import 'package:pycnomobile/screens/WelcomePage.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
 import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -63,7 +64,8 @@ class MyApp extends StatelessWidget {
         home: controller.isLoggedIn.value == AuthState.loggedIn
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
-                ? LoginPage()
+                ? WelcomePage()
+                //LoginPage()
                 : SplashPage(),
         builder: EasyLoading.init(),
       ),

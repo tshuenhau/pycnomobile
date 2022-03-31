@@ -85,15 +85,10 @@ class _AlertsPageState extends State<AlertsPage> {
                     itemBuilder: (context, index) {
                       if (notificationsController.unreadNotifications.length ==
                           0) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height *
-                                  2.5 /
-                                  100),
-                          child: Center(
-                              child: Container(
-                                  child: Text("No New Notifications"))),
-                        );
+                        return Container(
+                            height:
+                                MediaQuery.of(context).size.height * 70 / 100,
+                            child: Center(child: Text("No New Notifications")));
                       }
                       return AlertListTile(
                           notification: notificationsController
