@@ -35,7 +35,7 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
-    // await this.reload();
+    await this.reload();
   }
 
   @override
@@ -48,11 +48,12 @@ class ListOfSensorsController extends GetxController
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
-              .isBefore(DateTime.now().add(const Duration(seconds: -6000)))) {
+              .isBefore(DateTime.now().add(const Duration(seconds: -600)))) {
         print("refresh sensors");
         try {
           EasyLoading.show(status: 'loading...');
           await getListOfSensors();
+          lastRefreshTime.value = DateTime.now();
           EasyLoading.dismiss();
         } catch (err) {
           EasyLoading.showError('$err');
