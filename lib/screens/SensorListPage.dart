@@ -9,6 +9,7 @@ import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class SensorListPage extends StatefulWidget {
   const SensorListPage({Key? key}) : super(key: key);
@@ -23,10 +24,19 @@ class _SensorListPageState extends State<SensorListPage>
   late AuthController authController = Get.find();
   late ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
+  late Timer everyMinute;
+  late DateTime now;
 
   @override
   void initState() {
     print("authController TOKEN " + authController.token);
+    now = DateTime.now();
+    everyMinute = Timer.periodic(Duration(seconds: 60), (Timer t) {
+      print("1 minute passed");
+      setState(() {
+        now = DateTime.now();
+      });
+    });
     sensorsController.context = context;
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
@@ -94,25 +104,34 @@ class _SensorListPageState extends State<SensorListPage>
                                     1,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              if (index ==
-                                  sensorsController
-                                      .filteredListOfSensors.length) {
+                              // print(sensorsController.lastRefreshTime.value);
+                              // print(now);
+                              // print(timeago.format(
+                              //     sensorsController.lastRefreshTime.value));
+                              if (index == 0) {
                                 return Center(
                                     child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                2.5 /
-                                                100),
-                                        child: Obx(
-                                          () => Text(DateFormat.jms().format(
-                                              sensorsController
-                                                  .lastRefreshTime.value)),
-                                        )));
+                                  padding: EdgeInsets.only(
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              1.5 /
+                                              100),
+                                  child: Text("Last refreshed " +
+
+                                          // now.toString()
+                                          timeago.format(now == null
+                                              ? DateTime.now()
+                                              : sensorsController
+                                                  .lastRefreshTime.value)
+
+                                      // DateFormat.jms().format(
+                                      //     sensorsController
+                                      //         .lastRefreshTime.value)
+                                      ),
+                                ));
                               }
                               Sensor sensor = sensorsController
-                                  .filteredListOfSensors[index];
+                                  .filteredListOfSensors[index - 1];
                               return SensorsListTile(sensor: sensor);
                             },
                           ),
