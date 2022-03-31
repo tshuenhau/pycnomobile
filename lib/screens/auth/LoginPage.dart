@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 8.5 / 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
