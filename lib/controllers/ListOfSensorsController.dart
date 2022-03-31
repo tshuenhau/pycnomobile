@@ -82,6 +82,7 @@ class ListOfSensorsController extends GetxController
       for (var i = 0; i < body.length; i++) {
         if (body[i]["SLI"] != null) {
           //PULSE
+          addSensor(Pulse.fromJson(body[i]));
         } else {
           addSensor(FixSensor.fromJson(body[i]));
         }
