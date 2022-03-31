@@ -80,7 +80,8 @@ class SensorsListTile extends StatelessWidget {
                             )
                           : Image(
                               image: NetworkImage(
-                                  "https://pycno.co/${sensor.img}")))
+                                  "https://pycno.co/${sensor.img}"),
+                              fit: BoxFit.cover))
                 ])),
       ),
     );
