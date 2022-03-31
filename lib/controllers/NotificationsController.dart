@@ -5,11 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/sensors/TempSensor.dart';
-import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
-import 'package:pycnomobile/model/sensors/RainGauge.dart';
+import 'package:pycnomobile/model/sensors/FixSensor.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
@@ -94,9 +90,9 @@ class NotificationsController extends GetxController {
       var body = jsonDecode(response.body);
       if (body["SLI"] != null) {
         //PULSE
-        return TempSensor.fromJson(body);
+        return FixSensor.fromJson(body);
       } else {
-        return TempSensor.fromJson(body);
+        return FixSensor.fromJson(body);
       }
       // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body["UID"]);
 
