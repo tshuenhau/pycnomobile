@@ -49,11 +49,41 @@ class SensorsListTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.circle,
-                          color: sensor.isActive()
-                              ? Colors.greenAccent.shade700
-                              : Colors.redAccent.shade700,
-                          size: MediaQuery.of(context).size.height * 2 / 100),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("M",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.height *
+                                    2 /
+                                    100,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.45),
+                              )),
+                          SizedBox(
+                              width:
+                                  MediaQuery.of(context).size.width * 2 / 100),
+                          Icon(
+                            Icons.sim_card,
+                            size: MediaQuery.of(context).size.height * 2 / 100,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.45),
+                          ),
+                          // SizedBox(
+                          //     width:
+                          //         MediaQuery.of(context).size.width * 2 / 100),
+                          // Icon(Icons.circle,
+                          //     color: sensor.isActive()
+                          //         ? Colors.greenAccent.shade700
+                          //         : Colors.redAccent.shade700,
+                          //     size:
+                          //         MediaQuery.of(context).size.height * 2 / 100),
+                        ],
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
                             top:
@@ -69,19 +99,54 @@ class SensorsListTile extends StatelessWidget {
                   SizedBox(
                       width: MediaQuery.of(context).size.width *
                           (1 / 20)), // give it width
-                  Container(
-                      width: MediaQuery.of(context).size.height * 1 / 15,
-                      height: MediaQuery.of(context).size.height * 1 / 15,
-                      child: (sensor.img == null || sensor.img == "")
-                          ? Container(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.1),
-                            )
-                          : Image(
-                              image: NetworkImage(
-                                  "https://pycno.co/${sensor.img}"),
-                              fit: BoxFit.cover))
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.height * 1 / 15,
+                        height: MediaQuery.of(context).size.height * 1 / 15,
+                        decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(
+                                MediaQuery.of(context).size.height * 1.5 / 100),
+                            image: (sensor.img == null || sensor.img == "")
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(
+                                        "https://pycno.co/${sensor.img}"),
+                                    fit: BoxFit.cover)),
+                      ),
+
+                      // Container(
+                      //     width: MediaQuery.of(context).size.height * 1 / 15,
+                      //     height: MediaQuery.of(context).size.height * 1 / 15,
+                      //     child: (sensor.img == null || sensor.img == "")
+                      //         ? Container(
+                      //             decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.all(
+                      //                 Radius.circular(18),
+                      //               ),
+                      //               color: Theme.of(context)
+                      //                   .primaryColor
+                      //                   .withOpacity(0.1),
+                      //             ),
+                      //           )
+                      //         : Image(
+                      //             image: NetworkImage(
+                      //                 "https://pycno.co/${sensor.img}"),
+                      //             fit: BoxFit.cover)),
+                      Positioned(
+                        top: -MediaQuery.of(context).size.height * 0.5 / 100,
+                        right: -MediaQuery.of(context).size.height * 0.5 / 100,
+                        child: Icon(Icons.circle,
+                            color: sensor.isActive()
+                                ? Colors.greenAccent.shade700
+                                : Colors.redAccent.shade700,
+                            size: MediaQuery.of(context).size.height * 2 / 100),
+                      ),
+                    ],
+                  )
                 ])),
       ),
     );

@@ -32,7 +32,6 @@ class _SensorListPageState extends State<SensorListPage>
     print("authController TOKEN " + authController.token);
     now = DateTime.now();
     everyMinute = Timer.periodic(Duration(seconds: 60), (Timer t) {
-      print("1 minute passed");
       setState(() {
         now = DateTime.now();
       });
@@ -108,13 +107,15 @@ class _SensorListPageState extends State<SensorListPage>
                               // print(now);
                               // print(timeago.format(
                               //     sensorsController.lastRefreshTime.value));
-                              if (index == 0) {
+                              if (index ==
+                                  sensorsController
+                                      .filteredListOfSensors.length) {
                                 return Center(
                                     child: Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom:
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
                                           MediaQuery.of(context).size.height *
-                                              1.5 /
+                                              2.5 /
                                               100),
                                   child: Text("Last refreshed " +
 
@@ -131,7 +132,7 @@ class _SensorListPageState extends State<SensorListPage>
                                 ));
                               }
                               Sensor sensor = sensorsController
-                                  .filteredListOfSensors[index - 1];
+                                  .filteredListOfSensors[index];
                               return SensorsListTile(sensor: sensor);
                             },
                           ),
