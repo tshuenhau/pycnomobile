@@ -1,7 +1,7 @@
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class Pulse extends Sensor {
-  List<Map<String, dynamic>> sli;
+  List<dynamic> sli;
   Pulse(
       {required uid,
       required name,
@@ -36,7 +36,7 @@ class Pulse extends Sensor {
             readableAgoFull: readableAgoFull,
             functionalities: functionalities);
 
-  static List<Map<String, dynamic>> getSli(Map<String, dynamic> json) {
+  static List<dynamic> getSli(Map<String, dynamic> json) {
     return json["SLI"];
   }
 
