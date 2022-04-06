@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';

@@ -48,7 +48,8 @@ class ListOfSensorsController extends GetxController
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
-              .isBefore(DateTime.now().add(const Duration(seconds: -600)))) {
+              .isBefore(DateTime.now().add(const Duration(seconds: -900)))) {
+        // wait for 15 minutes before refreshing
         print("refresh sensors");
         try {
           EasyLoading.show(status: 'loading...');
@@ -82,6 +83,7 @@ class ListOfSensorsController extends GetxController
       for (var i = 0; i < body.length; i++) {
         if (body[i]["SLI"] != null) {
           //PULSE
+          addSensor(Pulse.fromJson(body[i]));
         } else {
           addSensor(FixSensor.fromJson(body[i]));
         }
@@ -110,10 +112,57 @@ class ListOfSensorsController extends GetxController
   }
 
   void sortSensors() {
-    filteredListOfSensors.sort((a, b) =>
-        a.polledAt != null && b.polledAt != null
+    List<Sensor> activeList = List.empty(growable: true);
+    List<Sensor> inactiveList = List.empty(growable: true);
+    for (Sensor s in filteredListOfSensors) {
+      if (DateTimeRange(
+                  start: DateTime.fromMillisecondsSinceEpoch(s.epoch!),
+                  end: DateTime.now())
+              .duration
+              .inHours >
+          24) {
+        inactiveList.insert(0, s);
+      } else {
+        activeList.insert(0, s);
+      }
+    }
+
+    //sorting inactive list
+    inactiveList.sort((a, b) => a.polledAt != null && b.polledAt != null
+        ? b.polledAt!.compareTo(a.polledAt!)
+        : 0);
+
+    List<Sensor> tempList = [...activeList];
+    for (Sensor sensor in activeList) {
+      if (sensor.uid.startsWith("K")) {
+        for (Sensor tempS in tempList) {
+          if (tempS.uid == sensor.site) {
+            //tempS = master sensor and sensor = node sensor
+            print("master sensor " + tempS.uid);
+            print("node sensor " + sensor.uid);
+            print("node sensor site " + sensor.site!);
+            int i = tempList.indexWhere(
+                (Sensor s) => s.uid == sensor.uid); //index of node sensor
+            int j = tempList.indexWhere((Sensor s) => s.uid == tempS.uid);
+            Sensor node = tempList.removeAt(i);
+            if (j + 1 > tempList.length) {
+              tempList.add(node);
+            } else {
+              tempList.insert(j + 1, node);
+            }
+
+            print(tempList);
+          }
+        }
+      }
+    } //a  is master, b is node
+    activeList.sort((a, b) => (b.site == a.uid || b.site == a.site)
+        ? 0
+        : a.polledAt != null && b.polledAt != null
             ? b.polledAt!.compareTo(a.polledAt!)
             : 0);
+    activeList.addAll(inactiveList);
+    filteredListOfSensors.value = [...activeList];
   }
 
   void searchListOfSensors() {
