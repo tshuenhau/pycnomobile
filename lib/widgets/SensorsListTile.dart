@@ -52,26 +52,34 @@ class SensorsListTile extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("M",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.height *
-                                    2 /
-                                    100,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.45),
-                              )),
+                          Container(
+                            height:
+                                MediaQuery.of(context).size.height * 2 / 100,
+                            child: FittedBox(
+                              child: Text("M",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.45),
+                                  )),
+                            ),
+                          ),
                           SizedBox(
                               width:
                                   MediaQuery.of(context).size.width * 2 / 100),
-                          Icon(
-                            Icons.sim_card,
-                            size: MediaQuery.of(context).size.height * 2 / 100,
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.45),
+                          Container(
+                            height:
+                                MediaQuery.of(context).size.height * 2 / 100,
+                            child: FittedBox(
+                              child: Icon(
+                                Icons.sim_card,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.45),
+                              ),
+                            ),
                           ),
                           // SizedBox(
                           //     width:
@@ -139,16 +147,47 @@ class SensorsListTile extends StatelessWidget {
                       Positioned(
                         top: -MediaQuery.of(context).size.height * 0.5 / 100,
                         right: -MediaQuery.of(context).size.height * 0.5 / 100,
-                        child: Icon(Icons.circle,
-                            color: sensor.isActive()
-                                ? Colors.greenAccent.shade700
-                                : Colors.redAccent.shade700,
-                            size: MediaQuery.of(context).size.height * 2 / 100),
+                        child: ActiveIndicator(sensor: sensor),
                       ),
                     ],
                   )
                 ])),
       ),
+    );
+  }
+}
+
+class ActiveIndicator extends StatelessWidget {
+  const ActiveIndicator({
+    Key? key,
+    required this.sensor,
+  }) : super(key: key);
+
+  final Sensor sensor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 2.5 / 100,
+          width: MediaQuery.of(context).size.height * 2.5 / 100,
+          alignment: Alignment.center,
+          child: Icon(Icons.circle,
+              color: Theme.of(context).colorScheme.surface,
+              size: MediaQuery.of(context).size.height * 2.5 / 100),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 2.5 / 100,
+          width: MediaQuery.of(context).size.height * 2.5 / 100,
+          alignment: Alignment.center,
+          child: Icon(Icons.circle,
+              color: sensor.isActive()
+                  ? Colors.greenAccent.shade700
+                  : Colors.redAccent.shade700,
+              size: MediaQuery.of(context).size.height * 2 / 100),
+        ),
+      ],
     );
   }
 }
