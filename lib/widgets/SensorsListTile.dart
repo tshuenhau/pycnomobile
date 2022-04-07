@@ -77,14 +77,16 @@ class SensorsListTile extends StatelessWidget {
                           Container(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: FittedBox(
-                              child: Icon(
-                                Icons.sim_card,
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.45),
-                              ),
-                            ),
+                            child: sensor.isSimActive
+                                ? FittedBox(
+                                    child: Icon(
+                                      Icons.sim_card,
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.45),
+                                    ),
+                                  )
+                                : null,
                           ),
                           // SizedBox(
                           //     width:

@@ -42,6 +42,7 @@ class ListOfSensorsController extends GetxController
   @override
   void onClose() {
     super.onClose();
+    this.dispose();
   }
 
   Future<void> reload() async {
