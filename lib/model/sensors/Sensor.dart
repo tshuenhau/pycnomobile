@@ -168,6 +168,11 @@ abstract class Sensor {
     return functionalities;
   }
 
+  @override
+  bool equals(Sensor s) {
+    return this.uid == s.uid;
+  }
+
   String toString() {
     // return "UID: $uid, Name: $name, Img: $img, Address: $address, Epoch: $epoch, Site: $site, IsLive?: $isLive, IsLiveHealth: $isLiveHealth, IsLiveTS: $isLiveTS, UpdatedAt: $updatedAt, PolledAt: $polledAt, SoilType: $soilType, ReadableAgo: $readableAgo, ReadableAgoFull: $readableAgoFull";
     return "name: $name, polledAt: $polledAt";

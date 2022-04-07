@@ -8,6 +8,7 @@ import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with WidgetsBindingObserver {
   late bool isLoggedIn;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
@@ -37,6 +38,31 @@ class _AppState extends State<App> {
       isLoggedIn = true;
     } else {
       isLoggedIn = false;
+    }
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  Future _refreshData() async {
+    await sensorsController.getListOfSensors();
+    sensorsController.searchListOfSensors();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      print("PAUSED");
+      sensorsController.lastPausedTime.value = DateTime.now();
+    }
+    if (state == AppLifecycleState.resumed &&
+        ModalRoute.of(context)!.isCurrent &&
+        sensorsController.lastPausedTime.value
+            .isBefore(DateTime.now().add(const Duration(seconds: -5)))) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => App()));
+      EasyLoading.show(status: "Loading");
+      await _refreshData();
+      EasyLoading.dismiss();
     }
   }
 

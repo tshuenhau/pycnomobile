@@ -57,17 +57,17 @@ class _SensorListPageState extends State<SensorListPage>
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed &&
-        ModalRoute.of(context)!.isCurrent &&
-        authController.currentTab.value == 0) {
-      EasyLoading.show(status: "Loading");
-      await _refreshData();
-      EasyLoading.dismiss();
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   super.didChangeAppLifecycleState(state);
+  //   if (state == AppLifecycleState.resumed &&
+  //       ModalRoute.of(context)!.isCurrent &&
+  //       authController.currentTab.value == 0) {
+  //     EasyLoading.show(status: "Loading");
+  //     await _refreshData();
+  //     EasyLoading.dismiss();
+  //   }
+  // }
 
   Future _refreshData() async {
     await sensorsController.getListOfSensors();

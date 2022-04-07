@@ -56,7 +56,12 @@ class SensorsListTile extends StatelessWidget {
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
                             child: FittedBox(
-                              child: Text("M",
+                              child: Text(
+                                  sensor.uid.startsWith("M")
+                                      ? "M"
+                                      : sensor.uid.startsWith("K")
+                                          ? "N"
+                                          : " ",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
