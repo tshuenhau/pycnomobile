@@ -6,7 +6,6 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/Search.dart';
 import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -17,8 +16,7 @@ class SensorListPage extends StatefulWidget {
   State<SensorListPage> createState() => _SensorListPageState();
 }
 
-class _SensorListPageState extends State<SensorListPage>
-    with WidgetsBindingObserver {
+class _SensorListPageState extends State<SensorListPage> {
   late StreamSubscription<bool> keyboardSubscription;
   late AuthController authController = Get.find();
   late ListOfSensorsController sensorsController =
@@ -37,7 +35,6 @@ class _SensorListPageState extends State<SensorListPage>
     });
     sensorsController.context = context;
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
 
     var keyboardVisibilityController = KeyboardVisibilityController();
 
@@ -52,22 +49,9 @@ class _SensorListPageState extends State<SensorListPage>
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
     keyboardSubscription.cancel();
     super.dispose();
   }
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) async {
-  //   super.didChangeAppLifecycleState(state);
-  //   if (state == AppLifecycleState.resumed &&
-  //       ModalRoute.of(context)!.isCurrent &&
-  //       authController.currentTab.value == 0) {
-  //     EasyLoading.show(status: "Loading");
-  //     await _refreshData();
-  //     EasyLoading.dismiss();
-  //   }
-  // }
 
   Future _refreshData() async {
     await sensorsController.getListOfSensors();

@@ -57,7 +57,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed &&
         ModalRoute.of(context)!.isCurrent &&
         sensorsController.lastPausedTime.value
-            .isBefore(DateTime.now().add(const Duration(seconds: -5)))) {
+            .isBefore(DateTime.now().add(const Duration(seconds: -900)))) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => App()));
       EasyLoading.show(status: "Loading");
@@ -74,6 +74,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
