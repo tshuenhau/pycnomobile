@@ -75,25 +75,25 @@ class _AlertsPageState extends State<AlertsPage> {
                 TabBarView(physics: NeverScrollableScrollPhysics(), children: [
               RefreshIndicator(
                 onRefresh: _refreshData,
-                child: Obx(() => ListView.builder(
-                    itemCount:
-                        notificationsController.unreadNotifications.length == 0
-                            ? 1
-                            : notificationsController
-                                .unreadNotifications.length,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (notificationsController.unreadNotifications.length ==
-                          0) {
-                        return Container(
+                child: Obx(() =>
+                    notificationsController.unreadNotifications.length == 0
+                        ? Container(
                             height:
                                 MediaQuery.of(context).size.height * 70 / 100,
-                            child: Center(child: Text("No New Notifications")));
-                      }
-                      return AlertListTile(
-                          notification: notificationsController
-                              .unreadNotifications[index]);
-                    })),
+                            child: Center(child: Text("No New Notifications")))
+                        : ListView.builder(
+                            itemCount: notificationsController
+                                        .unreadNotifications.length ==
+                                    0
+                                ? 1
+                                : notificationsController
+                                    .unreadNotifications.length,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return AlertListTile(
+                                  notification: notificationsController
+                                      .unreadNotifications[index]);
+                            })),
               ),
               RefreshIndicator(
                 onRefresh: _refreshData,

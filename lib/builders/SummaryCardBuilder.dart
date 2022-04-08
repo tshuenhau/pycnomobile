@@ -3,18 +3,13 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
 import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
+import 'package:pycnomobile/widgets/TitleSummaryCard.dart';
 
 Widget buildSummaryCards(
     {required Sensor sensor, required BuildContext context}) {
   List<Widget> leftColumn = [];
   List<Widget> rightColumn = [];
 
-  /*
-  leftColumn  rightColumn
-      1           2
-      3           4
-      5           6
- */
   void add(Widget card) {
     if (leftColumn.isEmpty) {
       leftColumn.add(card);
@@ -39,12 +34,12 @@ Widget buildSummaryCards(
             function: func,
             subFunctions: subFunctions));
       } else {
-        add(new BasicSummaryCard(
-            //TODO: Refactor these stuff especially the func.icon, func.color bs, just pass one func is enough.
-            sensor: sensor,
-            function: func));
+        if (func.icon == null) {
+          add(new TitleSummaryCard(sensor: sensor, function: func));
+        } else {
+          add(new BasicSummaryCard(sensor: sensor, function: func));
+        }
         // add(new BasicSummaryCard(
-        //     //TODO: Refactor these stuff especially the func.icon, func.color bs, just pass one func is enough.
         //     sensor: sensor,
         //     function: func));
       }
