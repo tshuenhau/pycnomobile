@@ -23,7 +23,7 @@ class BasicSummaryCard extends StatelessWidget {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               SizedBox(
-                child: function.icon != null
+                child: function.icon == null
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 1 / 100,
@@ -31,7 +31,7 @@ class BasicSummaryCard extends StatelessWidget {
                             bottom:
                                 MediaQuery.of(context).size.height * 1 / 100),
                         child: AutoSizeText(
-                          function.name,
+                          function.name == null ? function.key : function.name,
                           style: TextStyle(),
                           maxLines: 2,
                           textAlign: TextAlign.center,

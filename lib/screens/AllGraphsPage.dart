@@ -20,6 +20,9 @@ class AllGraphsPage extends StatefulWidget {
 class _AllGraphsPageState extends State<AllGraphsPage> {
   AuthController auth = Get.find();
   late bool isAlert;
+
+  bool showOldGraphs = false;
+
   @override
   void initState() {
     super.initState();
@@ -98,7 +101,32 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                         ? buildGraphs(widget.sensor,
                             widget.sensor.functionalities!, context)
                         : buildAlertGraphs(widget.sensor,
-                            widget.sensor.functionalities!, context))),
+                            widget.sensor.functionalities!, context)) +
+                    [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 3 / 100,
+                        ),
+                        child: Center(
+                            child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              showOldGraphs = !showOldGraphs;
+                            });
+                          },
+                          child: Text(showOldGraphs == false
+                              ? "Show Old Graphs"
+                              : "Hide Old Graphs"),
+                        )),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 2.5 / 100,
+                      ),
+                    ] +
+                    (showOldGraphs == true
+                        ? buildOldGraphs(widget.sensor,
+                            widget.sensor.functionalities!, context)
+                        : [])),
           ),
         ),
       ),
