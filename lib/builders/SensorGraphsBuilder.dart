@@ -47,8 +47,8 @@ Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
   EasyLoading.dismiss();
 }
 
-List<Widget> buildGraphs(
-    Sensor sensor, List<Functionality?> functions, BuildContext context) {
+List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
+    BuildContext context, bool isAlert) {
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   List<Widget> graphsToDraw = <Widget>[];
@@ -72,58 +72,25 @@ List<Widget> buildGraphs(
   if (controller.countNumberOfGraphs(functions) <= 0) {
     graphsToDraw.add(NoGraphData());
   }
-
-  controller.graphs.last.forEach((TimeSeries e) {
-    drawnCount += 1;
-    graphsToDraw.add(SensorLineChart(
-      timeSeries: e,
-    )); //I put ! behind the e just to avoid error, idk if will have any bugs
-  });
-
-  List<Widget> result = [
-    Column(children: <Widget>[] + graphsToDraw),
-    buildLoadingIndicator()
-  ];
-
-  return result;
-}
-
-List<Widget> buildAlertGraphs(
-    Sensor sensor, List<Functionality?> functions, BuildContext context) {
-  TimeSeriesController controller = Get.put(TimeSeriesController());
-
-  List<Widget> graphsToDraw = <Widget>[];
-  int drawnCount = 0;
-  Widget buildLoadingIndicator() {
-    if (drawnCount == controller.countNumberOfGraphs(functions)) {
-      return Container();
-    }
-    List<Widget> loadingIndicators = [];
-    for (int i = drawnCount;
-        i < controller.countNumberOfGraphs(functions);
-        i++) {
-      loadingIndicators.add(LoadingIndicator());
-    }
-    return Column(
-      children: <Widget>[] + loadingIndicators,
-    );
-    //return LoadingIndicator();
-  }
-
-  if (controller.countNumberOfGraphs(functions) <= 0) {
-    graphsToDraw.add(NoGraphData());
-  }
-
-  controller.alertGraphs.last.forEach((e) {
-    drawnCount += 1;
-    if (e.getTimeSeries != null) {
+  if (isAlert == true) {
+    controller.alertGraphs.last.forEach((e) {
+      drawnCount += 1;
+      if (e.getTimeSeries != null) {
+        graphsToDraw.add(SensorLineChart(
+          timeSeries: e,
+        )); //I put ! behind the e just to avoid error, idk if will have any bugs
+      } else {
+        graphsToDraw.add(NoGraphData());
+      }
+    });
+  } else {
+    controller.graphs.last.forEach((TimeSeries e) {
+      drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
         timeSeries: e,
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
-    } else {
-      graphsToDraw.add(NoGraphData());
-    }
-  });
+    });
+  }
 
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
@@ -132,6 +99,51 @@ List<Widget> buildAlertGraphs(
 
   return result;
 }
+
+// List<Widget> buildAlertGraphs(
+//     Sensor sensor, List<Functionality?> functions, BuildContext context) {
+//   TimeSeriesController controller = Get.put(TimeSeriesController());
+
+//   List<Widget> graphsToDraw = <Widget>[];
+//   int drawnCount = 0;
+//   Widget buildLoadingIndicator() {
+//     if (drawnCount == controller.countNumberOfGraphs(functions)) {
+//       return Container();
+//     }
+//     List<Widget> loadingIndicators = [];
+//     for (int i = drawnCount;
+//         i < controller.countNumberOfGraphs(functions);
+//         i++) {
+//       loadingIndicators.add(LoadingIndicator());
+//     }
+//     return Column(
+//       children: <Widget>[] + loadingIndicators,
+//     );
+//     //return LoadingIndicator();
+//   }
+
+//   if (controller.countNumberOfGraphs(functions) <= 0) {
+//     graphsToDraw.add(NoGraphData());
+//   }
+
+//   controller.alertGraphs.last.forEach((e) {
+//     drawnCount += 1;
+//     if (e.getTimeSeries != null) {
+//       graphsToDraw.add(SensorLineChart(
+//         timeSeries: e,
+//       )); //I put ! behind the e just to avoid error, idk if will have any bugs
+//     } else {
+//       graphsToDraw.add(NoGraphData());
+//     }
+//   });
+
+//   List<Widget> result = [
+//     Column(children: <Widget>[] + graphsToDraw),
+//     buildLoadingIndicator()
+//   ];
+
+//   return result;
+// }
 
 List<Widget> buildOldGraphs(
     Sensor sensor, List<Functionality?> functions, BuildContext context) {
