@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
 import 'package:get/get.dart';
+import 'package:pycnomobile/widgets/ActiveIndicator.dart';
 
 class SensorsListTile extends StatelessWidget {
   final Sensor sensor;
@@ -17,9 +18,6 @@ class SensorsListTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
-        // side: BorderSide(
-        //     color: Theme.of(context).colorScheme.secondary.withOpacity(0.35),
-        //     width: 1)
       ),
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: InkWell(
@@ -88,15 +86,6 @@ class SensorsListTile extends StatelessWidget {
                                   )
                                 : null,
                           ),
-                          // SizedBox(
-                          //     width:
-                          //         MediaQuery.of(context).size.width * 2 / 100),
-                          // Icon(Icons.circle,
-                          //     color: sensor.isActive()
-                          //         ? Colors.greenAccent.shade700
-                          //         : Colors.redAccent.shade700,
-                          //     size:
-                          //         MediaQuery.of(context).size.height * 2 / 100),
                         ],
                       ),
                       Padding(
@@ -132,69 +121,15 @@ class SensorsListTile extends StatelessWidget {
                                         "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
-
-                      // Container(
-                      //     width: MediaQuery.of(context).size.height * 1 / 15,
-                      //     height: MediaQuery.of(context).size.height * 1 / 15,
-                      //     child: (sensor.img == null || sensor.img == "")
-                      //         ? Container(
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.all(
-                      //                 Radius.circular(18),
-                      //               ),
-                      //               color: Theme.of(context)
-                      //                   .primaryColor
-                      //                   .withOpacity(0.1),
-                      //             ),
-                      //           )
-                      //         : Image(
-                      //             image: NetworkImage(
-                      //                 "https://pycno.co/${sensor.img}"),
-                      //             fit: BoxFit.cover)),
                       Positioned(
-                        top: -MediaQuery.of(context).size.height * 0.5 / 100,
-                        right: -MediaQuery.of(context).size.height * 0.5 / 100,
+                        top: -MediaQuery.of(context).size.height * 0.75 / 100,
+                        right: -MediaQuery.of(context).size.height * 0.75 / 100,
                         child: ActiveIndicator(sensor: sensor),
                       ),
                     ],
                   )
                 ])),
       ),
-    );
-  }
-}
-
-class ActiveIndicator extends StatelessWidget {
-  const ActiveIndicator({
-    Key? key,
-    required this.sensor,
-  }) : super(key: key);
-
-  final Sensor sensor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 2.5 / 100,
-          width: MediaQuery.of(context).size.height * 2.5 / 100,
-          alignment: Alignment.center,
-          child: Icon(Icons.circle,
-              color: Theme.of(context).colorScheme.surface,
-              size: MediaQuery.of(context).size.height * 2.5 / 100),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 2.5 / 100,
-          width: MediaQuery.of(context).size.height * 2.5 / 100,
-          alignment: Alignment.center,
-          child: Icon(Icons.circle,
-              color: sensor.isActive()
-                  ? Colors.greenAccent.shade700
-                  : Colors.redAccent.shade700,
-              size: MediaQuery.of(context).size.height * 2 / 100),
-        ),
-      ],
     );
   }
 }

@@ -20,6 +20,9 @@ class AllGraphsPage extends StatefulWidget {
 class _AllGraphsPageState extends State<AllGraphsPage> {
   AuthController auth = Get.find();
   late bool isAlert;
+
+  bool showOldGraphs = false;
+
   @override
   void initState() {
     super.initState();
@@ -73,35 +76,62 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
     // controller.initGraphs(sensor, sensor.functionalities!);
 
     return Center(
-      child: Container(
-        //padding: EdgeInsets.symmetric(horizontal: 20),
-        width: MediaQuery.of(context).size.width * 9.5 / 10,
-        height: MediaQuery.of(context).size.height,
-        padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 1 / 100),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Obx(
-            () => ListView(
-                padding: EdgeInsets.all(0),
-                children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [DateRangeSelector(context)],
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 2.5 / 100,
-                      ),
-                    ] +
-                    (!isAlert
-                        ? buildGraphs(widget.sensor,
-                            widget.sensor.functionalities!, context)
-                        : buildAlertGraphs(widget.sensor,
-                            widget.sensor.functionalities!, context))),
+        child: Container(
+      //padding: EdgeInsets.symmetric(horizontal: 20),
+      width: MediaQuery.of(context).size.width * 9.5 / 10,
+      height: MediaQuery.of(context).size.height,
+      padding:
+          EdgeInsets.only(top: MediaQuery.of(context).size.height * 1 / 100),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Obx(
+          () => ListView(
+            padding: EdgeInsets.all(0),
+            children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [DateRangeSelector(context)],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 2.5 / 100,
+                  ),
+                ] +
+                (!isAlert
+                    ? buildGraphs(widget.sensor, widget.sensor.functionalities!,
+                        context, false)
+                    : buildGraphs(widget.sensor, widget.sensor.functionalities!,
+                            context, true) +
+                        [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom:
+                                  MediaQuery.of(context).size.height * 3 / 100,
+                            ),
+                            child: Center(
+                                child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  showOldGraphs = !showOldGraphs;
+                                });
+                              },
+                              child: Text(showOldGraphs == false
+                                  ? "Show Old Graphs"
+                                  : "Hide Old Graphs"),
+                            )),
+                          ),
+                          SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 2.5 / 100,
+                          ),
+                        ] +
+                        (showOldGraphs == true
+                            ? buildOldGraphs(widget.sensor,
+                                widget.sensor.functionalities!, context)
+                            : [])),
           ),
         ),
       ),
-    );
+    ));
   }
 }

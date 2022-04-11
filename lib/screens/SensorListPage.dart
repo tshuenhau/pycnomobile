@@ -90,6 +90,7 @@ class _SensorListPageState extends State<SensorListPage> {
                               // print(now);
                               // print(timeago.format(
                               //     sensorsController.lastRefreshTime.value));
+
                               if (index ==
                                   sensorsController
                                       .filteredListOfSensors.length) {

@@ -113,9 +113,10 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   )
                 ] +
                 (!isAlert
-                    ? buildGraphs(widget.sensor, widget.functions, context)
-                    : buildAlertGraphs(
-                        widget.sensor, widget.functions, context)),
+                    ? buildGraphs(
+                        widget.sensor, widget.functions, context, false)
+                    : buildGraphs(
+                        widget.sensor, widget.functions, context, true)),
           ),
         ),
       ),
