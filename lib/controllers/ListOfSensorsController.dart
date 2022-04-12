@@ -22,6 +22,7 @@ class ListOfSensorsController extends GetxController
       List<TimeSeries>.empty(growable: true).obs;
   Rx<String> searchController = ''.obs;
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
+  Rx<DateTime> lastPausedTime = DateTime.now().obs;
 
   AuthController authController = Get.find();
 
@@ -35,12 +36,13 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
-    await this.reload();
+    this.reload();
   }
 
   @override
   void onClose() {
     super.onClose();
+    this.dispose();
   }
 
   Future<void> reload() async {
@@ -87,20 +89,6 @@ class ListOfSensorsController extends GetxController
         } else {
           addSensor(FixSensor.fromJson(body[i]));
         }
-        // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body[i]["UID"]);
-        // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
-        //   addSensor(MasterSoilSensor.fromJson(body[i]));
-        // } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
-        //   addSensor(NodeSoilSensor.fromJson(body[i]));
-        // } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
-        //   addSensor(SonicAnemometer.fromJson(body[i]));
-        // } else if (type == TYPE_OF_SENSOR.RAIN_GAUGE) {
-        //   addSensor(RainGauge.fromJson(body[i]));
-        // } else if (type == TYPE_OF_SENSOR.PULSE) {
-        //   addSensor(Pulse.fromJson(body[i]));
-        // } else {
-        //   addSensor(NodeSoilSensor.fromJson(body[i]));
-        // }
       }
 
       sortSensors();
@@ -115,54 +103,71 @@ class ListOfSensorsController extends GetxController
     List<Sensor> activeList = List.empty(growable: true);
     List<Sensor> inactiveList = List.empty(growable: true);
     for (Sensor s in filteredListOfSensors) {
-      if (DateTimeRange(
-                  start: DateTime.fromMillisecondsSinceEpoch(s.epoch!),
-                  end: DateTime.now())
-              .duration
-              .inHours >
-          24) {
+      if (DateTime.now()
+          .add(const Duration(hours: -24))
+          .isAfter(DateTime.fromMillisecondsSinceEpoch(s.epoch!))) {
         inactiveList.insert(0, s);
       } else {
         activeList.insert(0, s);
       }
     }
 
-    //sorting inactive list
+    //sorting inactive list by date
     inactiveList.sort((a, b) => a.polledAt != null && b.polledAt != null
-        ? b.polledAt!.compareTo(a.polledAt!)
+        ? a.polledAt!.compareTo(b.polledAt!)
         : 0);
 
-    List<Sensor> tempList = [...activeList];
-    for (Sensor sensor in activeList) {
-      if (sensor.uid.startsWith("K")) {
-        for (Sensor tempS in tempList) {
-          if (tempS.uid == sensor.site) {
-            //tempS = master sensor and sensor = node sensor
-            print("master sensor " + tempS.uid);
-            print("node sensor " + sensor.uid);
-            print("node sensor site " + sensor.site!);
-            int i = tempList.indexWhere(
-                (Sensor s) => s.uid == sensor.uid); //index of node sensor
-            int j = tempList.indexWhere((Sensor s) => s.uid == tempS.uid);
-            Sensor node = tempList.removeAt(i);
-            if (j + 1 > tempList.length) {
-              tempList.add(node);
-            } else {
-              tempList.insert(j + 1, node);
-            }
+    inactiveList = inactiveList.reversed.toList();
 
-            print(tempList);
+    List<Sensor> tempList = [...activeList];
+    Map<Sensor, List<Sensor>> sensorMap = {};
+
+    // create empty list for each non-node sensor
+    for (int i = 0; i < tempList.length; i++) {
+      if (!tempList[i].uid.startsWith("K")) {
+        sensorMap[tempList[i]] = List.empty(growable: true);
+      }
+    }
+
+    Iterable<Sensor> masterSensors = sensorMap.keys;
+
+    //add node sensors to master
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i].uid.startsWith("K")) {
+        for (Sensor master in masterSensors) {
+          if (master.uid == tempList[i].site) {
+            sensorMap[master]!.add(tempList[i]);
           }
         }
       }
-    } //a  is master, b is node
-    activeList.sort((a, b) => (b.site == a.uid || b.site == a.site)
-        ? 0
-        : a.polledAt != null && b.polledAt != null
-            ? b.polledAt!.compareTo(a.polledAt!)
-            : 0);
-    activeList.addAll(inactiveList);
-    filteredListOfSensors.value = [...activeList];
+    }
+
+    //sort all the node sensors
+    for (Sensor master in masterSensors) {
+      sensorMap[master]!.sort((a, b) => a.polledAt != null && b.polledAt != null
+          ? b.polledAt!.compareTo(a.polledAt!)
+          : 0);
+    }
+
+    //sort all the non-node sensors
+    List<Sensor> masterSensorsList = masterSensors.toList();
+    print(masterSensorsList);
+
+    masterSensorsList.sort((a, b) => a.polledAt != null && b.polledAt != null
+        ? b.polledAt!.compareTo(a.polledAt!)
+        : 0);
+
+    List<Sensor> list = List.empty(growable: true);
+    for (int i = 0; i < masterSensorsList.length; i++) {
+      Sensor currentSensor = masterSensorsList[i];
+      print(currentSensor);
+      //current sensor is a master sensor
+      list.add(currentSensor);
+      list.addAll(sensorMap[currentSensor] ?? []);
+    }
+
+    list.addAll(inactiveList);
+    filteredListOfSensors.value = [...list];
   }
 
   void searchListOfSensors() {
@@ -190,5 +195,6 @@ class ListOfSensorsController extends GetxController
         filteredListOfSensors.add(sensor);
       }
     }
+    sortSensors();
   }
 }

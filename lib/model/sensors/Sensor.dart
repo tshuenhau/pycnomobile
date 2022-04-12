@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
-import 'package:pycnomobile/model/sensors/notinuse/RainGauge.dart';
 // import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
 // import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
@@ -38,6 +36,7 @@ enum TYPE_OF_SENSOR {
 
 abstract class Sensor {
   // TYPE_OF_SENSOR type;
+  List<dynamic>? sli;
   String uid;
   String? name;
   String? img;
@@ -53,24 +52,27 @@ abstract class Sensor {
   String? readableAgo;
   String? readableAgoFull;
   List<Functionality>? functionalities;
-  Sensor({
-    // required this.type,
-    required this.uid,
-    required this.name,
-    required this.img,
-    required this.address,
-    required this.epoch,
-    required this.site,
-    required this.isLive,
-    required this.isLiveTS,
-    required this.isLiveHealth,
-    required this.updatedAt,
-    required this.polledAt,
-    required this.soilType,
-    required this.readableAgo,
-    required this.readableAgoFull,
-    required this.functionalities,
-  });
+  bool isSimActive;
+  Sensor(
+      {
+      // required this.type,
+      required this.uid,
+      required this.name,
+      required this.img,
+      required this.address,
+      required this.epoch,
+      required this.site,
+      required this.isLive,
+      required this.isLiveTS,
+      required this.isLiveHealth,
+      required this.updatedAt,
+      required this.polledAt,
+      required this.soilType,
+      required this.readableAgo,
+      required this.readableAgoFull,
+      required this.functionalities,
+      required this.sli,
+      required this.isSimActive});
 
   // Sonic Anemometer: K80xxxxx
   // Rain Gauge: K40xxxxx
@@ -110,6 +112,17 @@ abstract class Sensor {
       return true;
     }
     return false;
+  }
+
+  static bool getIsSimActive(json) {
+    if (json["sim1_lifeCycleStatus"] == "X") {
+      return false;
+    } else if (json["sim1_requestedTariff"] is String &&
+        json["sim1_requestedTariff"].substring(0, 1) == "X") {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   static getFunctionalities(Map<String, dynamic> json, TYPE_OF_SENSOR type) {
@@ -166,6 +179,10 @@ abstract class Sensor {
     }
 
     return functionalities;
+  }
+
+  bool isPulse() {
+    return this.sli != null;
   }
 
   String toString() {

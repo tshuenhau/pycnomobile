@@ -1,7 +1,6 @@
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class Pulse extends Sensor {
-  List<dynamic> sli;
   Pulse(
       {required uid,
       required name,
@@ -18,7 +17,8 @@ class Pulse extends Sensor {
       required readableAgo,
       required readableAgoFull,
       required functionalities,
-      required this.sli})
+      required sli,
+      required isSimActive})
       : super(
             uid: uid,
             name: name,
@@ -34,7 +34,9 @@ class Pulse extends Sensor {
             soilType: soilType,
             readableAgo: readableAgo,
             readableAgoFull: readableAgoFull,
-            functionalities: functionalities);
+            functionalities: functionalities,
+            sli: sli,
+            isSimActive: isSimActive);
 
   static List<dynamic> getSli(Map<String, dynamic> json) {
     return json["SLI"];
@@ -57,6 +59,7 @@ class Pulse extends Sensor {
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
         functionalities: Sensor.getFunctionalities(json, TYPE_OF_SENSOR.PULSE),
-        sli: getSli(json));
+        sli: getSli(json),
+        isSimActive: Sensor.getIsSimActive(json));
   }
 }
