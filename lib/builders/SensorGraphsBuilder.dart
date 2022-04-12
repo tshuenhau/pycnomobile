@@ -52,6 +52,8 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   List<Widget> graphsToDraw = <Widget>[];
+  List<Widget> sliGraphsToDraw = <Widget>[];
+
   int drawnCount = 0;
 
   Widget buildLoadingIndicator() {
@@ -86,14 +88,14 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
       controller.sliGraphs.last.forEach((key, value) {
         print(key.toString() + " " + value.toString() + "");
 
-        graphsToDraw.add(Container(
+        sliGraphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Text(
               key,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
         if (value.length < 1) {
-          graphsToDraw.add(Container(
+          sliGraphsToDraw.add(Container(
               height: MediaQuery.of(context).size.height * 10 / 100,
               child: Text(
                   " This SLI has sent data but no plottable data streams are available.",
@@ -101,18 +103,17 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
         }
         value.forEach((element) {
           drawnCount += 1;
-          graphsToDraw.add(SensorLineChart(timeSeries: element));
+          sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
-    }
-    if (sensor.isPulse()) {
-      graphsToDraw.add(Container(
+      sliGraphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
           child: Text(
             "Internal Pulse Sensors",
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     }
+
     controller.graphs.last.forEach((TimeSeries e) {
       drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
@@ -122,7 +123,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   }
 
   List<Widget> result = [
-    Column(children: <Widget>[] + graphsToDraw),
+    Column(children: <Widget>[] + sliGraphsToDraw + graphsToDraw),
     buildLoadingIndicator()
   ];
 
@@ -203,24 +204,3 @@ class LoadingIndicator extends StatelessWidget {
     );
   }
 }
-
-
-// Widget noGraphData(BuildContext context) {
-//   return SizedBox(
-//       height: MediaQuery.of(context).size.height * 15 / 100,
-//       child: Center(child: Text("No Data")));
-// }
-
-// Widget loadingIndicator(BuildContext context) {
-//   return Center(
-//     child: Padding(
-//       padding: EdgeInsets.only(
-//           top: MediaQuery.of(context).size.height * 7.5 / 100,
-//           bottom: MediaQuery.of(context).size.height * 10 / 100),
-//       child: SizedBox(
-//           height: MediaQuery.of(context).size.width * 5 / 100,
-//           width: MediaQuery.of(context).size.width * 5 / 100,
-//           child: CircularProgressIndicator()),
-//     ),
-//   );
-// }
