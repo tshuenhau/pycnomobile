@@ -84,10 +84,10 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
     if (sensor.isPulse()) {
       controller.sliGraphs.last.forEach((key, value) {
-        print("value" + value.length.toString() + "");
-        if (value.length < 1) {
-          return;
-        }
+        print(key.toString() + " " + value.toString() + "");
+        // if (value.length < 1) {
+        //   return;
+        // }
         graphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Text(
@@ -95,7 +95,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
         value.forEach((element) {
-          //drawnCount += 1;
+          drawnCount += 1;
           graphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
