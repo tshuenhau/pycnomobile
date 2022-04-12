@@ -181,6 +181,10 @@ abstract class Sensor {
     return functionalities;
   }
 
+  bool isPulse() {
+    return this.sli != null;
+  }
+
   String toString() {
     // return "UID: $uid, Name: $name, Img: $img, Address: $address, Epoch: $epoch, Site: $site, IsLive?: $isLive, IsLiveHealth: $isLiveHealth, IsLiveTS: $isLiveTS, UpdatedAt: $updatedAt, PolledAt: $polledAt, SoilType: $soilType, ReadableAgo: $readableAgo, ReadableAgoFull: $readableAgoFull";
     return "name: $name, polledAt: $polledAt";

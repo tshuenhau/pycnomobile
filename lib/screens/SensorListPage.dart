@@ -86,11 +86,6 @@ class _SensorListPageState extends State<SensorListPage> {
                                     1,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              // print(sensorsController.lastRefreshTime.value);
-                              // print(now);
-                              // print(timeago.format(
-                              //     sensorsController.lastRefreshTime.value));
-
                               if (index ==
                                   sensorsController
                                       .filteredListOfSensors.length) {
@@ -104,10 +99,8 @@ class _SensorListPageState extends State<SensorListPage> {
                                   child: Text("Last refreshed " +
 
                                           // now.toString()
-                                          timeago.format(now == null
-                                              ? DateTime.now()
-                                              : sensorsController
-                                                  .lastRefreshTime.value)
+                                          timeago.format(sensorsController
+                                              .lastRefreshTime.value)
 
                                       // DateFormat.jms().format(
                                       //     sensorsController

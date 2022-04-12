@@ -206,5 +206,6 @@ class ListOfSensorsController extends GetxController
         filteredListOfSensors.add(sensor);
       }
     }
+    sortSensors();
   }
 }
