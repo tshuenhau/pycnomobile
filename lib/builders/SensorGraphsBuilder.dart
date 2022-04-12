@@ -76,37 +76,32 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   if (isAlert == true) {
     controller.alertGraphs.last.forEach((e) {
       drawnCount += 1;
-      if (e.getTimeSeries != null) {
-        graphsToDraw.add(SensorLineChart(
-          timeSeries: e,
-        )); //I put ! behind the e just to avoid error, idk if will have any bugs
-      } else {
-        graphsToDraw.add(NoGraphData());
-      }
+      graphsToDraw.add(SensorLineChart(
+        timeSeries: e,
+      )); //I put ! behind the e just to avoid error, idk if will have any bugs
     });
   } else {
+    //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
+    if (sensor.isPulse()) {
+      controller.sliGraphs.last.forEach((key, value) {
+        print("value" + value.length.toString() + "");
+        graphsToDraw.add(Container(
+            height: MediaQuery.of(context).size.height * 5 / 100,
+            child: Text(
+              key,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )));
+        value.forEach((element) {
+          //drawnCount += 1;
+          graphsToDraw.add(SensorLineChart(timeSeries: element));
+        });
+      });
+    }
     controller.graphs.last.forEach((TimeSeries e) {
       drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
         timeSeries: e,
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
-    });
-  }
-
-  if (sensor.isPulse()) {
-    controller.sliGraphs.last.forEach((key, value) {
-      graphsToDraw.add(Container(
-          height: MediaQuery.of(context).size.height * 5 / 100,
-          child: Text(key)));
-      value.forEach((element) {
-        drawnCount += 1;
-
-        if (element.getTimeSeries != null) {
-          graphsToDraw.add(SensorLineChart(timeSeries: element));
-        } else {
-          graphsToDraw.add(NoGraphData());
-        }
-      });
     });
   }
 
