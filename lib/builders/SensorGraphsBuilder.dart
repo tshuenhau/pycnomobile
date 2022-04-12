@@ -106,14 +106,13 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
           sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
-      sliGraphsToDraw.add(Container(
-          height: MediaQuery.of(context).size.height * 5 / 100,
-          child: Text(
-            "Internal Pulse Sensors",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )));
     }
-
+    graphsToDraw.add(Container(
+        height: MediaQuery.of(context).size.height * 5 / 100,
+        child: Text(
+          "Internal Pulse Sensors",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )));
     controller.graphs.last.forEach((TimeSeries e) {
       drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
