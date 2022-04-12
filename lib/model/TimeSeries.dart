@@ -24,6 +24,6 @@ class TimeSeries {
 
   @override
   String toString() {
-    return "color: $_color, key: $_key, data: $_timeSeries";
+    return "color: $_color, key: $_key, data: ${_timeSeries == null}";
   }
 }
