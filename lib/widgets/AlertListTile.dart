@@ -84,9 +84,13 @@ class AlertCard extends StatelessWidget {
                   title: Padding(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).size.height * 1 / 100),
-                    child: Text(notification.descText ?? ""),
+                    child: Text(notification.descText ?? "",
+                        overflow: TextOverflow.ellipsis, maxLines: 2),
                   ),
-                  subtitle: Text(notification.uid),
+                  subtitle: Text(
+                    notification.uid,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   trailing: SizedBox(
                     width: MediaQuery.of(context).size.width * 20 / 100,
                     child: AutoSizeText(
