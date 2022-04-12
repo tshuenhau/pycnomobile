@@ -28,12 +28,9 @@ class SensorsListTile extends StatelessWidget {
               CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
         },
         child: ListTile(
-            title: SizedBox(
-              width: MediaQuery.of(context).size.width * 1 / 100,
-              child: Text(
-                sensor.name ?? "",
-                overflow: TextOverflow.ellipsis,
-              ),
+            title: Text(
+              sensor.name ?? "",
+              overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
               sensor.uid,
