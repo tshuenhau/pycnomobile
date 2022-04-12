@@ -94,7 +94,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
               key,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
-        if (value.length < 1) {
+        if (value!.length < 1) {
           sliGraphsToDraw.add(Container(
               height: MediaQuery.of(context).size.height * 10 / 100,
               child: Text(
