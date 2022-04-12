@@ -17,6 +17,12 @@ class TimeSeriesController extends GetxController {
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
 
+  RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
+
+  RxList<RxMap<String, RxList<TimeSeries>>> sliAlertGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
+
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
@@ -36,11 +42,56 @@ class TimeSeriesController extends GetxController {
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-
+    RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
     if (!isAlert) {
       graphs.add(instanceList);
     } else {
       alertGraphs.add(instanceList);
+    }
+
+    //check if pulse
+    if (sensor.isPulse()) {
+      if (!isAlert) {
+        sliGraphs.add(instanceSliMap);
+      } else {
+        sliAlertGraphs.add(instanceSliMap);
+      }
+
+      print("IS PULSE!!!");
+      for (dynamic sli in sensor.sli!) {
+        String sid = sli["SID"].toString();
+        RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+        for (String functionality in sli["plottable"]) {
+          final response = await http.get(Uri.parse(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&SID=${sli["SID"]}&$functionality'));
+          if (response.statusCode == 200) {
+            if (jsonDecode(response.body).length <= 0) {
+              continue;
+            }
+            var body = jsonDecode(response.body)[0];
+
+            String color = body['color'];
+            String key = body['key'];
+            if (body["values"] == null) {
+              instanceSliList.add(
+                  new TimeSeries(key: key, color: color, timeSeries: null));
+              continue;
+            }
+            Map<int, double> timeSeries = convertListToMap(body['values']);
+            instanceSliList.add(
+                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+          } else {
+            throw Exception("Failed to retrieve data"); //Ask UI to reload
+          }
+        }
+        instanceSliMap[sid] = instanceSliList;
+      }
+      if (sliGraphs.length > 1 && !isAlert) {
+        sliGraphs.removeRange(0, sliGraphs.length - 1);
+      } else if (sliAlertGraphs.length > 1) {
+        sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
+      }
+      print(sliGraphs);
     }
 
     for (Functionality? function in functions) {
@@ -53,8 +104,6 @@ class TimeSeriesController extends GetxController {
             if (subfunc != null) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-              // print(
-              //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
               if (response.statusCode == 200) {
                 if (jsonDecode(response.body).length <= 0) {
                   continue;

@@ -24,23 +24,25 @@ import 'package:pycnomobile/model/functionalities/Wndr.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 
 class FixSensor extends Sensor {
-  FixSensor({
-    required uid,
-    required name,
-    required img,
-    required address,
-    required epoch,
-    required site,
-    required isLive,
-    required isLiveTS,
-    required isLiveHealth,
-    required updatedAt,
-    required polledAt,
-    required soilType,
-    required readableAgo,
-    required readableAgoFull,
-    required functionalities,
-  }) : super(
+  FixSensor(
+      {required uid,
+      required name,
+      required img,
+      required address,
+      required epoch,
+      required site,
+      required isLive,
+      required isLiveTS,
+      required isLiveHealth,
+      required updatedAt,
+      required polledAt,
+      required soilType,
+      required readableAgo,
+      required readableAgoFull,
+      required functionalities,
+      required sli,
+      required isSimActive})
+      : super(
             uid: uid,
             name: name,
             address: address,
@@ -54,8 +56,10 @@ class FixSensor extends Sensor {
             polledAt: polledAt,
             soilType: soilType,
             readableAgo: readableAgo,
+            sli: sli,
             readableAgoFull: readableAgoFull,
-            functionalities: functionalities);
+            functionalities: functionalities,
+            isSimActive: isSimActive);
 
   static getFunctionalities(Map<String, dynamic> json) {
     List<Functionality> functionalities = List.empty(growable: true);
@@ -120,6 +124,7 @@ class FixSensor extends Sensor {
         img: json["img"],
         epoch: json["epoch"],
         site: json["site"],
+        sli: json["SLI"],
         isLive: json["isLive"] == "YES",
         isLiveHealth: json["isLiveHealth"],
         isLiveTS: DateTime.parse(json["isLiveTS"]),
@@ -128,6 +133,7 @@ class FixSensor extends Sensor {
         soilType: json["soilType"],
         readableAgo: json["readableAgo"],
         readableAgoFull: json["readableAgoFull"],
-        functionalities: getFunctionalities(json));
+        functionalities: getFunctionalities(json),
+        isSimActive: Sensor.getIsSimActive(json));
   }
 }
