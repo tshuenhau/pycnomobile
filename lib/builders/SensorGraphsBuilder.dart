@@ -85,6 +85,9 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     if (sensor.isPulse()) {
       controller.sliGraphs.last.forEach((key, value) {
         print("value" + value.length.toString() + "");
+        if (value.length < 1) {
+          return;
+        }
         graphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Text(
@@ -96,6 +99,14 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
           graphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
+    }
+    if (sensor.isPulse()) {
+      graphsToDraw.add(Container(
+          height: MediaQuery.of(context).size.height * 5 / 100,
+          child: Text(
+            "Internal Pulse Sensors",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )));
     }
     controller.graphs.last.forEach((TimeSeries e) {
       drawnCount += 1;
