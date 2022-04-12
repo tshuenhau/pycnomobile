@@ -85,15 +85,20 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     if (sensor.isPulse()) {
       controller.sliGraphs.last.forEach((key, value) {
         print(key.toString() + " " + value.toString() + "");
-        // if (value.length < 1) {
-        //   return;
-        // }
+
         graphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Text(
               key,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
+        if (value.length < 1) {
+          graphsToDraw.add(Container(
+              height: MediaQuery.of(context).size.height * 10 / 100,
+              child: Text(
+                  " This SLI has sent data but no plottable data streams are available.",
+                  textAlign: TextAlign.center)));
+        }
         value.forEach((element) {
           drawnCount += 1;
           graphsToDraw.add(SensorLineChart(timeSeries: element));
