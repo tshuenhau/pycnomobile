@@ -103,17 +103,6 @@ class ListOfSensorsController extends GetxController
     List<Sensor> activeList = List.empty(growable: true);
     List<Sensor> inactiveList = List.empty(growable: true);
     for (Sensor s in filteredListOfSensors) {
-      // print(s.epoch!);
-      // if (DateTimeRange(
-      //             start: DateTime.fromMillisecondsSinceEpoch(s.epoch!),
-      //             end: DateTime.now())
-      //         .duration
-      //         .inHours >
-      //     24) {
-      //   inactiveList.insert(0, s);
-      // } else {
-      //   activeList.insert(0, s);
-      // }
       if (DateTime.now()
           .add(const Duration(hours: -24))
           .isAfter(DateTime.fromMillisecondsSinceEpoch(s.epoch!))) {
