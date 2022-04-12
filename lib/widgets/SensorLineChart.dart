@@ -280,7 +280,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
           (_maxY.toString().length > _minY.toString().length ? _maxY : _minY)
               .toString()
               .length /
-          60,
+          50,
       margin: MediaQuery.of(context).size.width * 1.5 / 100,
       interval: max(1, _leftTitlesInterval),
     );
@@ -360,7 +360,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                 child: Padding(
                   padding: EdgeInsets.only(
                       right: MediaQuery.of(context).size.height * 3.5 / 100,
-                      left: MediaQuery.of(context).size.height * 1.5 / 100,
+                      left: MediaQuery.of(context).size.height * 0.5 / 100,
                       top: MediaQuery.of(context).size.height * 1.5 / 100,
                       bottom: MediaQuery.of(context).size.height * 1.5 / 100),
                   child: widget.timeSeries.getTimeSeries == null

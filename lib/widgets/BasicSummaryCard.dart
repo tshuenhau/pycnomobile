@@ -57,7 +57,7 @@ class BasicSummaryCard extends StatelessWidget {
                       ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 25 / 100,
+                width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
