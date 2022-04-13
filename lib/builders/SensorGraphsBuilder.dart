@@ -55,15 +55,18 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   List<Widget> sliGraphsToDraw = <Widget>[];
 
   int drawnCount = 0;
+  int count = controller.countNumberOfGraphs(functions);
+  if (sensor.isPulse()) {
+    List<int> sliCount = controller.countSliGraphs(sensor);
+    print("sli count " + sliCount.toString());
+  }
 
   Widget buildLoadingIndicator() {
-    if (drawnCount == controller.countNumberOfGraphs(functions)) {
+    if (drawnCount == count) {
       return Container();
     }
     List<Widget> loadingIndicators = [];
-    for (int i = drawnCount;
-        i < controller.countNumberOfGraphs(functions);
-        i++) {
+    for (int i = drawnCount; i < count; i++) {
       loadingIndicators.add(LoadingIndicator());
     }
     return Column(
@@ -72,7 +75,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     //return LoadingIndicator();
   }
 
-  if (controller.countNumberOfGraphs(functions) <= 0) {
+  if (count <= 0) {
     graphsToDraw.add(NoGraphData());
   }
   if (isAlert == true) {
@@ -94,7 +97,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
               key,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
-        if (value!.length < 1) {
+        if (value.length < 1) {
           sliGraphsToDraw.add(Container(
               height: MediaQuery.of(context).size.height * 10 / 100,
               child: Text(
