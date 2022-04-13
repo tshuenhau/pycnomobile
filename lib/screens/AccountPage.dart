@@ -179,16 +179,17 @@ class _AccountPageState extends State<AccountPage> {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            authController.logout();
-                                            ThemeService().deleteColorScheme();
-                                            ThemeService().deleteTheme();
-                                            Get.changeThemeMode(
-                                                ThemeMode.light);
                                             Get.delete<TimeSeriesController>();
                                             Get.delete<
                                                 NotificationsController>();
                                             Get.delete<
                                                 ListOfSensorsController>();
+                                            authController.logout();
+                                            ThemeService().deleteColorScheme();
+                                            ThemeService().deleteTheme();
+                                            Get.changeThemeMode(
+                                                ThemeMode.light);
+
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pushAndRemoveUntil(

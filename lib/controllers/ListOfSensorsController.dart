@@ -28,6 +28,7 @@ class ListOfSensorsController extends GetxController
 
   @override
   void onInit() async {
+    this.reload();
     super.onInit();
     try {
       EasyLoading.show(status: 'loading...');
@@ -36,17 +37,16 @@ class ListOfSensorsController extends GetxController
     } catch (err) {
       EasyLoading.showError('$err');
     }
-    this.reload();
   }
 
   @override
   void onClose() {
     super.onClose();
-    this.dispose();
   }
 
-  Future<void> reload() async {
+  void reload() {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
+      print("hello");
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value

@@ -18,9 +18,10 @@ class SensorListPage extends StatefulWidget {
 
 class _SensorListPageState extends State<SensorListPage> {
   late StreamSubscription<bool> keyboardSubscription;
-  late AuthController authController = Get.find();
-  late ListOfSensorsController sensorsController =
+  AuthController authController = Get.find();
+  ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
+
   late Timer everyMinute;
   late DateTime now;
 
@@ -34,6 +35,7 @@ class _SensorListPageState extends State<SensorListPage> {
       });
     });
     sensorsController.context = context;
+
     super.initState();
 
     var keyboardVisibilityController = KeyboardVisibilityController();
