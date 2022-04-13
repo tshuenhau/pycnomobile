@@ -17,11 +17,11 @@ class TimeSeriesController extends GetxController {
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
 
-  RxList<RxMap<String, RxList<TimeSeries>?>> sliGraphs =
-      RxList<RxMap<String, RxList<TimeSeries>?>>.empty();
+  RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
-  RxList<RxMap<String, RxList<TimeSeries>?>> sliAlertGraphs =
-      RxList<RxMap<String, RxList<TimeSeries>?>>.empty();
+  RxList<RxMap<String, RxList<TimeSeries>>> sliAlertGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
@@ -42,7 +42,7 @@ class TimeSeriesController extends GetxController {
   Future<void> getMultiTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-    RxMap<String, RxList<TimeSeries>?> instanceSliMap = RxMap();
+    RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
     if (!isAlert) {
       graphs.add(instanceList);
     } else {
@@ -57,12 +57,10 @@ class TimeSeriesController extends GetxController {
         sliAlertGraphs.add(instanceSliMap);
       }
 
+      print("IS PULSE!!!");
       for (dynamic sli in sensor.sli!) {
         String pid = sli["PID"].toString();
         RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-        if (sli["plottable"].isEmpty) {
-          instanceSliMap[pid] = null;
-        }
         for (String functionality in sli["plottable"]) {
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality'));
@@ -180,8 +178,11 @@ class TimeSeriesController extends GetxController {
     return count;
   }
 
-  // List<int> countSliGraphs(List<Functionality?> functions) {
-  //   List<int> sliCount = [];
-
-  // }
+  List<int> countSliGraphs(Sensor sensor) {
+    List<int> sliCount = [];
+    for (dynamic sli in sensor.sli!) {
+      sliCount.add(sli["plottable"].length);
+    }
+    return sliCount;
+  }
 }

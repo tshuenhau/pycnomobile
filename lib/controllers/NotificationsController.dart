@@ -34,26 +34,26 @@ class NotificationsController extends GetxController {
   void dismissNotification(NotificationData notif) async {
     // print(
     //     'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}');
-    // final response = await http.put(
-    //     Uri.parse(
-    //         'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}'),
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: json.encode({"state": 1}));
-    // print("RESPONSE " + response.statusCode.toString());
+    final response = await http.put(
+        Uri.parse(
+            'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}'),
+        headers: {
+          "content-type": "application/json",
+        },
+        body: json.encode({"state": 1}));
+    print("RESPONSE " + response.statusCode.toString());
 
-    // if (response.statusCode == 200) {
-    print("success");
-    notif.markAsRead();
-    unreadNotifications.removeWhere((x) => x.id == notif.id);
-    readNotifications.add(notif);
-    readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
-    // await getNotifications();
-    alertCounter.value = unreadNotifications.length;
-    // } else {
-    //   throw Exception("Could not mark as read. Try again!");
-    // }
+    if (response.statusCode == 200) {
+      print("success");
+      notif.markAsRead();
+      unreadNotifications.removeWhere((x) => x.id == notif.id);
+      readNotifications.add(notif);
+      readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
+      await getNotifications();
+      alertCounter.value = unreadNotifications.length;
+    } else {
+      throw Exception("Could not mark as read. Try again!");
+    }
   }
 
   Future<void> getNotifications() async {
