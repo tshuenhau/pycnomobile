@@ -178,10 +178,11 @@ class TimeSeriesController extends GetxController {
     return count;
   }
 
-  List<int> countSliGraphs(Sensor sensor) {
-    List<int> sliCount = [];
+  int countSliGraphs(Sensor sensor) {
+    //List<int> sliCount = [];
+    int sliCount = 0;
     for (dynamic sli in sensor.sli!) {
-      sliCount.add(sli["plottable"].length);
+      sliCount += (sli["plottable"] as List).length;
     }
     return sliCount;
   }

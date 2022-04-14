@@ -54,10 +54,13 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   List<Widget> graphsToDraw = <Widget>[];
   List<Widget> sliGraphsToDraw = <Widget>[];
 
+  int sliDrawnCount = 0;
+  int sliCount = 0;
+
   int drawnCount = 0;
   int count = controller.countNumberOfGraphs(functions);
   if (sensor.isPulse()) {
-    List<int> sliCount = controller.countSliGraphs(sensor);
+    int sliCount = controller.countSliGraphs(sensor);
     print("sli count " + sliCount.toString());
   }
 
@@ -88,6 +91,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   } else {
     //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
     if (sensor.isPulse()) {
+      sliCount = controller.countSliGraphs(sensor);
       controller.sliGraphs.last.forEach((key, value) {
         print(key.toString() + " " + value.toString() + "");
 
@@ -105,11 +109,12 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
                   textAlign: TextAlign.center)));
         }
         value.forEach((element) {
-          drawnCount += 1;
+          sliDrawnCount += 1;
           sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
     }
+
     graphsToDraw.add(Container(
         height: MediaQuery.of(context).size.height * 5 / 100,
         child: Text(
@@ -123,9 +128,24 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
     });
   }
+  Widget buildSliLoadingIndicator() {
+    if (drawnCount == count) {
+      return Container();
+    }
+    List<Widget> loadingIndicators = [];
+    for (int i = sliDrawnCount; i < sliCount; i++) {
+      loadingIndicators.add(LoadingIndicator());
+    }
+    return Column(
+      children: <Widget>[] + loadingIndicators,
+    );
+    //return LoadingIndicator();
+  }
 
   List<Widget> result = [
-    Column(children: <Widget>[] + sliGraphsToDraw + graphsToDraw),
+    Column(children: <Widget>[] + sliGraphsToDraw),
+    buildSliLoadingIndicator(),
+    Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator()
   ];
 
@@ -138,11 +158,13 @@ List<Widget> buildOldGraphs(
 
   List<Widget> graphsToDraw = <Widget>[];
   int drawnCount = 0;
+
   Widget buildLoadingIndicator() {
     if (drawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
     }
     List<Widget> loadingIndicators = [];
+
     for (int i = drawnCount;
         i < controller.countNumberOfGraphs(functions);
         i++) {
