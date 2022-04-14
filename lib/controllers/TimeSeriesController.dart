@@ -57,13 +57,13 @@ class TimeSeriesController extends GetxController {
         sliAlertGraphs.add(instanceSliMap);
       }
 
-      print("IS PULSE!!!");
       for (dynamic sli in sensor.sli!) {
         String pid = sli["PID"].toString();
         RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+        instanceSliMap[pid] = instanceSliList;
         for (String functionality in sli["plottable"]) {
           final response = await http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality'));
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -84,7 +84,6 @@ class TimeSeriesController extends GetxController {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
           }
         }
-        instanceSliMap[pid] = instanceSliList;
       }
       if (sliGraphs.length > 1 && !isAlert) {
         sliGraphs.removeRange(0, sliGraphs.length - 1);
@@ -92,8 +91,6 @@ class TimeSeriesController extends GetxController {
         sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
       }
     }
-
-    print(sliGraphs[0]);
 
     for (Functionality? function in functions) {
       if (function != null) {
@@ -183,6 +180,15 @@ class TimeSeriesController extends GetxController {
     int sliCount = 0;
     for (dynamic sli in sensor.sli!) {
       sliCount += (sli["plottable"] as List).length;
+    }
+    return sliCount;
+  }
+
+  List<int> countListSliGraphs(Sensor sensor) {
+    List<int> sliCount = [];
+
+    for (dynamic sli in sensor.sli!) {
+      sliCount.add((sli["plottable"] as List).length);
     }
     return sliCount;
   }

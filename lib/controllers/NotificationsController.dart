@@ -49,7 +49,7 @@ class NotificationsController extends GetxController {
       unreadNotifications.removeWhere((x) => x.id == notif.id);
       readNotifications.add(notif);
       readNotifications.sort((a, b) => b.epoch.compareTo(a.epoch));
-      await getNotifications();
+      // await getNotifications();
       alertCounter.value = unreadNotifications.length;
     } else {
       throw Exception("Could not mark as read. Try again!");
