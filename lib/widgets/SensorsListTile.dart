@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
 import 'package:get/get.dart';
@@ -21,9 +23,12 @@ class SensorsListTile extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           FocusScope.of(context).unfocus();
-
+          SensorInfoController controller = Get.put(SensorInfoController());
+          EasyLoading.show(status: "Loading...");
+          await controller.getTimeSeriesForSparklines(sensor);
+          EasyLoading.dismiss();
           Navigator.of(context).push(
               CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
         },
