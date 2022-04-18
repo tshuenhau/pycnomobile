@@ -24,6 +24,7 @@ class SparklinesPage extends StatelessWidget {
           return Container(
               child: ListView.builder(
             scrollDirection: Axis.horizontal,
+            itemCount: controller.sparkLines.length,
             itemBuilder: (BuildContext context, int index) {
               return Text('5');
             },
