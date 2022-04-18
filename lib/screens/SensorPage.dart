@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
+import 'package:pycnomobile/screens/SparklinesPage.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
@@ -86,7 +87,9 @@ class _SensorPageState extends State<SensorPage> {
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
             child:
                 TabBarView(physics: NeverScrollableScrollPhysics(), children: [
-              SensorSummaryPage(sensor: widget.sensor),
+              (widget.sensor.isPulse()
+                  ? SparklinesPage(sensor: widget.sensor)
+                  : SensorSummaryPage(sensor: widget.sensor)),
               AllGraphsPage(
                 key: widget.key,
                 sensor: widget.sensor,
