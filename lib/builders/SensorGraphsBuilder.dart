@@ -61,7 +61,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   int count = controller.countNumberOfGraphs(functions);
   if (sensor.isPulse()) {
     int sliCount = controller.countSliGraphs(sensor);
-    print("sli count " + sliCount.toString());
+    // print("sli count " + sliCount.toString());
   }
 
   Widget buildLoadingIndicator() {
@@ -93,7 +93,7 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     if (sensor.isPulse()) {
       sliCount = controller.countSliGraphs(sensor);
       controller.sliGraphs.last.forEach((key, value) {
-        print(key.toString() + " " + value.toString() + "");
+        // print(key.toString() + " " + value.toString() + "");
 
         sliGraphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,

@@ -21,6 +21,7 @@ class _SensorPageState extends State<SensorPage> {
   void initState() {
     super.initState();
     // initData();
+    print("SENSOR DEETS " + widget.sensor.toString());
     c.getTimeSeriesForSparklines(widget.sensor);
   }
 

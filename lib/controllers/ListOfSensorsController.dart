@@ -46,7 +46,6 @@ class ListOfSensorsController extends GetxController
 
   void reload() {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
-      print("hello");
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
