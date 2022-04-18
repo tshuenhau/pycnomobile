@@ -1,21 +1,24 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:http/http.dart' as http;
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
-import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-import 'package:pycnomobile/widgets/SensorLineChart.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class TimeSeriesController extends GetxController {
   TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
+
+  RxList<RxMap<String, RxList<TimeSeries>>> oldSliGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
+
+  RxList<RxMap<String, RxList<TimeSeries>>> oldSliAlertGraphs =
+      RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
   RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
       RxList<RxMap<String, RxList<TimeSeries>>>.empty();
@@ -43,6 +46,7 @@ class TimeSeriesController extends GetxController {
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
     RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
+    RxMap<String, RxList<TimeSeries>> instanceOldSliMap = RxMap();
     if (!isAlert) {
       graphs.add(instanceList);
     } else {
@@ -51,37 +55,77 @@ class TimeSeriesController extends GetxController {
 
     //check if pulse
     if (sensor.isPulse()) {
+      print("SENSOR " + (sensor as Pulse).toString());
+      dynamic slil = (sensor as Pulse).slil;
+      dynamic slir = (sensor).slir;
+      print("SLIL " + slil.toString());
+      print("SLIR " + slir.toString());
+
       if (!isAlert) {
         sliGraphs.add(instanceSliMap);
+        oldSliGraphs.add(instanceOldSliMap);
       } else {
         sliAlertGraphs.add(instanceSliMap);
+        oldSliAlertGraphs.add(instanceOldSliMap);
       }
 
       for (dynamic sli in sensor.sli!) {
         String pid = sli["PID"].toString();
-        RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-        instanceSliMap[pid] = instanceSliList;
-        for (String functionality in sli["plottable"]) {
-          final response = await http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-          if (response.statusCode == 200) {
-            if (jsonDecode(response.body).length <= 0) {
-              continue;
-            }
-            var body = jsonDecode(response.body)[0];
+        dynamic sid = sli["SID"];
+        print("SID " + sid.toString());
 
-            String color = body['color'];
-            String key = body['key'];
-            if (body["values"] == null) {
-              instanceSliList.add(
-                  new TimeSeries(key: key, color: color, timeSeries: null));
-              continue;
+        if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+          print("YAY");
+          RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+          instanceSliMap[pid] = instanceSliList;
+          for (String functionality in sli["plottable"]) {
+            final response = await http.get(Uri.parse(
+                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+            if (response.statusCode == 200) {
+              if (jsonDecode(response.body).length <= 0) {
+                continue;
+              }
+              var body = jsonDecode(response.body)[0];
+
+              String color = body['color'];
+              String key = body['key'];
+              if (body["values"] == null) {
+                instanceSliList.add(
+                    new TimeSeries(key: key, color: color, timeSeries: null));
+                continue;
+              }
+              Map<int, double> timeSeries = convertListToMap(body['values']);
+              instanceSliList.add(new TimeSeries(
+                  key: key, color: color, timeSeries: timeSeries));
+            } else {
+              throw Exception("Failed to retrieve data"); //Ask UI to reload
             }
-            Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceSliList.add(
-                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
-          } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
+          }
+        } else {
+          RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+          instanceOldSliMap[pid] = instanceSliList;
+          for (String functionality in sli["plottable"]) {
+            final response = await http.get(Uri.parse(
+                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+            if (response.statusCode == 200) {
+              if (jsonDecode(response.body).length <= 0) {
+                continue;
+              }
+              var body = jsonDecode(response.body)[0];
+
+              String color = body['color'];
+              String key = body['key'];
+              if (body["values"] == null) {
+                instanceSliList.add(
+                    new TimeSeries(key: key, color: color, timeSeries: null));
+                continue;
+              }
+              Map<int, double> timeSeries = convertListToMap(body['values']);
+              instanceSliList.add(new TimeSeries(
+                  key: key, color: color, timeSeries: timeSeries));
+            } else {
+              throw Exception("Failed to retrieve data"); //Ask UI to reload
+            }
           }
         }
       }
@@ -154,6 +198,8 @@ class TimeSeriesController extends GetxController {
     } else if (alertGraphs.length > 1) {
       alertGraphs.removeRange(0, alertGraphs.length - 1);
     }
+
+    print(oldSliGraphs);
   }
 
   int countNumberOfGraphs(List<Functionality?> functions) {
@@ -177,19 +223,16 @@ class TimeSeriesController extends GetxController {
 
   int countSliGraphs(Sensor sensor) {
     //List<int> sliCount = [];
+    dynamic slil = (sensor as Pulse).slil;
+    dynamic slir = (sensor).slir;
     int sliCount = 0;
     for (dynamic sli in sensor.sli!) {
-      sliCount += (sli["plottable"] as List).length;
+      dynamic sid = sli["SID"];
+      if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+        sliCount += (sli["plottable"] as List).length;
+      }
     }
-    return sliCount;
-  }
-
-  List<int> countListSliGraphs(Sensor sensor) {
-    List<int> sliCount = [];
-
-    for (dynamic sli in sensor.sli!) {
-      sliCount.add((sli["plottable"] as List).length);
-    }
+    print("SLI COUNT " + sliCount.toString());
     return sliCount;
   }
 }

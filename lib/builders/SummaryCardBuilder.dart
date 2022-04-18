@@ -20,11 +20,6 @@ Widget buildSummaryCards(
     }
   }
 
-  if (sensor.sli != null) {
-    print("PULSE");
-    print(sensor.sli);
-  }
-
   if (sensor.functionalities != null) {
     for (Functionality func in sensor.functionalities!) {
       if (func.value is List<Functionality?>) {

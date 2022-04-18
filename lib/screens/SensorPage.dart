@@ -4,6 +4,7 @@ import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SensorSummaryPage.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:get/get.dart';
 
 class SensorPage extends StatefulWidget {
@@ -15,10 +16,13 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
+  SensorInfoController c = Get.put(SensorInfoController());
   @override
   void initState() {
     super.initState();
     // initData();
+    print("SENSOR DEETS " + widget.sensor.toString());
+    c.getTimeSeriesForSparklines(widget.sensor);
   }
 
   @override

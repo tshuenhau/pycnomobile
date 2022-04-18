@@ -23,8 +23,6 @@ class AuthController extends GetxController {
   onInit() async {
     super.onInit();
     preferences = await Preferences.getInstance();
-    print(this.colorScheme);
-    print(ThemeService().colorScheme);
     // await getTheme();
     // await getIsDark();
 
