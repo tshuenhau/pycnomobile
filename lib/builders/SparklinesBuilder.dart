@@ -18,8 +18,7 @@ List<Widget> buildSparklines(
   print("Sparklines length: " + controller.sparkLines.length.toString());
 
   controller.sparkLines.forEach((e) {
-    print("1");
-    sparkLines.add(SparklineListTile());
+    sparkLines.add(SparklineListTile(data: e));
   });
   return sparkLines;
 }

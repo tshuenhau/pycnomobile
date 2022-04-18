@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 
 class SparklineListTile extends StatelessWidget {
-  const SparklineListTile({Key? key}) : super(key: key);
-
+  SparklineListTile({Key? key, required this.data}) : super(key: key);
+  List<double> data;
   @override
   Widget build(BuildContext context) {
     return Card(
