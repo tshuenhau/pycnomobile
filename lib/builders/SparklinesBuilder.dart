@@ -28,8 +28,6 @@ List<Widget> buildSparklines(
       print(e.getTimeSeries);
       if (e.getTimeSeries == null) {
         //fake data, to remove
-        sparkLines.add(SparklineListTile(
-            sli: key, name: e.getKey, data: [0, 1, 2, 1.5, 2, 0, -0.5]));
         return;
       }
       sparkLines.add(SparklineListTile(
