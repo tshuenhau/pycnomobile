@@ -22,10 +22,6 @@ class SummaryCard extends StatelessWidget {
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
-            // side: BorderSide(
-            //     color:
-            //         Theme.of(context).colorScheme.secondary.withOpacity(0.25),
-            //     width: 1)
           ),
           child: InkWell(
               onTap: () {

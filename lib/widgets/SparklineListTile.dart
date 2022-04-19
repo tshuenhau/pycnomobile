@@ -8,8 +8,10 @@ class SparklineListTile extends StatelessWidget {
   List<double> data;
   String sli;
   String name;
+
   @override
   Widget build(BuildContext context) {
+    double change = (data.last - data.first);
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -20,21 +22,73 @@ class SparklineListTile extends StatelessWidget {
             child: ListTile(
               horizontalTitleGap: MediaQuery.of(context).size.width * 7.5 / 100,
               leading: Container(
-                width: MediaQuery.of(context).size.width * 50 / 100,
+                width: MediaQuery.of(context).size.width * 35 / 100,
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  name + " " + sli,
-                  overflow: TextOverflow.ellipsis,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 2 / 100,
+                        child: FittedBox(
+                            child: Text(
+                          name,
+                          overflow: TextOverflow.ellipsis,
+                        ))),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5 / 100,
+                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 1.75 / 100,
+                        child: FittedBox(
+                            child: Text(
+                          sli,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.75)),
+                        ))),
+                  ],
                 ),
               ),
               title: SizedBox(
-                width: 5.0,
-                height: 20,
+                height: MediaQuery.of(context).size.height * 2 / 100,
                 child: Sparkline(
                   data: data,
                 ),
               ),
-              trailing: Text(data.last.toString()),
+              trailing: Container(
+                //height: MediaQuery.of(context).size.height * 2 / 100,
+                width: MediaQuery.of(context).size.width * 15 / 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 2 / 100,
+                        child: FittedBox(
+                            child: Text(data.last.toStringAsFixed(3)))),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5 / 100,
+                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 1.75 / 100,
+                        child: FittedBox(
+                            child: Text((change).toStringAsFixed(3),
+                                style: TextStyle(
+                                    color: change == 0
+                                        ? Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.75)
+                                        : change > 0
+                                            ? Colors.green.shade700
+                                            : Colors.red.shade700)))),
+                  ],
+                ),
+              ),
             )));
   }
 }
