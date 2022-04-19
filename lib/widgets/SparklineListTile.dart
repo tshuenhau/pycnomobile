@@ -56,6 +56,11 @@ class SparklineListTile extends StatelessWidget {
               title: SizedBox(
                 height: MediaQuery.of(context).size.height * 2 / 100,
                 child: Sparkline(
+                  lineColor: change == 0
+                      ? Colors.blue.shade700
+                      : change > 0
+                          ? Colors.green.shade700
+                          : Colors.red.shade700,
                   data: data,
                 ),
               ),
