@@ -13,8 +13,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
-  RxList<RxList<double>> sparkLines =
-      RxList<RxList<double>>.empty(growable: true);
+  RxMap<String, RxList<TimeSeries>> sparkLines =
+      RxMap<String, RxList<TimeSeries>>();
 
   @override
   void onInit() {
@@ -41,7 +41,6 @@ class SensorInfoController extends GetxController {
   }
 
   Future<void> getTimeSeriesForSparklines(Sensor sensor) async {
-    RxList<TimeSeries> instanceList = RxList.empty(growable: true);
     DateTime twelveHrsBef = DateTime.now().add(const Duration(hours: -12));
     DateTime now = DateTime.now();
     if (sensor.sli == null) {
@@ -49,6 +48,8 @@ class SensorInfoController extends GetxController {
     }
 
     for (dynamic sli in sensor.sli!) {
+      String pid = sli["PID"].toString();
+      RxList<TimeSeries> instanceList = RxList.empty(growable: true);
       for (String functionality in sli["plottable"]) {
         final response = await http.get(Uri.parse(
             'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
@@ -60,6 +61,8 @@ class SensorInfoController extends GetxController {
           print(body);
           String color = body['color'];
           String key = body['key'];
+          sparkLines[pid] = instanceList;
+
           if (body["values"] == null) {
             instanceList
                 .add(new TimeSeries(key: key, color: color, timeSeries: null));
@@ -71,11 +74,6 @@ class SensorInfoController extends GetxController {
         } else {
           throw Exception("Failed to retrieve data"); //Ask UI to reload
         }
-      }
-    }
-    for (TimeSeries ts in instanceList) {
-      if (ts.getTimeSeries != null) {
-        sparkLines.add(convertTimeSeriestoList(ts.getTimeSeries!).obs);
       }
     }
 

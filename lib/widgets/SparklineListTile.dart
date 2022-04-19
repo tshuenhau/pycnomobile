@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 
 class SparklineListTile extends StatelessWidget {
-  SparklineListTile({Key? key, required this.data}) : super(key: key);
+  SparklineListTile(
+      {Key? key, required this.sli, required this.name, required this.data})
+      : super(key: key);
   List<double> data;
+  String sli;
+  String name;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,7 +23,7 @@ class SparklineListTile extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 50 / 100,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Flow meter. SLI: 1211393439.",
+                  name + " " + sli,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -27,22 +31,10 @@ class SparklineListTile extends StatelessWidget {
                 width: 5.0,
                 height: 20,
                 child: Sparkline(
-                  data: [
-                    0.0,
-                    1.0,
-                    1.5,
-                    2.0,
-                    0.0,
-                    0.0,
-                    -0.5,
-                    -1.0,
-                    -0.5,
-                    0.0,
-                    0.0
-                  ],
+                  data: data,
                 ),
               ),
-              trailing: Text("55.5"),
+              trailing: Text(data.last.toString()),
             )));
   }
 }

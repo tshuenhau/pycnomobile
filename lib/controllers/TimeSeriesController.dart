@@ -55,11 +55,8 @@ class TimeSeriesController extends GetxController {
 
     //check if pulse
     if (sensor.isPulse()) {
-      print("SENSOR " + (sensor as Pulse).toString());
       dynamic slil = (sensor as Pulse).slil;
       dynamic slir = (sensor).slir;
-      print("SLIL " + slil.toString());
-      print("SLIR " + slir.toString());
 
       if (!isAlert) {
         sliGraphs.add(instanceSliMap);
@@ -75,7 +72,6 @@ class TimeSeriesController extends GetxController {
         print("SID " + sid.toString());
 
         if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
-          print("YAY");
           RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
           instanceSliMap[pid] = instanceSliList;
           for (String functionality in sli["plottable"]) {
