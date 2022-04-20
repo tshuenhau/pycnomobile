@@ -41,7 +41,7 @@ class SensorInfoController extends GetxController {
   }
 
   Future<void> getTimeSeriesForSparklines(Sensor sensor) async {
-    DateTime twelveHrsBef = DateTime.now().add(const Duration(hours: -24));
+    DateTime twelveHrsBef = DateTime.now().add(const Duration(days: -3));
     DateTime now = DateTime.now();
     if (sensor.sli == null) {
       return;
@@ -54,9 +54,9 @@ class SensorInfoController extends GetxController {
         // final response = await http.get(Uri.parse(
         //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
         final response = await http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=P6024864AC0A6725B&BAT&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toIso8601String()}')); //TEMP FUNCTIONALITY
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=P6024864AC0A6725B&RSSI&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toIso8601String()}')); //TEMP FUNCTIONALITY
         print(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=P6024864AC0A6725B&BAT&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toIso8601String()}');
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=P6024864AC0A6725B&RSSI&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toIso8601String()}');
         if (response.statusCode == 200) {
           if (jsonDecode(response.body).length <= 0) {
             continue;

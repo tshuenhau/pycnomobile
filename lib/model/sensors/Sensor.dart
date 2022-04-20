@@ -34,6 +34,8 @@ enum TYPE_OF_SENSOR {
   PULSE
 }
 
+enum IS_ACTIVE { ACTIVE, SEMI, INACTIVE }
+
 abstract class Sensor {
   // TYPE_OF_SENSOR type;
   List<dynamic>? sli;
@@ -97,21 +99,31 @@ abstract class Sensor {
   //   }
   // }
 
-  bool isActive() {
-    // print("start: " + DateTime.fromMillisecondsSinceEpoch(epoch!).toString());
-    // print(DateTime.now());
-    if (DateTime.now().isBefore(DateTime.fromMillisecondsSinceEpoch(epoch!))) {
-      return true;
+  // bool isActive() {
+  //   // print("start: " + DateTime.fromMillisecondsSinceEpoch(epoch!).toString());
+  //   // print(DateTime.now());
+  //   if (DateTime.now().isBefore(DateTime.fromMillisecondsSinceEpoch(epoch!))) {
+  //     return true;
+  //   }
+  //   if (DateTimeRange(
+  //               start: DateTime.fromMillisecondsSinceEpoch(epoch!),
+  //               end: DateTime.now())
+  //           .duration
+  //           .inHours <=
+  //       24) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  IS_ACTIVE isActive() {
+    if (polledAt!.hour < 8) {
+      return IS_ACTIVE.ACTIVE;
+    } else if (polledAt!.hour >= 8 && polledAt!.day <= 15) {
+      return IS_ACTIVE.SEMI;
+    } else {
+      return IS_ACTIVE.INACTIVE;
     }
-    if (DateTimeRange(
-                start: DateTime.fromMillisecondsSinceEpoch(epoch!),
-                end: DateTime.now())
-            .duration
-            .inHours <=
-        24) {
-      return true;
-    }
-    return false;
   }
 
   static bool getIsSimActive(json) {
