@@ -14,6 +14,7 @@ class ActiveIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    IS_ACTIVE isActive = sensor.isActive();
     return Stack(
       children: [
         Container(
@@ -29,9 +30,11 @@ class ActiveIndicator extends StatelessWidget {
           width: MediaQuery.of(context).size.height * outerSize / 100,
           alignment: Alignment.center,
           child: Icon(Icons.circle,
-              color: sensor.isActive()
+              color: isActive == IS_ACTIVE.ACTIVE
                   ? Colors.greenAccent.shade700
-                  : Colors.redAccent.shade700,
+                  : isActive == IS_ACTIVE.SEMI
+                      ? Colors.orangeAccent.shade700
+                      : Colors.redAccent.shade700,
               size: MediaQuery.of(context).size.height * innerSize / 100),
         ),
       ],
