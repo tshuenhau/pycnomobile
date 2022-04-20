@@ -23,6 +23,7 @@ class ListOfSensorsController extends GetxController
   Rx<String> searchController = ''.obs;
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
   Rx<DateTime> lastPausedTime = DateTime.now().obs;
+  RxList<Sensor> inactiveListOfSensors = List<Sensor>.empty(growable: true).obs;
 
   AuthController authController = Get.find();
 
@@ -115,6 +116,7 @@ class ListOfSensorsController extends GetxController
         : 0);
 
     inactiveList = inactiveList.reversed.toList();
+    inactiveListOfSensors.value = inactiveList;
 
     List<Sensor> tempList = [...activeList];
     Map<Sensor, List<Sensor>> sensorMap = {};
