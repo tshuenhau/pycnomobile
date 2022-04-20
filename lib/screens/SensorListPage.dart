@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class _SensorListPageState extends State<SensorListPage> {
 
   late Timer everyMinute;
   late DateTime now;
+
+  bool displayInactive = false;
 
   @override
   void initState() {
@@ -63,25 +66,26 @@ class _SensorListPageState extends State<SensorListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 3 / 100),
-            child: Center(
-              child: Column(
-                children: [
-                  Search(
-                    hintText: "Search...",
-                  ),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: _refreshData,
-                      child: Obx(
-                        () => Center(
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 3 / 100),
+          child: Center(
+            child: Column(
+              children: [
+                Search(
+                  hintText: "Search...",
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: _refreshData,
+                    child: Obx(
+                      () => Center(
+                        child: Scrollbar(
                           child: ListView.builder(
                             itemCount:
                                 sensorsController.filteredListOfSensors.length +
@@ -99,19 +103,16 @@ class _SensorListPageState extends State<SensorListPage> {
                                               2.5 /
                                               100),
                                   child: Text("Last refreshed " +
-
-                                          // now.toString()
-                                          timeago.format(sensorsController
-                                              .lastRefreshTime.value)
-
-                                      // DateFormat.jms().format(
-                                      //     sensorsController
-                                      //         .lastRefreshTime.value)
-                                      ),
+                                      timeago.format(sensorsController
+                                          .lastRefreshTime.value)),
                                 ));
                               }
                               Sensor sensor = sensorsController
                                   .filteredListOfSensors[index];
+                              if (sensor.isActive() == IS_ACTIVE.INACTIVE &&
+                                  displayInactive == false) {
+                                return Container();
+                              }
                               return SensorsListTile(sensor: sensor);
                             },
                           ),
@@ -119,10 +120,25 @@ class _SensorListPageState extends State<SensorListPage> {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          EasyLoading.showInfo("100 Inactive Sensors hidden",
+              dismissOnTap: true);
+          setState(() {
+            displayInactive = !displayInactive;
+          });
+        },
+        tooltip: "Display Inactive",
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        child: Icon(
+            displayInactive == false ? Icons.visibility_off : Icons.visibility),
+      ),
+    );
   }
 }
