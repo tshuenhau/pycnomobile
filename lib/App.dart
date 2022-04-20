@@ -33,6 +33,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
     // getTheme(authController.user.value?.colorScheme, true)
+
     controller.getNotifications();
     if (authController.isLoggedIn.value == AuthState.loggedIn) {
       isLoggedIn = true;
@@ -139,6 +140,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    EasyLoading.instance
+      ..loadingStyle = Theme.of(context).brightness == Brightness.dark
+          ? EasyLoadingStyle.dark
+          : EasyLoadingStyle.light
+      ..maskType = EasyLoadingMaskType.custom
+      ..maskColor = Theme.of(context).colorScheme.background.withOpacity(0.65);
+
     return SafeArea(
       child: Center(
         child: PersistentTabView(
