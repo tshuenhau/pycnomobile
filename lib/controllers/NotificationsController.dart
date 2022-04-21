@@ -16,7 +16,7 @@ class NotificationsController extends GetxController {
 
   void onInit() async {
     super.onInit();
-    await this.reload();
+    // await this.reload();
   }
 
   @override
