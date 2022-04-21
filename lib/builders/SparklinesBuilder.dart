@@ -16,8 +16,6 @@ List<Widget> buildSparklines(
   SensorInfoController controller = Get.put(SensorInfoController());
   List<Widget> sparkLines = [];
 
-  // print("Sparklines length: " + controller.sparkLines.length.toString());
-
   /*
     Sparklines format: Map<String, List<TimeSeries>> 
                               |            |
@@ -25,9 +23,7 @@ List<Widget> buildSparklines(
   */
   controller.sparkLines.forEach((key, value) {
     value.forEach((TimeSeries e) {
-      print(e.getTimeSeries);
       if (e.getTimeSeries == null) {
-        //fake data, to remove
         return;
       }
       sparkLines.add(SparklineListTile(
@@ -36,6 +32,17 @@ List<Widget> buildSparklines(
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
     });
   });
-  print("SPARKLINES: " + sparkLines.toString());
+
+  controller.nonSliSparklines.forEach((key, value) {
+    value.forEach((TimeSeries e) {
+      if (e.getTimeSeries == null) {
+        return;
+      }
+      sparkLines.add(SparklineListTile(
+          sli: controller.nonSliSparklines.keys.elementAt(0),
+          name: e.getKey,
+          data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
+    });
+  });
   return sparkLines;
 }
