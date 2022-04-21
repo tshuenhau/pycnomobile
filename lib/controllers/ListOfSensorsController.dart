@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
@@ -29,7 +28,7 @@ class ListOfSensorsController extends GetxController
 
   @override
   void onInit() async {
-    this.reload();
+    // this.reload();
     super.onInit();
     try {
       EasyLoading.show(status: 'loading...');
@@ -100,25 +99,27 @@ class ListOfSensorsController extends GetxController
   }
 
   void sortSensors() {
-    List<Sensor> activeList = List.empty(growable: true);
+    // List<Sensor> activeList = List.empty(growable: true);
+    List<Sensor> allSensorList = List.empty(growable: true);
     List<Sensor> inactiveList = List.empty(growable: true);
     for (Sensor s in filteredListOfSensors) {
       if (s.isActive() == IS_ACTIVE.ACTIVE) {
-        activeList.insert(0, s);
+        allSensorList.insert(0, s);
       } else {
         inactiveList.insert(0, s);
+        allSensorList.insert(0, s);
       }
     }
 
     //sorting inactive list by date
-    inactiveList.sort((a, b) => a.polledAt != null && b.polledAt != null
-        ? a.polledAt!.compareTo(b.polledAt!)
-        : 0);
+    // inactiveList.sort((a, b) => a.polledAt != null && b.polledAt != null
+    //     ? a.polledAt!.compareTo(b.polledAt!)
+    //     : 0);
 
     inactiveList = inactiveList.reversed.toList();
     inactiveListOfSensors.value = inactiveList;
 
-    List<Sensor> tempList = [...activeList];
+    List<Sensor> tempList = [...allSensorList];
     Map<Sensor, List<Sensor>> sensorMap = {};
 
     // create empty list for each non-node sensor
@@ -165,7 +166,7 @@ class ListOfSensorsController extends GetxController
       list.addAll(sensorMap[currentSensor] ?? []);
     }
 
-    list.addAll(inactiveList);
+    // list.addAll(inactiveList);
     filteredListOfSensors.value = [...list];
   }
 

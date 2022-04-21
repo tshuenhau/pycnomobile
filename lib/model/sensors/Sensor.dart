@@ -117,9 +117,19 @@ abstract class Sensor {
   // }
 
   IS_ACTIVE isActive() {
-    if (polledAt!.hour < 8) {
+    if (DateTime.now()
+        .toUtc()
+        .subtract(new Duration(hours: 8))
+        .isBefore(polledAt!.toUtc())) {
       return IS_ACTIVE.ACTIVE;
-    } else if (polledAt!.hour >= 8 && polledAt!.day <= 15) {
+    } else if (DateTime.now()
+            .toUtc()
+            .subtract(new Duration(hours: 8))
+            .isAfter(polledAt!.toUtc()) &&
+        DateTime.now()
+            .toUtc()
+            .subtract(new Duration(days: 15))
+            .isBefore(polledAt!.toUtc())) {
       return IS_ACTIVE.SEMI;
     } else {
       return IS_ACTIVE.INACTIVE;
