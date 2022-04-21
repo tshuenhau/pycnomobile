@@ -43,11 +43,11 @@ class SensorInfoController extends GetxController {
   }
 
   Future<void> getTimeSeriesForSparklines(Sensor sensor) async {
-    DateTime twelveHrsBef = DateTime.now().add(const Duration(days: -3));
+    sparkLines.value = {};
+    nonSliSparklines.value = {};
+    DateTime twelveHrsBef = DateTime.now().add(const Duration(hours: -24));
+
     DateTime now = DateTime.now();
-    if (sensor.sli == null) {
-      return;
-    }
     if (sensor.isPulse()) {
       for (dynamic sli in sensor.sli!) {
         String pid = sli["PID"].toString();
@@ -60,7 +60,7 @@ class SensorInfoController extends GetxController {
               continue;
             }
             var body = jsonDecode(response.body)[0];
-            print(body);
+
             String color = body['color'];
             String key = body['key'];
             sparkLines[pid] = instanceList;
@@ -74,12 +74,11 @@ class SensorInfoController extends GetxController {
             instanceList.add(
                 new TimeSeries(key: key, color: color, timeSeries: timeSeries));
           } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
+            throw Exception("Failed to retrieve data. Try again!");
           }
         }
       }
     }
-
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
     for (Functionality functionality in sensor.functionalities!) {
       final response = await http.get(Uri.parse(
@@ -102,7 +101,7 @@ class SensorInfoController extends GetxController {
         instanceList.add(
             new TimeSeries(key: key, color: color, timeSeries: timeSeries));
       } else {
-        throw Exception("Failed to retrieve data"); //Ask UI to reload
+        throw Exception("Failed to retrieve data. Try again!");
       }
     }
   }
