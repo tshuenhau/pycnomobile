@@ -22,7 +22,6 @@ class _SensorPageState extends State<SensorPage> {
   void initState() {
     super.initState();
     // initData();
-    c.getTimeSeriesForSparklines(widget.sensor);
   }
 
   @override
@@ -86,9 +85,7 @@ class _SensorPageState extends State<SensorPage> {
                 top: MediaQuery.of(context).size.height * 0.5 / 100),
             child:
                 TabBarView(physics: NeverScrollableScrollPhysics(), children: [
-              (widget.sensor.isPulse()
-                  ? SparklinesPage(sensor: widget.sensor)
-                  : SensorSummaryPage(sensor: widget.sensor)),
+              SparklinesPage(sensor: widget.sensor),
               AllGraphsPage(
                 key: widget.key,
                 sensor: widget.sensor,

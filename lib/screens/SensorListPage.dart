@@ -129,14 +129,14 @@ class _SensorListPageState extends State<SensorListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await EasyLoading.showInfo(
-              (displayInactive == false ? "Showing" : "Hiding") +
+              (!displayInactive ? "Showing" : "Hiding") +
                   " ${sensorsController.inactiveListOfSensors.length} Inactive Sensors",
               dismissOnTap: true);
           setState(() {
             displayInactive = !displayInactive;
           });
         },
-        tooltip: "Display Inactive",
+        tooltip: displayInactive ? "Hide Inactive" : "Display Inactive",
         backgroundColor: Theme.of(context).colorScheme.tertiary,
         child: Icon(
             displayInactive == false ? Icons.visibility_off : Icons.visibility),
