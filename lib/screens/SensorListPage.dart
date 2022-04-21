@@ -129,9 +129,8 @@ class _SensorListPageState extends State<SensorListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await EasyLoading.showInfo(
-              displayInactive
-                  ? "Hiding ${sensorsController.inactiveListOfSensors.length} Inactive Sensors..."
-                  : "Showing ${sensorsController.inactiveListOfSensors.length} Inactive Sensors...",
+              (!displayInactive ? "Showing" : "Hiding") +
+                  " ${sensorsController.inactiveListOfSensors.length} Inactive Sensors",
               dismissOnTap: true);
           setState(() {
             displayInactive = !displayInactive;
