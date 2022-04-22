@@ -73,22 +73,32 @@ Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
   EasyLoading.dismiss();
 }
 
-List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
-    BuildContext context, bool isAlert) {
+List<Widget> buildGraphs(
+    {required Sensor sensor,
+    required List<Functionality?> functions,
+    required BuildContext context,
+    required TYPE_OF_TIMESERIES type,
+    required bool isAlert}) {
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   List<Widget> graphsToDraw = <Widget>[];
-  List<Widget> sliGraphsToDraw = <Widget>[];
+  //List<Widget> sliGraphsToDraw = <Widget>[];
 
-  int sliDrawnCount = 0;
-  int sliCount = 0;
+  // int sliDrawnCount = 0;
+  // int sliCount = 0;
 
   int drawnCount = 0;
-  int count = controller.countNumberOfGraphs(functions);
-  if (sensor.isPulse()) {
-    int sliCount = controller.countSliGraphs(sensor);
-    // print("sli count " + sliCount.toString());
-  }
+  int count = (type == TYPE_OF_TIMESERIES.OLD_SLI
+      ? controller.countOldGraphs(sensor)
+      : type == TYPE_OF_TIMESERIES.SLI
+          ? controller.countSliGraphs(sensor)
+          : type == TYPE_OF_TIMESERIES.INTERNAL
+              ? controller.countNumberOfGraphs(functions)
+              : 1);
+  // if (sensor.isPulse()) {
+  //   int sliCount = controller.countSliGraphs(sensor);
+  //   // print("sli count " + sliCount.toString());
+  // }
 
   Widget buildLoadingIndicator() {
     if (drawnCount == count) {
@@ -116,61 +126,55 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
     });
   } else {
     //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
-    if (sensor.isPulse()) {
-      sliCount = controller.countSliGraphs(sensor);
-      controller.sliGraphs.last.forEach((key, value) {
+    if (sensor.isPulse() &&
+        (type == TYPE_OF_TIMESERIES.SLI ||
+            type == TYPE_OF_TIMESERIES.OLD_SLI)) {
+      // sliCount = controller.countSliGraphs(sensor);
+      RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
+          type == TYPE_OF_TIMESERIES.SLI
+              ? controller.sliGraphs
+              : controller.oldSliGraphs;
+      sliGraphs.last.forEach((key, value) {
         // print(key.toString() + " " + value.toString() + "");
 
-        sliGraphsToDraw.add(Container(
+        graphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Text(
               key,
               style: TextStyle(fontWeight: FontWeight.bold),
             )));
         if (value.length < 1) {
-          sliGraphsToDraw.add(Container(
+          graphsToDraw.add(Container(
               height: MediaQuery.of(context).size.height * 10 / 100,
               child: Text(
                   " This SLI has sent data but no plottable data streams are available.",
                   textAlign: TextAlign.center)));
         }
         value.forEach((element) {
-          sliDrawnCount += 1;
-          sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
+          drawnCount += 1;
+          graphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
-      graphsToDraw.add(Container(
-          height: MediaQuery.of(context).size.height * 5 / 100,
-          child: Text(
-            "Internal Pulse Sensors",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )));
     }
-
-    controller.graphs.last.forEach((TimeSeries e) {
-      drawnCount += 1;
-      graphsToDraw.add(SensorLineChart(
-        timeSeries: e,
-      )); //I put ! behind the e just to avoid error, idk if will have any bugs
-    });
-  }
-  Widget buildSliLoadingIndicator() {
-    if (drawnCount == count) {
-      return Container();
+    if (type == TYPE_OF_TIMESERIES.INTERNAL || type == TYPE_OF_TIMESERIES.ALL) {
+      if (sensor.isPulse() == true) {
+        graphsToDraw.add(Container(
+            height: MediaQuery.of(context).size.height * 5 / 100,
+            child: Text(
+              "Internal Pulse Sensors",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )));
+      }
+      controller.graphs.last.forEach((TimeSeries e) {
+        drawnCount += 1;
+        graphsToDraw.add(SensorLineChart(
+          timeSeries: e,
+        )); //I put ! behind the e just to avoid error, idk if will have any bugs
+      });
     }
-    List<Widget> loadingIndicators = [];
-    for (int i = sliDrawnCount; i < sliCount; i++) {
-      loadingIndicators.add(LoadingIndicator());
-    }
-    return Column(
-      children: <Widget>[] + loadingIndicators,
-    );
-    //return LoadingIndicator();
   }
 
   List<Widget> result = [
-    Column(children: <Widget>[] + sliGraphsToDraw),
-    buildSliLoadingIndicator(),
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator()
   ];
@@ -178,62 +182,62 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   return result;
 }
 
-List<Widget> buildOldSliGraphs(
-    Sensor sensor, List<Functionality?> functions, BuildContext context) {
-  TimeSeriesController controller = Get.put(TimeSeriesController());
+// List<Widget> buildOldSliGraphs(
+//     Sensor sensor, List<Functionality?> functions, BuildContext context) {
+//   TimeSeriesController controller = Get.put(TimeSeriesController());
 
-  List<Widget> sliGraphsToDraw = <Widget>[];
-  int sliDrawnCount = 0;
+//   List<Widget> sliGraphsToDraw = <Widget>[];
+//   int sliDrawnCount = 0;
 
-  Widget buildLoadingIndicator() {
-    if (sliDrawnCount == controller.countOldGraphs(sensor)) {
-      return Container();
-    }
+//   Widget buildLoadingIndicator() {
+//     if (sliDrawnCount == controller.countOldGraphs(sensor)) {
+//       return Container();
+//     }
 
-    List<Widget> loadingIndicators = [];
+//     List<Widget> loadingIndicators = [];
 
-    for (int i = sliDrawnCount; i < controller.countOldGraphs(sensor); i++) {
-      loadingIndicators.add(LoadingIndicator());
-    }
-    return Column(
-      children: <Widget>[] + loadingIndicators,
-    );
-    //return LoadingIndicator();
-  }
+//     for (int i = sliDrawnCount; i < controller.countOldGraphs(sensor); i++) {
+//       loadingIndicators.add(LoadingIndicator());
+//     }
+//     return Column(
+//       children: <Widget>[] + loadingIndicators,
+//     );
+//     //return LoadingIndicator();
+//   }
 
-  if (controller.countNumberOfGraphs(functions) <= 0) {
-    sliGraphsToDraw.add(NoGraphData());
-  }
+//   if (controller.countNumberOfGraphs(functions) <= 0) {
+//     sliGraphsToDraw.add(NoGraphData());
+//   }
 
-  controller.oldSliGraphs.last.forEach((key, value) {
-    // print(key.toString() + " " + value.toString() + "");
+//   controller.oldSliGraphs.last.forEach((key, value) {
+//     // print(key.toString() + " " + value.toString() + "");
 
-    sliGraphsToDraw.add(Container(
-        height: MediaQuery.of(context).size.height * 5 / 100,
-        child: Text(
-          key,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )));
-    if (value.length < 1) {
-      sliGraphsToDraw.add(Container(
-          height: MediaQuery.of(context).size.height * 10 / 100,
-          child: Text(
-              " This SLI has sent data but no plottable data streams are available.",
-              textAlign: TextAlign.center)));
-    }
-    value.forEach((element) {
-      sliDrawnCount += 1;
-      sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
-    });
-  });
+//     sliGraphsToDraw.add(Container(
+//         height: MediaQuery.of(context).size.height * 5 / 100,
+//         child: Text(
+//           key,
+//           style: TextStyle(fontWeight: FontWeight.bold),
+//         )));
+//     if (value.length < 1) {
+//       sliGraphsToDraw.add(Container(
+//           height: MediaQuery.of(context).size.height * 10 / 100,
+//           child: Text(
+//               " This SLI has sent data but no plottable data streams are available.",
+//               textAlign: TextAlign.center)));
+//     }
+//     value.forEach((element) {
+//       sliDrawnCount += 1;
+//       sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
+//     });
+//   });
 
-  List<Widget> result = [
-    Column(children: <Widget>[] + sliGraphsToDraw),
-    buildLoadingIndicator()
-  ];
+//   List<Widget> result = [
+//     Column(children: <Widget>[] + sliGraphsToDraw),
+//     buildLoadingIndicator()
+//   ];
 
-  return result;
-}
+//   return result;
+// }
 
 class NoGraphData extends StatelessWidget {
   const NoGraphData({

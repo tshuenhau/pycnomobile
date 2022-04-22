@@ -1,3 +1,5 @@
+enum TYPE_OF_TIMESERIES { ALL, INTERNAL, SLI, OLD_SLI }
+
 class TimeSeries {
   Map<int, double>? _timeSeries;
   String _color;
