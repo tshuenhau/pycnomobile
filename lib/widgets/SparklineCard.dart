@@ -17,7 +17,9 @@ class SparklineCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Padding(
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
                 vertical: MediaQuery.of(context).size.height * 2 / 100),
@@ -40,7 +42,15 @@ class SparklineCard extends StatelessWidget {
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 2 / 100),
-                    Text(change.toStringAsFixed(3)),
+                    Text((change > 0 ? "+" : "") + change.toStringAsFixed(3),
+                        style: TextStyle(
+                            color: change == 0
+                                ? Colors.blue.shade700
+                                : change > 0
+                                    ? Colors.green.shade700
+                                    : Colors.red.shade700,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 3 / 100)),
                   ],
                 ),
                 Container(
@@ -50,14 +60,22 @@ class SparklineCard extends StatelessWidget {
                     children: [
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 2 / 100,
-                          child: Text(
-                            name,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                      Text(sli),
+                          child: Text(name,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      3 /
+                                      100))),
+                      Text(sli,
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width *
+                                  2.5 /
+                                  100)),
                     ],
                   ),
                 ),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 1.5 / 100),
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.width * 4 / 100,
@@ -65,12 +83,20 @@ class SparklineCard extends StatelessWidget {
                     lineColor: change == 0
                         ? Colors.blue.shade700
                         : change > 0
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
+                            ? Colors.green.shade700.withOpacity(0.75)
+                            : Colors.red.shade700.withOpacity(0.75),
+                    fillMode: FillMode.below,
+                    fillColor: change == 0
+                        ? Colors.blue.shade700
+                        : change > 0
+                            ? Colors.green.shade700.withOpacity(0.1)
+                            : Colors.red.shade700.withOpacity(0.1),
                     data: data,
                   ),
                 )
               ],
-            )));
+            ),
+          ),
+        ));
   }
 }
