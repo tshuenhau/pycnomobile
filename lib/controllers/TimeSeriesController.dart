@@ -26,6 +26,7 @@ class TimeSeriesController extends GetxController {
   RxList<RxMap<String, RxList<TimeSeries>>> sliAlertGraphs =
       RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
+  bool showOldGraphs = false;
   static Map<int, double> convertListToMap(List list) {
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
