@@ -34,7 +34,7 @@ class SensorsListTile extends StatelessWidget {
                 CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
             EasyLoading.dismiss();
           } catch (e) {
-            EasyLoading.showError(e.toString());
+            EasyLoading.showError('$e');
           }
         },
         child: ListTile(

@@ -80,28 +80,65 @@ class SensorInfoController extends GetxController {
       }
     }
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-    for (Functionality functionality in sensor.functionalities!) {
-      final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-      if (response.statusCode == 200) {
-        if (jsonDecode(response.body).length <= 0) {
-          continue;
-        }
-        var body = jsonDecode(response.body)[0];
-        String color = body['color'];
-        String key = body['key'];
-        nonSliSparklines[sensor.name ?? " "] = instanceList;
+    for (Functionality? functionality in sensor.functionalities!) {
+      if (functionality != null) {
+        if (functionality.value is List) {
+          List func = functionality.value;
 
-        if (body["values"] == null) {
-          instanceList
-              .add(new TimeSeries(key: key, color: color, timeSeries: null));
-          continue;
+          for (Functionality? subfunc in func) {
+            if (subfunc != null) {
+              final response = await http.get(Uri.parse(
+                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+              if (response.statusCode == 200) {
+                if (jsonDecode(response.body).length <= 0) {
+                  continue;
+                }
+                var body = jsonDecode(response.body)[0];
+
+                String color = body['color'];
+                String key = body['key'];
+                if (body["values"] == null) {
+                  instanceList.add(
+                      new TimeSeries(key: key, color: color, timeSeries: null));
+                  continue;
+                }
+                Map<int, double> timeSeries = convertListToMap(body['values']);
+                instanceList.add(new TimeSeries(
+                    key: key, color: color, timeSeries: timeSeries));
+              } else {
+                throw Exception("Failed to retrieve data"); //Ask UI to reload
+              }
+            }
+          }
+        } else {
+          final response = await http.get(Uri.parse(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+          print(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}');
+          print('status code ' +
+              response.statusCode.toString() +
+              " $functionality");
+          if (response.statusCode == 200) {
+            if (jsonDecode(response.body).length <= 0) {
+              continue;
+            }
+            var body = jsonDecode(response.body)[0];
+            String color = body['color'];
+            String key = body['key'];
+            nonSliSparklines[sensor.name ?? " "] = instanceList;
+
+            if (body["values"] == null) {
+              instanceList.add(
+                  new TimeSeries(key: key, color: color, timeSeries: null));
+              continue;
+            }
+            Map<int, double> timeSeries = convertListToMap(body['values']);
+            instanceList.add(
+                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+          } else {
+            throw Exception("Failed to retrieve data. Try again!");
+          }
         }
-        Map<int, double> timeSeries = convertListToMap(body['values']);
-        instanceList.add(
-            new TimeSeries(key: key, color: color, timeSeries: timeSeries));
-      } else {
-        throw Exception("Failed to retrieve data. Try again!");
       }
     }
   }
