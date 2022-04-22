@@ -22,79 +22,90 @@ class SparklineCard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
-                vertical: MediaQuery.of(context).size.height * 2 / 100),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      data.last.toStringAsFixed(3),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              MediaQuery.of(context).size.width * 4 / 100),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * 2 / 100),
-                    Text((change > 0 ? "+" : "") + change.toStringAsFixed(3),
-                        style: TextStyle(
-                            color: change == 0
-                                ? Colors.blue.shade700
-                                : change > 0
-                                    ? Colors.green.shade700
-                                    : Colors.red.shade700,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 3 / 100)),
-                  ],
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                vertical: MediaQuery.of(context).size.width * 4 / 100),
+            child: Container(
+              height: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        data.last.toStringAsFixed(3),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 4 / 100),
+                      ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 2 / 100,
-                          child: Text(name,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      3 /
-                                      100))),
-                      Text(sli,
+                          width: MediaQuery.of(context).size.width * 2 / 100),
+                      Text((change > 0 ? "+" : "") + change.toStringAsFixed(3),
                           style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width *
-                                  2.5 /
-                                  100)),
+                              color: change == 0
+                                  ? Colors.blue.shade700
+                                  : change > 0
+                                      ? Colors.green.shade700
+                                      : Colors.red.shade700,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 3 / 100)),
                     ],
                   ),
-                ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 1.5 / 100),
-                SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.width * 4 / 100,
-                  child: Sparkline(
-                    lineColor: change == 0
-                        ? Colors.blue.shade700
-                        : change > 0
-                            ? Colors.green.shade700.withOpacity(0.75)
-                            : Colors.red.shade700.withOpacity(0.75),
-                    fillMode: FillMode.below,
-                    fillColor: change == 0
-                        ? Colors.blue.shade700
-                        : change > 0
-                            ? Colors.green.shade700.withOpacity(0.1)
-                            : Colors.red.shade700.withOpacity(0.1),
-                    data: data,
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 2 / 100,
+                            child: Text(name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.75),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            3 /
+                                            100))),
+                        Text(sli,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.65),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    2.5 /
+                                    100)),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 1.5 / 100),
+                  Expanded(
+                    // width: double.infinity,
+                    // height: MediaQuery.of(context).size.width * 2.5 / 100,
+                    child: Sparkline(
+                      lineColor: change == 0
+                          ? Colors.blue.shade700
+                          : change > 0
+                              ? Colors.green.shade700.withOpacity(0.75)
+                              : Colors.red.shade700.withOpacity(0.75),
+                      fillMode: FillMode.below,
+                      fillColor: change == 0
+                          ? Colors.blue.shade700
+                          : change > 0
+                              ? Colors.green.shade700.withOpacity(0.1)
+                              : Colors.red.shade700.withOpacity(0.1),
+                      data: data,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ));
