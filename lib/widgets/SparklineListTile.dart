@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
+import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 
 class SparklineListTile extends StatelessWidget {
   SparklineListTile(
@@ -18,7 +19,16 @@ class SparklineListTile extends StatelessWidget {
         ),
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         child: InkWell(
-            onTap: () {},
+            onTap: () {
+              // showModalBottomSheet(
+              //     backgroundColor: Colors.transparent,
+              //     isScrollControlled: true,
+              //     context: context,
+              //     builder: (context) {
+              //       return GraphBottomSheet(
+              //           sensor: sensor, functions: functions);
+              //     });
+            },
             child: ListTile(
               horizontalTitleGap: MediaQuery.of(context).size.width * 7.5 / 100,
               leading: Container(

@@ -17,10 +17,11 @@ List<Widget> buildSparklines(
   List<Widget> sparkLines = [];
 
   /*
-    Sparklines format: Map<String, List<TimeSeries>> 
+    Sparklines format: Map<String, List<TimeSeries>>
                               |            |
                              SLI's PID  TimeSeries for each functionality in SLI
   */
+  print(sensor.functionalities?.first.key);
   controller.sparkLines.forEach((key, value) {
     value.forEach((TimeSeries e) {
       if (e.getTimeSeries == null) {
