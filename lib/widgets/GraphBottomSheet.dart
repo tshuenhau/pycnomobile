@@ -116,13 +116,13 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     ? buildGraphs(
                         sensor: widget.sensor,
                         functions: widget.functions,
-                        type: TYPE_OF_TIMESERIES.ALL,
+                        type: TYPE_OF_TIMESERIES.SINGLE,
                         context: context,
                         isAlert: false)
                     : buildGraphs(
                         sensor: widget.sensor,
                         functions: widget.functions,
-                        type: TYPE_OF_TIMESERIES.ALL,
+                        type: TYPE_OF_TIMESERIES.SINGLE,
                         context: context,
                         isAlert: true)),
           ),

@@ -95,10 +95,6 @@ List<Widget> buildGraphs(
           : type == TYPE_OF_TIMESERIES.INTERNAL
               ? controller.countNumberOfGraphs(functions)
               : 1);
-  // if (sensor.isPulse()) {
-  //   int sliCount = controller.countSliGraphs(sensor);
-  //   // print("sli count " + sliCount.toString());
-  // }
 
   Widget buildLoadingIndicator() {
     if (drawnCount == count) {
@@ -128,7 +124,8 @@ List<Widget> buildGraphs(
     //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
     if (sensor.isPulse() &&
         (type == TYPE_OF_TIMESERIES.SLI ||
-            type == TYPE_OF_TIMESERIES.OLD_SLI)) {
+            type == TYPE_OF_TIMESERIES.OLD_SLI ||
+            type == TYPE_OF_TIMESERIES.SINGLE)) {
       // sliCount = controller.countSliGraphs(sensor);
       RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
           type == TYPE_OF_TIMESERIES.SLI
@@ -156,7 +153,8 @@ List<Widget> buildGraphs(
         });
       });
     }
-    if (type == TYPE_OF_TIMESERIES.INTERNAL || type == TYPE_OF_TIMESERIES.ALL) {
+    if (type == TYPE_OF_TIMESERIES.INTERNAL ||
+        type == TYPE_OF_TIMESERIES.SINGLE) {
       if (sensor.isPulse() == true) {
         graphsToDraw.add(Container(
             height: MediaQuery.of(context).size.height * 5 / 100,

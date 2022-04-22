@@ -12,7 +12,7 @@ class SparklineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double change = (data.last - data.first);
+    double change = (data.last - data.first) / data.first * 100;
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -44,15 +44,23 @@ class SparklineCard extends StatelessWidget {
                       ),
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 2 / 100),
-                      Text((change > 0 ? "+" : "") + change.toStringAsFixed(3),
-                          style: TextStyle(
-                              color: change == 0
-                                  ? Colors.blue.shade700
-                                  : change > 0
-                                      ? Colors.green.shade700
-                                      : Colors.red.shade700,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 3 / 100)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 12 / 100,
+                        child: Text(
+                            (change > 0 ? "+" : "") +
+                                change.toStringAsFixed(1) +
+                                "%",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: change == 0
+                                    ? Colors.blue.shade700
+                                    : change > 0
+                                        ? Colors.green.shade700
+                                        : Colors.red.shade700,
+                                fontSize: MediaQuery.of(context).size.width *
+                                    3 /
+                                    100)),
+                      ),
                     ],
                   ),
                   Container(
