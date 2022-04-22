@@ -180,7 +180,7 @@ List<Widget> buildOldSliGraphs(
     sliGraphsToDraw.add(NoGraphData());
   }
 
-  controller.sliGraphs.last.forEach((key, value) {
+  controller.oldSliGraphs.last.forEach((key, value) {
     // print(key.toString() + " " + value.toString() + "");
 
     sliGraphsToDraw.add(Container(
