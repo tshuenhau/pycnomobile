@@ -102,29 +102,35 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                             widget.sensor.functionalities!, context, false)
                         : buildGraphs(widget.sensor,
                             widget.sensor.functionalities!, context, true)) +
-                    [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 3 / 100,
-                        ),
-                        child: Center(
-                            child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              showOldGraphs = !showOldGraphs;
-                            });
-                          },
-                          child: Text(showOldGraphs == false
-                              ? "Show Old Graphs"
-                              : "Hide Old Graphs"),
-                        )),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 2.5 / 100,
-                      ),
-                    ] +
+                    (widget.sensor.isPulse()
+                        ? [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    3 /
+                                    100,
+                              ),
+                              child: Center(
+                                  child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showOldGraphs = !showOldGraphs;
+                                  });
+                                },
+                                child: Text(showOldGraphs == false
+                                    ? "Show Old Graphs"
+                                    : "Hide Old Graphs"),
+                              )),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height *
+                                  2.5 /
+                                  100,
+                            ),
+                          ]
+                        : []) +
                     (showOldGraphs == true
-                        ? buildOldGraphs(widget.sensor,
+                        ? buildOldSliGraphs(widget.sensor,
                             widget.sensor.functionalities!, context)
                         : [])),
           ),

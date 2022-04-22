@@ -113,14 +113,14 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
           sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
         });
       });
+      graphsToDraw.add(Container(
+          height: MediaQuery.of(context).size.height * 5 / 100,
+          child: Text(
+            "Internal Pulse Sensors",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )));
     }
 
-    graphsToDraw.add(Container(
-        height: MediaQuery.of(context).size.height * 5 / 100,
-        child: Text(
-          "Internal Pulse Sensors",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )));
     controller.graphs.last.forEach((TimeSeries e) {
       drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
@@ -152,20 +152,20 @@ List<Widget> buildGraphs(Sensor sensor, List<Functionality?> functions,
   return result;
 }
 
-List<Widget> buildOldGraphs(
+List<Widget> buildOldSliGraphs(
     Sensor sensor, List<Functionality?> functions, BuildContext context) {
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
-  List<Widget> graphsToDraw = <Widget>[];
-  int drawnCount = 0;
+  List<Widget> sliGraphsToDraw = <Widget>[];
+  int sliDrawnCount = 0;
 
   Widget buildLoadingIndicator() {
-    if (drawnCount == controller.countNumberOfGraphs(functions)) {
+    if (sliDrawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
     }
     List<Widget> loadingIndicators = [];
 
-    for (int i = drawnCount;
+    for (int i = sliDrawnCount;
         i < controller.countNumberOfGraphs(functions);
         i++) {
       loadingIndicators.add(LoadingIndicator());
@@ -177,18 +177,33 @@ List<Widget> buildOldGraphs(
   }
 
   if (controller.countNumberOfGraphs(functions) <= 0) {
-    graphsToDraw.add(NoGraphData());
+    sliGraphsToDraw.add(NoGraphData());
   }
 
-  controller.graphs.last.forEach((TimeSeries e) {
-    drawnCount += 1;
-    graphsToDraw.add(SensorLineChart(
-      timeSeries: e,
-    )); //I put ! behind the e just to avoid error, idk if will have any bugs
+  controller.sliGraphs.last.forEach((key, value) {
+    // print(key.toString() + " " + value.toString() + "");
+
+    sliGraphsToDraw.add(Container(
+        height: MediaQuery.of(context).size.height * 5 / 100,
+        child: Text(
+          key,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )));
+    if (value.length < 1) {
+      sliGraphsToDraw.add(Container(
+          height: MediaQuery.of(context).size.height * 10 / 100,
+          child: Text(
+              " This SLI has sent data but no plottable data streams are available.",
+              textAlign: TextAlign.center)));
+    }
+    value.forEach((element) {
+      sliDrawnCount += 1;
+      sliGraphsToDraw.add(SensorLineChart(timeSeries: element));
+    });
   });
 
   List<Widget> result = [
-    Column(children: <Widget>[] + graphsToDraw),
+    Column(children: <Widget>[] + sliGraphsToDraw),
     buildLoadingIndicator()
   ];
 
