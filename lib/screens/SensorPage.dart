@@ -80,18 +80,13 @@ class _SensorPageState extends State<SensorPage> {
           // actions: [IconButton(onPressed: () => {}, icon: Icon(Icons.today))],
         ),
         body: Center(
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.5 / 100),
-            child:
-                TabBarView(physics: NeverScrollableScrollPhysics(), children: [
-              SparklinesPage(sensor: widget.sensor),
-              AllGraphsPage(
-                key: widget.key,
-                sensor: widget.sensor,
-              )
-            ]),
-          ),
+          child: TabBarView(physics: NeverScrollableScrollPhysics(), children: [
+            SparklinesPage(sensor: widget.sensor),
+            AllGraphsPage(
+              key: widget.key,
+              sensor: widget.sensor,
+            )
+          ]),
         ),
       ),
     );
