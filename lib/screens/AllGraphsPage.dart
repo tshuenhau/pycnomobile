@@ -20,6 +20,7 @@ class AllGraphsPage extends StatefulWidget {
 class _AllGraphsPageState extends State<AllGraphsPage> {
   AuthController auth = Get.find();
   late bool isAlert;
+  TimeSeriesController controller = Get.put(TimeSeriesController());
 
   bool showOldGraphs = false;
 
@@ -112,7 +113,9 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                               ),
                               child: Center(
                                   child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  await initOldGraphs(isAlert, widget.sensor,
+                                      widget.sensor.functionalities!);
                                   setState(() {
                                     showOldGraphs = !showOldGraphs;
                                   });

@@ -113,11 +113,7 @@ class SensorInfoController extends GetxController {
         } else {
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-          print(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${twelveHrsBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}');
-          print('status code ' +
-              response.statusCode.toString() +
-              " $functionality");
+
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;

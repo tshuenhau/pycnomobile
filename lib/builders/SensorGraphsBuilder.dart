@@ -35,6 +35,32 @@ Future<void> initGraphs(
   }
 }
 
+Future<void> initOldGraphs(
+    bool isAlert, Sensor sensor, List<Functionality?> functions,
+    [DateTimeRange? dateRange]) async {
+  if (dateRange == null) {
+    dateRange = new DateTimeRange(
+        start: DateTime.now().add(Duration(hours: -24 * 7)),
+        end: DateTime.now());
+  } else if (dateRange.duration.inDays <= 0) {
+    DateTime now = DateTime.now();
+    dateRange = DateTimeRange(
+        start: DateTime(now.year, now.month, now.day, 0, 0),
+        end: DateTime(now.year, now.month, now.day, 23, 59));
+  } else {
+    dateRange = DateTimeRange(
+        start: dateRange.start,
+        end: DateTime(dateRange.end.year, dateRange.end.month,
+            dateRange.end.day, 23, 59));
+  }
+
+  if (sensor.functionalities != null) {
+    TimeSeriesController controller = Get.put(TimeSeriesController());
+    controller.getOldSliTimeSeries(
+        dateRange.start, dateRange.end, functions, sensor, isAlert);
+  }
+}
+
 Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
     Sensor sensor, List<Functionality?> functions) async {
   TimeSeriesController controller = Get.put(TimeSeriesController());
@@ -163,6 +189,7 @@ List<Widget> buildOldSliGraphs(
     if (sliDrawnCount == controller.countNumberOfGraphs(functions)) {
       return Container();
     }
+
     List<Widget> loadingIndicators = [];
 
     for (int i = sliDrawnCount;
@@ -180,7 +207,7 @@ List<Widget> buildOldSliGraphs(
     sliGraphsToDraw.add(NoGraphData());
   }
 
-  controller.sliGraphs.last.forEach((key, value) {
+  controller.oldSliGraphs.last.forEach((key, value) {
     // print(key.toString() + " " + value.toString() + "");
 
     sliGraphsToDraw.add(Container(
@@ -204,7 +231,7 @@ List<Widget> buildOldSliGraphs(
 
   List<Widget> result = [
     Column(children: <Widget>[] + sliGraphsToDraw),
-    buildLoadingIndicator()
+    // buildLoadingIndicator()
   ];
 
   return result;
