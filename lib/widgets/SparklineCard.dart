@@ -59,7 +59,7 @@ class SparklineCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 23 / 100,
+                  width: double.infinity,
                   height: MediaQuery.of(context).size.width * 4 / 100,
                   child: Sparkline(
                     lineColor: change == 0
