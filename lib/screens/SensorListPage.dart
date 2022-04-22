@@ -30,7 +30,6 @@ class _SensorListPageState extends State<SensorListPage> {
 
   @override
   void initState() {
-    print("authController TOKEN " + authController.token);
     now = DateTime.now();
     everyMinute = Timer.periodic(Duration(seconds: 60), (Timer t) {
       setState(() {
