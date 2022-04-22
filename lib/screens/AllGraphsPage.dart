@@ -104,7 +104,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                             functions: widget.sensor.functionalities!,
                             type: TYPE_OF_TIMESERIES.SLI,
                             context: context,
-                            isAlert: false) +
+                            isAlert: isAlert) +
                         [
                           Container(),
                           Padding(
@@ -138,21 +138,14 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                         functions: widget.sensor.functionalities!,
                         type: TYPE_OF_TIMESERIES.OLD_SLI,
                         context: context,
-                        isAlert: false)
+                        isAlert: isAlert)
                     : []) +
-                ((!isAlert
-                    ? buildGraphs(
-                        sensor: widget.sensor,
-                        functions: widget.sensor.functionalities!,
-                        type: TYPE_OF_TIMESERIES.INTERNAL,
-                        context: context,
-                        isAlert: false)
-                    : buildGraphs(
-                        sensor: widget.sensor,
-                        functions: widget.sensor.functionalities!,
-                        type: TYPE_OF_TIMESERIES.INTERNAL,
-                        context: context,
-                        isAlert: true))),
+                (buildGraphs(
+                    sensor: widget.sensor,
+                    functions: widget.sensor.functionalities!,
+                    type: TYPE_OF_TIMESERIES.INTERNAL,
+                    context: context,
+                    isAlert: isAlert)),
           ),
         ),
       ),
