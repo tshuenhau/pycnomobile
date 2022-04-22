@@ -141,12 +141,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     EasyLoading.instance
-      ..loadingStyle = Theme.of(context).brightness == Brightness.dark
-          ? EasyLoadingStyle.dark
-          : EasyLoadingStyle.light
+      ..loadingStyle = EasyLoadingStyle.custom
       ..maskType = EasyLoadingMaskType.custom
-      ..maskColor = Theme.of(context).colorScheme.background.withOpacity(0.65)
-      ..backgroundColor =
+      ..backgroundColor = Theme.of(context).colorScheme.background
+      ..textColor = Theme.of(context).colorScheme.tertiary
+      ..indicatorColor =
           Theme.of(context).colorScheme.tertiary.withOpacity(0.65)
       ..displayDuration = const Duration(milliseconds: 1000);
 
