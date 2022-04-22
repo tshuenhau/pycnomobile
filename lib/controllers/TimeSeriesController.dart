@@ -171,12 +171,18 @@ class TimeSeriesController extends GetxController {
   Future<void> getOldSliTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxMap<String, RxList<TimeSeries>> instanceOldSliMap = RxMap();
+    dynamic slil = (sensor as Pulse).slil;
+    dynamic slir = (sensor).slir;
     if (!isAlert) {
       oldSliGraphs.add(instanceOldSliMap);
     } else {
       oldSliAlertGraphs.add(instanceOldSliMap);
     }
     for (dynamic sli in sensor.sli!) {
+      dynamic sid = sli["SID"];
+      if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+        continue;
+      }
       RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
       String pid = sli["PID"].toString();
       instanceOldSliMap[pid] = instanceSliList;
@@ -237,6 +243,21 @@ class TimeSeriesController extends GetxController {
       }
     }
     print("SLI COUNT " + sliCount.toString());
+    return sliCount;
+  }
+
+  int countOldGraphs(Sensor sensor) {
+    dynamic slil = (sensor as Pulse).slil;
+    dynamic slir = (sensor).slir;
+    int sliCount = 0;
+    for (dynamic sli in sensor.sli!) {
+      dynamic sid = sli["SID"];
+      if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+      } else {
+        sliCount += (sli["plottable"] as List).length;
+      }
+    }
+    print("COUNT " + sliCount.toString());
     return sliCount;
   }
 }

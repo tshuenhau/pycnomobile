@@ -186,15 +186,13 @@ List<Widget> buildOldSliGraphs(
   int sliDrawnCount = 0;
 
   Widget buildLoadingIndicator() {
-    if (sliDrawnCount == controller.countNumberOfGraphs(functions)) {
+    if (sliDrawnCount == controller.countOldGraphs(sensor)) {
       return Container();
     }
 
     List<Widget> loadingIndicators = [];
 
-    for (int i = sliDrawnCount;
-        i < controller.countNumberOfGraphs(functions);
-        i++) {
+    for (int i = sliDrawnCount; i < controller.countOldGraphs(sensor); i++) {
       loadingIndicators.add(LoadingIndicator());
     }
     return Column(
@@ -231,7 +229,7 @@ List<Widget> buildOldSliGraphs(
 
   List<Widget> result = [
     Column(children: <Widget>[] + sliGraphsToDraw),
-    // buildLoadingIndicator()
+    buildLoadingIndicator()
   ];
 
   return result;
