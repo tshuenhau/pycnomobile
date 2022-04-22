@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/widgets/SparklineCard.dart';
 import 'package:pycnomobile/widgets/SparklineListTile.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 
@@ -27,7 +28,7 @@ List<Widget> buildSparklines(
       if (e.getTimeSeries == null) {
         return;
       }
-      sparkLines.add(SparklineListTile(
+      sparkLines.add(SparklineCard(
           sli: key,
           name: e.getKey,
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
@@ -39,7 +40,7 @@ List<Widget> buildSparklines(
       if (e.getTimeSeries == null) {
         return;
       }
-      sparkLines.add(SparklineListTile(
+      sparkLines.add(SparklineCard(
           sli: controller.nonSliSparklines.keys.elementAt(0),
           name: e.getKey,
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));

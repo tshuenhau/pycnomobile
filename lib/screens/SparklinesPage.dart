@@ -9,7 +9,13 @@ class SparklinesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return GridView.count(
+      primary: false,
+      childAspectRatio: (9 / 6),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 3.5 / 100),
+      crossAxisSpacing: MediaQuery.of(context).size.width * 1 / 100,
+      mainAxisSpacing: MediaQuery.of(context).size.width * 1 / 100,
+      crossAxisCount: 2,
       children: buildSparklines(sensor: sensor, context: context),
     );
   }
