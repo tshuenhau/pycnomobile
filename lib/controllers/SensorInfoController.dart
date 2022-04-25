@@ -66,13 +66,19 @@ class SensorInfoController extends GetxController {
             sparkLines[pid] = instanceList;
 
             if (body["values"] == null) {
-              instanceList.add(
-                  new TimeSeries(key: key, color: color, timeSeries: null));
+              instanceList.add(new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: null,
+                  key: functionality));
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(
-                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+            instanceList.add(new TimeSeries(
+                name: key,
+                color: color,
+                timeSeries: timeSeries,
+                key: functionality));
           } else {
             throw Exception("Failed to retrieve data. Try again!");
           }
@@ -98,13 +104,19 @@ class SensorInfoController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
-                  instanceList.add(
-                      new TimeSeries(key: key, color: color, timeSeries: null));
+                  instanceList.add(new TimeSeries(
+                      name: key,
+                      color: color,
+                      timeSeries: null,
+                      key: subfunc.key));
                   continue;
                 }
                 Map<int, double> timeSeries = convertListToMap(body['values']);
                 instanceList.add(new TimeSeries(
-                    key: key, color: color, timeSeries: timeSeries));
+                    name: key,
+                    color: color,
+                    timeSeries: timeSeries,
+                    key: subfunc.key));
               } else {
                 throw Exception("Failed to retrieve data"); //Ask UI to reload
               }
@@ -124,13 +136,19 @@ class SensorInfoController extends GetxController {
             nonSliSparklines[sensor.name ?? " "] = instanceList;
 
             if (body["values"] == null) {
-              instanceList.add(
-                  new TimeSeries(key: key, color: color, timeSeries: null));
+              instanceList.add(new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: null,
+                  key: functionality.key));
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(
-                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+            instanceList.add(new TimeSeries(
+                name: key,
+                color: color,
+                timeSeries: timeSeries,
+                key: functionality.key));
           } else {
             throw Exception("Failed to retrieve data. Try again!");
           }

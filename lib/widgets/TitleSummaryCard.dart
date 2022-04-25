@@ -51,7 +51,7 @@ class TitleSummaryCard extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.25 / 100),
                       child: AutoSizeText(
-                        function.unit,
+                        function.unit!,
                         maxLines: 1,
                         minFontSize: 1,
                         textAlign: TextAlign.right,

@@ -24,8 +24,6 @@ class GraphBottomSheet extends StatefulWidget {
 }
 
 class _GraphBottomSheetState extends State<GraphBottomSheet> {
-  //late DateTimeRange? dateRange;
-  // List<TimeSeries> graphs = [];
   late bool isAlert;
   AuthController auth = Get.find();
   @override
@@ -67,11 +65,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                 if (_newDateRange != null) {
                   await getGraphsForTimeRange(
                       isAlert, _newDateRange, widget.sensor, widget.functions);
-                  // setState(() {
-                  //   graphs = result!;
-                  // });
-
-                  //buildSensorGraphs(context, sensor, functions, _newDateRange);
                 }
               },
               child: Icon(Icons.today,

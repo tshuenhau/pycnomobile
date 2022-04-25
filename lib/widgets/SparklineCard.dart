@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
+import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
+import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 class SparklineCard extends StatelessWidget {
   SparklineCard(
-      {Key? key, required this.sli, required this.name, required this.data})
+      {Key? key,
+      required this.sli,
+      required this.name,
+      required this.function,
+      required this.data,
+      required this.sensor})
       : super(key: key);
   List<double> data;
   String sli;
   String name;
+  Sensor sensor;
+  Functionality function;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +28,17 @@ class SparklineCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            print(function);
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return GraphBottomSheet(
+                      sensor: sensor, functions: [function]);
+                });
+          },
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,

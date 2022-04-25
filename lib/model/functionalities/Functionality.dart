@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class Functionality<T> {
   String name;
-  String unit;
+  String? unit;
   Color? color;
   IconData? icon;
-  T value;
+  T? value;
   String key;
 
   Functionality({
