@@ -30,7 +30,7 @@ class MultiSummaryCard extends StatelessWidget {
                 child: Column(
               children: [
                 Text(
-                  function.name + " (" + function.unit + ")",
+                  function.name + " (" + function.unit! + ")",
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 3 / 100),
                 ),

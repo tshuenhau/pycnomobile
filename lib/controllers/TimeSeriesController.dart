@@ -84,13 +84,19 @@ class TimeSeriesController extends GetxController {
               String color = body['color'];
               String key = body['key'];
               if (body["values"] == null) {
-                instanceSliList.add(
-                    new TimeSeries(key: key, color: color, timeSeries: null));
+                instanceSliList.add(new TimeSeries(
+                    name: key,
+                    color: color,
+                    timeSeries: null,
+                    key: functionality));
                 continue;
               }
               Map<int, double> timeSeries = convertListToMap(body['values']);
               instanceSliList.add(new TimeSeries(
-                  key: key, color: color, timeSeries: timeSeries));
+                  name: key,
+                  color: color,
+                  timeSeries: timeSeries,
+                  key: functionality));
             } else {
               throw Exception("Failed to retrieve data"); //Ask UI to reload
             }
@@ -123,13 +129,16 @@ class TimeSeriesController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (body["values"] == null) {
-                  instanceList.add(
-                      new TimeSeries(key: key, color: color, timeSeries: null));
+                  instanceList.add(new TimeSeries(
+                      name: key, color: color, timeSeries: null));
                   continue;
                 }
                 Map<int, double> timeSeries = convertListToMap(body['values']);
                 instanceList.add(new TimeSeries(
-                    key: key, color: color, timeSeries: timeSeries));
+                    name: key,
+                    color: color,
+                    timeSeries: timeSeries,
+                    key: subfunc.key));
               } else {
                 throw Exception("Failed to retrieve data"); //Ask UI to reload
               }
@@ -138,6 +147,8 @@ class TimeSeriesController extends GetxController {
         } else {
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          print(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
 
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
@@ -149,12 +160,15 @@ class TimeSeriesController extends GetxController {
             String key = body['key'];
             if (body["values"] == null) {
               instanceList.add(
-                  new TimeSeries(key: key, color: color, timeSeries: null));
+                  new TimeSeries(name: key, color: color, timeSeries: null));
               continue;
             }
             Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(
-                new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+            instanceList.add(new TimeSeries(
+                name: key,
+                color: color,
+                timeSeries: timeSeries,
+                key: function.key));
           } else {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
           }
@@ -198,13 +212,21 @@ class TimeSeriesController extends GetxController {
           String color = body['color'];
           String key = body['key'];
           if (body["values"] == null) {
-            instanceSliList
-                .add(new TimeSeries(key: key, color: color, timeSeries: null));
+            instanceSliList.add(
+              new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: null,
+                  key: functionality),
+            );
             continue;
           }
           Map<int, double> timeSeries = convertListToMap(body['values']);
-          instanceSliList.add(
-              new TimeSeries(key: key, color: color, timeSeries: timeSeries));
+          instanceSliList.add(new TimeSeries(
+              name: key,
+              color: color,
+              timeSeries: timeSeries,
+              key: functionality));
         } else {
           throw Exception("Failed to retrieve data");
         }

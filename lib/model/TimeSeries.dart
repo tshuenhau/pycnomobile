@@ -3,17 +3,24 @@ enum TYPE_OF_TIMESERIES { SINGLE, INTERNAL, SLI, OLD_SLI }
 class TimeSeries {
   Map<int, double>? _timeSeries;
   String _color;
-  String _key;
+  String _name;
+  String? _key;
   TimeSeries(
-      {required String key,
+      {required String name,
       required String color,
+      String? key,
       required Map<int, double>? timeSeries})
-      : _key = key,
+      : _name = name,
         _color = color,
+        _key = key,
         _timeSeries = timeSeries;
 
+  String get getName {
+    return _name;
+  }
+
   String get getKey {
-    return _key;
+    return _key!;
   }
 
   String get getColor {
@@ -26,6 +33,6 @@ class TimeSeries {
 
   @override
   String toString() {
-    return "color: $_color, key: $_key, data: ${_timeSeries == null}";
+    return "color: $_color, key: $_name, data: ${_timeSeries == null}";
   }
 }
