@@ -120,12 +120,14 @@ List<Widget> buildGraphs(
           type == TYPE_OF_TIMESERIES.OLD_SLI ||
           type == TYPE_OF_TIMESERIES.SINGLE)) {
     // sliCount = controller.countSliGraphs(sensor);
-    RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs = type ==
-            TYPE_OF_TIMESERIES.SLI
-        ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
-        : (isAlert ? controller.oldSliAlertGraphs : controller.oldSliGraphs);
+    RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
+        type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE
+            ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
+            : (isAlert
+                ? controller.oldSliAlertGraphs
+                : controller.oldSliGraphs);
     sliGraphs.last.forEach((key, value) {
-      // print(key.toString() + " " + value.toString() + "");
+      print(key.toString() + " " + value.toString() + "");
 
       graphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
@@ -150,7 +152,7 @@ List<Widget> buildGraphs(
       type == TYPE_OF_TIMESERIES.SINGLE) {
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
-    if (sensor.isPulse() == true) {
+    if (sensor.isPulse()) {
       graphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
           child: Text(

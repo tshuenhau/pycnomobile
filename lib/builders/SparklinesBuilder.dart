@@ -23,7 +23,6 @@ List<Widget> buildSparklines(
                               |            |
                              SLI's PID  TimeSeries for each functionality in SLI
   */
-  print(sensor.functionalities?.first.key);
   controller.sparkLines.forEach((key, value) {
     value.forEach((TimeSeries e) {
       if (e.getTimeSeries == null) {

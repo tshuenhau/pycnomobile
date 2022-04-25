@@ -29,7 +29,7 @@ class SparklineCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            print("HELLO");
+            print(function);
             showModalBottomSheet(
                 backgroundColor: Colors.transparent,
                 isScrollControlled: true,

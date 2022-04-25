@@ -61,6 +61,8 @@ class TimeSeriesController extends GetxController {
       if (!isAlert) {
         sliGraphs.add(instanceSliMap);
       } else {
+        oldSliAlertGraphs.last = RxMap<String, RxList<TimeSeries>>();
+        sliAlertGraphs.last = RxMap<String, RxList<TimeSeries>>();
         sliAlertGraphs.add(instanceSliMap);
       }
 

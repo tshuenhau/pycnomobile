@@ -331,7 +331,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.timeSeries.getKey,
+        Text(widget.timeSeries.getName,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
