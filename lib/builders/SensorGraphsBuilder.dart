@@ -130,11 +130,12 @@ List<Widget> buildGraphs(
           type == TYPE_OF_TIMESERIES.OLD_SLI ||
           type == TYPE_OF_TIMESERIES.SINGLE)) {
     RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
-        type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE
+        (type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE)
             ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
             : (isAlert
                 ? controller.oldSliAlertGraphs
                 : controller.oldSliGraphs);
+
     print("SLI GRAPHS " + sliGraphs.last.toString());
     print("LEN " + sliGraphs.last.length.toString());
     sliGraphs.last.forEach((key, value) {
@@ -156,11 +157,12 @@ List<Widget> buildGraphs(
         graphsToDraw.add(SensorLineChart(timeSeries: element));
       });
     });
-  }
-  if (type == TYPE_OF_TIMESERIES.INTERNAL ||
+  } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
       type == TYPE_OF_TIMESERIES.SINGLE) {
+    print(controller.graphs.last);
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
+
     print("Type " + type.toString());
 
     if (sensor.isPulse() && type != TYPE_OF_TIMESERIES.SINGLE) {

@@ -99,9 +99,6 @@ class SparklineCard extends StatelessWidget {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-<<<<<<< HEAD
-                            child: Text(function.name,
-=======
                             child: Text(
                                 name
                                     .replaceAll(
@@ -110,7 +107,6 @@ class SparklineCard extends StatelessWidget {
                                     .replaceAll(
                                         new RegExp(r'[ ]{2,}', unicode: true),
                                         ' '),
->>>>>>> 7c2fb30a0ff2143e7a99aa883c03ff5d587e08cb
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)
