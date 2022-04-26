@@ -1,4 +1,4 @@
-enum TYPE_OF_TIMESERIES { SINGLE, INTERNAL, SLI, OLD_SLI }
+enum TYPE_OF_TIMESERIES { SINGLE_SLI, SINGLE_INTERNAL, INTERNAL, SLI, OLD_SLI }
 
 class TimeSeries {
   Map<int, double>? _timeSeries;

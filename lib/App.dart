@@ -145,8 +145,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       ..maskType = EasyLoadingMaskType.custom
       ..backgroundColor = Theme.of(context).colorScheme.background
       ..textColor = Theme.of(context).colorScheme.tertiary
-      ..indicatorColor =
-          Theme.of(context).colorScheme.tertiary.withOpacity(0.65)
+      ..indicatorColor = Theme.of(context).colorScheme.tertiary
       ..displayDuration = const Duration(milliseconds: 1000);
 
     return SafeArea(

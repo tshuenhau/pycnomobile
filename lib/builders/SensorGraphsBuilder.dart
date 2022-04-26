@@ -125,15 +125,15 @@ List<Widget> buildGraphs(
   }
 
   //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
-  if ((type == TYPE_OF_TIMESERIES.SLI ||
-      type == TYPE_OF_TIMESERIES.OLD_SLI ||
-      type == TYPE_OF_TIMESERIES.SINGLE)) {
-    RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
-        (type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE)
-            ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
-            : (isAlert
-                ? controller.oldSliAlertGraphs
-                : controller.oldSliGraphs);
+  if (sensor.isPulse() &&
+      (type == TYPE_OF_TIMESERIES.SLI ||
+          type == TYPE_OF_TIMESERIES.OLD_SLI ||
+          type == TYPE_OF_TIMESERIES.SINGLE_SLI)) {
+    RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs = (type ==
+                TYPE_OF_TIMESERIES.SLI ||
+            type == TYPE_OF_TIMESERIES.SINGLE_SLI)
+        ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
+        : (isAlert ? controller.oldSliAlertGraphs : controller.oldSliGraphs);
 
     print("SLI GRAPHS " + sliGraphs.last.toString());
     print("LEN " + sliGraphs.last.length.toString());
@@ -157,14 +157,16 @@ List<Widget> buildGraphs(
       });
     });
   } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
-      type == TYPE_OF_TIMESERIES.SINGLE) {
-    print(controller.graphs.last);
+      type == TYPE_OF_TIMESERIES.SINGLE_INTERNAL) {
+    print("ehre");
+    print(controller.sliGraphs.last);
+
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
 
     print("Type " + type.toString());
 
-    if (sensor.isPulse() && type != TYPE_OF_TIMESERIES.SINGLE) {
+    if (sensor.isPulse() && type != TYPE_OF_TIMESERIES.SINGLE_INTERNAL) {
       graphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
           child: Text(
