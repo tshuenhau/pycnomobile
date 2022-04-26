@@ -42,6 +42,8 @@ List<Widget> buildSparklines(
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
     });
   });
+  print('non sli sparklines ' + controller.nonSliSparklines.toString());
+  print('sli sparklines ' + controller.sparkLines.toString());
   controller.nonSliSparklines.forEach((key, value) {
     value.forEach((TimeSeries e) {
       if (e.getTimeSeries == null) {
@@ -56,7 +58,7 @@ List<Widget> buildSparklines(
               color: null,
               icon: null,
               unit: null),
-          sli: controller.nonSliSparklines.keys.elementAt(0),
+          sli: "",
           name: e.getKey,
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
     });

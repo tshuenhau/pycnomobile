@@ -42,7 +42,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    print("functions: " + widget.functions.toString());
+    print('init data');
     await initGraphs(
         isAlert, widget.sensor, widget.functions, widget.sli, widget.name);
   }
@@ -115,7 +115,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   buildGraphs(
                       sensor: widget.sensor,
                       functions: widget.functions,
-                      type: widget.sli == widget.sensor.name
+                      type: widget.sli == ""
                           ? TYPE_OF_TIMESERIES.SINGLE_INTERNAL
                           : TYPE_OF_TIMESERIES.SINGLE_SLI,
                       context: context,
