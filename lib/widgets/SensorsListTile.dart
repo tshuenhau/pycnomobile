@@ -27,7 +27,7 @@ class SensorsListTile extends StatelessWidget {
           FocusScope.of(context).unfocus();
           SensorInfoController controller = Get.put(SensorInfoController());
 
-          // EasyLoading.show(status: "Loading...");
+          // EasyLoading.show(status: "Fetching Sensor Data...");
           try {
             controller.getTimeSeriesForSparklines(sensor);
             Navigator.of(context).push(
