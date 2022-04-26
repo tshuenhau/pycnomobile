@@ -125,10 +125,9 @@ List<Widget> buildGraphs(
   }
 
   //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
-  if (sensor.isPulse() &&
-      (type == TYPE_OF_TIMESERIES.SLI ||
-          type == TYPE_OF_TIMESERIES.OLD_SLI ||
-          type == TYPE_OF_TIMESERIES.SINGLE)) {
+  if ((type == TYPE_OF_TIMESERIES.SLI ||
+      type == TYPE_OF_TIMESERIES.OLD_SLI ||
+      type == TYPE_OF_TIMESERIES.SINGLE)) {
     RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
         (type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE)
             ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
@@ -157,7 +156,8 @@ List<Widget> buildGraphs(
         graphsToDraw.add(SensorLineChart(timeSeries: element));
       });
     });
-  } else {
+  } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
+      type == TYPE_OF_TIMESERIES.SINGLE) {
     print(controller.graphs.last);
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
