@@ -54,29 +54,25 @@ class SparklineCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            data.last.toStringAsFixed(2) + "",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width *
-                                    4 /
-                                    100),
-                          ),
-                        ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 2 / 100),
-                        Text(
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        data.last.toStringAsFixed(3),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 4 / 100),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 2 / 100),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 12 / 100,
+                        child: Text(
                             (change > 0 ? "+" : "") +
-                                change.toStringAsFixed(2) +
+                                change.toStringAsFixed(1) +
                                 "%",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -86,10 +82,10 @@ class SparklineCard extends StatelessWidget {
                                         ? Colors.green.shade700
                                         : Colors.red.shade700,
                                 fontSize: MediaQuery.of(context).size.width *
-                                    3.5 /
+                                    3 /
                                     100)),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Container(
                     width: double.infinity,
@@ -99,18 +95,7 @@ class SparklineCard extends StatelessWidget {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-<<<<<<< HEAD
                             child: Text(function.name,
-=======
-                            child: Text(
-                                name
-                                    .replaceAll(
-                                        new RegExp(r"\([^)]*\)", unicode: true),
-                                        "")
-                                    .replaceAll(
-                                        new RegExp(r'[ ]{2,}', unicode: true),
-                                        ' '),
->>>>>>> 7c2fb30a0ff2143e7a99aa883c03ff5d587e08cb
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)
@@ -144,7 +129,7 @@ class SparklineCard extends StatelessWidget {
                               : Colors.red.shade700.withOpacity(0.75),
                       fillMode: FillMode.below,
                       fillColor: change == 0
-                          ? Colors.blue.shade700.withOpacity(0.1)
+                          ? Colors.blue.shade700
                           : change > 0
                               ? Colors.green.shade700.withOpacity(0.1)
                               : Colors.red.shade700.withOpacity(0.1),
