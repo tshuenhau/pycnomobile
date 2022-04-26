@@ -4,6 +4,7 @@ import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:get/get.dart';
 
 class SparklineCard extends StatelessWidget {
   SparklineCard(
@@ -15,8 +16,8 @@ class SparklineCard extends StatelessWidget {
       required this.sensor})
       : super(key: key);
   List<double> data;
-  String sli;
-  String name;
+  String sli; //sli pid
+  String name; //name of sensor
   Sensor sensor;
   Functionality function;
 
@@ -29,14 +30,17 @@ class SparklineCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            print(function);
+            print("NAME" + name + " SLI " + sli);
             showModalBottomSheet(
                 backgroundColor: Colors.transparent,
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
                   return GraphBottomSheet(
-                      sensor: sensor, functions: [function]);
+                      sensor: sensor,
+                      functions: [function],
+                      sli: sli,
+                      name: name);
                 });
           },
           child: Padding(
@@ -91,7 +95,7 @@ class SparklineCard extends StatelessWidget {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: Text(name,
+                            child: Text(function.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)

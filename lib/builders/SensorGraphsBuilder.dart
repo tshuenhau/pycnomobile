@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
-Future<void> initGraphs(
-    bool isAlert, Sensor sensor, List<Functionality?> functions,
+Future<void> initGraphs(bool isAlert, Sensor sensor,
+    List<Functionality?> functions, String sli, String name,
     [DateTimeRange? dateRange]) async {
   if (dateRange == null) {
     dateRange = new DateTimeRange(
@@ -30,8 +29,13 @@ Future<void> initGraphs(
 
   if (sensor.functionalities != null) {
     TimeSeriesController controller = Get.put(TimeSeriesController());
-    controller.getMultiTimeSeries(
-        dateRange.start, dateRange.end, functions, sensor, isAlert);
+    if (functions.length <= 1 && sensor.isPulse()) {
+      controller.getSingleTimeSeries(
+          dateRange.start, dateRange.end, sensor, isAlert, sli, functions);
+    } else {
+      controller.getMultiTimeSeries(
+          dateRange.start, dateRange.end, functions, sensor, isAlert);
+    }
   }
 }
 
@@ -61,13 +65,24 @@ Future<void> initOldGraphs(
   }
 }
 
-Future<void> getGraphsForTimeRange(bool isAlert, DateTimeRange dateRange,
-    Sensor sensor, List<Functionality?> functions) async {
+Future<void> getGraphsForTimeRange(
+  bool isAlert,
+  DateTimeRange dateRange,
+  Sensor sensor,
+  List<Functionality?> functions,
+  String sli,
+  String name,
+) async {
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    await controller.getMultiTimeSeries(dateRange.start,
-        dateRange.end.add(Duration(days: 1)), functions, sensor, isAlert);
+    await controller.getMultiTimeSeries(
+      dateRange.start,
+      dateRange.end.add(Duration(days: 1)),
+      functions,
+      sensor,
+      isAlert,
+    );
   }
 
   EasyLoading.dismiss();
@@ -82,11 +97,6 @@ List<Widget> buildGraphs(
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   List<Widget> graphsToDraw = <Widget>[];
-  //List<Widget> sliGraphsToDraw = <Widget>[];
-
-  // int sliDrawnCount = 0;
-  // int sliCount = 0;
-
   int drawnCount = 0;
   int count = (type == TYPE_OF_TIMESERIES.OLD_SLI
       ? controller.countOldGraphs(sensor)
@@ -95,7 +105,7 @@ List<Widget> buildGraphs(
           : type == TYPE_OF_TIMESERIES.INTERNAL
               ? controller.countNumberOfGraphs(functions)
               : 1);
-
+  print('count ' + count.toString());
   Widget buildLoadingIndicator() {
     if (drawnCount == count) {
       return Container();
@@ -119,16 +129,15 @@ List<Widget> buildGraphs(
       (type == TYPE_OF_TIMESERIES.SLI ||
           type == TYPE_OF_TIMESERIES.OLD_SLI ||
           type == TYPE_OF_TIMESERIES.SINGLE)) {
-    // sliCount = controller.countSliGraphs(sensor);
     RxList<RxMap<String, RxList<TimeSeries>>> sliGraphs =
         type == TYPE_OF_TIMESERIES.SLI || type == TYPE_OF_TIMESERIES.SINGLE
             ? (isAlert ? controller.sliAlertGraphs : controller.sliGraphs)
             : (isAlert
                 ? controller.oldSliAlertGraphs
                 : controller.oldSliGraphs);
+    print("SLI GRAPHS " + sliGraphs.last.toString());
+    print("LEN " + sliGraphs.last.length.toString());
     sliGraphs.last.forEach((key, value) {
-      print(key.toString() + " " + value.toString() + "");
-
       graphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
           child: Text(
@@ -152,7 +161,9 @@ List<Widget> buildGraphs(
       type == TYPE_OF_TIMESERIES.SINGLE) {
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
-    if (sensor.isPulse()) {
+    print("Type " + type.toString());
+
+    if (sensor.isPulse() && type != TYPE_OF_TIMESERIES.SINGLE) {
       graphsToDraw.add(Container(
           height: MediaQuery.of(context).size.height * 5 / 100,
           child: Text(
@@ -160,12 +171,14 @@ List<Widget> buildGraphs(
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     }
-    internalGraphs.forEach((TimeSeries e) {
-      drawnCount += 1;
-      graphsToDraw.add(SensorLineChart(
-        timeSeries: e,
-      )); //I put ! behind the e just to avoid error, idk if will have any bugs
-    });
+    if (type != TYPE_OF_TIMESERIES.SINGLE) {
+      internalGraphs.forEach((TimeSeries e) {
+        drawnCount += 1;
+        graphsToDraw.add(SensorLineChart(
+          timeSeries: e,
+        )); //I put ! behind the e just to avoid error, idk if will have any bugs
+      });
+    }
   }
 
   List<Widget> result = [

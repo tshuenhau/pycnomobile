@@ -10,13 +10,16 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 class GraphBottomSheet extends StatefulWidget {
-  GraphBottomSheet({
-    Key? key,
-    required this.sensor,
-    required this.functions,
-  }) : super(key: key);
+  GraphBottomSheet(
+      {Key? key,
+      required this.sensor,
+      required this.functions,
+      required this.sli,
+      required this.name})
+      : super(key: key);
   final Sensor sensor;
-
+  final String sli;
+  final String name;
   final List<Functionality?> functions;
 
   @override
@@ -39,7 +42,9 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    await initGraphs(isAlert, widget.sensor, widget.functions);
+    print("functions: " + widget.functions.toString());
+    await initGraphs(
+        isAlert, widget.sensor, widget.functions, widget.sli, widget.name);
   }
 
   @override
@@ -63,8 +68,8 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     lastDate: DateTime.now());
 
                 if (_newDateRange != null) {
-                  await getGraphsForTimeRange(
-                      isAlert, _newDateRange, widget.sensor, widget.functions);
+                  await getGraphsForTimeRange(isAlert, _newDateRange,
+                      widget.sensor, widget.functions, widget.sli, widget.name);
                 }
               },
               child: Icon(Icons.today,
@@ -91,34 +96,27 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
       child: Center(
         child: Obx(
           () => ListView(
-            children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width * 4.5 / 100),
-                      DateRangeSelector(context)
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 2.5 / 100,
-                  )
-                ] +
-                (!isAlert
-                    ? buildGraphs(
-                        sensor: widget.sensor,
-                        functions: widget.functions,
-                        type: TYPE_OF_TIMESERIES.SINGLE,
-                        context: context,
-                        isAlert: false)
-                    : buildGraphs(
-                        sensor: widget.sensor,
-                        functions: widget.functions,
-                        type: TYPE_OF_TIMESERIES.SINGLE,
-                        context: context,
-                        isAlert: true)),
-          ),
+              children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 4.5 / 100),
+                        DateRangeSelector(context)
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 2.5 / 100,
+                    )
+                  ] +
+                  buildGraphs(
+                      sensor: widget.sensor,
+                      functions: widget.functions,
+                      type: TYPE_OF_TIMESERIES.SINGLE,
+                      context: context,
+                      isAlert: isAlert)),
         ),
       ),
     );

@@ -42,7 +42,6 @@ List<Widget> buildSparklines(
           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
     });
   });
-
   controller.nonSliSparklines.forEach((key, value) {
     value.forEach((TimeSeries e) {
       if (e.getTimeSeries == null) {

@@ -30,8 +30,9 @@ class SummaryCard extends StatelessWidget {
                     isScrollControlled: true,
                     context: context,
                     builder: (context) {
-                      return GraphBottomSheet(
-                          sensor: sensor, functions: functions);
+                      return Container();
+                      // return GraphBottomSheet(
+                      //     sensor: sensor, functions: functions);
                     });
               },
               child: child)),

@@ -27,12 +27,12 @@ class SensorsListTile extends StatelessWidget {
           FocusScope.of(context).unfocus();
           SensorInfoController controller = Get.put(SensorInfoController());
 
-          EasyLoading.show(status: "Loading...");
+          // EasyLoading.show(status: "Loading...");
           try {
-            await controller.getTimeSeriesForSparklines(sensor);
+            controller.getTimeSeriesForSparklines(sensor);
             Navigator.of(context).push(
                 CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
-            EasyLoading.dismiss();
+            // EasyLoading.dismiss();
           } catch (e) {
             EasyLoading.showError('$e');
           }
