@@ -30,7 +30,7 @@ Future<void> initGraphs(bool isAlert, Sensor sensor,
   print('sensor functionalities ' + sensor.functionalities.toString());
   if (sensor.functionalities != null) {
     TimeSeriesController controller = Get.put(TimeSeriesController());
-    if (functions.length <= 1 && sensor.isPulse()) {
+    if (functions.length <= 1 && sli != "") {
       print("GET SINGLE " + sli);
       controller.getSingleTimeSeries(
           dateRange.start, dateRange.end, sensor, isAlert, sli, functions);

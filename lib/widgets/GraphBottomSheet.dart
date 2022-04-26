@@ -91,9 +91,13 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
               topRight: const Radius.circular(15.0)
               //topRight: const Radius.circular(10.0)
               )),
-      height: controller.countNumberOfGraphs(widget.functions) > 1
-          ? MediaQuery.of(context).size.height * 75 / 100
-          : MediaQuery.of(context).size.height * 55 / 100,
+      height: widget.sli == ""
+          ? controller.countNumberOfGraphs(widget.functions) > 1
+              ? MediaQuery.of(context).size.height * 75 / 100
+              : MediaQuery.of(context).size.height * 55 / 100
+          : controller.countSliGraphs(widget.sensor) > 1
+              ? MediaQuery.of(context).size.height * 75 / 100
+              : MediaQuery.of(context).size.height * 55 / 100,
       child: Center(
         child: Obx(
           () => ListView(
