@@ -158,6 +158,11 @@ List<Widget> buildGraphs(
     });
   } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
       type == TYPE_OF_TIMESERIES.SINGLE_INTERNAL) {
+    print("hereeee");
+
+    print("INTERNAL: " + controller.graphs.last.toString());
+    print("SLI: " + controller.sliGraphs.last.toString());
+
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
 
