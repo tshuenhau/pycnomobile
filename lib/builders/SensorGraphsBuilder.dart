@@ -157,8 +157,7 @@ List<Widget> buildGraphs(
         graphsToDraw.add(SensorLineChart(timeSeries: element));
       });
     });
-  } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
-      type == TYPE_OF_TIMESERIES.SINGLE) {
+  } else {
     print(controller.graphs.last);
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
@@ -173,14 +172,13 @@ List<Widget> buildGraphs(
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     }
-    if (type != TYPE_OF_TIMESERIES.SINGLE) {
-      internalGraphs.forEach((TimeSeries e) {
-        drawnCount += 1;
-        graphsToDraw.add(SensorLineChart(
-          timeSeries: e,
-        )); //I put ! behind the e just to avoid error, idk if will have any bugs
-      });
-    }
+
+    internalGraphs.forEach((TimeSeries e) {
+      drawnCount += 1;
+      graphsToDraw.add(SensorLineChart(
+        timeSeries: e,
+      )); //I put ! behind the e just to avoid error, idk if will have any bugs
+    });
   }
 
   List<Widget> result = [
