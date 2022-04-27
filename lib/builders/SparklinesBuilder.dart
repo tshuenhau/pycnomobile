@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:pycnomobile/widgets/(OLD)SparklineCard.dart';
 import 'package:pycnomobile/widgets/SparklineCard.dart';
-import 'package:pycnomobile/widgets/SparklineCardV2.dart';
 import 'package:pycnomobile/widgets/SliSparklineCard.dart';
 import 'package:pycnomobile/widgets/SparklineListTile.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
@@ -30,7 +30,7 @@ List<Widget> buildSparklinesV2(
 
       if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
         for (String functionality in sli["plottable"]) {
-          cards.add(new SliSparklineCardV2(
+          cards.add(new SparklineCardV2(
               name: functionality,
               index: sli["plottable"].indexOf(functionality),
               sli: pid,
@@ -52,6 +52,7 @@ List<Widget> buildSparklinesV2(
       cards.add(new SparklineCardV2(
           name: func.name,
           index: sensor.functionalities!.indexOf(func),
+          sli: "",
           sensor: sensor,
           function: func));
     }
