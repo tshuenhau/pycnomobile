@@ -74,38 +74,43 @@ class SparklineCardV2 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        sli == ""
-                            ? function.value.toStringAsFixed(3)
-                            : sensor.sli?[sensor.sli?.indexWhere((e) {
-                                          return e["PID"] == sli;
-                                        }) ??
-                                        0][function.key]
-                                    .toStringAsFixed(3) ??
-                                "",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.width * 4 / 100),
+                      Flexible(
+                        child: Text(
+                          (sli == ""
+                                      ? function.value
+                                      : sensor.sli?[sensor.sli?.indexWhere((e) {
+                                            return e["PID"] == sli;
+                                          }) ??
+                                          0][function.key])
+                                  .toStringAsFixed(3) ??
+                              "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 4 / 100),
+                        ),
                       ),
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 2 / 100),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 12 / 100,
-                        child: Text(
-                            (change > 0 ? "+" : "") +
-                                change.toStringAsFixed(1) +
-                                "%",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: change == 0
-                                    ? Colors.blue.shade700
-                                    : change > 0
-                                        ? Colors.green.shade700
-                                        : Colors.red.shade700,
-                                fontSize: MediaQuery.of(context).size.width *
-                                    3 /
-                                    100)),
+                        child: Flexible(
+                          child: Text(
+                              (change > 0 ? "+" : "") +
+                                  change.toStringAsFixed(1) +
+                                  "%",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: change == 0
+                                      ? Colors.blue.shade700
+                                      : change > 0
+                                          ? Colors.green.shade700
+                                          : Colors.red.shade700,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      3 /
+                                      100)),
+                        ),
                       ),
                     ],
                   ),
