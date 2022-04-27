@@ -164,6 +164,7 @@ class TimeSeriesController extends GetxController {
         sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
       }
     }
+
     for (Functionality? function in functions) {
       if (function != null) {
         if (function.value is List) {
@@ -174,6 +175,7 @@ class TimeSeriesController extends GetxController {
             if (subfunc != null) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+
               if (response.statusCode == 200) {
                 if (jsonDecode(response.body).length <= 0) {
                   continue;
@@ -201,7 +203,8 @@ class TimeSeriesController extends GetxController {
         } else {
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-
+          print(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -232,6 +235,7 @@ class TimeSeriesController extends GetxController {
     } else if (alertGraphs.length > 1) {
       alertGraphs.removeRange(0, alertGraphs.length - 1);
     }
+    print('bitch ' + graphs.toString());
   }
 
   Future<void> getOldSliTimeSeries(DateTime start, DateTime end,

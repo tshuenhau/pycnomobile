@@ -108,6 +108,8 @@ List<Widget> buildGraphs(
           : type == TYPE_OF_TIMESERIES.INTERNAL
               ? controller.countNumberOfGraphs(functions)
               : 1);
+  print('count ' + count.toString());
+
   Widget buildLoadingIndicator() {
     if (drawnCount == count) {
       return Container();
@@ -158,11 +160,6 @@ List<Widget> buildGraphs(
     });
   } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
       type == TYPE_OF_TIMESERIES.SINGLE_INTERNAL) {
-    print("hereeee");
-
-    print("INTERNAL: " + controller.graphs.last.toString());
-    print("SLI: " + controller.sliGraphs.last.toString());
-
     RxList<TimeSeries> internalGraphs =
         isAlert ? controller.alertGraphs.last : controller.graphs.last;
 
@@ -174,7 +171,7 @@ List<Widget> buildGraphs(
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     }
-    print("WAT THE FUCK");
+    print(internalGraphs);
     internalGraphs.forEach((TimeSeries e) {
       drawnCount += 1;
       graphsToDraw.add(SensorLineChart(
@@ -182,7 +179,7 @@ List<Widget> buildGraphs(
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
     });
   }
-  print(type);
+  print('cock ' + graphsToDraw.toString());
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator()
