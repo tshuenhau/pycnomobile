@@ -93,24 +93,22 @@ class SparklineCardV2 extends StatelessWidget {
                       ),
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 2 / 100),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 12 / 100,
-                        child: Flexible(
-                          child: Text(
-                              (change > 0 ? "+" : "") +
-                                  change.toStringAsFixed(1) +
-                                  "%",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: change == 0
-                                      ? Colors.blue.shade700
-                                      : change > 0
-                                          ? Colors.green.shade700
-                                          : Colors.red.shade700,
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      3 /
-                                      100)),
-                        ),
+                      Flexible(
+                        //  width: MediaQuery.of(context).size.width * 12 / 100,
+                        child: Text(
+                            (change > 0 ? "+" : "") +
+                                change.toStringAsFixed(1) +
+                                "%",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: change == 0
+                                    ? Colors.blue.shade700
+                                    : change > 0
+                                        ? Colors.green.shade700
+                                        : Colors.red.shade700,
+                                fontSize: MediaQuery.of(context).size.width *
+                                    3 /
+                                    100)),
                       ),
                     ],
                   ),
@@ -148,9 +146,14 @@ class SparklineCardV2 extends StatelessWidget {
                   data.length == 0
                       ? Expanded(
                           child: Container(
-                              child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: CircularProgressIndicator())))
+                              child: Center(
+                          child: SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.width * 3 / 100,
+                              width:
+                                  MediaQuery.of(context).size.width * 3 / 100,
+                              child: CircularProgressIndicator()),
+                        )))
                       : Expanded(
                           // width: double.infinity,
                           // height: MediaQuery.of(context).size.width * 2.5 / 100,
