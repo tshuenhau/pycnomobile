@@ -157,10 +157,22 @@ class SparklineCardV2 extends StatelessWidget {
                                       : Colors.red.shade700.withOpacity(0.75),
                               fillMode: FillMode.below,
                               fillColor: change == 0
-                                  ? Colors.blue.shade700.withOpacity(0.1)
+                                  ? Colors.blue.shade700.withOpacity(
+                                      (Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? 0.1
+                                          : 0.4))
                                   : change > 0
-                                      ? Colors.green.shade700.withOpacity(0.1)
-                                      : Colors.red.shade700.withOpacity(0.1),
+                                      ? Colors.green.shade700.withOpacity(
+                                          (Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? 0.1
+                                              : 0.4))
+                                      : Colors.red.shade700.withOpacity(
+                                          (Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? 0.1
+                                              : 0.4)),
                               data: data))
                 ],
               ),
