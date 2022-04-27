@@ -5,54 +5,44 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/controllers/SensorInfoController.dart';
 
-class SparklineCardV2 extends StatelessWidget {
-  SparklineCardV2(
+class SparklineCard extends StatelessWidget {
+  SparklineCard(
       {Key? key,
+      required this.sli,
       required this.name,
       required this.function,
-      required this.index,
+      required this.data,
       required this.sensor})
       : super(key: key);
-
+  List<double> data;
+  String sli; //sli pid
   String name; //name of sensor
   Sensor sensor;
-  int index;
   Functionality function;
 
   @override
   Widget build(BuildContext context) {
-    SensorInfoController controller = Get.put(SensorInfoController());
-
+    double change = (data.last - data.first) / data.first * 100;
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: InkWell(onTap: () {
-          showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              isScrollControlled: true,
-              context: context,
-              builder: (context) {
-                return GraphBottomSheet(
-                    sensor: sensor, functions: [function], sli: "", name: name);
-              });
-        }, child: Obx(() {
-          List<double> data =
-              (controller.nonSliSparklines[sensor.name]?.length ?? 0) <= index
-                  ? []
-                  : controller.convertTimeSeriestoList(controller
-                          .nonSliSparklines[sensor.name]?[index]
-                          .getTimeSeries! ??
-                      {});
-
-          late double change;
-
-          change = data.length == 0
-              ? 0
-              : ((data[data.length - 1] - data[0]) / data[0] * 100);
-          return Padding(
+        child: InkWell(
+          onTap: () {
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return GraphBottomSheet(
+                      sensor: sensor,
+                      functions: [function],
+                      sli: sli,
+                      name: name);
+                });
+          },
+          child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
                 vertical: MediaQuery.of(context).size.width * 4 / 100),
@@ -69,7 +59,7 @@ class SparklineCardV2 extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        function.value.toStringAsFixed(3),
+                        data.last.toStringAsFixed(3),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -114,7 +104,7 @@ class SparklineCardV2 extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sensor.name ?? "",
+                        Text(sli,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
@@ -127,28 +117,28 @@ class SparklineCardV2 extends StatelessWidget {
                   ),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 1.5 / 100),
-                  data.length == 0
-                      ? Container()
-                      : Expanded(
-                          // width: double.infinity,
-                          // height: MediaQuery.of(context).size.width * 2.5 / 100,
-                          child: Sparkline(
-                              lineColor: change == 0
-                                  ? Colors.blue.shade700
-                                  : change > 0
-                                      ? Colors.green.shade700.withOpacity(0.75)
-                                      : Colors.red.shade700.withOpacity(0.75),
-                              fillMode: FillMode.below,
-                              fillColor: change == 0
-                                  ? Colors.blue.shade700.withOpacity(0.1)
-                                  : change > 0
-                                      ? Colors.green.shade700.withOpacity(0.1)
-                                      : Colors.red.shade700.withOpacity(0.1),
-                              data: data))
+                  Expanded(
+                    // width: double.infinity,
+                    // height: MediaQuery.of(context).size.width * 2.5 / 100,
+                    child: Sparkline(
+                      lineColor: change == 0
+                          ? Colors.blue.shade700
+                          : change > 0
+                              ? Colors.green.shade700.withOpacity(0.75)
+                              : Colors.red.shade700.withOpacity(0.75),
+                      fillMode: FillMode.below,
+                      fillColor: change == 0
+                          ? Colors.blue.shade700.withOpacity(0.1)
+                          : change > 0
+                              ? Colors.green.shade700.withOpacity(0.1)
+                              : Colors.red.shade700.withOpacity(0.1),
+                      data: data,
+                    ),
+                  )
                 ],
               ),
             ),
-          );
-        })));
+          ),
+        ));
   }
 }

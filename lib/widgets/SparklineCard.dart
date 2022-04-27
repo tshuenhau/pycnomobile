@@ -5,44 +5,60 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
+import 'package:pycnomobile/controllers/SensorInfoController.dart';
 
-class SparklineCard extends StatelessWidget {
-  SparklineCard(
+class SparklineCardV2 extends StatelessWidget {
+  SparklineCardV2(
       {Key? key,
-      required this.sli,
       required this.name,
       required this.function,
-      required this.data,
+      required this.sli,
+      required this.index,
       required this.sensor})
       : super(key: key);
-  List<double> data;
-  String sli; //sli pid
+
   String name; //name of sensor
   Sensor sensor;
+  int index;
   Functionality function;
+  String sli;
 
   @override
   Widget build(BuildContext context) {
-    double change = (data.last - data.first) / data.first * 100;
+    SensorInfoController controller = Get.put(SensorInfoController());
+
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: InkWell(
-          onTap: () {
-            showModalBottomSheet(
-                backgroundColor: Colors.transparent,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) {
-                  return GraphBottomSheet(
-                      sensor: sensor,
-                      functions: [function],
-                      sli: sli,
-                      name: name);
-                });
-          },
-          child: Padding(
+        child: InkWell(onTap: () {
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return GraphBottomSheet(
+                    sensor: sensor, functions: [function], sli: "", name: name);
+              });
+        }, child: Obx(() {
+          List<double> data = sli == ""
+              ? (controller.nonSliSparklines[sensor.name]?.length ?? 0) <= index
+                  ? []
+                  : controller.convertTimeSeriestoList(controller
+                          .nonSliSparklines[sensor.name]?[index]
+                          .getTimeSeries! ??
+                      {})
+              : (controller.sparkLines[sli]?.length ?? 0) <= index
+                  ? []
+                  : controller.convertTimeSeriestoList(
+                      controller.sparkLines[sli]?[index].getTimeSeries! ?? {});
+
+          late double change;
+
+          change = data.length == 0
+              ? 0
+              : ((data[data.length - 1] - data[0]) / data[0] * 100);
+          return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
                 vertical: MediaQuery.of(context).size.width * 4 / 100),
@@ -59,7 +75,14 @@ class SparklineCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        data.last.toStringAsFixed(3),
+                        sli == ""
+                            ? function.value.toStringAsFixed(3)
+                            : sensor.sli?[sensor.sli?.indexWhere((e) {
+                                          return e["PID"] == sli;
+                                        }) ??
+                                        0][function.key]
+                                    .toStringAsFixed(3) ??
+                                "",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -104,7 +127,7 @@ class SparklineCard extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sli,
+                        Text(sensor.name ?? "",
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
@@ -117,28 +140,28 @@ class SparklineCard extends StatelessWidget {
                   ),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 1.5 / 100),
-                  Expanded(
-                    // width: double.infinity,
-                    // height: MediaQuery.of(context).size.width * 2.5 / 100,
-                    child: Sparkline(
-                      lineColor: change == 0
-                          ? Colors.blue.shade700
-                          : change > 0
-                              ? Colors.green.shade700.withOpacity(0.75)
-                              : Colors.red.shade700.withOpacity(0.75),
-                      fillMode: FillMode.below,
-                      fillColor: change == 0
-                          ? Colors.blue.shade700.withOpacity(0.1)
-                          : change > 0
-                              ? Colors.green.shade700.withOpacity(0.1)
-                              : Colors.red.shade700.withOpacity(0.1),
-                      data: data,
-                    ),
-                  )
+                  data.length == 0
+                      ? Container()
+                      : Expanded(
+                          // width: double.infinity,
+                          // height: MediaQuery.of(context).size.width * 2.5 / 100,
+                          child: Sparkline(
+                              lineColor: change == 0
+                                  ? Colors.blue.shade700
+                                  : change > 0
+                                      ? Colors.green.shade700.withOpacity(0.75)
+                                      : Colors.red.shade700.withOpacity(0.75),
+                              fillMode: FillMode.below,
+                              fillColor: change == 0
+                                  ? Colors.blue.shade700.withOpacity(0.1)
+                                  : change > 0
+                                      ? Colors.green.shade700.withOpacity(0.1)
+                                      : Colors.red.shade700.withOpacity(0.1),
+                              data: data))
                 ],
               ),
             ),
-          ),
-        ));
+          );
+        })));
   }
 }
