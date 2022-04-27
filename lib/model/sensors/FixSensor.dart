@@ -63,8 +63,7 @@ class FixSensor extends Sensor {
 
   static getFunctionalities(Map<String, dynamic> json) {
     List<Functionality> functionalities = List.empty(growable: true);
-    List<Functionality> soilMoisture = List.empty(growable: true);
-    List<Functionality> soilTemp = List.empty(growable: true);
+
     for (var i = 0; i < json["plottable"].length; i++) {
       if (json["plottable"][i] == "TEMP") {
         functionalities.add(new Temp(json["TEMP"]?.toDouble()));
@@ -89,29 +88,29 @@ class FixSensor extends Sensor {
       } else if (json["plottable"][i] == "WNDR") {
         functionalities.add(new Wndr(json["WNDR"]?.toDouble()));
       } else if (json["plottable"][i] == "ST1") {
-        soilMoisture.add(new St1(json["ST1"]?.toDouble()));
+        functionalities.add(new St1(json["ST1"]?.toDouble()));
       } else if (json["plottable"][i] == "ST3") {
-        soilMoisture.add(new St3(json["ST3"]?.toDouble()));
+        functionalities.add(new St3(json["ST3"]?.toDouble()));
       } else if (json["plottable"][i] == "ST5") {
-        soilMoisture.add(new St5(json["ST5"]?.toDouble()));
+        functionalities.add(new St5(json["ST5"]?.toDouble()));
       } else if (json["plottable"][i] == "S1T") {
-        soilTemp.add(new S1t(json["S1T"]?.toDouble()));
+        functionalities.add(new S1t(json["S1T"]?.toDouble()));
       } else if (json["plottable"][i] == "S2T") {
-        soilTemp.add(new S2t(json["S2T"]?.toDouble()));
+        functionalities.add(new S2t(json["S2T"]?.toDouble()));
       } else if (json["plottable"][i] == "S3T") {
-        soilTemp.add(new S3t(json["S3T"]?.toDouble()));
+        functionalities.add(new S3t(json["S3T"]?.toDouble()));
       } else if (json["plottable"][i] == "S4T") {
-        soilTemp.add(new S4t(json["S4T"]?.toDouble()));
+        functionalities.add(new S4t(json["S4T"]?.toDouble()));
       } else if (json["plottable"][i] == "S5T") {
-        soilTemp.add(new S5t(json["S5T"]?.toDouble()));
+        functionalities.add(new S5t(json["S5T"]?.toDouble()));
       } else if (json["plottable"][i] == "S6T") {
-        soilTemp.add(new S6t(json["S6T"]?.toDouble()));
+        functionalities.add(new S6t(json["S6T"]?.toDouble()));
       }
     }
-    if (soilTemp.length > 0 || soilMoisture.length > 0) {
-      functionalities.add(new S123456t(soilTemp));
-      functionalities.add(new St135(soilMoisture));
-    }
+    // if (soilTemp.length > 0 || soilMoisture.length > 0) {
+    //   functionalities.add(new S123456t(soilTemp));
+    //   functionalities.add(new St135(soilMoisture));
+    // }
 
     return functionalities;
   }

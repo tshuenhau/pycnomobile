@@ -27,15 +27,12 @@ Future<void> initGraphs(bool isAlert, Sensor sensor,
         end: DateTime(dateRange.end.year, dateRange.end.month,
             dateRange.end.day, 23, 59));
   }
-  print('sensor functionalities ' + sensor.functionalities.toString());
   if (sensor.functionalities != null) {
     TimeSeriesController controller = Get.put(TimeSeriesController());
     if (functions.length <= 1 && sli != "") {
-      print("GET SINGLE " + sli);
       controller.getSingleTimeSeries(
           dateRange.start, dateRange.end, sensor, isAlert, sli, functions);
     } else {
-      print("GET MULTI");
       controller.getMultiTimeSeries(
           dateRange.start, dateRange.end, functions, sensor, isAlert);
     }
@@ -179,7 +176,6 @@ List<Widget> buildGraphs(
       )); //I put ! behind the e just to avoid error, idk if will have any bugs
     });
   }
-  print('cock ' + graphsToDraw.toString());
   List<Widget> result = [
     Column(children: <Widget>[] + graphsToDraw),
     buildLoadingIndicator()

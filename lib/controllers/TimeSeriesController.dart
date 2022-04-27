@@ -126,9 +126,6 @@ class TimeSeriesController extends GetxController {
           for (String functionality in sli["plottable"]) {
             final response = await http.get(Uri.parse(
                 'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-            print(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
-
             if (response.statusCode == 200) {
               if (jsonDecode(response.body).length <= 0) {
                 continue;
@@ -235,7 +232,6 @@ class TimeSeriesController extends GetxController {
     } else if (alertGraphs.length > 1) {
       alertGraphs.removeRange(0, alertGraphs.length - 1);
     }
-    print('bitch ' + graphs.toString());
   }
 
   Future<void> getOldSliTimeSeries(DateTime start, DateTime end,
@@ -320,7 +316,6 @@ class TimeSeriesController extends GetxController {
         sliCount += (sli["plottable"] as List).length;
       }
     }
-    print("SLI COUNT " + sliCount.toString());
     return sliCount;
   }
 
@@ -335,7 +330,6 @@ class TimeSeriesController extends GetxController {
         sliCount += (sli["plottable"] as List).length;
       }
     }
-    print("COUNT " + sliCount.toString());
     return sliCount;
   }
 }
