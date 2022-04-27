@@ -151,8 +151,6 @@ class ListOfSensorsController extends GetxController
 
     //sort all the non-node sensors
     List<Sensor> masterSensorsList = masterSensors.toList();
-    print(masterSensorsList);
-
     masterSensorsList.sort((a, b) => a.polledAt != null && b.polledAt != null
         ? b.polledAt!.compareTo(a.polledAt!)
         : 0);

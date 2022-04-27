@@ -149,8 +149,8 @@ abstract class Sensor {
 
   static getFunctionalities(Map<String, dynamic> json, TYPE_OF_SENSOR type) {
     List<Functionality> functionalities = List.empty(growable: true);
-    List<Functionality> soilMoisture = List.empty(growable: true);
-    List<Functionality> soilTemp = List.empty(growable: true);
+    // List<Functionality> soilMoisture = List.empty(growable: true);
+    // List<Functionality> soilTemp = List.empty(growable: true);
     for (var i = 0; i < json["plottable"].length; i++) {
       if (json["plottable"][i] == "TEMP") {
         functionalities.add(new Temp(json["TEMP"]?.toDouble()));
@@ -175,33 +175,89 @@ abstract class Sensor {
       } else if (json["plottable"][i] == "WNDR") {
         functionalities.add(new Wndr(json["WNDR"]?.toDouble()));
       } else if (json["plottable"][i] == "ST1") {
-        soilMoisture.add(new St1(json["ST1"]?.toDouble()));
+        functionalities.add(new St1(json["ST1"]?.toDouble()));
       } else if (json["plottable"][i] == "ST3") {
-        soilMoisture.add(new St3(json["ST3"]?.toDouble()));
+        functionalities.add(new St3(json["ST3"]?.toDouble()));
       } else if (json["plottable"][i] == "ST5") {
-        soilMoisture.add(new St5(json["ST5"]?.toDouble()));
+        functionalities.add(new St5(json["ST5"]?.toDouble()));
       } else if (json["plottable"][i] == "S1T") {
-        soilTemp.add(new S1t(json["S1T"]?.toDouble()));
+        functionalities.add(new S1t(json["S1T"]?.toDouble()));
       } else if (json["plottable"][i] == "S2T") {
-        soilTemp.add(new S2t(json["S2T"]?.toDouble()));
+        functionalities.add(new S2t(json["S2T"]?.toDouble()));
       } else if (json["plottable"][i] == "S3T") {
-        soilTemp.add(new S3t(json["S3T"]?.toDouble()));
+        functionalities.add(new S3t(json["S3T"]?.toDouble()));
       } else if (json["plottable"][i] == "S4T") {
-        soilTemp.add(new S4t(json["S4T"]?.toDouble()));
+        functionalities.add(new S4t(json["S4T"]?.toDouble()));
       } else if (json["plottable"][i] == "S5T") {
-        soilTemp.add(new S5t(json["S5T"]?.toDouble()));
+        functionalities.add(new S5t(json["S5T"]?.toDouble()));
       } else if (json["plottable"][i] == "S6T") {
-        soilTemp.add(new S6t(json["S6T"]?.toDouble()));
+        functionalities.add(new S6t(json["S6T"]?.toDouble()));
       }
     }
-    if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR ||
-        type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
-      functionalities.add(new S123456t(soilTemp));
-      functionalities.add(new St135(soilMoisture));
-    }
+    // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR ||
+    //     type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+    //   functionalities.add(new S123456t(soilTemp));
+    //   functionalities.add(new St135(soilMoisture));
+    // }
 
     return functionalities;
   }
+
+  // static getFunctionalities(Map<String, dynamic> json, TYPE_OF_SENSOR type) {
+  //   List<Functionality> functionalities = List.empty(growable: true);
+  //   List<Functionality> soilMoisture = List.empty(growable: true);
+  //   List<Functionality> soilTemp = List.empty(growable: true);
+  //   for (var i = 0; i < json["plottable"].length; i++) {
+  //     if (json["plottable"][i] == "TEMP") {
+  //       functionalities.add(new Temp(json["TEMP"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "HUM") {
+  //       functionalities.add(new Hum(json["HUM"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "BAT") {
+  //       functionalities.add(new Bat(json["BAT"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "RAINH") {
+  //       functionalities.add(new Rainh(json["RAINH"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "RAIN") {
+  //       functionalities.add(new Rain(json["RAINH"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "LW1") {
+  //       functionalities.add(new Lw1(json["LW1"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "LX1") {
+  //       functionalities.add(new Lx1(json["LX1"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "RSSI") {
+  //       functionalities.add(new Rssi(json["RSSI"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "UV") {
+  //       functionalities.add(new Uv(json["UV"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "WND") {
+  //       functionalities.add(new Wnd(json["WND"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "WNDR") {
+  //       functionalities.add(new Wndr(json["WNDR"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "ST1") {
+  //       soilMoisture.add(new St1(json["ST1"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "ST3") {
+  //       soilMoisture.add(new St3(json["ST3"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "ST5") {
+  //       soilMoisture.add(new St5(json["ST5"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S1T") {
+  //       soilTemp.add(new S1t(json["S1T"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S2T") {
+  //       soilTemp.add(new S2t(json["S2T"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S3T") {
+  //       soilTemp.add(new S3t(json["S3T"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S4T") {
+  //       soilTemp.add(new S4t(json["S4T"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S5T") {
+  //       soilTemp.add(new S5t(json["S5T"]?.toDouble()));
+  //     } else if (json["plottable"][i] == "S6T") {
+  //       soilTemp.add(new S6t(json["S6T"]?.toDouble()));
+  //     }
+  //   }
+  //   if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR ||
+  //       type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+  //     functionalities.add(new S123456t(soilTemp));
+  //     functionalities.add(new St135(soilMoisture));
+  //   }
+
+  //   return functionalities;
+  // }
 
   bool isPulse() {
     return this.sli != null;
