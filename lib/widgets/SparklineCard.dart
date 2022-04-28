@@ -77,13 +77,12 @@ class SparklineCardV2 extends StatelessWidget {
                       Flexible(
                         child: Text(
                           (sli == ""
-                                      ? function.value
-                                      : sensor.sli?[sensor.sli?.indexWhere((e) {
-                                            return e["PID"] == sli;
-                                          }) ??
-                                          0][function.key])
-                                  .toStringAsFixed(3) ??
-                              "",
+                                  ? function.value
+                                  : sensor.sli?[sensor.sli?.indexWhere((e) {
+                                        return e["PID"] == sli;
+                                      }) ??
+                                      0][function.key])
+                              .toString(),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
