@@ -103,10 +103,10 @@ class ListOfSensorsController extends GetxController
     List<Sensor> allSensorList = List.empty(growable: true);
     List<Sensor> inactiveList = List.empty(growable: true);
     for (Sensor s in filteredListOfSensors) {
-      if (s.isActive() == IS_ACTIVE.ACTIVE) {
+      if (s.isActive() == IS_ACTIVE.INACTIVE) {
+        inactiveList.insert(0, s);
         allSensorList.insert(0, s);
       } else {
-        inactiveList.insert(0, s);
         allSensorList.insert(0, s);
       }
     }
@@ -117,6 +117,7 @@ class ListOfSensorsController extends GetxController
     //     : 0);
 
     inactiveList = inactiveList.reversed.toList();
+    print("INACTIVE LIST LENGTH " + inactiveList.length.toString());
     inactiveListOfSensors.value = inactiveList;
 
     List<Sensor> tempList = [...allSensorList];
