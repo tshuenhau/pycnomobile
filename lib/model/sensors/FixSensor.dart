@@ -65,47 +65,55 @@ class FixSensor extends Sensor {
     List<Functionality> functionalities = List.empty(growable: true);
 
     for (var i = 0; i < json["plottable"].length; i++) {
-      if (json["plottable"][i] == "TEMP") {
-        functionalities.add(new Temp(json["TEMP"]?.toDouble()));
-      } else if (json["plottable"][i] == "HUM") {
-        functionalities.add(new Hum(json["HUM"]?.toDouble()));
-      } else if (json["plottable"][i] == "BAT") {
-        functionalities.add(new Bat(json["BAT"]?.toDouble()));
-      } else if (json["plottable"][i] == "RAINH") {
-        functionalities.add(new Rainh(json["RAINH"]?.toDouble()));
-      } else if (json["plottable"][i] == "RAIN") {
-        functionalities.add(new Rain(json["RAINH"]?.toDouble()));
-      } else if (json["plottable"][i] == "LW1") {
-        functionalities.add(new Lw1(json["LW1"]?.toDouble()));
-      } else if (json["plottable"][i] == "LX1") {
-        functionalities.add(new Lx1(json["LX1"]?.toDouble()));
-      } else if (json["plottable"][i] == "RSSI") {
-        functionalities.add(new Rssi(json["RSSI"]?.toDouble()));
-      } else if (json["plottable"][i] == "UV") {
-        functionalities.add(new Uv(json["UV"]?.toDouble()));
-      } else if (json["plottable"][i] == "WND") {
-        functionalities.add(new Wnd(json["WND"]?.toDouble()));
-      } else if (json["plottable"][i] == "WNDR") {
-        functionalities.add(new Wndr(json["WNDR"]?.toDouble()));
-      } else if (json["plottable"][i] == "ST1") {
-        functionalities.add(new St1(json["ST1"]?.toDouble()));
-      } else if (json["plottable"][i] == "ST3") {
-        functionalities.add(new St3(json["ST3"]?.toDouble()));
-      } else if (json["plottable"][i] == "ST5") {
-        functionalities.add(new St5(json["ST5"]?.toDouble()));
-      } else if (json["plottable"][i] == "S1T") {
-        functionalities.add(new S1t(json["S1T"]?.toDouble()));
-      } else if (json["plottable"][i] == "S2T") {
-        functionalities.add(new S2t(json["S2T"]?.toDouble()));
-      } else if (json["plottable"][i] == "S3T") {
-        functionalities.add(new S3t(json["S3T"]?.toDouble()));
-      } else if (json["plottable"][i] == "S4T") {
-        functionalities.add(new S4t(json["S4T"]?.toDouble()));
-      } else if (json["plottable"][i] == "S5T") {
-        functionalities.add(new S5t(json["S5T"]?.toDouble()));
-      } else if (json["plottable"][i] == "S6T") {
-        functionalities.add(new S6t(json["S6T"]?.toDouble()));
-      }
+      // if (json["plottable"][i] == "TEMP") {
+      //   functionalities.add(new Temp(json["TEMP"]?.toDouble()));
+      // } else if (json["plottable"][i] == "HUM") {
+      //   functionalities.add(new Hum(json["HUM"]?.toDouble()));
+      // } else if (json["plottable"][i] == "BAT") {
+      //   functionalities.add(new Bat(json["BAT"]?.toDouble()));
+      // } else if (json["plottable"][i] == "RAINH") {
+      //   functionalities.add(new Rainh(json["RAINH"]?.toDouble()));
+      // } else if (json["plottable"][i] == "RAIN") {
+      //   functionalities.add(new Rain(json["RAINH"]?.toDouble()));
+      // } else if (json["plottable"][i] == "LW1") {
+      //   functionalities.add(new Lw1(json["LW1"]?.toDouble()));
+      // } else if (json["plottable"][i] == "LX1") {
+      //   functionalities.add(new Lx1(json["LX1"]?.toDouble()));
+      // } else if (json["plottable"][i] == "RSSI") {
+      //   functionalities.add(new Rssi(json["RSSI"]?.toDouble()));
+      // } else if (json["plottable"][i] == "UV") {
+      //   functionalities.add(new Uv(json["UV"]?.toDouble()));
+      // } else if (json["plottable"][i] == "WND") {
+      //   functionalities.add(new Wnd(json["WND"]?.toDouble()));
+      // } else if (json["plottable"][i] == "WNDR") {
+      //   functionalities.add(new Wndr(json["WNDR"]?.toDouble()));
+      // } else if (json["plottable"][i] == "ST1") {
+      //   functionalities.add(new St1(json["ST1"]?.toDouble()));
+      // } else if (json["plottable"][i] == "ST3") {
+      //   functionalities.add(new St3(json["ST3"]?.toDouble()));
+      // } else if (json["plottable"][i] == "ST5") {
+      //   functionalities.add(new St5(json["ST5"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S1T") {
+      //   functionalities.add(new S1t(json["S1T"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S2T") {
+      //   functionalities.add(new S2t(json["S2T"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S3T") {
+      //   functionalities.add(new S3t(json["S3T"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S4T") {
+      //   functionalities.add(new S4t(json["S4T"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S5T") {
+      //   functionalities.add(new S5t(json["S5T"]?.toDouble()));
+      // } else if (json["plottable"][i] == "S6T") {
+      //   functionalities.add(new S6t(json["S6T"]?.toDouble()));
+      // } else {
+      functionalities.add(new Functionality(
+          value: json[json["plottable"][i]],
+          unit: "",
+          name: json["plottable"][i],
+          color: null,
+          icon: null,
+          key: json["plottable"][i]));
+      // }
     }
     // if (soilTemp.length > 0 || soilMoisture.length > 0) {
     //   functionalities.add(new S123456t(soilTemp));
