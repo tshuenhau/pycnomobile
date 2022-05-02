@@ -4,8 +4,6 @@ import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/widgets/(OLD)SparklineCard.dart';
 import 'package:pycnomobile/widgets/SparklineCard.dart';
-import 'package:pycnomobile/widgets/SliSparklineCard.dart';
-import 'package:pycnomobile/widgets/SparklineListTile.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
@@ -30,6 +28,13 @@ List<Widget> buildSparklinesV2(
 
       if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
         for (String functionality in sli["plottable"]) {
+          if (functionality == "IP" ||
+              functionality == "APN" ||
+              functionality == "TXT" ||
+              functionality == "LAT2" ||
+              functionality == "LON2") {
+            continue;
+          }
           cards.add(new SparklineCardV2(
               name: functionality,
               index: sli["plottable"].indexOf(functionality),
@@ -48,7 +53,15 @@ List<Widget> buildSparklinesV2(
   }
   if (sensor.functionalities != null) {
     for (Functionality func in sensor.functionalities!) {
-      print("INDEX " + sensor.functionalities!.indexOf(func).toString());
+      if (func.key == "IP" ||
+          func.key == "APN" ||
+          func.key == "TXT" ||
+          func.key == "LAT2" ||
+          func.key == "BUF" ||
+          func.key == "NET" ||
+          func.key == "LON2") {
+        continue;
+      }
       cards.add(new SparklineCardV2(
           name: func.name,
           index: sensor.functionalities!.indexOf(func),

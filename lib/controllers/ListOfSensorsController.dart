@@ -102,6 +102,9 @@ class ListOfSensorsController extends GetxController
     // List<Sensor> activeList = List.empty(growable: true);
     List<Sensor> allSensorList = List.empty(growable: true);
     List<Sensor> inactiveList = List.empty(growable: true);
+    if (filteredListOfSensors.length <= 1) {
+      return;
+    }
     for (Sensor s in filteredListOfSensors) {
       if (s.isActive() == IS_ACTIVE.INACTIVE) {
         inactiveList.insert(0, s);
@@ -117,10 +120,10 @@ class ListOfSensorsController extends GetxController
     //     : 0);
 
     inactiveList = inactiveList.reversed.toList();
-    print("INACTIVE LIST LENGTH " + inactiveList.length.toString());
     inactiveListOfSensors.value = inactiveList;
 
     List<Sensor> tempList = [...allSensorList];
+
     Map<Sensor, List<Sensor>> sensorMap = {};
 
     // create empty list for each non-node sensor
@@ -129,6 +132,7 @@ class ListOfSensorsController extends GetxController
         sensorMap[tempList[i]] = List.empty(growable: true);
       }
     }
+    print("SENSOR MAP " + sensorMap.toString());
 
     Iterable<Sensor> masterSensors = sensorMap.keys;
 
@@ -155,22 +159,28 @@ class ListOfSensorsController extends GetxController
     masterSensorsList.sort((a, b) => a.polledAt != null && b.polledAt != null
         ? b.polledAt!.compareTo(a.polledAt!)
         : 0);
-
     List<Sensor> list = List.empty(growable: true);
     for (int i = 0; i < masterSensorsList.length; i++) {
       Sensor currentSensor = masterSensorsList[i];
-      print(currentSensor);
+      print(currentSensor.uid);
       //current sensor is a master sensor
       list.add(currentSensor);
       list.addAll(sensorMap[currentSensor] ?? []);
     }
 
-    // list.addAll(inactiveList);
+    //Add nodes in case no masters
+    for (int i = 0; i < tempList.length; i++) {
+      if (!list.contains(tempList[i])) {
+        list.add(tempList[i]);
+      }
+    }
+
     filteredListOfSensors.value = [...list];
   }
 
   void searchListOfSensors() {
     String searchTerm = searchController.value;
+    print(searchTerm);
     filteredListOfSensors.clear();
     if (searchTerm == "") {
       List<Sensor> tempList = List<Sensor>.empty(growable: true);
@@ -194,6 +204,8 @@ class ListOfSensorsController extends GetxController
         filteredListOfSensors.add(sensor);
       }
     }
+    print(" BEF SEARCHED SENSORS " + filteredListOfSensors.toString());
     sortSensors();
+    print("SEARCHED SENSORS " + filteredListOfSensors.toString());
   }
 }

@@ -108,8 +108,10 @@ class _SensorListPageState extends State<SensorListPage> {
                               }
                               Sensor sensor = sensorsController
                                   .filteredListOfSensors[index];
+                              print(sensor);
+                              print(index);
                               if (sensor.isActive() == IS_ACTIVE.INACTIVE &&
-                                  displayInactive == false) {
+                                  !displayInactive) {
                                 return Container();
                               }
                               return SensorsListTile(sensor: sensor);
