@@ -88,66 +88,127 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
         alignment: Alignment.topCenter,
         child: Obx(
           () => ListView(
-            padding: EdgeInsets.all(0),
-            children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [DateRangeSelector(context)],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 2.5 / 100,
-                  ),
-                ] +
-                (widget.sensor.isPulse()
-                    ? (buildGraphs(
-                            sensor: widget.sensor,
-                            functions: widget.sensor.functionalities!,
-                            type: TYPE_OF_TIMESERIES.SLI,
-                            context: context,
-                            isAlert: isAlert) +
-                        [
-                          Container(),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom:
-                                  MediaQuery.of(context).size.height * 3 / 100,
+              padding: EdgeInsets.all(0),
+              children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [DateRangeSelector(context)],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 2.5 / 100,
+                    ),
+                  ] +
+                  (widget.sensor.isPulse()
+                      ? (buildGraphs(
+                              sensor: widget.sensor,
+                              functions: widget.sensor.functionalities!,
+                              type: TYPE_OF_TIMESERIES.SLI,
+                              context: context,
+                              isAlert: isAlert) +
+                          [
+                            Container(),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    3 /
+                                    100,
+                              ),
+                              child: Center(
+                                  child: ElevatedButton(
+                                onPressed: () async {
+                                  await initOldGraphs(isAlert, widget.sensor,
+                                      widget.sensor.functionalities!);
+                                  setState(() {
+                                    showOldGraphs = !showOldGraphs;
+                                  });
+                                },
+                                child: Text(showOldGraphs == false
+                                    ? "Show Old Graphs"
+                                    : "Hide Old Graphs"),
+                              )),
                             ),
-                            child: Center(
-                                child: ElevatedButton(
-                              onPressed: () async {
-                                await initOldGraphs(isAlert, widget.sensor,
-                                    widget.sensor.functionalities!);
-                                setState(() {
-                                  showOldGraphs = !showOldGraphs;
-                                });
-                              },
-                              child: Text(showOldGraphs == false
-                                  ? "Show Old Graphs"
-                                  : "Hide Old Graphs"),
-                            )),
-                          ),
-                          SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 2.5 / 100,
-                          ),
-                        ])
-                    : []) +
-                (showOldGraphs == true
-                    ? buildGraphs(
-                        sensor: widget.sensor,
-                        functions: widget.sensor.functionalities!,
-                        type: TYPE_OF_TIMESERIES.OLD_SLI,
-                        context: context,
-                        isAlert: isAlert)
-                    : []) +
-                (buildGraphs(
-                    sensor: widget.sensor,
-                    functions: widget.sensor.functionalities!,
-                    type: TYPE_OF_TIMESERIES.INTERNAL,
-                    context: context,
-                    isAlert: isAlert)),
-          ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height *
+                                  2.5 /
+                                  100,
+                            ),
+                          ])
+                      : []) +
+                  (showOldGraphs == true
+                      ? buildGraphs(
+                          sensor: widget.sensor,
+                          functions: widget.sensor.functionalities!,
+                          type: TYPE_OF_TIMESERIES.OLD_SLI,
+                          context: context,
+                          isAlert: isAlert)
+                      : []) +
+                  (buildGraphs(
+                      sensor: widget.sensor,
+                      functions: widget.sensor.functionalities!,
+                      type: TYPE_OF_TIMESERIES.INTERNAL,
+                      context: context,
+                      isAlert: isAlert)) +
+                  [
+                    Center(
+                        child: Text("Log",
+                            style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.height *
+                                    2.5 /
+                                    100))),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical:
+                              MediaQuery.of(context).size.height * 2.5 / 100,
+                          horizontal:
+                              MediaQuery.of(context).size.width * 2.5 / 100),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.65))),
+                        height: MediaQuery.of(context).size.height * 25 / 100,
+                        child: Scrollbar(
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              physics: ClampingScrollPhysics(),
+                              child: Scrollbar(
+                                scrollbarOrientation:
+                                    ScrollbarOrientation.right,
+                                child: Scrollbar(
+                                  scrollbarOrientation:
+                                      ScrollbarOrientation.left,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                            "Hi------------------------------------------------------------------------------------------------------------------------"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte"),
+                                        Text("bte")
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ),
+                    ),
+                  ]),
         ),
       ),
     ));
