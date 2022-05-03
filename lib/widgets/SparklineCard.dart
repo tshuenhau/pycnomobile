@@ -46,12 +46,12 @@ class SparklineCardV2 extends StatelessWidget {
                   ? []
                   : controller.convertTimeSeriestoList(controller
                           .nonSliSparklines[sensor.name]?[index]
-                          .getTimeSeries! ??
+                          .getTimeSeries ??
                       {})
               : (controller.sparkLines[sli]?.length ?? 0) <= index
                   ? []
                   : controller.convertTimeSeriestoList(
-                      controller.sparkLines[sli]?[index].getTimeSeries! ?? {});
+                      controller.sparkLines[sli]?[index].getTimeSeries ?? {});
 
           late double change;
 

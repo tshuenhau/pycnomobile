@@ -132,7 +132,6 @@ class ListOfSensorsController extends GetxController
         sensorMap[tempList[i]] = List.empty(growable: true);
       }
     }
-    print("SENSOR MAP " + sensorMap.toString());
 
     Iterable<Sensor> masterSensors = sensorMap.keys;
 
@@ -162,7 +161,6 @@ class ListOfSensorsController extends GetxController
     List<Sensor> list = List.empty(growable: true);
     for (int i = 0; i < masterSensorsList.length; i++) {
       Sensor currentSensor = masterSensorsList[i];
-      print(currentSensor.uid);
       //current sensor is a master sensor
       list.add(currentSensor);
       list.addAll(sensorMap[currentSensor] ?? []);
@@ -180,7 +178,6 @@ class ListOfSensorsController extends GetxController
 
   void searchListOfSensors() {
     String searchTerm = searchController.value;
-    print(searchTerm);
     filteredListOfSensors.clear();
     if (searchTerm == "") {
       List<Sensor> tempList = List<Sensor>.empty(growable: true);
@@ -204,8 +201,7 @@ class ListOfSensorsController extends GetxController
         filteredListOfSensors.add(sensor);
       }
     }
-    print(" BEF SEARCHED SENSORS " + filteredListOfSensors.toString());
+
     sortSensors();
-    print("SEARCHED SENSORS " + filteredListOfSensors.toString());
   }
 }
