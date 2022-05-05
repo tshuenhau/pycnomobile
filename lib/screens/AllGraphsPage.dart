@@ -167,7 +167,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                             border: Border.all(
                                 color: Theme.of(context)
                                     .primaryColor
-                                    .withOpacity(0.65))),
+                                    .withOpacity(0.45))),
                         height: MediaQuery.of(context).size.height * 25 / 100,
                         child: Scrollbar(
                           child: SingleChildScrollView(

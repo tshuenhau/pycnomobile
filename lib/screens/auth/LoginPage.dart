@@ -22,8 +22,16 @@ class LoginPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 8.5 / 100),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            SizedBox(height: MediaQuery.of(context).size.height * 15 / 100),
+            Icon(Icons.equalizer,
+                size: MediaQuery.of(context).size.width * 15 / 100),
+            SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
+            Text("Welcome back!",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
             TextField(
                 onSubmitted: (s) async {
                   try {

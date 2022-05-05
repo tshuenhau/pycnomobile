@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 var customColorScheme = ColorScheme(
     //! Do API Call to get the JSON and then convert it into a ColorSchemeObject
     brightness: Brightness.light,
-    background: Color(0xFFf2f0e1),
+    background: Colors.white,
     onBackground: Colors.black,
     error: Colors.black,
     onError: Colors.black,
@@ -12,10 +12,10 @@ var customColorScheme = ColorScheme(
     onSecondary: Color(0xFFfdfdf5),
     onTertiary: Color(0xFFfdfdf5),
     onSurface: Color(0xFF252a20),
-    primary: Color(0xFF252a20),
-    secondary: Color(0xFF6c6c65),
-    tertiary: Color(0xFF757c49),
-    surface: Color(0xFFfffcf3));
+    primary: Colors.black,
+    secondary: Colors.black,
+    tertiary: Colors.green.shade400,
+    surface: Colors.white.withOpacity(0.85));
 
 Color hexToColor(String code) {
   // print(code);

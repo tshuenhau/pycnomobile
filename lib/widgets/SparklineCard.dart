@@ -143,7 +143,13 @@ class SparklineCardV2 extends StatelessWidget {
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 1.5 / 100),
                   data == null
-                      ? Container(child: Text("No data"))
+                      ? Expanded(
+                          child: Container(
+                              child: Text("No data",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.65)))))
                       : data.length == 0
                           ? Expanded(
                               child: Container(
@@ -171,14 +177,12 @@ class SparklineCardV2 extends StatelessWidget {
                                   fillMode: FillMode.below,
                                   fillColor: change == 0
                                       ? Colors.blue.shade700.withOpacity(
-                                          (Theme.of(context).brightness ==
-                                                  Brightness.light
+                                          (Theme.of(context).brightness == Brightness.light
                                               ? 0.1
                                               : 0.4))
                                       : change > 0
                                           ? Colors.green.shade700.withOpacity(
-                                              (Theme.of(context).brightness ==
-                                                      Brightness.light
+                                              (Theme.of(context).brightness == Brightness.light
                                                   ? 0.1
                                                   : 0.4))
                                           : Colors.red.shade700.withOpacity(
