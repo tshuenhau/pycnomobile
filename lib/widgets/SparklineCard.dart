@@ -41,23 +41,25 @@ class SparklineCardV2 extends StatelessWidget {
                     sensor: sensor, functions: [function], sli: "", name: name);
               });
         }, child: Obx(() {
-          List<double> data = sli == ""
+          List<double>? data = sli == ""
               ? (controller.nonSliSparklines[sensor.name]?.length ?? 0) <= index
                   ? []
                   : controller.convertTimeSeriestoList(controller
-                          .nonSliSparklines[sensor.name]?[index]
-                          .getTimeSeries ??
-                      {})
+                      .nonSliSparklines[sensor.name]?[index].getTimeSeries)
               : (controller.sparkLines[sli]?.length ?? 0) <= index
                   ? []
                   : controller.convertTimeSeriestoList(
-                      controller.sparkLines[sli]?[index].getTimeSeries ?? {});
+                      controller.sparkLines[sli]?[index].getTimeSeries);
 
           late double change;
+          if (data == null) {
+            change = 0;
+          } else {
+            change = data.length == 0
+                ? 0
+                : ((data[data.length - 1] - data[0]) / data[0] * 100);
+          }
 
-          change = data.length == 0
-              ? 0
-              : ((data[data.length - 1] - data[0]) / data[0] * 100);
           return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
@@ -76,9 +78,11 @@ class SparklineCardV2 extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          data.length > 0
-                              ? data[data.length - 1].toStringAsFixed(2)
-                              : "-",
+                          data == null
+                              ? '-'
+                              : (data.length) > 0
+                                  ? data[data.length - 1].toStringAsFixed(2)
+                                  : "-",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -138,45 +142,51 @@ class SparklineCardV2 extends StatelessWidget {
                   ),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 1.5 / 100),
-                  data.length == 0
-                      ? Expanded(
-                          child: Container(
-                              child: Center(
-                          child: SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.width * 3 / 100,
-                              width:
-                                  MediaQuery.of(context).size.width * 3 / 100,
-                              child: CircularProgressIndicator()),
-                        )))
-                      : Expanded(
-                          // width: double.infinity,
-                          // height: MediaQuery.of(context).size.width * 2.5 / 100,
-                          child: Sparkline(
-                              lineColor: change == 0
-                                  ? Colors.blue.shade700
-                                  : change > 0
-                                      ? Colors.green.shade700.withOpacity(0.75)
-                                      : Colors.red.shade700.withOpacity(0.75),
-                              fillMode: FillMode.below,
-                              fillColor: change == 0
-                                  ? Colors.blue.shade700.withOpacity(
-                                      (Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? 0.1
-                                          : 0.4))
-                                  : change > 0
-                                      ? Colors.green.shade700.withOpacity(
+                  data == null
+                      ? Container(child: Text("No data"))
+                      : data.length == 0
+                          ? Expanded(
+                              child: Container(
+                                  child: Center(
+                              child: SizedBox(
+                                  height: MediaQuery.of(context).size.width *
+                                      3 /
+                                      100,
+                                  width: MediaQuery.of(context).size.width *
+                                      3 /
+                                      100,
+                                  child: CircularProgressIndicator()),
+                            )))
+                          : Expanded(
+                              // width: double.infinity,
+                              // height: MediaQuery.of(context).size.width * 2.5 / 100,
+                              child: Sparkline(
+                                  lineColor: change == 0
+                                      ? Colors.blue.shade700
+                                      : change > 0
+                                          ? Colors.green.shade700
+                                              .withOpacity(0.75)
+                                          : Colors.red.shade700
+                                              .withOpacity(0.75),
+                                  fillMode: FillMode.below,
+                                  fillColor: change == 0
+                                      ? Colors.blue.shade700.withOpacity(
                                           (Theme.of(context).brightness ==
                                                   Brightness.light
                                               ? 0.1
                                               : 0.4))
-                                      : Colors.red.shade700.withOpacity(
-                                          (Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? 0.1
-                                              : 0.4)),
-                              data: data))
+                                      : change > 0
+                                          ? Colors.green.shade700.withOpacity(
+                                              (Theme.of(context).brightness ==
+                                                      Brightness.light
+                                                  ? 0.1
+                                                  : 0.4))
+                                          : Colors.red.shade700.withOpacity(
+                                              (Theme.of(context).brightness ==
+                                                      Brightness.light
+                                                  ? 0.1
+                                                  : 0.4)),
+                                  data: data))
                 ],
               ),
             ),

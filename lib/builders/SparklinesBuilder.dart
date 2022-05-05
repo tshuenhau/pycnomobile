@@ -76,55 +76,55 @@ List<Widget> buildSparklinesV2(
   return cards;
 }
 
-List<Widget> buildSparklines(
-    {required Sensor sensor, required BuildContext context}) {
-  print("Building sparklines...");
-  SensorInfoController controller = Get.put(SensorInfoController());
-  List<Widget> sparkLines = [];
+// List<Widget> buildSparklines(
+//     {required Sensor sensor, required BuildContext context}) {
+//   print("Building sparklines...");
+//   SensorInfoController controller = Get.put(SensorInfoController());
+//   List<Widget> sparkLines = [];
 
-  /*
-    Sparklines format: Map<String, List<TimeSeries>>
-                              |            |
-                             SLI's PID  TimeSeries for each functionality in SLI
-  */
-  controller.sparkLines.forEach((key, value) {
-    value.forEach((TimeSeries e) {
-      if (e.getTimeSeries == null) {
-        return;
-      }
-      sparkLines.add(SparklineCard(
-          sensor: sensor,
-          function: new Functionality(
-              name: e.getName,
-              key: e.getKey,
-              value: null,
-              color: null,
-              icon: null,
-              unit: null),
-          sli: key,
-          name: e.getName,
-          data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
-    });
-  });
+//   /*
+//     Sparklines format: Map<String, List<TimeSeries>>
+//                               |            |
+//                              SLI's PID  TimeSeries for each functionality in SLI
+//   */
+//   controller.sparkLines.forEach((key, value) {
+//     value.forEach((TimeSeries e) {
+//       if (e.getTimeSeries == null) {
+//         return;
+//       }
+//       sparkLines.add(SparklineCard(
+//           sensor: sensor,
+//           function: new Functionality(
+//               name: e.getName,
+//               key: e.getKey,
+//               value: null,
+//               color: null,
+//               icon: null,
+//               unit: null),
+//           sli: key,
+//           name: e.getName,
+//           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
+//     });
+//   });
 
-  controller.nonSliSparklines.forEach((key, value) {
-    value.forEach((TimeSeries e) {
-      if (e.getTimeSeries == null) {
-        return;
-      }
-      sparkLines.add(SparklineCard(
-          sensor: sensor,
-          function: new Functionality(
-              name: e.getName,
-              key: e.getKey,
-              value: null,
-              color: null,
-              icon: null,
-              unit: null),
-          sli: "",
-          name: e.getKey,
-          data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
-    });
-  });
-  return sparkLines;
-}
+//   controller.nonSliSparklines.forEach((key, value) {
+//     value.forEach((TimeSeries e) {
+//       if (e.getTimeSeries == null) {
+//         return;
+//       }
+//       sparkLines.add(SparklineCard(
+//           sensor: sensor,
+//           function: new Functionality(
+//               name: e.getName,
+//               key: e.getKey,
+//               value: null,
+//               color: null,
+//               icon: null,
+//               unit: null),
+//           sli: "",
+//           name: e.getKey,
+//           data: controller.convertTimeSeriestoList(e.getTimeSeries)));
+//     });
+//   });
+//   return sparkLines;
+// }

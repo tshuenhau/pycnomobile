@@ -14,9 +14,9 @@ class NotificationsController extends GetxController {
   Rx<int> alertCounter = 0.obs;
   Rx<bool> isSevere = false.obs;
 
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    // await this.reload();
+    this.reload();
   }
 
   @override
@@ -26,7 +26,9 @@ class NotificationsController extends GetxController {
 
   Future<void> reload() async {
     // refresh notifs every 1/2 hour
+
     Timer.periodic(new Duration(seconds: 1800), (timer) async {
+      print('reload notif');
       await this.getNotifications();
     });
   }
