@@ -105,7 +105,6 @@ List<Widget> buildGraphs(
           : type == TYPE_OF_TIMESERIES.INTERNAL
               ? controller.countNumberOfGraphs(functions)
               : 1);
-  print('count ' + count.toString());
 
   Widget buildLoadingIndicator() {
     if (drawnCount == count) {

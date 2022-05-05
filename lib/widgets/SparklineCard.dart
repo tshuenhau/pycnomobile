@@ -46,12 +46,12 @@ class SparklineCardV2 extends StatelessWidget {
                   ? []
                   : controller.convertTimeSeriestoList(controller
                           .nonSliSparklines[sensor.name]?[index]
-                          .getTimeSeries! ??
+                          .getTimeSeries ??
                       {})
               : (controller.sparkLines[sli]?.length ?? 0) <= index
                   ? []
                   : controller.convertTimeSeriestoList(
-                      controller.sparkLines[sli]?[index].getTimeSeries! ?? {});
+                      controller.sparkLines[sli]?[index].getTimeSeries ?? {});
 
           late double change;
 
@@ -76,14 +76,9 @@ class SparklineCardV2 extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          ((sli == ""
-                                      ? function.value
-                                      : sensor.sli?[sensor.sli?.indexWhere((e) {
-                                            return e["PID"] == sli;
-                                          }) ??
-                                          0][function.key]) ??
-                                  0)
-                              .toStringAsFixed(2),
+                          data.length > 0
+                              ? data[data.length - 1].toStringAsFixed(2)
+                              : "-",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,

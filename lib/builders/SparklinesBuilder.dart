@@ -51,8 +51,10 @@ List<Widget> buildSparklinesV2(
       }
     }
   }
+
   if (sensor.functionalities != null) {
     for (Functionality func in sensor.functionalities!) {
+      print(sensor.functionalities!.indexOf(func));
       if (func.key == "IP" ||
           func.key == "APN" ||
           func.key == "TXT" ||
