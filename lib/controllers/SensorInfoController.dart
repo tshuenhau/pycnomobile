@@ -30,7 +30,10 @@ class SensorInfoController extends GetxController {
     super.onClose();
   }
 
-  List<double> convertTimeSeriestoList(Map<int, double> timeSeries) {
+  List<double>? convertTimeSeriestoList(Map<int, double>? timeSeries) {
+    if (timeSeries == null) {
+      return null;
+    }
     List<double> list = [];
     timeSeries.forEach((key, value) {
       list.insert(list.length, value);
