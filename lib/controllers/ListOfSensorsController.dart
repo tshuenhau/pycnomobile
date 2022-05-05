@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/notinuse/SonicAnemometer.dart';
 import 'package:pycnomobile/model/sensors/FixSensor.dart';
-import 'package:pycnomobile/model/sensors/notinuse/RainGauge.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
@@ -28,7 +26,7 @@ class ListOfSensorsController extends GetxController
 
   @override
   void onInit() async {
-    // this.reload();
+    this.reload();
     super.onInit();
     try {
       EasyLoading.show(status: 'loading...');
@@ -46,6 +44,7 @@ class ListOfSensorsController extends GetxController
 
   void reload() {
     Timer.periodic(new Duration(seconds: 5), (timer) async {
+      // print("reload");
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value

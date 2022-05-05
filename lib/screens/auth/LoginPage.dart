@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
+import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
                         username: usernameController.text,
                         password: passwordController.text);
                     EasyLoading.dismiss();
-                    Navigator.of(context)
+                    Navigator.of(context, rootNavigator: true)
                         .push(MaterialPageRoute(builder: (context) => App()));
                   } catch (e) {
                     EasyLoading.showError("invalid username/password");

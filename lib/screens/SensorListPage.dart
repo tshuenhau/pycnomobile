@@ -52,8 +52,15 @@ class _SensorListPageState extends State<SensorListPage> {
   }
 
   @override
+  didChangeDependencies() {
+    context.dependOnInheritedWidgetOfExactType();
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     keyboardSubscription.cancel();
+    Get.delete<ListOfSensorsController>();
     super.dispose();
   }
 
