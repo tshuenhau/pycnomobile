@@ -164,9 +164,9 @@ class SparklineCardV2 extends StatelessWidget {
                                   child: CircularProgressIndicator()),
                             )))
                           : Expanded(
-                              // width: double.infinity,
-                              // height: MediaQuery.of(context).size.width * 2.5 / 100,
                               child: Sparkline(
+                                  averageLine: true,
+                                  averageLabel: true,
                                   lineColor: change == 0
                                       ? Colors.blue.shade700
                                       : change > 0
