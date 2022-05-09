@@ -349,29 +349,46 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     .toString()))),
         Stack(
           children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.70,
-              child: Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(18),
-                    ),
-                    color: Colors.transparent), //Color(0xff232d37)),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.height * 3.5 / 100,
-                      left: MediaQuery.of(context).size.height * 0.5 / 100,
-                      top: MediaQuery.of(context).size.height * 1.5 / 100,
-                      bottom: MediaQuery.of(context).size.height * 1.5 / 100),
-                  child: widget.timeSeries.getTimeSeries == null
-                      ? Center(child: Container(child: Text("No Data")))
-                      : LineChart(
-                          mainData(),
+                AspectRatio(
+                  aspectRatio: 1.70,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(18),
                         ),
+                        color: Colors.transparent), //Color(0xff232d37)),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.height * 3.5 / 100,
+                          left: MediaQuery.of(context).size.height * 0.5 / 100,
+                          top: MediaQuery.of(context).size.height * 1.5 / 100,
+                          bottom:
+                              MediaQuery.of(context).size.height * 1.5 / 100),
+                      child: widget.timeSeries.getTimeSeries == null
+                          ? LineChart(
+                              mainData(),
+                            )
+                          : LineChart(
+                              mainData(),
+                            ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ] +
+              (widget.timeSeries.getTimeSeries == null
+                  ? [
+                      AspectRatio(
+                        aspectRatio: 1.70,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom:
+                                  MediaQuery.of(context).size.height * 3 / 100),
+                          child:
+                              Container(child: Center(child: Text("No Data"))),
+                        ),
+                      )
+                    ]
+                  : []),
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 2.5 / 100)
       ],

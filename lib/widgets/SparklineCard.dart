@@ -6,6 +6,7 @@ import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
+import 'package:collection/collection.dart';
 
 class SparklineCardV2 extends StatelessWidget {
   SparklineCardV2(
@@ -55,9 +56,10 @@ class SparklineCardV2 extends StatelessWidget {
           if (data == null) {
             change = 0;
           } else {
+            double average = data.average;
             change = data.length == 0
                 ? 0
-                : ((data[data.length - 1] - data[0]) / data[0] * 100);
+                : ((data[data.length - 1] - data[0]) / average * 100);
           }
 
           return Padding(
