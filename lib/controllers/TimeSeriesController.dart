@@ -52,13 +52,54 @@ class TimeSeriesController extends GetxController {
     List<Functionality?> functions,
   ) async {
     RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
-    if (!isAlert) {
-      sliGraphs.add(instanceSliMap);
-    } else {
-      sliAlertGraphs.add(instanceSliMap);
+    if (sensor.isPulse() && sli != "") {
+      //for sli functionalities
+      RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+
+      if (!isAlert) {
+        sliGraphs.add(instanceSliMap);
+      } else {
+        sliAlertGraphs.add(instanceSliMap);
+      }
+      for (Functionality? function in functions) {
+        if (function == null) {
+          continue;
+        }
+        final response = await http.get(Uri.parse(
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sli&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+        if (response.statusCode == 200) {
+          if (jsonDecode(response.body).length <= 0) {
+            continue;
+          }
+          var body = jsonDecode(response.body)[0];
+
+          String color = body['color'];
+          String key = body['key'];
+
+          if (body["values"] == null) {
+            instanceSliList.add(new TimeSeries(
+                name: key, color: color, timeSeries: null, key: function.key));
+            continue;
+          }
+          Map<int, double> timeSeries = convertListToMap(body['values']);
+          instanceSliList.add(new TimeSeries(
+              name: key,
+              color: color,
+              timeSeries: timeSeries,
+              key: function.key));
+        } else {
+          throw Exception("Failed to retrieve data"); //Ask UI to reload
+        }
+      }
     }
-    RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-    instanceSliMap[sli] = instanceSliList;
+    // for non-sli functions
+    RxList<TimeSeries> instanceList = RxList.empty(growable: true);
+    if (!isAlert) {
+      graphs.add(instanceList);
+    } else {
+      alertGraphs.add(instanceList);
+    }
+    instanceSliMap[sli] = instanceList;
     final response = await http.get(Uri.parse(
         'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sli&${functions[0]!.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
     if (response.statusCode == 200) {
@@ -70,12 +111,12 @@ class TimeSeriesController extends GetxController {
       String color = body['color'];
       String key = body['key'];
       if (body["values"] == null) {
-        instanceSliList.add(new TimeSeries(
+        instanceList.add(new TimeSeries(
             name: key, color: color, timeSeries: null, key: functions[0]!.key));
         return;
       }
       Map<int, double> timeSeries = convertListToMap(body['values']);
-      instanceSliList.add(new TimeSeries(
+      instanceList.add(new TimeSeries(
           name: key,
           color: color,
           timeSeries: timeSeries,
@@ -124,6 +165,7 @@ class TimeSeriesController extends GetxController {
           RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
           instanceSliMap[pid] = instanceSliList;
           for (String functionality in sli["plottable"]) {
+            print(functionality);
             final response = await http.get(Uri.parse(
                 'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
             if (response.statusCode == 200) {
@@ -215,12 +257,16 @@ class TimeSeriesController extends GetxController {
                   new TimeSeries(name: key, color: color, timeSeries: null));
               continue;
             }
-            Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(new TimeSeries(
-                name: key,
-                color: color,
-                timeSeries: timeSeries,
-                key: function.key));
+            if (body["values"][0][1] is String) {
+              print("HALLELUJAH");
+            } else {
+              Map<int, double> timeSeries = convertListToMap(body['values']);
+              instanceList.add(new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: timeSeries,
+                  key: function.key));
+            }
           } else {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
           }
@@ -237,6 +283,7 @@ class TimeSeriesController extends GetxController {
   Future<void> getOldSliTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxMap<String, RxList<TimeSeries>> instanceOldSliMap = RxMap();
+
     dynamic slil = (sensor as Pulse).slil;
     dynamic slir = (sensor).slir;
     if (!isAlert) {

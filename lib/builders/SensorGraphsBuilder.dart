@@ -29,10 +29,14 @@ Future<void> initGraphs(bool isAlert, Sensor sensor,
   }
   if (sensor.functionalities != null) {
     TimeSeriesController controller = Get.put(TimeSeriesController());
-    if (functions.length <= 1 && sli != "") {
+
+    if (functions.length <= 1) {
+      //for non sli graph bottom sheet
+      print('getting single, sli ' + sli);
       controller.getSingleTimeSeries(
           dateRange.start, dateRange.end, sensor, isAlert, sli, functions);
     } else {
+      print('getting multi');
       controller.getMultiTimeSeries(
           dateRange.start, dateRange.end, functions, sensor, isAlert);
     }
