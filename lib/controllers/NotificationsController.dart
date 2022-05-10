@@ -28,7 +28,6 @@ class NotificationsController extends GetxController {
     // refresh notifs every 1/2 hour
 
     Timer.periodic(new Duration(seconds: 1800), (timer) async {
-      print('reload notif');
       await this.getNotifications();
     });
   }
@@ -43,10 +42,8 @@ class NotificationsController extends GetxController {
           "content-type": "application/json",
         },
         body: json.encode({"state": 1}));
-    print("RESPONSE " + response.statusCode.toString());
 
     if (response.statusCode == 200) {
-      print("success");
       notif.markAsRead();
       unreadNotifications.removeWhere((x) => x.id == notif.id);
       readNotifications.add(notif);

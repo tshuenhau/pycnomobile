@@ -41,16 +41,22 @@ class SparklineCardV2 extends StatelessWidget {
                     sensor: sensor, functions: [function], sli: "", name: name);
               });
         }, child: Obx(() {
+          print("Spark lines " + controller.nonSliSparklines.toString());
+          print("WAT " + controller.nonSliSparklines[""].toString());
+          print("HELO " +
+              sensor.name.toString() +
+              controller.nonSliSparklines[""].toString());
           List<double>? data = sli == ""
-              ? (controller.nonSliSparklines[sensor.name]?.length ?? 0) <= index
+              ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ?? 0) <=
+                      index
                   ? []
                   : controller.convertTimeSeriestoList(controller
-                      .nonSliSparklines[sensor.name]?[index].getTimeSeries)
-              : (controller.sparkLines[sli]?.length ?? 0) <= index
+                      .nonSliSparklines[sensor.name ?? ""]?[index]
+                      .getTimeSeries)
+              : (controller.sparkLines[sli.toString()]?.length ?? 0) <= index
                   ? []
-                  : controller.convertTimeSeriestoList(
-                      controller.sparkLines[sli]?[index].getTimeSeries);
-
+                  : controller.convertTimeSeriestoList(controller
+                      .sparkLines[sli.toString()]?[index].getTimeSeries);
           late double change;
           if (data == null) {
             change = 0;

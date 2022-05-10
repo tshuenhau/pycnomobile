@@ -143,7 +143,7 @@ class SensorInfoController extends GetxController {
             var body = jsonDecode(response.body)[0];
             String color = body['color'];
             String key = body['key'];
-            nonSliSparklines[sensor.name ?? " "] = instanceList;
+            nonSliSparklines[sensor.name ?? ""] = instanceList;
 
             if (body["values"] == null) {
               instanceList.add(new TimeSeries(

@@ -215,12 +215,16 @@ class TimeSeriesController extends GetxController {
                   new TimeSeries(name: key, color: color, timeSeries: null));
               continue;
             }
-            Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(new TimeSeries(
-                name: key,
-                color: color,
-                timeSeries: timeSeries,
-                key: function.key));
+            if (body["values"][0][1] is String) {
+              print("HALLELUJAH");
+            } else {
+              Map<int, double> timeSeries = convertListToMap(body['values']);
+              instanceList.add(new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: timeSeries,
+                  key: function.key));
+            }
           } else {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
           }
@@ -237,6 +241,7 @@ class TimeSeriesController extends GetxController {
   Future<void> getOldSliTimeSeries(DateTime start, DateTime end,
       List<Functionality?> functions, Sensor sensor, bool isAlert) async {
     RxMap<String, RxList<TimeSeries>> instanceOldSliMap = RxMap();
+
     dynamic slil = (sensor as Pulse).slil;
     dynamic slir = (sensor).slir;
     if (!isAlert) {
