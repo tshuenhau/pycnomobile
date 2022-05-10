@@ -97,14 +97,22 @@ class _AlertsPageState extends State<AlertsPage> {
               ),
               RefreshIndicator(
                 onRefresh: _refreshData,
-                child: Obx(() => ListView.builder(
-                    itemCount: notificationsController.readNotifications.length,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return AlertListTile(
-                          notification:
-                              notificationsController.readNotifications[index]);
-                    })),
+                child: Obx(() => notificationsController
+                            .readNotifications.length ==
+                        0
+                    ? Container(
+                        height: MediaQuery.of(context).size.height * 70 / 100,
+                        child: Center(
+                            child: Text("No Recently Read Notifications")))
+                    : ListView.builder(
+                        itemCount:
+                            notificationsController.readNotifications.length,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return AlertListTile(
+                              notification: notificationsController
+                                  .readNotifications[index]);
+                        })),
               ),
             ]),
           ),
