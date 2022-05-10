@@ -15,8 +15,6 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 List<Widget> buildSparklinesV2(
     {required Sensor sensor, required BuildContext context}) {
-  print("build sparklines v2");
-
   List<Widget> cards = [];
   if (sensor.isPulse()) {
     //create cards for slis

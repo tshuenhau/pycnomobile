@@ -38,14 +38,12 @@ class SparklineCardV2 extends StatelessWidget {
               context: context,
               builder: (context) {
                 return GraphBottomSheet(
-                    sensor: sensor, functions: [function], sli: "", name: name);
+                    sensor: sensor,
+                    functions: [function],
+                    sli: sli,
+                    name: name);
               });
         }, child: Obx(() {
-          print("Spark lines " + controller.nonSliSparklines.toString());
-          print("WAT " + controller.nonSliSparklines[""].toString());
-          print("HELO " +
-              sensor.name.toString() +
-              controller.nonSliSparklines[""].toString());
           List<double>? data = sli == ""
               ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ?? 0) <=
                       index

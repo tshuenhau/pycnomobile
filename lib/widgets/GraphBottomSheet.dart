@@ -79,7 +79,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    print("SLI (A): " + (widget.sli == widget.sensor.name).toString());
+    // print("SLI (A): " + (widget.sli == widget.sensor.name).toString());
     TimeSeriesController controller = Get.put(TimeSeriesController());
     return Container(
       padding: EdgeInsets.symmetric(
