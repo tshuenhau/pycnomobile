@@ -8,6 +8,7 @@ import 'package:pycnomobile/screens/SensorPage.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
+import 'package:pycnomobile/controllers/SensorInfoController.dart';
 
 class AlertListTile extends StatelessWidget {
   AlertListTile({Key? key, required this.notification}) : super(key: key);
@@ -48,6 +49,8 @@ class AlertCard extends StatelessWidget {
           notification.epoch,
         )));
 
+    SensorInfoController sensorInfoController = Get.put(SensorInfoController());
+
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -62,6 +65,7 @@ class AlertCard extends StatelessWidget {
                 EasyLoading.show(status: "Loading");
                 Sensor sensor =
                     await controller.getSensorFromNotifs(this.notification.uid);
+                sensorInfoController.getTimeSeriesForSparklines(sensor, true);
                 EasyLoading.dismiss();
                 Navigator.of(context).push(CupertinoPageRoute(
                     builder: (_) => SensorPage(sensor: sensor)));
