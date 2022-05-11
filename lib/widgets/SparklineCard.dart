@@ -68,7 +68,8 @@ class SparklineCardV2 extends StatelessWidget {
               change = 0;
             } else if (data.length > 0) {
               double average = data.average;
-              change = ((data[data.length - 1] - data[0]) / average * 100);
+              //change = ((data[data.length - 1] - data[0]) / data.last * 100);
+              change = ((data[data.length - 1] - data[0]));
             }
           } else {
             print(controller.alertNonSliSparklines);
@@ -133,9 +134,8 @@ class SparklineCardV2 extends StatelessWidget {
                       Flexible(
                         //  width: MediaQuery.of(context).size.width * 12 / 100,
                         child: Text(
-                            (change > 0 ? "+" : "") +
-                                change.toStringAsFixed(1) +
-                                "%",
+                            (change > 0 ? "+" : "") + change.toStringAsFixed(2),
+                            //+  "%",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: change == 0
@@ -203,8 +203,8 @@ class SparklineCardV2 extends StatelessWidget {
                             )))
                           : Expanded(
                               child: Sparkline(
-                                  averageLine: true,
-                                  averageLabel: true,
+                                  averageLine: false,
+                                  averageLabel: false,
                                   lineColor: change == 0
                                       ? Colors.blue.shade700
                                       : change > 0
