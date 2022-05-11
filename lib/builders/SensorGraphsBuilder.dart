@@ -11,7 +11,6 @@ import 'package:pycnomobile/widgets/SensorLineChart.dart';
 Future<void> initGraphs(bool isAlert, Sensor sensor,
     List<Functionality?> functions, String sli, String name,
     [DateTimeRange? dateRange]) async {
-  print('init graphs');
   if (dateRange == null) {
     dateRange = new DateTimeRange(
         start: DateTime.now().add(Duration(hours: -24 * 7)),
