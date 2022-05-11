@@ -64,13 +64,11 @@ class SparklineCardV2 extends StatelessWidget {
                     : controller.convertTimeSeriestoList(controller
                         .sparkLines[sli.toString()]?[index].getTimeSeries);
 
-            if (data == null) {
+            if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
               double average = data.average;
               change = ((data[data.length - 1] - data[0]) / average * 100);
-            } else {
-              change = 0;
             }
           } else {
             print(controller.alertNonSliSparklines);
