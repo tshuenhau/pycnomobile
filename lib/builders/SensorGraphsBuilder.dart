@@ -145,14 +145,21 @@ List<Widget> buildGraphs(
             key,
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
-      if (value.length < 1) {
-        graphsToDraw.add(Container(
-            height: MediaQuery.of(context).size.height * 10 / 100,
-            child: Text(
-                " This SLI has sent data but no plottable data streams are available.",
-                textAlign: TextAlign.center)));
-      }
+      // if (value.length < 1) {
+      //   graphsToDraw.add(Container(
+      //       height: MediaQuery.of(context).size.height * 10 / 100,
+      //       child: Text(
+      //           " This SLI has sent data but no plottable data streams are available.",
+      //           textAlign: TextAlign.center)));
+      // }
       value.forEach((element) {
+        if (element.getTimeSeries == null) {
+          graphsToDraw.add(Container(
+              height: MediaQuery.of(context).size.height * 10 / 100,
+              child: Text(
+                  " This SLI has sent data but no plottable data streams are available.",
+                  textAlign: TextAlign.center)));
+        }
         drawnCount += 1;
         graphsToDraw.add(SensorLineChart(timeSeries: element));
       });
