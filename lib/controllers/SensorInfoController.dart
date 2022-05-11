@@ -16,7 +16,11 @@ class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
   RxMap<String, RxList<TimeSeries>> sparkLines =
       RxMap<String, RxList<TimeSeries>>();
+  RxMap<String, RxList<TimeSeries>> alertSparklines =
+      RxMap<String, RxList<TimeSeries>>();
   RxMap<String, RxList<TimeSeries>> nonSliSparklines =
+      RxMap<String, RxList<TimeSeries>>();
+  RxMap<String, RxList<TimeSeries>> alertNonSliSparklines =
       RxMap<String, RxList<TimeSeries>>();
 
   @override
@@ -46,9 +50,8 @@ class SensorInfoController extends GetxController {
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
-  Future<void> getTimeSeriesForSparklines(Sensor sensor) async {
-    sparkLines.value = {};
-    nonSliSparklines.value = {};
+  Future<void> getTimeSeriesForSparklines(Sensor sensor, bool isAlert) async {
+    print("IS ALERT: " + isAlert.toString());
     DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
 
     DateTime now = DateTime.now();
@@ -72,7 +75,11 @@ class SensorInfoController extends GetxController {
 
               String color = body['color'];
               String key = body['key'];
-              sparkLines[pid] = instanceList;
+              if (isAlert) {
+                alertSparklines[pid] = instanceList;
+              } else {
+                sparkLines[pid] = instanceList;
+              }
 
               if (body["values"] == null) {
                 instanceList.add(new TimeSeries(
@@ -143,8 +150,12 @@ class SensorInfoController extends GetxController {
             var body = jsonDecode(response.body)[0];
             String color = body['color'];
             String key = body['key'];
-            nonSliSparklines[sensor.name ?? ""] = instanceList;
 
+            if (isAlert) {
+              alertNonSliSparklines[sensor.name ?? ""] = instanceList;
+            } else {
+              nonSliSparklines[sensor.name ?? ""] = instanceList;
+            }
             if (body["values"] == null) {
               instanceList.add(new TimeSeries(
                   name: key,

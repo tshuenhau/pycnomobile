@@ -6,6 +6,7 @@ import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:collection/collection.dart';
 
 class SparklineCardV2 extends StatelessWidget {
@@ -27,6 +28,7 @@ class SparklineCardV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SensorInfoController controller = Get.put(SensorInfoController());
+    AuthController auth = Get.put(AuthController());
 
     return Card(
         shape: RoundedRectangleBorder(
@@ -45,25 +47,57 @@ class SparklineCardV2 extends StatelessWidget {
                     name: name);
               });
         }, child: Obx(() {
-          List<double>? data = sli == ""
-              ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ?? 0) <=
-                      index
-                  ? []
-                  : controller.convertTimeSeriestoList(controller
-                      .nonSliSparklines[sensor.name ?? ""]?[index]
-                      .getTimeSeries)
-              : (controller.sparkLines[sli.toString()]?.length ?? 0) <= index
-                  ? []
-                  : controller.convertTimeSeriestoList(controller
-                      .sparkLines[sli.toString()]?[index].getTimeSeries);
+          late List<double>? data;
           late double change;
-          if (data == null) {
-            change = 0;
+
+          if (auth.currentTab.value == 0) {
+            data = sli == ""
+                ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ??
+                            0) <=
+                        index
+                    ? []
+                    : controller.convertTimeSeriestoList(controller
+                        .nonSliSparklines[sensor.name ?? ""]?[index]
+                        .getTimeSeries)
+                : (controller.sparkLines[sli.toString()]?.length ?? 0) <= index
+                    ? []
+                    : controller.convertTimeSeriestoList(controller
+                        .sparkLines[sli.toString()]?[index].getTimeSeries);
+
+            if (data == null) {
+              change = 0;
+            } else if (data.length > 0) {
+              double average = data.average;
+              change = ((data[data.length - 1] - data[0]) / average * 100);
+            } else {
+              change = 0;
+            }
           } else {
-            double average = data.average;
-            change = data.length == 0
-                ? 0
-                : ((data[data.length - 1] - data[0]) / average * 100);
+            print(controller.alertNonSliSparklines);
+            data = sli == ""
+                ? (controller.alertNonSliSparklines[sensor.name ?? ""]
+                                ?.length ??
+                            0) <=
+                        index
+                    ? []
+                    : controller.convertTimeSeriestoList(controller
+                        .alertNonSliSparklines[sensor.name ?? ""]?[index]
+                        .getTimeSeries)
+                : (controller.alertSparklines[sli.toString()]?.length ?? 0) <=
+                        index
+                    ? []
+                    : controller.convertTimeSeriestoList(controller
+                        .alertSparklines[sli.toString()]?[index].getTimeSeries);
+
+            if (data == null) {
+              change = 0;
+            } else if (data.length > 0) {
+              double average = data.average;
+              change = ((data[data.length - 1] - data[0]) / average * 100);
+            } else {
+              change = 0;
+            }
+            print(data);
           }
 
           return Padding(
