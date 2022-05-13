@@ -51,8 +51,14 @@ class SensorInfoController extends GetxController {
   }
 
   Future<void> getTimeSeriesForSparklines(Sensor sensor, bool isAlert) async {
-    print("IS ALERT: " + isAlert.toString());
     DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
+    if (isAlert) {
+      alertSparklines.value = {};
+      alertNonSliSparklines.value = {};
+    } else {
+      sparkLines.value = {};
+      nonSliSparklines.value = {};
+    }
 
     DateTime now = DateTime.now();
     if (sensor.isPulse()) {
@@ -80,7 +86,11 @@ class SensorInfoController extends GetxController {
               } else {
                 sparkLines[pid] = instanceList;
               }
-
+              if (body["values"] != null) {
+                if (body["values"][0][1] is String) {
+                  continue;
+                }
+              }
               if (body["values"] == null) {
                 instanceList.add(new TimeSeries(
                     name: key,
@@ -120,6 +130,12 @@ class SensorInfoController extends GetxController {
 
                 String color = body['color'];
                 String key = body['key'];
+                if (body["values"] != null) {
+                  if (body["values"][0][1] is String) {
+                    continue;
+                  }
+                }
+
                 if (body["values"] == null) {
                   instanceList.add(new TimeSeries(
                       name: key,
@@ -155,6 +171,11 @@ class SensorInfoController extends GetxController {
               alertNonSliSparklines[sensor.name ?? ""] = instanceList;
             } else {
               nonSliSparklines[sensor.name ?? ""] = instanceList;
+            }
+            if (body["values"] != null) {
+              if (body["values"][0][1] is String) {
+                continue;
+              }
             }
             if (body["values"] == null) {
               instanceList.add(new TimeSeries(

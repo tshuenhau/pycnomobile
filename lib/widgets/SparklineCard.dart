@@ -14,7 +14,8 @@ class SparklineCardV2 extends StatelessWidget {
       {Key? key,
       required this.name,
       required this.function,
-      required this.sli,
+      required this.sliPid,
+      required this.sliName,
       required this.index,
       required this.sensor})
       : super(key: key);
@@ -23,7 +24,8 @@ class SparklineCardV2 extends StatelessWidget {
   Sensor sensor;
   int index;
   Functionality function;
-  String sli;
+  String sliPid;
+  String sliName;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,8 @@ class SparklineCardV2 extends StatelessWidget {
                 return GraphBottomSheet(
                     sensor: sensor,
                     functions: [function],
-                    sli: sli,
+                    sliPid: sliPid,
+                    sliName: sliName,
                     name: name);
               });
         }, child: Obx(() {
@@ -51,7 +54,7 @@ class SparklineCardV2 extends StatelessWidget {
           late double change;
 
           if (auth.currentTab.value == 0) {
-            data = sli == ""
+            data = sliPid == ""
                 ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ??
                             0) <=
                         index
@@ -59,10 +62,10 @@ class SparklineCardV2 extends StatelessWidget {
                     : controller.convertTimeSeriestoList(controller
                         .nonSliSparklines[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.sparkLines[sli.toString()]?.length ?? 0) <= index
+                : (controller.sparkLines[sliPid.toString()]?.length ?? 0) <= index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .sparkLines[sli.toString()]?[index].getTimeSeries);
+                        .sparkLines[sliPid.toString()]?[index].getTimeSeries);
 
             if (data == null || data.length < 1) {
               change = 0;
@@ -73,7 +76,7 @@ class SparklineCardV2 extends StatelessWidget {
             }
           } else {
             print(controller.alertNonSliSparklines);
-            data = sli == ""
+            data = sliPid == ""
                 ? (controller.alertNonSliSparklines[sensor.name ?? ""]
                                 ?.length ??
                             0) <=
@@ -82,11 +85,11 @@ class SparklineCardV2 extends StatelessWidget {
                     : controller.convertTimeSeriestoList(controller
                         .alertNonSliSparklines[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.alertSparklines[sli.toString()]?.length ?? 0) <=
+                : (controller.alertSparklines[sliPid.toString()]?.length ?? 0) <=
                         index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .alertSparklines[sli.toString()]?[index].getTimeSeries);
+                        .alertSparklines[sliPid.toString()]?[index].getTimeSeries);
 
             if (data == null) {
               change = 0;
@@ -96,7 +99,6 @@ class SparklineCardV2 extends StatelessWidget {
             } else {
               change = 0;
             }
-            print(data);
           }
 
           return Padding(

@@ -23,6 +23,7 @@ List<Widget> buildSparklinesV2(
     for (dynamic sli in sensor.sli!) {
       String pid = sli["PID"].toString();
       dynamic sid = sli["SID"];
+      String name = sli["name"].toString();
 
       if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
         for (String functionality in sli["plottable"]) {
@@ -36,7 +37,8 @@ List<Widget> buildSparklinesV2(
           cards.add(new SparklineCardV2(
               name: functionality,
               index: sli["plottable"].indexOf(functionality),
-              sli: pid,
+              sliPid: pid,
+              sliName: name,
               sensor: sensor,
               function: new Functionality(
                   color: null,
@@ -64,7 +66,8 @@ List<Widget> buildSparklinesV2(
       cards.add(new SparklineCardV2(
           name: func.name,
           index: sensor.functionalities!.indexOf(func),
-          sli: "",
+          sliPid: "",
+          sliName: "",
           sensor: sensor,
           function: func));
     }

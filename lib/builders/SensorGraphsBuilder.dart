@@ -9,7 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 
 Future<void> initGraphs(bool isAlert, Sensor sensor,
-    List<Functionality?> functions, String sli, String name,
+    List<Functionality?> functions, String sliPid, String sliName, String name,
     [DateTimeRange? dateRange]) async {
   if (dateRange == null) {
     dateRange = new DateTimeRange(
@@ -31,9 +31,9 @@ Future<void> initGraphs(bool isAlert, Sensor sensor,
 
     if (functions.length <= 1) {
       //for non sli graph bottom sheet
-      print('getting single, sli ' + sli);
-      controller.getSingleTimeSeries(
-          dateRange.start, dateRange.end, sensor, isAlert, sli, functions);
+      print('getting single, sli ' + sliPid);
+      controller.getSingleTimeSeries(dateRange.start, dateRange.end, sensor,
+          isAlert, sliPid, sliName, functions);
     } else {
       print('getting multi');
       controller.getMultiTimeSeries(
@@ -73,7 +73,8 @@ Future<void> getGraphsForTimeRange(
   DateTimeRange dateRange,
   Sensor sensor,
   List<Functionality?> functions,
-  String sli,
+  String sliPid,
+  String sliName,
   String name,
 ) async {
   TimeSeriesController controller = Get.put(TimeSeriesController());
@@ -154,7 +155,14 @@ List<Widget> buildGraphs(
                   textAlign: TextAlign.center)));
         }
         drawnCount += 1;
-        graphsToDraw.add(SensorLineChart(timeSeries: element));
+        if (element.isTimeSeries()) {
+          graphsToDraw.add(SensorLineChart(timeSeries: element));
+        } else {
+          //LogSeries
+          //TODO: add logs widget here
+          print("Drawing log series");
+          graphsToDraw.add(Text("This is a log series"));
+        }
       });
     });
   } else if (type == TYPE_OF_TIMESERIES.INTERNAL ||
@@ -170,12 +178,17 @@ List<Widget> buildGraphs(
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     }
-    print(internalGraphs);
+
     internalGraphs.forEach((TimeSeries e) {
       drawnCount += 1;
-      graphsToDraw.add(SensorLineChart(
-        timeSeries: e,
-      )); //I put ! behind the e just to avoid error, idk if will have any bugs
+      if (e.isTimeSeries()) {
+        graphsToDraw.add(SensorLineChart(timeSeries: e));
+      } else {
+        //LogSeries
+        print("Drawing log series");
+        //TODO: add logs widget here
+        graphsToDraw.add(Text("This is a log series"));
+      }
     });
   }
   List<Widget> result = [
