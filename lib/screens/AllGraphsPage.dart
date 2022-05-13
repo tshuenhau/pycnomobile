@@ -44,7 +44,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
 
   void initData(bool isAlert) async {
     await initGraphs(
-        isAlert, widget.sensor, widget.sensor.functionalities!, "", "");
+        isAlert, widget.sensor, widget.sensor.functionalities!, "", "", "");
   }
 
   Widget DateRangeSelector(BuildContext context) {
@@ -63,7 +63,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
 
               if (_newDateRange != null) {
                 await getGraphsForTimeRange(isAlert, _newDateRange,
-                    widget.sensor, widget.sensor.functionalities!, "", "");
+                    widget.sensor, widget.sensor.functionalities!, "", "", "");
                 //buildSensorGraphs(context, sensor, functions, _newDateRange);
               }
             },

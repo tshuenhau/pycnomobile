@@ -14,11 +14,13 @@ class GraphBottomSheet extends StatefulWidget {
       {Key? key,
       required this.sensor,
       required this.functions,
-      required this.sli,
+      required this.sliPid,
+      required this.sliName,
       required this.name})
       : super(key: key);
   final Sensor sensor;
-  final String sli;
+  final String sliPid;
+  final String sliName;
   final String name;
   final List<Functionality?> functions;
 
@@ -42,9 +44,8 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    print('init data');
-    await initGraphs(
-        isAlert, widget.sensor, widget.functions, widget.sli, widget.name);
+    await initGraphs(isAlert, widget.sensor, widget.functions, widget.sliPid,
+        widget.sliName, widget.name);
   }
 
   @override
@@ -68,8 +69,14 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                     lastDate: DateTime.now());
 
                 if (_newDateRange != null) {
-                  await getGraphsForTimeRange(isAlert, _newDateRange,
-                      widget.sensor, widget.functions, widget.sli, widget.name);
+                  await getGraphsForTimeRange(
+                      isAlert,
+                      _newDateRange,
+                      widget.sensor,
+                      widget.functions,
+                      widget.sliPid,
+                      widget.sliName,
+                      widget.name);
                 }
               },
               child: Icon(Icons.today,
@@ -79,7 +86,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    // print("SLI (A): " + (widget.sli == widget.sensor.name).toString());
     TimeSeriesController controller = Get.put(TimeSeriesController());
     return Container(
       padding: EdgeInsets.symmetric(
@@ -113,7 +119,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
                   buildGraphs(
                       sensor: widget.sensor,
                       functions: widget.functions,
-                      type: widget.sli == ""
+                      type: widget.sliPid == ""
                           ? TYPE_OF_TIMESERIES.SINGLE_INTERNAL
                           : TYPE_OF_TIMESERIES.SINGLE_SLI,
                       context: context,

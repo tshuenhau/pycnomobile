@@ -8,7 +8,7 @@ class TimeSeries {
   TimeSeries(
       {required String name,
       required String color,
-      String? key,
+      required String? key,
       required Map<int, double>? timeSeries})
       : _name = name,
         _color = color,
@@ -29,6 +29,10 @@ class TimeSeries {
 
   Map<int, double>? get getTimeSeries {
     return _timeSeries;
+  }
+
+  bool isTimeSeries() {
+    return true;
   }
 
   @override
