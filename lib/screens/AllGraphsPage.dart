@@ -148,67 +148,7 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                       functions: widget.sensor.functionalities!,
                       type: TYPE_OF_TIMESERIES.INTERNAL,
                       context: context,
-                      isAlert: isAlert)) +
-                  [
-                    Center(
-                        child: Text("Log",
-                            style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.height *
-                                    2.5 /
-                                    100))),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical:
-                              MediaQuery.of(context).size.height * 2.5 / 100,
-                          horizontal:
-                              MediaQuery.of(context).size.width * 2.5 / 100),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.45))),
-                        height: MediaQuery.of(context).size.height * 25 / 100,
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              physics: ClampingScrollPhysics(),
-                              child: Scrollbar(
-                                scrollbarOrientation:
-                                    ScrollbarOrientation.right,
-                                child: Scrollbar(
-                                  scrollbarOrientation:
-                                      ScrollbarOrientation.left,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                            "Hi------------------------------------------------------------------------------------------------------------------------"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte"),
-                                        Text("bte")
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        ),
-                      ),
-                    ),
-                  ]),
+                      isAlert: isAlert))),
         ),
       ),
     ));

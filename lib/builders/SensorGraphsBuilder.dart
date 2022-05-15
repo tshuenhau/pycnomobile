@@ -161,7 +161,9 @@ List<Widget> buildGraphs(
           //LogSeries
           //TODO: add logs widget here
           print("Drawing log series");
-          graphsToDraw.add(Text("This is a log series"));
+          graphsToDraw.add(
+            Logs(),
+          );
         }
       });
     });
@@ -186,8 +188,9 @@ List<Widget> buildGraphs(
       } else {
         //LogSeries
         print("Drawing log series");
-        //TODO: add logs widget here
-        graphsToDraw.add(Text("This is a log series"));
+        graphsToDraw.add(
+          Logs(),
+        );
       }
     });
   }
@@ -197,6 +200,78 @@ List<Widget> buildGraphs(
   ];
 
   return result;
+}
+
+class Logs extends StatelessWidget {
+  const Logs({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 5 / 100,
+          child: Center(
+              child: Text("Log",
+                  style: TextStyle(
+                      fontSize:
+                          MediaQuery.of(context).size.height * 2.5 / 100))),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 2.5 / 100,
+              horizontal: MediaQuery.of(context).size.width * 2.5 / 100),
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Theme.of(context).primaryColor.withOpacity(0.45))),
+            height: MediaQuery.of(context).size.height * 20 / 100,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 25 / 100,
+              child: Scrollbar(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: ClampingScrollPhysics(),
+                    child: Scrollbar(
+                      scrollbarOrientation: ScrollbarOrientation.right,
+                      child: Scrollbar(
+                        scrollbarOrientation: ScrollbarOrientation.left,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                  "Hi------------------------------------------------------------------------------------------------------------------------"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte"),
+                              Text("bte")
+                            ],
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class NoGraphData extends StatelessWidget {
