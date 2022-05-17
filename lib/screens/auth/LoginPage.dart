@@ -23,14 +23,23 @@ class LoginPage extends StatelessWidget {
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 8.5 / 100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: MediaQuery.of(context).size.height * 15 / 100),
             Icon(Icons.equalizer,
                 size: MediaQuery.of(context).size.width * 15 / 100),
             SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
-            Text("Welcome back!",
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 40 / 100,
+              child: Text(
+                "SENSOR CLUB",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 5.5 / 100,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'nulshock'),
+              ),
+            ),
             SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
             TextField(
                 onSubmitted: (s) async {
