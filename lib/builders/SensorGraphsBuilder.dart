@@ -163,7 +163,7 @@ List<Widget> buildGraphs(
           //LogSeries
           //TODO: add logs widget here
           print("Drawing log series");
-
+          print(((element as LogSeries).getLogSeries ?? {}).toString());
           graphsToDraw.add(
             Logs(
               data: (element as LogSeries).getLogSeries ?? {},
@@ -193,6 +193,7 @@ List<Widget> buildGraphs(
       } else {
         //LogSeries
         print("Drawing log series");
+        print(((e as LogSeries).getLogSeries ?? {}).toString());
         graphsToDraw.add(
           Logs(
             data: (e as LogSeries).getLogSeries ?? {},
