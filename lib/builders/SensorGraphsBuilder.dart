@@ -166,7 +166,7 @@ List<Widget> buildGraphs(
 
           graphsToDraw.add(
             Logs(
-              data: new Map(),
+              data: (element as LogSeries).getLogSeries ?? {},
             ),
           );
         }

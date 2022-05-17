@@ -70,6 +70,7 @@ class _LogsState extends State<Logs> {
   }
 
   List<Widget> get buildLogs {
+    print("data: " + widget.data.toString());
     List<Widget> widgets = [];
     widgets.add(Container(
       decoration: BoxDecoration(
@@ -96,6 +97,7 @@ class _LogsState extends State<Logs> {
       ),
     ));
     widget.data.forEach((key, value) {
+      print("iterating");
       widgets.add(Container(
         decoration: BoxDecoration(
             border: Border(
