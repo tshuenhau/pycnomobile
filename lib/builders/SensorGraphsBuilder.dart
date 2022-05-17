@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
+import 'package:pycnomobile/model/LogSeries.dart';
 import 'package:pycnomobile/controllers/TimeSeriesController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
@@ -194,7 +195,7 @@ List<Widget> buildGraphs(
         print("Drawing log series");
         graphsToDraw.add(
           Logs(
-            data: new Map(),
+            data: (e as LogSeries).getLogSeries ?? {},
           ),
         );
       }
