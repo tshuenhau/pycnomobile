@@ -10,7 +10,6 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
 class TimeSeriesController extends GetxController {
-  TimeSeries? currentTimeSeries;
   AuthController authController = Get.find();
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
@@ -34,9 +33,8 @@ class TimeSeriesController extends GetxController {
   }
 
   static Map<int, String> convertListToMapLogs(List list) {
-    print(list);
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
-        key: (e) => e[0].toInt(), value: (e) => e[1].toString());
+        key: (e) => e[0], value: (e) => e[1].toString());
   }
 
   @override
@@ -239,8 +237,8 @@ class TimeSeriesController extends GetxController {
       if (function != null) {
         final response = await http.get(Uri.parse(
             'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-        print(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
+        // print(
+        //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
         if (response.statusCode == 200) {
           if (jsonDecode(response.body).length <= 0) {
             continue;
@@ -256,7 +254,6 @@ class TimeSeriesController extends GetxController {
           }
           if (body["values"][0][1] is String) {
             Map<int, String> logSeries = convertListToMapLogs(body['values']);
-            print("Adding instance list");
             instanceList.add(new LogSeries(
                 name: key, key: function.key, logSeries: logSeries));
             continue;
