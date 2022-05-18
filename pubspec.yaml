@@ -71,6 +71,14 @@ flutter:
   assets:
     - assets/images/pycno_logo.png
     - assets/images/welcome_page.jpg
+    - assets/images/app_logo.png
+    - assets/images/potatoes_in_space_greenhouse.jpg
+    - assets/images/rov.jpg
+    - assets/images/space.jpg
+    - assets/images/vineyard.jpg
+    - assets/images/water_treatment.jpg
+
+
 
   fonts:
     - family: Nulshock

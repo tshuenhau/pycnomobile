@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class WelcomePageItem extends StatelessWidget {
-  WelcomePageItem({Key? key, required this.text}) : super(key: key);
+  WelcomePageItem({Key? key, required this.text, required this.image})
+      : super(key: key);
   String text;
+  AssetImage image;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class WelcomePageItem extends StatelessWidget {
         //width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/welcome_page.jpg"),
+            image: image,
             fit: BoxFit.cover,
           ),
         ),
@@ -39,11 +41,18 @@ class WelcomePageItem extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 80 / 100,
                         child: Text(text,
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                                 fontSize: MediaQuery.of(context).size.width *
                                     4.5 /
                                     100,
-                                fontFamily: 'nulshock')),
+                                fontFamily: 'nulshock',
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.black.withOpacity(0.9),
+                                      offset: const Offset(10, 5),
+                                      blurRadius: 30),
+                                ])),
                       ),
                       // SizedBox(
                       //     height: MediaQuery.of(context).size.height * 3 / 100),
