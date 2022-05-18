@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/theme/CustomColorScheme.dart';
+import 'package:pycnomobile/theme/customColorScheme.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 var globalTheme = ThemeData(
-    colorScheme: customColorScheme,
+    colorScheme: defaultColorScheme,
     appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         // This will be applied to the "back" icon
@@ -17,18 +17,18 @@ var globalTheme = ThemeData(
             fontWeight: FontWeight.w500, fontSize: 20, color: Colors.black)),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-      primary: customColorScheme.secondary,
-      onPrimary: customColorScheme.onSecondary,
+      primary: defaultColorScheme.secondary,
+      onPrimary: defaultColorScheme.onSecondary,
       elevation: 0,
     )),
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            primary: customColorScheme.onSecondary,
-            onSurface: customColorScheme.secondary,
-            backgroundColor: customColorScheme.secondary)),
-    primaryColor: customColorScheme.primary,
-    cardTheme: CardTheme(color: customColorScheme.surface, elevation: 0),
-    scaffoldBackgroundColor: customColorScheme.background,
+            primary: defaultColorScheme.onSecondary,
+            onSurface: defaultColorScheme.secondary,
+            backgroundColor: defaultColorScheme.secondary)),
+    primaryColor: defaultColorScheme.primary,
+    cardTheme: CardTheme(color: defaultColorScheme.surface, elevation: 0),
+    scaffoldBackgroundColor: defaultColorScheme.background,
     textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.black)),
     primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
 
@@ -38,7 +38,7 @@ ThemeData getTheme(Map? colorScheme, bool isLight) {
   auth.isLightMode.value = isLight;
   ColorScheme myColorScheme;
   if (colorScheme == null) {
-    myColorScheme = customColorScheme;
+    myColorScheme = defaultColorScheme;
   } else {
     myColorScheme = getColorScheme(colorScheme, isLight);
   }

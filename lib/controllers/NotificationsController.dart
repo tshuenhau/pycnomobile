@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -115,7 +116,10 @@ class NotificationsController extends GetxController {
             "Failed to retrieve list of sensors"); //Ask UI to reload
       }
     } on SocketException catch (e) {
-      Get.to(ErrorPage());
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.',
+          duration: Duration(seconds: 3),
+          dismissOnTap: true);
       throw Exception("No internet");
     }
   }

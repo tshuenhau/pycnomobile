@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
@@ -159,7 +160,8 @@ class TimeSeriesController extends GetxController {
         sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
       }
     } on SocketException catch (e) {
-      Get.to(ErrorPage());
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.');
     }
   }
 
@@ -294,7 +296,10 @@ class TimeSeriesController extends GetxController {
         alertGraphs.removeRange(0, alertGraphs.length - 1);
       }
     } on SocketException catch (e) {
-      Get.to(ErrorPage());
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.',
+          duration: Duration(seconds: 3),
+          dismissOnTap: true);
     }
   }
 

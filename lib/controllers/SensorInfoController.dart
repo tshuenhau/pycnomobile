@@ -202,7 +202,10 @@ class SensorInfoController extends GetxController {
         }
       }
     } on SocketException catch (e) {
-      Get.to(ErrorPage());
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.',
+          duration: Duration(seconds: 3),
+          dismissOnTap: true);
     }
   }
 }

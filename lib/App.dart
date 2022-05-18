@@ -9,6 +9,8 @@ import 'package:pycnomobile/screens/AccountPage.dart';
 import 'package:pycnomobile/screens/AlertsPage.dart';
 import 'package:pycnomobile/screens/SensorListPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:pycnomobile/theme/GlobalTheme.dart';
+import 'package:pycnomobile/theme/ThemeService.dart';
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
@@ -139,13 +141,23 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+    print("BRIGHTNESS?" +
+        (Theme.of(context).brightness == Brightness.light).toString());
+    final Color accent =
+        getTheme(ThemeService().colorScheme, isLight).colorScheme.tertiary;
+
+    print("accent: " + accent.toString());
     EasyLoading.instance
       ..loadingStyle = EasyLoadingStyle.custom
       ..maskType = EasyLoadingMaskType.custom
       ..backgroundColor = Theme.of(context).colorScheme.background
-      ..textColor = Theme.of(context).colorScheme.tertiary
-      ..indicatorColor = Theme.of(context).colorScheme.tertiary
-      ..displayDuration = const Duration(milliseconds: 1000);
+      ..maskColor = isLight
+          ? Theme.of(context).colorScheme.primary.withOpacity(0.35)
+          : Theme.of(context).colorScheme.primary.withOpacity(0.05)
+      ..displayDuration = const Duration(milliseconds: 1000)
+      ..indicatorColor = accent
+      ..textColor = accent;
 
     return SafeArea(
       child: Center(

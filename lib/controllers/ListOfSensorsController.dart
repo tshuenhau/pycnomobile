@@ -30,8 +30,9 @@ class ListOfSensorsController extends GetxController
   void onInit() async {
     this.reload();
     super.onInit();
+
     try {
-      EasyLoading.show(status: 'Loading...');
+      EasyLoading.show(status: 'Fetching Sensors...');
       await getListOfSensors();
       EasyLoading.dismiss();
     } catch (err) {
@@ -97,7 +98,10 @@ class ListOfSensorsController extends GetxController
             "Failed to retrieve list of sensors"); //Ask UI to reload
       }
     } on SocketException catch (e) {
-      Get.to(ErrorPage());
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.',
+          duration: Duration(seconds: 3),
+          dismissOnTap: true);
     }
   }
 

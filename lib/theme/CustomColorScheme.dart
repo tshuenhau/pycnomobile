@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //! Need to get the color scheme from the JSON,
-var customColorScheme = ColorScheme(
+var defaultColorScheme = ColorScheme(
     brightness: Brightness.light,
     background: Colors.white,
     onBackground: Colors.black,
@@ -13,7 +13,7 @@ var customColorScheme = ColorScheme(
     onSurface: Color(0xFF252a20),
     primary: Colors.black,
     secondary: Colors.black,
-    tertiary: Colors.green.shade400,
+    tertiary: Colors.black,
     surface: Colors.white.withOpacity(0.85));
 
 Color hexToColor(String code) {
