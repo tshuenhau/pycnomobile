@@ -27,9 +27,11 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: MediaQuery.of(context).size.height * 15 / 100),
-            Icon(Icons.equalizer,
-                size: MediaQuery.of(context).size.width * 15 / 100),
-            SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
+            Image(
+                width: MediaQuery.of(context).size.width * 15 / 100,
+                height: MediaQuery.of(context).size.width * 15 / 100,
+                image: AssetImage("assets/images/app_logo.png")),
+            SizedBox(height: MediaQuery.of(context).size.height * 2 / 100),
             SizedBox(
               width: MediaQuery.of(context).size.width * 40 / 100,
               child: Text(
@@ -64,7 +66,7 @@ class LoginPage extends StatelessWidget {
                     fillColor: Theme.of(context).colorScheme.surface,
                     filled: true,
                     hintText: "username")),
-            SizedBox(height: 5),
+            SizedBox(height: MediaQuery.of(context).size.height * 1 / 100),
             TextField(
                 obscureText: true,
                 onSubmitted: (s) async {
@@ -86,7 +88,7 @@ class LoginPage extends StatelessWidget {
                     fillColor: Theme.of(context).colorScheme.surface,
                     filled: true,
                     hintText: "password")),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height * 3 / 100),
             ElevatedButton(
               style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(
@@ -113,7 +115,15 @@ class LoginPage extends StatelessWidget {
                   print(e);
                 }
               },
-            )
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 3.5 / 100),
+            Text(
+                "You should've received your login details with our hardware devices.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black.withOpacity(0.65),
+                    fontFamily: 'GothamRounded',
+                    fontSize: MediaQuery.of(context).size.width * 3 / 100)),
           ],
         ),
       ),

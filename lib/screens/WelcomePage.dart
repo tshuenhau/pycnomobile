@@ -80,7 +80,7 @@ class WelcomePage extends StatelessWidget {
               count: pages.length,
               effect: ScrollingDotsEffect(
                 activeStrokeWidth: 2,
-                activeDotScale: 1.2,
+                activeDotScale: 1.6,
                 spacing: MediaQuery.of(context).size.width * 2 / 100,
                 dotHeight: MediaQuery.of(context).size.width * 2 / 100,
                 dotWidth: MediaQuery.of(context).size.width * 2 / 100,
@@ -96,6 +96,7 @@ class WelcomePage extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 40 / 100,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
+                elevation: 1,
                 primary: Colors.black,
                 onPrimary: Colors.white,
                 onSurface: Theme.of(context).colorScheme.tertiary,
@@ -130,7 +131,7 @@ class WelcomePage extends StatelessWidget {
           bottom: MediaQuery.of(context).size.height * 0 / 100,
           child: Container(
               color: Colors.black,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 3 / 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

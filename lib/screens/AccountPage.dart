@@ -261,18 +261,41 @@ class _AccountPageState extends State<AccountPage> {
                                 MediaQuery.of(context).size.height * 2.5 / 100),
                         Container(
                             height:
-                                MediaQuery.of(context).size.height * 10 / 100,
+                                MediaQuery.of(context).size.height * 15 / 100,
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("powered by: ",
                                     style:
                                         TextStyle(fontFamily: 'GothamRounded')),
-                                Icon(Icons.equalizer,
-                                    size: MediaQuery.of(context).size.width *
-                                        5 /
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        1.5 /
                                         100),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.height *
+                                      20 /
+                                      100,
+                                  child: Image(
+                                    image: NetworkImage(
+                                        Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? ThemeService()
+                                                .colorScheme['light']
+                                                    ['companyLightLogo']
+                                                .toString()
+                                            : ThemeService()
+                                                .colorScheme['light']
+                                                    ['companyLightLogo']
+                                                .toString()),
+                                  ),
+                                )
                               ],
                             )),
+                        SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 3 / 100)
                       ]))
                 ]),
           ),
