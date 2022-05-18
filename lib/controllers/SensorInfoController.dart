@@ -11,6 +11,8 @@ import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'dart:io';
+import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
@@ -51,40 +53,128 @@ class SensorInfoController extends GetxController {
   }
 
   Future<void> getTimeSeriesForSparklines(Sensor sensor, bool isAlert) async {
-    DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
-    if (isAlert) {
-      alertSparklines.value = {};
-      alertNonSliSparklines.value = {};
-    } else {
-      sparkLines.value = {};
-      nonSliSparklines.value = {};
-    }
+    try {
+      DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
+      if (isAlert) {
+        alertSparklines.value = {};
+        alertNonSliSparklines.value = {};
+      } else {
+        sparkLines.value = {};
+        nonSliSparklines.value = {};
+      }
 
-    DateTime now = DateTime.now();
-    if (sensor.isPulse()) {
-      dynamic slil = (sensor as Pulse).slil; //left sli
-      dynamic slir = (sensor).slir; //right sli
-      for (dynamic sli in sensor.sli!) {
-        String pid = sli["PID"].toString();
-        dynamic sid = sli["SID"];
+      DateTime now = DateTime.now();
+      if (sensor.isPulse()) {
+        dynamic slil = (sensor as Pulse).slil; //left sli
+        dynamic slir = (sensor).slir; //right sli
+        for (dynamic sli in sensor.sli!) {
+          String pid = sli["PID"].toString();
+          dynamic sid = sli["SID"];
 
-        if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
-          RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-          for (String functionality in sli["plottable"]) {
+          if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+            RxList<TimeSeries> instanceList = RxList.empty(growable: true);
+            for (String functionality in sli["plottable"]) {
+              final response = await http.get(Uri.parse(
+                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$functionality&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+              if (response.statusCode == 200) {
+                if (jsonDecode(response.body).length <= 0) {
+                  continue;
+                }
+                var body = jsonDecode(response.body)[0];
+
+                String color = body['color'];
+                String key = body['key'];
+                if (isAlert) {
+                  alertSparklines[pid] = instanceList;
+                } else {
+                  sparkLines[pid] = instanceList;
+                }
+                if (body["values"] != null) {
+                  if (body["values"][0][1] is String) {
+                    continue;
+                  }
+                }
+                if (body["values"] == null) {
+                  instanceList.add(new TimeSeries(
+                      name: key,
+                      color: color,
+                      timeSeries: null,
+                      key: functionality));
+                  continue;
+                }
+                Map<int, double> timeSeries = convertListToMap(body['values']);
+                instanceList.add(new TimeSeries(
+                    name: key,
+                    color: color,
+                    timeSeries: timeSeries,
+                    key: functionality));
+              } else {
+                throw Exception("Failed to retrieve data. Try again!");
+              }
+            }
+          }
+        }
+      }
+      RxList<TimeSeries> instanceList = RxList.empty(growable: true);
+      for (Functionality? functionality in sensor.functionalities!) {
+        if (functionality != null) {
+          if (functionality.value is List) {
+            List func = functionality.value;
+
+            for (Functionality? subfunc in func) {
+              if (subfunc != null) {
+                final response = await http.get(Uri.parse(
+                    'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+                if (response.statusCode == 200) {
+                  if (jsonDecode(response.body).length <= 0) {
+                    continue;
+                  }
+                  var body = jsonDecode(response.body)[0];
+
+                  String color = body['color'];
+                  String key = body['key'];
+                  if (body["values"] != null) {
+                    if (body["values"][0][1] is String) {
+                      continue;
+                    }
+                  }
+
+                  if (body["values"] == null) {
+                    instanceList.add(new TimeSeries(
+                        name: key,
+                        color: color,
+                        timeSeries: null,
+                        key: subfunc.key));
+                    continue;
+                  }
+                  Map<int, double> timeSeries =
+                      convertListToMap(body['values']);
+                  instanceList.add(new TimeSeries(
+                      name: key,
+                      color: color,
+                      timeSeries: timeSeries,
+                      key: subfunc.key));
+                } else {
+                  throw Exception("Failed to retrieve data"); //Ask UI to reload
+                }
+              }
+            }
+          } else {
             final response = await http.get(Uri.parse(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$functionality&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+
             if (response.statusCode == 200) {
               if (jsonDecode(response.body).length <= 0) {
                 continue;
               }
               var body = jsonDecode(response.body)[0];
-
               String color = body['color'];
               String key = body['key'];
+
               if (isAlert) {
-                alertSparklines[pid] = instanceList;
+                alertNonSliSparklines[sensor.name ?? ""] = instanceList;
               } else {
-                sparkLines[pid] = instanceList;
+                nonSliSparklines[sensor.name ?? ""] = instanceList;
               }
               if (body["values"] != null) {
                 if (body["values"][0][1] is String) {
@@ -96,7 +186,7 @@ class SensorInfoController extends GetxController {
                     name: key,
                     color: color,
                     timeSeries: null,
-                    key: functionality));
+                    key: functionality.key));
                 continue;
               }
               Map<int, double> timeSeries = convertListToMap(body['values']);
@@ -104,98 +194,15 @@ class SensorInfoController extends GetxController {
                   name: key,
                   color: color,
                   timeSeries: timeSeries,
-                  key: functionality));
+                  key: functionality.key));
             } else {
               throw Exception("Failed to retrieve data. Try again!");
             }
           }
         }
       }
-    }
-    RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-    for (Functionality? functionality in sensor.functionalities!) {
-      if (functionality != null) {
-        if (functionality.value is List) {
-          List func = functionality.value;
-
-          for (Functionality? subfunc in func) {
-            if (subfunc != null) {
-              final response = await http.get(Uri.parse(
-                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-              if (response.statusCode == 200) {
-                if (jsonDecode(response.body).length <= 0) {
-                  continue;
-                }
-                var body = jsonDecode(response.body)[0];
-
-                String color = body['color'];
-                String key = body['key'];
-                if (body["values"] != null) {
-                  if (body["values"][0][1] is String) {
-                    continue;
-                  }
-                }
-
-                if (body["values"] == null) {
-                  instanceList.add(new TimeSeries(
-                      name: key,
-                      color: color,
-                      timeSeries: null,
-                      key: subfunc.key));
-                  continue;
-                }
-                Map<int, double> timeSeries = convertListToMap(body['values']);
-                instanceList.add(new TimeSeries(
-                    name: key,
-                    color: color,
-                    timeSeries: timeSeries,
-                    key: subfunc.key));
-              } else {
-                throw Exception("Failed to retrieve data"); //Ask UI to reload
-              }
-            }
-          }
-        } else {
-          final response = await http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-
-          if (response.statusCode == 200) {
-            if (jsonDecode(response.body).length <= 0) {
-              continue;
-            }
-            var body = jsonDecode(response.body)[0];
-            String color = body['color'];
-            String key = body['key'];
-
-            if (isAlert) {
-              alertNonSliSparklines[sensor.name ?? ""] = instanceList;
-            } else {
-              nonSliSparklines[sensor.name ?? ""] = instanceList;
-            }
-            if (body["values"] != null) {
-              if (body["values"][0][1] is String) {
-                continue;
-              }
-            }
-            if (body["values"] == null) {
-              instanceList.add(new TimeSeries(
-                  name: key,
-                  color: color,
-                  timeSeries: null,
-                  key: functionality.key));
-              continue;
-            }
-            Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(new TimeSeries(
-                name: key,
-                color: color,
-                timeSeries: timeSeries,
-                key: functionality.key));
-          } else {
-            throw Exception("Failed to retrieve data. Try again!");
-          }
-        }
-      }
+    } on SocketException catch (e) {
+      Get.to(ErrorPage());
     }
   }
 }

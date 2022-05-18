@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 //! Need to get the color scheme from the JSON,
 var customColorScheme = ColorScheme(
-    //! Do API Call to get the JSON and then convert it into a ColorSchemeObject
     brightness: Brightness.light,
     background: Colors.white,
     onBackground: Colors.black,
@@ -23,11 +22,11 @@ Color hexToColor(String code) {
 }
 
 ColorScheme getColorScheme(Map colorScheme, bool isLight) {
+  print("color scheme " + colorScheme.toString());
   if (isLight) {
     return ColorScheme(
         brightness: Brightness.light,
-        background:
-            hexToColor(colorScheme["companyColors1"]["light"]["background"]),
+        background: hexToColor(colorScheme["light"]["companyLightBackground"]),
         onBackground: Colors.black,
         error: Colors.black,
         onError: Colors.black,
@@ -37,13 +36,12 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         onSurface: Color(0xFF252a20),
         primary: Colors.black,
         secondary: Colors.black,
-        tertiary: hexToColor(colorScheme["companyColors1"]["light"]["accent"]),
+        tertiary: hexToColor(colorScheme["light"]["companyLightAccent"]),
         surface: Colors.white.withOpacity(0.85));
   } else {
     return ColorScheme(
         brightness: Brightness.dark,
-        background:
-            hexToColor(colorScheme["companyColors1"]["dark"]["background"]),
+        background: hexToColor(colorScheme["dark"]["companyDarkBackground"]),
         onBackground: Colors.black,
         error: Colors.white,
         onError: Colors.white,
@@ -53,7 +51,7 @@ ColorScheme getColorScheme(Map colorScheme, bool isLight) {
         onSurface: Colors.white,
         primary: Colors.white,
         secondary: Colors.white,
-        tertiary: hexToColor(colorScheme["companyColors1"]["dark"]["accent"]),
+        tertiary: hexToColor(colorScheme["dark"]["companyDarkAccent"]),
         surface: Colors.black.withOpacity(0.85));
   }
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:get/get.dart';
+
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pycnomobile/theme/ThemeService.dart';
 
@@ -7,14 +11,27 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: ThemeService().colorScheme["companyColors1"] == null
+    AuthController auth = Get.find();
+    print("is light mode " + auth.isLightMode.value.toString());
+    return Obx(() => Container(
+        color: ThemeService().colorScheme == {}
             ? Colors.black
-            : HexColor(ThemeService()
-                .colorScheme["companyColors1"]['dark']['background']
-                .toString()),
-        child: ThemeService().colorScheme["companyColors1"] == null
+            : auth.isLightMode.value
+                ? HexColor(ThemeService()
+                    .colorScheme['light']['companyLightBackground']
+                    .toString())
+                : HexColor(ThemeService()
+                    .colorScheme['dark']['companyDarkBackground']
+                    .toString()),
+        child: ThemeService().colorScheme == {}
             ? null
-            : Center(child: Image.asset("assets/images/pycno_logo.png")));
+            : Center(
+                child: auth.isLightMode.value
+                    ? Image.network(ThemeService()
+                        .colorScheme['light']['companyLightLogo']
+                        .toString())
+                    : Image.network(ThemeService()
+                        .colorScheme['dark']['companyDarkLogo']
+                        .toString()))));
   }
 }

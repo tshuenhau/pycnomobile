@@ -9,6 +9,8 @@ import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'dart:io';
+import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
@@ -29,7 +31,7 @@ class ListOfSensorsController extends GetxController
     this.reload();
     super.onInit();
     try {
-      EasyLoading.show(status: 'loading...');
+      EasyLoading.show(status: 'Loading...');
       await getListOfSensors();
       EasyLoading.dismiss();
     } catch (err) {
@@ -50,9 +52,8 @@ class ListOfSensorsController extends GetxController
           lastRefreshTime.value
               .isBefore(DateTime.now().add(const Duration(seconds: -900)))) {
         // wait for 15 minutes before refreshing
-        print("refresh sensors");
         try {
-          EasyLoading.show(status: 'loading...');
+          EasyLoading.show(status: 'Loading...');
           await getListOfSensors();
           lastRefreshTime.value = DateTime.now();
           EasyLoading.dismiss();
@@ -70,30 +71,33 @@ class ListOfSensorsController extends GetxController
 
   Future<void>? getListOfSensors() async {
     print(authController.token + " token, getting list of sensors!");
-    final response = await http.get(Uri.parse(
-        'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
+    try {
+      final response = await http.get(Uri.parse(
+          'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
+      print("RES " + response.statusCode.toString());
+      if (response.statusCode == 200) {
+        listOfSensors.clear();
+        filteredListOfSensors.clear();
+        var body = jsonDecode(response.body);
 
-    // print(
-    //     'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}');
-    if (response.statusCode == 200) {
-      listOfSensors.clear();
-      filteredListOfSensors.clear();
-      var body = jsonDecode(response.body);
-
-      for (var i = 0; i < body.length; i++) {
-        if (body[i]["SLI"] != null) {
-          //PULSE
-          addSensor(Pulse.fromJson(body[i]));
-        } else {
-          addSensor(FixSensor.fromJson(body[i]));
+        for (var i = 0; i < body.length; i++) {
+          if (body[i]["SLI"] != null) {
+            //PULSE
+            addSensor(Pulse.fromJson(body[i]));
+          } else {
+            addSensor(FixSensor.fromJson(body[i]));
+          }
         }
+
+        sortSensors();
+
+        this.lastRefreshTime.value = DateTime.now();
+      } else {
+        throw Exception(
+            "Failed to retrieve list of sensors"); //Ask UI to reload
       }
-
-      sortSensors();
-
-      this.lastRefreshTime.value = DateTime.now();
-    } else {
-      throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
+    } on SocketException catch (e) {
+      Get.to(ErrorPage());
     }
   }
 

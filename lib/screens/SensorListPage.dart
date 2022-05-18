@@ -9,6 +9,7 @@ import 'package:pycnomobile/widgets/SensorsListTile.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'dart:io';
 
 class SensorListPage extends StatefulWidget {
   const SensorListPage({Key? key}) : super(key: key);
@@ -66,6 +67,7 @@ class _SensorListPageState extends State<SensorListPage> {
 
   Future _refreshData() async {
     await sensorsController.getListOfSensors();
+
     sensorsController.searchListOfSensors();
   }
 

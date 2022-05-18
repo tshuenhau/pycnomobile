@@ -28,7 +28,6 @@ class SensorsListTile extends StatelessWidget {
         onTap: () async {
           FocusScope.of(context).unfocus();
           SensorInfoController controller = Get.put(SensorInfoController());
-          AuthController auth = Get.put(AuthController());
 
           // EasyLoading.show(status: "Fetching Sensor Data...");
           try {
@@ -126,8 +125,10 @@ class SensorsListTile extends StatelessWidget {
                             image: (sensor.img == null || sensor.img == "")
                                 ? null
                                 : DecorationImage(
-                                    image: NetworkImage(
-                                        "https://pycno.co/${sensor.img}"),
+                                    image: NetworkImage(sensor.img!.startsWith(
+                                            "https://pycno-media.s3.amazonaws.com/")
+                                        ? sensor.img!
+                                        : "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
                       Positioned(

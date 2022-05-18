@@ -6,6 +6,8 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/sensors/FixSensor.dart';
+import 'dart:io';
+import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
@@ -84,31 +86,37 @@ class NotificationsController extends GetxController {
   }
 
   Future<Sensor> getSensorFromNotifs(String uid) async {
-    final response = await http.get(Uri.parse(
-        'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}'));
-    print(
-        'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}');
-    if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
-      if (body["SLI"] != null) {
-        //PULSE
-        return FixSensor.fromJson(body);
-      } else {
-        return FixSensor.fromJson(body);
-      }
-      // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body["UID"]);
+    try {
+      final response = await http.get(Uri.parse(
+          'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}'));
+      print(
+          'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}');
+      if (response.statusCode == 200) {
+        var body = jsonDecode(response.body);
+        if (body["SLI"] != null) {
+          //PULSE
+          return FixSensor.fromJson(body);
+        } else {
+          return FixSensor.fromJson(body);
+        }
+        // TYPE_OF_SENSOR type = Sensor.getTypeOfSensor(body["UID"]);
 
-      // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
-      //   return MasterSoilSensor.fromJson(body);
-      // } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
-      //   return NodeSoilSensor.fromJson(body);
-      // } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
-      //   return SonicAnemometer.fromJson(body);
-      // } else {
-      //   return RainGauge.fromJson(body);
-      // }
-    } else {
-      throw Exception("Failed to retrieve list of sensors"); //Ask UI to reload
+        // if (type == TYPE_OF_SENSOR.MASTER_SOIL_SENSOR) {
+        //   return MasterSoilSensor.fromJson(body);
+        // } else if (type == TYPE_OF_SENSOR.NODE_SOIL_SENSOR) {
+        //   return NodeSoilSensor.fromJson(body);
+        // } else if (type == TYPE_OF_SENSOR.SONIC_ANEMOMETER) {
+        //   return SonicAnemometer.fromJson(body);
+        // } else {
+        //   return RainGauge.fromJson(body);
+        // }
+      } else {
+        throw Exception(
+            "Failed to retrieve list of sensors"); //Ask UI to reload
+      }
+    } on SocketException catch (e) {
+      Get.to(ErrorPage());
+      throw Exception("No internet");
     }
   }
 }
