@@ -271,7 +271,7 @@ class _AccountPageState extends State<AccountPage> {
                                 MediaQuery.of(context).size.height * 10 / 100,
                             child: Column(
                               children: [
-                                Text("Powered by: ",
+                                Text("powered by: ",
                                     style:
                                         TextStyle(fontFamily: 'GothamRounded')),
                                 Icon(Icons.equalizer,
