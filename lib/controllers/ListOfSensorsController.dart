@@ -10,6 +10,7 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'dart:io';
+import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
@@ -96,7 +97,7 @@ class ListOfSensorsController extends GetxController
             "Failed to retrieve list of sensors"); //Ask UI to reload
       }
     } on SocketException catch (e) {
-      throw SocketException("No internet!");
+      Get.to(ErrorPage());
     }
   }
 

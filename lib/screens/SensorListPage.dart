@@ -10,7 +10,6 @@ import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'dart:io';
-import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class SensorListPage extends StatefulWidget {
   const SensorListPage({Key? key}) : super(key: key);
@@ -67,13 +66,7 @@ class _SensorListPageState extends State<SensorListPage> {
   }
 
   Future _refreshData() async {
-    try {
-      await sensorsController.getListOfSensors();
-    } on SocketException catch (e) {
-      //TODO: Error message
-      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => ErrorPage()), (_) => false);
-    }
+    await sensorsController.getListOfSensors();
 
     sensorsController.searchListOfSensors();
   }
