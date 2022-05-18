@@ -12,6 +12,7 @@ enum AuthState { unknown, loggedIn, loggedOut }
 
 class AuthController extends GetxController {
   String token = "";
+  Rx<bool> isLightMode = true.obs;
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Rx<AuthState> isLoggedIn = AuthState.unknown.obs;
   var deviceData = <String, dynamic>{};
@@ -23,11 +24,6 @@ class AuthController extends GetxController {
   onInit() async {
     super.onInit();
     preferences = await Preferences.getInstance();
-    // await getTheme();
-    // await getIsDark();
-
-    // changeTheme();
-
     isLoggedIn.value =
         await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
 
@@ -104,7 +100,6 @@ class AuthController extends GetxController {
         // await preferences.setTheme(user.value!.colorScheme);
 
         ThemeService().saveColorScheme(user.value!.colorScheme);
-        print("SAVE THEME!");
         ThemeService().saveTheme(true);
         ThemeService().switchTheme();
       }

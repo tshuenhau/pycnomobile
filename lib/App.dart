@@ -52,7 +52,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused) {
-      print("PAUSED");
       sensorsController.lastPausedTime.value = DateTime.now();
     }
     if (state == AppLifecycleState.resumed &&

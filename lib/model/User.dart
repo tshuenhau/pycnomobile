@@ -46,17 +46,15 @@ class User {
         farmType: json["farmtype"],
         farmAddr: json["farmaddress"],
         colorScheme: {
-          "companyColors1": {
-            "light": {
-              "background": "#F2F2F2",
-              "accent": "#228822",
-              "logo": "dlsdfsdf"
-            },
-            "dark": {"background": "#222222", "accent": "#32C732"}
+          "light": {
+            "companyLightLogo": json["companyLightLogo"],
+            "companyLightBackground": json["companyLightBackground"],
+            "companyLightAccent": json["companyLightAccent"],
           },
-          "companyColors2": {
-            "light": {"background": "#f2f0e1", "primary": "#ffffff"},
-            "dark": {"background": "#f2f0e1", "primary": "#000000"}
+          "dark": {
+            "companyDarkLogo": json["companyDarkLogo"],
+            "companyDarkBackground": json["companyDarkBackground"],
+            "companyDarkAccent": json["companyDarkAccent"]
           }
         });
   }

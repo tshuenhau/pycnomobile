@@ -207,13 +207,6 @@ class _AccountPageState extends State<AccountPage> {
                               ]),
                         ]),
                   )),
-                  // TextButton.icon(
-                  //     icon: Icon(Icons.person),
-                  //     label: Text("Account Details"),
-                  //     onPressed: () => Navigator.of(context).push(
-                  //           MaterialPageRoute(
-                  //               builder: (_) => AccountDetailsPage()),
-                  //         )),
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 2.5 / 100),
                   Container(
