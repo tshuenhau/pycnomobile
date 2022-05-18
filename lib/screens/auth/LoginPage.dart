@@ -4,6 +4,7 @@ import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'dart:io';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -105,6 +106,8 @@ class LoginPage extends StatelessWidget {
                   EasyLoading.dismiss();
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => App()));
+                } on SocketException catch (e) {
+                  EasyLoading.showError("Check your connection and try again!");
                 } catch (e) {
                   EasyLoading.showError("invalid username/password");
                   print(e);
