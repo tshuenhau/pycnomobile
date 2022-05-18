@@ -273,10 +273,16 @@ class _AccountPageState extends State<AccountPage> {
                                     height: MediaQuery.of(context).size.height *
                                         1.5 /
                                         100),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.height *
-                                      20 /
-                                      100,
+                                Container(
+                                  constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height *
+                                              10 /
+                                              100,
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              40 /
+                                              100),
                                   child: Image(
                                     image: NetworkImage(
                                         Theme.of(context).brightness ==
