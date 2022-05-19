@@ -21,11 +21,17 @@ class SplashPage extends StatelessWidget {
         child: auth.colorScheme.isEmpty
             ? null
             : Center(
-                child: Theme.of(context).brightness == Brightness.light
-                    ? Image.network(auth.colorScheme['light']
-                            ['companyLightLogo']
-                        .toString())
-                    : Image.network(auth.colorScheme['dark']['companyDarkLogo']
-                        .toString()))));
+                child: Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.width * 40 / 100,
+                    maxWidth: MediaQuery.of(context).size.width * 40 / 100),
+                child: Image(
+                  image: NetworkImage(Theme.of(context).brightness ==
+                          Brightness.light
+                      ? auth.colorScheme['light']['companyLightLogo'].toString()
+                      : auth.colorScheme['light']['companyLightLogo']
+                          .toString()),
+                ),
+              ))));
   }
 }
