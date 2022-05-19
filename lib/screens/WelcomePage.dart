@@ -15,6 +15,15 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   final PageController controller = PageController();
+
+  final List _allAsset = [
+    ///tabbar
+    "assets/images/vineyard.jpg",
+    "assets/images/water_treatment.jpg",
+    "assets/images/space.jpg",
+    "assets/images/rov.jpg",
+    "assets/images/potatoes_in_space_greenhouse.jpg"
+  ];
   int index = 0;
   List<Widget> pages = [
     WelcomePageItem(
@@ -36,18 +45,14 @@ class _WelcomePageState extends State<WelcomePage> {
   // @override
   // void initState() {
   //   super.initState();
-  //   index = 0;
-  //   controller.addListener(() {
-  //     setState(() {
-  //       index = controller.page!.toInt();
-  //     });
-  //   });
   // }
 
   @override
   Widget build(BuildContext context) {
     print("curr index: " + index.toString());
-
+    for (var asset in _allAsset) {
+      precacheImage(AssetImage(asset), context);
+    }
     return Stack(
       alignment: Alignment.center,
       children: [
