@@ -61,7 +61,7 @@ class _WelcomePageState extends State<WelcomePage> {
             onPageChanged: (i) {
               print("onpageChanged: index" + index.toString());
               setState(() {
-                index = controller.page!.toInt();
+                index = i;
               });
             },
           ),
