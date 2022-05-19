@@ -313,6 +313,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
           //     1) {
           //   return DateFormat("MMM d").format(date);
           // }
+
           return DateFormat("MMM d", 'en_US').format(date) +
               "\n" +
               DateFormat("HH:mm", 'en_US').format(date);
@@ -336,15 +337,19 @@ class _SensorLineChartState extends State<SensorLineChart> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 1 / 100,
         ),
-        (isLast24()
-            ? Text("Last 24 Hours")
-            : Text((DateFormat("dd/MM/yy")
-                    .format(DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
-                    .toString() +
-                " - " +
-                DateFormat("dd/MM/yy")
-                    .format(DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
-                    .toString()))),
+        ((widget.timeSeries.getTimeSeries == null)
+            ? Text("-")
+            : isLast24()
+                ? Text("Last 24 Hours")
+                : Text((DateFormat("dd/MM/yy")
+                        .format(
+                            DateTime.fromMillisecondsSinceEpoch(_minX.toInt()))
+                        .toString() +
+                    " - " +
+                    DateFormat("dd/MM/yy")
+                        .format(
+                            DateTime.fromMillisecondsSinceEpoch(_maxX.toInt()))
+                        .toString()))),
         Stack(
           children: <Widget>[
                 AspectRatio(
