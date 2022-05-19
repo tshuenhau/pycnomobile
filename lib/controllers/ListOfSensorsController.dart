@@ -173,6 +173,7 @@ class ListOfSensorsController extends GetxController
         ? b.polledAt!.compareTo(a.polledAt!)
         : 0);
     List<Sensor> list = List.empty(growable: true);
+
     for (int i = 0; i < masterSensorsList.length; i++) {
       Sensor currentSensor = masterSensorsList[i];
       //current sensor is a master sensor
@@ -183,7 +184,10 @@ class ListOfSensorsController extends GetxController
     //Add nodes in case no masters
     for (int i = 0; i < tempList.length; i++) {
       if (!list.contains(tempList[i])) {
-        list.add(tempList[i]);
+        list.insert(
+            list.indexWhere(
+                (sensor) => sensor.polledAt!.isBefore(tempList[i].polledAt!)),
+            tempList[i]);
       }
     }
 

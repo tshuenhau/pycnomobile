@@ -33,9 +33,11 @@ class _SensorListPageState extends State<SensorListPage> {
   void initState() {
     now = DateTime.now();
     everyMinute = Timer.periodic(Duration(seconds: 60), (Timer t) {
-      setState(() {
-        now = DateTime.now();
-      });
+      if (this.mounted) {
+        setState(() {
+          now = DateTime.now();
+        });
+      }
     });
     sensorsController.context = context;
 
@@ -144,9 +146,12 @@ class _SensorListPageState extends State<SensorListPage> {
                       ? "s"
                       : ""),
               dismissOnTap: true);
-          setState(() {
-            displayInactive = !displayInactive;
-          });
+          if (this.mounted) {
+            setState(() {
+              // Your state change code goes here
+              displayInactive = !displayInactive;
+            });
+          }
         },
         tooltip: displayInactive ? "Hide Inactive" : "Display Inactive",
         backgroundColor: Theme.of(context).colorScheme.tertiary,
