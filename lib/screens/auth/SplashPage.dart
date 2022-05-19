@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:get/get.dart';
-
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pycnomobile/theme/ThemeService.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:get/get.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -12,26 +10,23 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController auth = Get.find();
-    print("is light mode " + auth.isLightMode.value.toString());
+    print("colorScheme: " + auth.colorScheme.toString());
     return Obx(() => Container(
-        color: ThemeService().colorScheme == {}
+        color: auth.colorScheme.isEmpty
             ? Colors.black
-            : auth.isLightMode.value
-                ? HexColor(ThemeService()
-                    .colorScheme['light']['companyLightBackground']
+            : Theme.of(context).brightness == Brightness.light
+                ? HexColor(auth.colorScheme['light']['companyLightBackground']
                     .toString())
-                : HexColor(ThemeService()
-                    .colorScheme['dark']['companyDarkBackground']
+                : HexColor(auth.colorScheme['dark']['companyDarkBackground']
                     .toString()),
-        child: ThemeService().colorScheme == {}
+        child: auth.colorScheme.isEmpty
             ? null
             : Center(
-                child: auth.isLightMode.value
-                    ? Image.network(ThemeService()
-                        .colorScheme['light']['companyLightLogo']
+                child: Theme.of(context).brightness == Brightness.light
+                    ? Image.network(auth.colorScheme['light']
+                            ['companyLightLogo']
                         .toString())
-                    : Image.network(ThemeService()
-                        .colorScheme['dark']['companyDarkLogo']
+                    : Image.network(auth.colorScheme['dark']['companyDarkLogo']
                         .toString()))));
   }
 }
