@@ -153,7 +153,7 @@ List<Widget> buildGraphs(
           graphsToDraw.add(Container(
               height: MediaQuery.of(context).size.height * 10 / 100,
               child: Text(
-                  " This SLI has sent data but no plottable data streams are available.",
+                  "This SLI has sent data but no plottable data streams are available.",
                   textAlign: TextAlign.center)));
         }
         drawnCount += 1;
