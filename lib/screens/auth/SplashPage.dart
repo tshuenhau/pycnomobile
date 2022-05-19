@@ -10,7 +10,6 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController auth = Get.find();
-    print("colorScheme: " + auth.colorScheme.toString());
     return Obx(() => Container(
         color: auth.colorScheme.isEmpty
             ? Colors.black

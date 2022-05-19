@@ -189,7 +189,6 @@ class _AccountPageState extends State<AccountPage> {
                                             ThemeService().deleteTheme();
                                             Get.changeThemeMode(
                                                 ThemeMode.light);
-
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pushAndRemoveUntil(
@@ -284,17 +283,15 @@ class _AccountPageState extends State<AccountPage> {
                                               40 /
                                               100),
                                   child: Image(
-                                    image: NetworkImage(
-                                        Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? ThemeService()
-                                                .colorScheme['light']
-                                                    ['companyLightLogo']
-                                                .toString()
-                                            : ThemeService()
-                                                .colorScheme['light']
-                                                    ['companyLightLogo']
-                                                .toString()),
+                                    image: NetworkImage(Theme.of(context)
+                                                .brightness ==
+                                            Brightness.light
+                                        ? authController.colorScheme['light']
+                                                ['companyLightLogo']
+                                            .toString()
+                                        : authController.colorScheme['light']
+                                                ['companyLightLogo']
+                                            .toString()),
                                   ),
                                 )
                               ],

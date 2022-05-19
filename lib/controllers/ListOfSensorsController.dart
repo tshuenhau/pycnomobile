@@ -23,6 +23,7 @@ class ListOfSensorsController extends GetxController
   Rx<DateTime> lastRefreshTime = DateTime.now().obs;
   Rx<DateTime> lastPausedTime = DateTime.now().obs;
   RxList<Sensor> inactiveListOfSensors = List<Sensor>.empty(growable: true).obs;
+  late Timer t;
 
   AuthController authController = Get.find();
 
@@ -42,11 +43,18 @@ class ListOfSensorsController extends GetxController
 
   @override
   void onClose() {
+    t.cancel();
     super.onClose();
   }
 
+  @override
+  void dispose() {
+    t.cancel();
+    super.dispose();
+  }
+
   void reload() {
-    Timer.periodic(new Duration(seconds: 5), (timer) async {
+    t = Timer.periodic(new Duration(seconds: 5), (Timer t) async {
       // print("reload");
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
@@ -75,7 +83,6 @@ class ListOfSensorsController extends GetxController
     try {
       final response = await http.get(Uri.parse(
           'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
-      print("RES " + response.statusCode.toString());
       if (response.statusCode == 200) {
         listOfSensors.clear();
         filteredListOfSensors.clear();
@@ -166,6 +173,7 @@ class ListOfSensorsController extends GetxController
         ? b.polledAt!.compareTo(a.polledAt!)
         : 0);
     List<Sensor> list = List.empty(growable: true);
+
     for (int i = 0; i < masterSensorsList.length; i++) {
       Sensor currentSensor = masterSensorsList[i];
       //current sensor is a master sensor
@@ -176,7 +184,10 @@ class ListOfSensorsController extends GetxController
     //Add nodes in case no masters
     for (int i = 0; i < tempList.length; i++) {
       if (!list.contains(tempList[i])) {
-        list.add(tempList[i]);
+        list.insert(
+            list.indexWhere(
+                (sensor) => sensor.polledAt!.isBefore(tempList[i].polledAt!)),
+            tempList[i]);
       }
     }
 

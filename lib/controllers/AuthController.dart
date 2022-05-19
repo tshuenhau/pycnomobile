@@ -5,7 +5,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'package:pycnomobile/model/User.dart';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:pycnomobile/theme/ThemeService.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 
@@ -61,7 +60,7 @@ class AuthController extends GetxController {
     }
     try {
       await getAccount();
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 3)); //For logo to load
       return true;
     } catch (e) {
       return false;
@@ -136,9 +135,7 @@ class AuthController extends GetxController {
       token = "";
       isLoggedIn.value = AuthState.loggedOut;
       currentTab.value = 0;
-      // ThemeService().deleteColorScheme();
-      // ThemeService().deleteTheme();
-      // getTheme({}, true);
+      getTheme({}, true);
     } else {
       throw Exception("Unable to logout. Try again.");
     }

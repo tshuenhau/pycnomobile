@@ -16,6 +16,7 @@ class NotificationsController extends GetxController {
   RxList<NotificationData> readNotifications = RxList.empty();
   Rx<int> alertCounter = 0.obs;
   Rx<bool> isSevere = false.obs;
+  late Timer t;
 
   void onInit() {
     super.onInit();
@@ -24,13 +25,20 @@ class NotificationsController extends GetxController {
 
   @override
   void onClose() {
+    t.cancel();
     super.onClose();
+  }
+
+  @override
+  void dispose() {
+    t.cancel();
+    super.dispose();
   }
 
   Future<void> reload() async {
     // refresh notifs every 1/2 hour
 
-    Timer.periodic(new Duration(seconds: 1800), (timer) async {
+    t = Timer.periodic(new Duration(seconds: 1800), (timer) async {
       await this.getNotifications();
     });
   }
