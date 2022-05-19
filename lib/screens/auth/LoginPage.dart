@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
                     await authController.login(
                         username: usernameController.text,
                         password: passwordController.text);
-                    EasyLoading.dismiss();
+                    //EasyLoading.dismiss();
                     Navigator.of(context, rootNavigator: true)
                         .push(MaterialPageRoute(builder: (context) => App()));
                   } catch (e) {
@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
                     await authController.login(
                         username: usernameController.text,
                         password: passwordController.text);
-                    EasyLoading.dismiss();
+                    //EasyLoading.dismiss();
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => App()));
                   } catch (e) {
@@ -105,7 +105,7 @@ class LoginPage extends StatelessWidget {
                   await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
-                  EasyLoading.dismiss();
+                  // EasyLoading.dismiss();
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => App()));
                 } on SocketException catch (e) {

@@ -55,6 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
           // height: double.infinity,
           // width: double.infinity,
           child: PageView(
+            allowImplicitScrolling: true,
             controller: controller,
             children: pages,
             onPageChanged: (i) {
