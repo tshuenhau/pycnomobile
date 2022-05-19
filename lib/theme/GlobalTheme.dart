@@ -33,9 +33,6 @@ var globalTheme = ThemeData(
     primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.black)));
 
 ThemeData getTheme(Map? colorScheme, bool isLight) {
-  AuthController auth = Get.put(AuthController());
-  print("IS LIGHT " + isLight.toString());
-  auth.isLightMode.value = isLight;
   ColorScheme myColorScheme;
   if (colorScheme == null) {
     myColorScheme = defaultColorScheme;

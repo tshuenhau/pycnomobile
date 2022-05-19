@@ -59,30 +59,38 @@ class NotificationsController extends GetxController {
   }
 
   Future<void> getNotifications() async {
-    final response = await http.get(Uri.parse(
-        'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
-    // print(
-    //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
-    if (response.statusCode == 200) {
-      alertCounter.value = 0;
-      isSevere.value = false;
-      unreadNotifications.clear();
-      readNotifications.clear();
-      var body = jsonDecode(response.body);
-      for (var i = 0; i < body.length; i++) {
-        NotificationData notif = NotificationData.fromJson(body[i]);
-        if (notif.severity > 0 && notif.state == 0) {
-          unreadNotifications.add(notif);
-          if (notif.severity > 3) {
-            isSevere.value = true;
+    try {
+      final response = await http.get(Uri.parse(
+          'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
+      // print(
+      //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
+      if (response.statusCode == 200) {
+        alertCounter.value = 0;
+        isSevere.value = false;
+        unreadNotifications.clear();
+        readNotifications.clear();
+        var body = jsonDecode(response.body);
+        for (var i = 0; i < body.length; i++) {
+          NotificationData notif = NotificationData.fromJson(body[i]);
+          if (notif.severity > 0 && notif.state == 0) {
+            unreadNotifications.add(notif);
+            if (notif.severity > 3) {
+              isSevere.value = true;
+            }
+            alertCounter.value++;
+          } else if (notif.state == 1) {
+            readNotifications.add(notif);
           }
-          alertCounter.value++;
-        } else if (notif.state == 1) {
-          readNotifications.add(notif);
         }
+      } else {
+        throw Exception("Unable to get notifications");
       }
-    } else {
-      throw Exception("Unable to get notifications");
+    } on SocketException catch (e) {
+      EasyLoading.showError(
+          'Network Error: please check your internet connection.',
+          duration: Duration(seconds: 3),
+          dismissOnTap: true);
+      throw Exception("No internet");
     }
   }
 

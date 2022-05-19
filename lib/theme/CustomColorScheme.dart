@@ -22,7 +22,6 @@ Color hexToColor(String code) {
 }
 
 ColorScheme getColorScheme(Map colorScheme, bool isLight) {
-  print("color scheme " + colorScheme.toString());
   if (isLight) {
     return ColorScheme(
         brightness: Brightness.light,
