@@ -15,39 +15,38 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   final PageController controller = PageController();
-  late int index;
-  @override
-  void initState() {
-    super.initState();
-    index = 0;
-    controller.addListener(() {
-      setState(() {
-        index = controller.page!.toInt();
-      });
-    });
-  }
+  int index = 0;
+  List<Widget> pages = [
+    WelcomePageItem(
+        text: "AGRICULTURE SOIL & AMBIENT SENSORS",
+        image: AssetImage("assets/images/vineyard.jpg")),
+    WelcomePageItem(
+        text: "WATER WASTE MANAGEMENT SYSTEMS",
+        image: AssetImage("assets/images/water_treatment.jpg")),
+    WelcomePageItem(
+        text: "HOSTILE ENVIRONMENT SENSOR SYSTEMS",
+        image: AssetImage("assets/images/space.jpg")),
+    WelcomePageItem(
+        text: "OCEANOGRAPHIC & ENVIRONMENTAL SENSING",
+        image: AssetImage("assets/images/rov.jpg")),
+    WelcomePageItem(
+        text: "SMART HYDROPONIC & NURSERY AUTOMATION",
+        image: AssetImage("assets/images/potatoes_in_space_greenhouse.jpg")),
+  ];
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   index = 0;
+  //   controller.addListener(() {
+  //     setState(() {
+  //       index = controller.page!.toInt();
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     print("curr index: " + index.toString());
-
-    List<Widget> pages = [
-      WelcomePageItem(
-          text: "AGRICULTURE SOIL & AMBIENT SENSORS",
-          image: AssetImage("assets/images/vineyard.jpg")),
-      WelcomePageItem(
-          text: "WATER WASTE MANAGEMENT SYSTEMS",
-          image: AssetImage("assets/images/water_treatment.jpg")),
-      WelcomePageItem(
-          text: "HOSTILE ENVIRONMENT SENSOR SYSTEMS",
-          image: AssetImage("assets/images/space.jpg")),
-      WelcomePageItem(
-          text: "OCEANOGRAPHIC & ENVIRONMENTAL SENSING",
-          image: AssetImage("assets/images/rov.jpg")),
-      WelcomePageItem(
-          text: "SMART HYDROPONIC & NURSERY AUTOMATION",
-          image: AssetImage("assets/images/potatoes_in_space_greenhouse.jpg")),
-    ];
 
     return Stack(
       alignment: Alignment.center,
@@ -55,7 +54,13 @@ class _WelcomePageState extends State<WelcomePage> {
         Container(
           // height: double.infinity,
           // width: double.infinity,
-          child: PageView(controller: controller, children: pages),
+          child: PageView(
+            controller: controller,
+            children: pages,
+            onPageChanged: (i) {
+              print("onpageChanged: index" + index.toString());
+            },
+          ),
         ),
         Positioned(
           top: MediaQuery.of(context).size.height * 15 / 100,
