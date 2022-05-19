@@ -6,12 +6,30 @@ import 'package:pycnomobile/theme/ThemeService.dart';
 import 'package:pycnomobile/widgets/WelcomePageItem.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
   @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  final PageController controller = PageController();
+  late int index;
+  @override
+  void initState() {
+    super.initState();
+    index = 0;
+    controller.addListener(() {
+      setState(() {
+        index = controller.page!.toInt();
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController();
+    print("curr index: " + index.toString());
 
     List<Widget> pages = [
       WelcomePageItem(
@@ -95,12 +113,19 @@ class WelcomePage extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 40 / 100,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 1,
-                primary: Colors.black,
-                onPrimary: Colors.white,
-                onSurface: Theme.of(context).colorScheme.tertiary,
-              ),
+              style: index < 3
+                  ? ElevatedButton.styleFrom(
+                      elevation: 1,
+                      primary: Colors.black,
+                      onPrimary: Colors.white,
+                      onSurface: Theme.of(context).colorScheme.tertiary,
+                    )
+                  : ElevatedButton.styleFrom(
+                      elevation: 1,
+                      primary: Colors.green,
+                      onPrimary: Colors.white,
+                      onSurface: Theme.of(context).colorScheme.tertiary,
+                    ),
               child: Text('Login',
                   style: TextStyle(
                       fontFamily: 'nulshock',
