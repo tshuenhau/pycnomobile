@@ -142,8 +142,8 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
-    print("BRIGHTNESS?" +
-        (Theme.of(context).brightness == Brightness.light).toString());
+    // print("BRIGHTNESS?" +
+    //     (Theme.of(context).brightness == Brightness.light).toString());
     final Color accent =
         getTheme(ThemeService().colorScheme, isLight).colorScheme.tertiary;
 

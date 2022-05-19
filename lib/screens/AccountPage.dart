@@ -189,7 +189,6 @@ class _AccountPageState extends State<AccountPage> {
                                             ThemeService().deleteTheme();
                                             Get.changeThemeMode(
                                                 ThemeMode.light);
-
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pushAndRemoveUntil(
