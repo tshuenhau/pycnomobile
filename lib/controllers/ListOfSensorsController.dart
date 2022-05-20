@@ -10,7 +10,6 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'dart:io';
-import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
@@ -127,11 +126,6 @@ class ListOfSensorsController extends GetxController
         allSensorList.insert(0, s);
       }
     }
-
-    //sorting inactive list by date
-    // inactiveList.sort((a, b) => a.polledAt != null && b.polledAt != null
-    //     ? a.polledAt!.compareTo(b.polledAt!)
-    //     : 0);
 
     inactiveList = inactiveList.reversed.toList();
     inactiveListOfSensors.value = inactiveList;

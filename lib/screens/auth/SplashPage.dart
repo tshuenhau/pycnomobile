@@ -29,8 +29,7 @@ class SplashPage extends StatelessWidget {
                   image: NetworkImage(Theme.of(context).brightness ==
                           Brightness.light
                       ? auth.colorScheme['light']['companyLightLogo'].toString()
-                      : auth.colorScheme['light']['companyLightLogo']
-                          .toString()),
+                      : auth.colorScheme['dark']['companyDarkLogo'].toString()),
                 ),
               ))));
   }

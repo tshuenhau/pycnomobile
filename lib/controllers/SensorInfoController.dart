@@ -12,7 +12,6 @@ import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
 import 'package:pycnomobile/widgets/SensorLineChart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
-import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
@@ -178,6 +177,7 @@ class SensorInfoController extends GetxController {
               }
               if (body["values"] != null) {
                 if (body["values"][0][1] is String) {
+                  //Don't display any logs
                   continue;
                 }
               }
