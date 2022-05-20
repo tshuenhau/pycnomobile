@@ -10,7 +10,6 @@ import 'package:pycnomobile/model/LogSeries.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 import 'dart:io';
-import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class TimeSeriesController extends GetxController {
   AuthController authController = Get.find();
@@ -120,6 +119,7 @@ class TimeSeriesController extends GetxController {
       } else {
         alertGraphs.add(instanceList);
       }
+
       instanceSliMap["Driver: " + sliName + " SLI: " + sliPid] = instanceList;
       final response = await http.get(Uri.parse(
           'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${functions[0]!.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
@@ -195,12 +195,13 @@ class TimeSeriesController extends GetxController {
         for (dynamic sli in sensor.sli!) {
           String pid = sli["PID"].toString();
           dynamic sid = sli["SID"];
-          String name = sli["name"].toString();
+          String? name = sli["name"];
 
           if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
             RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-            instanceSliMap["Driver: " + name + " SLI: " + pid] =
-                instanceSliList;
+            instanceSliMap[(name != null ? "Driver: " + name.toString() : "") +
+                " SLI: " +
+                pid] = instanceSliList;
             for (String functionality in sli["plottable"]) {
               final response = await http.get(Uri.parse(
                   'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
