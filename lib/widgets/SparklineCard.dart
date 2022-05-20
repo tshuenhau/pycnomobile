@@ -62,7 +62,8 @@ class SparklineCardV2 extends StatelessWidget {
                     : controller.convertTimeSeriestoList(controller
                         .nonSliSparklines[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.sparkLines[sliPid.toString()]?.length ?? 0) <= index
+                : (controller.sparkLines[sliPid.toString()]?.length ?? 0) <=
+                        index
                     ? []
                     : controller.convertTimeSeriestoList(controller
                         .sparkLines[sliPid.toString()]?[index].getTimeSeries);
@@ -85,11 +86,13 @@ class SparklineCardV2 extends StatelessWidget {
                     : controller.convertTimeSeriestoList(controller
                         .alertNonSliSparklines[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.alertSparklines[sliPid.toString()]?.length ?? 0) <=
+                : (controller.alertSparklines[sliPid.toString()]?.length ??
+                            0) <=
                         index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .alertSparklines[sliPid.toString()]?[index].getTimeSeries);
+                        .alertSparklines[sliPid.toString()]?[index]
+                        .getTimeSeries);
 
             if (data == null) {
               change = 0;
@@ -169,7 +172,7 @@ class SparklineCardV2 extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sensor.name ?? "",
+                        Text(sliName != "" ? "SLI" : "Internal",
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
