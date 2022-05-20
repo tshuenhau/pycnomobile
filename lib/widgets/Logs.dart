@@ -72,30 +72,30 @@ class _LogsState extends State<Logs> {
   List<Widget> get buildLogs {
     print("data: " + widget.data.toString());
     List<Widget> widgets = [];
-    widgets.add(Container(
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-                  color: Theme.of(context).primaryColor.withOpacity(0.6)))),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width * 25 / 100,
-                child: Text("16/05/22 04:27:51")),
-            Flexible(
-              child: Container(
-                  constraints: BoxConstraints(
-                      minWidth: MediaQuery.of(context).size.width * 55 / 100),
-                  child: Text("Test")),
-            )
-          ],
-        ),
-      ),
-    ));
+    // widgets.add(Container(
+    //   decoration: BoxDecoration(
+    //       border: Border(
+    //           bottom: BorderSide(
+    //               color: Theme.of(context).primaryColor.withOpacity(0.6)))),
+    //   child: Padding(
+    //     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+    //     child: Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         SizedBox(
+    //             width: MediaQuery.of(context).size.width * 25 / 100,
+    //             child: Text("16/05/22 04:27:51")),
+    //         Flexible(
+    //           child: Container(
+    //               constraints: BoxConstraints(
+    //                   minWidth: MediaQuery.of(context).size.width * 55 / 100),
+    //               child: Text("Test")),
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // ));
     widget.data.forEach((key, value) {
       print("iterating");
       widgets.add(Container(
@@ -104,7 +104,7 @@ class _LogsState extends State<Logs> {
                 bottom: BorderSide(
                     color: Theme.of(context).primaryColor.withOpacity(0.6)))),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

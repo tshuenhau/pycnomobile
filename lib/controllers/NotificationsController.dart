@@ -8,7 +8,6 @@ import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/sensors/FixSensor.dart';
 import 'dart:io';
-import 'package:pycnomobile/screens/ErrorPage.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
