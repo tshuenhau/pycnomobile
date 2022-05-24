@@ -7,6 +7,7 @@ import 'package:pycnomobile/model/User.dart';
 import 'dart:convert';
 import 'package:pycnomobile/theme/ThemeService.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
+import 'package:pycnomobile/screens/NoInternetPage.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut }
 
@@ -62,6 +63,9 @@ class AuthController extends GetxController {
       await getAccount();
       await Future.delayed(Duration(seconds: 3)); //For logo to load
       return true;
+    } on SocketException catch (e) {
+      Get.to(NoInternetPage());
+      return false;
     } catch (e) {
       return false;
     }
