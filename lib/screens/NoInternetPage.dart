@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/screens/auth/LoginPage.dart';
+import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:get/get.dart';
 
 class NoInternetPage extends StatelessWidget {
   const NoInternetPage({Key? key}) : super(key: key);
@@ -53,9 +55,15 @@ class NoInternetPage extends StatelessWidget {
                   ),
                   child: Icon(Icons.refresh,
                       size: MediaQuery.of(context).size.width * 8 / 100),
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  onPressed: () async {
+                    AuthController auth = Get.find();
+                    auth.isLoggedIn.value = await auth.checkLoggedInStatus()
+                        ? AuthState.loggedIn
+                        : AuthState.loggedOut;
+                    if (auth.isLoggedIn.value == AuthState.loggedIn) {
+                      Get.back();
+                    }
+                    print(auth.isLoggedIn.value);
                   },
                 ),
               ),
