@@ -13,6 +13,29 @@ class NoInternetPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(Icons.signal_wifi_bad,
+                  color: Colors.black.withOpacity(0.85),
+                  size: MediaQuery.of(context).size.width * 15 / 100),
+              SizedBox(height: MediaQuery.of(context).size.height * 3.5 / 100),
+
+              Text("WHOOPS!",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'GothamRounded',
+                      fontSize: MediaQuery.of(context).size.width * 7.5 / 100)),
+              Text("No Internet connection!",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'GothamRounded',
+                      fontWeight: FontWeight.w500,
+                      fontSize: MediaQuery.of(context).size.width * 4 / 100)),
+              Text("Please check you connection and try again!",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'GothamRounded',
+                      fontSize: MediaQuery.of(context).size.width * 3.5 / 100)),
+              SizedBox(height: MediaQuery.of(context).size.height * 3.5 / 100),
+
               // SizedBox(height: MediaQuery.of(context).size.height * 1.5 / 100),
               SizedBox(
                 height: MediaQuery.of(context).size.width * 12 / 100,
@@ -24,7 +47,8 @@ class NoInternetPage extends StatelessWidget {
                     onPrimary: Colors.white,
                     onSurface: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.width * 100 / 100),
                         side: BorderSide(color: Colors.transparent)),
                   ),
                   child: Icon(Icons.refresh,
@@ -35,17 +59,6 @@ class NoInternetPage extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 1.5 / 100),
-              Text("No Internet!",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontFamily: 'GothamRounded',
-                      fontSize: MediaQuery.of(context).size.width * 3.5 / 100)),
-              Text("Check you connection and try again!",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontFamily: 'GothamRounded',
-                      fontSize: MediaQuery.of(context).size.width * 3.5 / 100)),
             ],
           )),
     );
