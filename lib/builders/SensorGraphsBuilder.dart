@@ -235,7 +235,7 @@ class NoGraphData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height * 2.5 / 100),
+          bottom: MediaQuery.of(context).size.height * 4.5 / 100),
       child: Container(
           width: MediaQuery.of(context).size.width * 80 / 100,
           height: MediaQuery.of(context).size.height * 20 / 100,
