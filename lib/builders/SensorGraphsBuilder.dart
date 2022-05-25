@@ -151,7 +151,7 @@ List<Widget> buildGraphs(
       if (value.length < 1) {
         graphsToDraw.add(Padding(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 3.5 / 100),
+              bottom: MediaQuery.of(context).size.height * 7.5 / 100),
           child: Container(
               height: MediaQuery.of(context).size.height * 20 / 100,
               width: MediaQuery.of(context).size.width * 80 / 100,
