@@ -176,12 +176,12 @@ class ListOfSensorsController extends GetxController
     }
 
     //Add nodes in case no masters
+    print(tempList.length);
     for (int i = 0; i < tempList.length; i++) {
       if (!list.contains(tempList[i])) {
-        list.insert(
-            list.indexWhere(
-                (sensor) => sensor.polledAt!.isBefore(tempList[i].polledAt!)),
-            tempList[i]);
+        int indexWhr = list.indexWhere(
+            (sensor) => sensor.polledAt!.isBefore(tempList[i].polledAt!));
+        list.insert(indexWhr == -1 ? 0 : indexWhr, tempList[i]);
       }
     }
 
