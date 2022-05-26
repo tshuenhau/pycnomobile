@@ -35,7 +35,11 @@ class AccountListTile extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 25 / 100,
                 child:
                     Text(title, style: TextStyle(fontWeight: FontWeight.bold))),
-            title: Text(value),
+            title: Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height * 1 / 100),
+              child: Text(value),
+            ),
             // trailing: Icon(Icons.edit)
           ),
         ));
