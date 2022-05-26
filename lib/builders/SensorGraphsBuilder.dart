@@ -33,11 +33,9 @@ Future<void> initGraphs(bool isAlert, Sensor sensor,
 
     if (functions.length <= 1) {
       //for non sli graph bottom sheet
-      print('getting single, sli ' + sliPid);
       controller.getSingleTimeSeries(dateRange.start, dateRange.end, sensor,
           isAlert, sliPid, sliName, functions);
     } else {
-      print('getting multi');
       controller.getMultiTimeSeries(
           dateRange.start, dateRange.end, functions, sensor, isAlert);
     }

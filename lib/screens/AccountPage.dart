@@ -289,8 +289,8 @@ class _AccountPageState extends State<AccountPage> {
                                         ? authController.colorScheme['light']
                                                 ['companyLightLogo']
                                             .toString()
-                                        : authController.colorScheme['light']
-                                                ['companyLightLogo']
+                                        : authController.colorScheme['dark']
+                                                ['companyDarkLogo']
                                             .toString()),
                                   ),
                                 )
