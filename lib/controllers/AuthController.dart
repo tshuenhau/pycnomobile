@@ -121,7 +121,6 @@ class AuthController extends GetxController {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
       if (user.value != null) {
         this.colorScheme.value = user.value!.colorScheme;
-        print('hehehehe ' + this.colorScheme.toString());
       }
     } else {
       throw Exception("Unable to get account details");
