@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
-import 'package:pycnomobile/screens/SensorSummaryPage.dart';
 import 'package:pycnomobile/screens/SparklinesPage.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/SensorInfoController.dart';
-import 'package:get/get.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
@@ -17,7 +13,6 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
-  SensorInfoController c = Get.put(SensorInfoController());
   @override
   void initState() {
     super.initState();
@@ -81,7 +76,7 @@ class _SensorPageState extends State<SensorPage> {
         ),
         body: Center(
           child: TabBarView(physics: NeverScrollableScrollPhysics(), children: [
-            SparklinesPage(sensor: widget.sensor),
+            SparklinesPage(sensor: widget.sensor, key: UniqueKey()),
             AllGraphsPage(
               key: widget.key,
               sensor: widget.sensor,

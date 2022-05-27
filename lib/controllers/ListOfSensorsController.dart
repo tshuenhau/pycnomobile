@@ -58,8 +58,8 @@ class ListOfSensorsController extends GetxController
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
-              .isBefore(DateTime.now().add(const Duration(seconds: -900)))) {
-        // wait for 15 minutes before refreshing
+              .isBefore(DateTime.now().add(const Duration(seconds: -1800)))) {
+        // wait for 30 minutes before refreshing
         try {
           EasyLoading.show(status: 'Loading...');
           await getListOfSensors();
@@ -95,7 +95,6 @@ class ListOfSensorsController extends GetxController
             addSensor(FixSensor.fromJson(body[i]));
           }
         }
-
         sortSensors();
 
         this.lastRefreshTime.value = DateTime.now();
@@ -119,6 +118,13 @@ class ListOfSensorsController extends GetxController
       return;
     }
     for (Sensor s in filteredListOfSensors) {
+      print(s.name ??
+          ' ' +
+              ' epoch ' +
+              s.epoch.toString() +
+              ' time ago ' +
+              s.polledAt.toString());
+      print(s.polledAt);
       if (s.isActive() == IS_ACTIVE.INACTIVE) {
         inactiveList.insert(0, s);
         allSensorList.insert(0, s);
@@ -176,7 +182,6 @@ class ListOfSensorsController extends GetxController
     }
 
     //Add nodes in case no masters
-    print(tempList.length);
     for (int i = 0; i < tempList.length; i++) {
       if (!list.contains(tempList[i])) {
         int indexWhr = list.indexWhere(

@@ -15,14 +15,14 @@ import 'dart:io';
 
 class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
-  RxMap<String, RxList<TimeSeries>> sparkLines =
-      RxMap<String, RxList<TimeSeries>>();
-  RxMap<String, RxList<TimeSeries>> alertSparklines =
-      RxMap<String, RxList<TimeSeries>>();
-  RxMap<String, RxList<TimeSeries>> nonSliSparklines =
-      RxMap<String, RxList<TimeSeries>>();
-  RxMap<String, RxList<TimeSeries>> alertNonSliSparklines =
-      RxMap<String, RxList<TimeSeries>>();
+  RxList<RxMap<String, RxList<TimeSeries>>> sparkLines =
+      RxList<RxMap<String, RxList<TimeSeries>>>();
+  RxList<RxMap<String, RxList<TimeSeries>>> alertSparklines =
+      RxList<RxMap<String, RxList<TimeSeries>>>();
+  RxList<RxMap<String, RxList<TimeSeries>>> nonSliSparklines =
+      RxList<RxMap<String, RxList<TimeSeries>>>();
+  RxList<RxMap<String, RxList<TimeSeries>>> alertNonSliSparklines =
+      RxList<RxMap<String, RxList<TimeSeries>>>();
 
   @override
   void onInit() {
@@ -55,11 +55,12 @@ class SensorInfoController extends GetxController {
     try {
       DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
       if (isAlert) {
-        alertSparklines.value = {};
-        alertNonSliSparklines.value = {};
+        alertSparklines.add(RxMap());
+        alertNonSliSparklines.add(RxMap());
       } else {
-        sparkLines.value = {};
-        nonSliSparklines.value = {};
+        sparkLines.add(RxMap());
+
+        nonSliSparklines.add(RxMap());
       }
 
       DateTime now = DateTime.now();
@@ -84,9 +85,9 @@ class SensorInfoController extends GetxController {
                 String color = body['color'];
                 String key = body['key'];
                 if (isAlert) {
-                  alertSparklines[pid] = instanceList;
+                  alertSparklines.last[pid] = instanceList;
                 } else {
-                  sparkLines[pid] = instanceList;
+                  sparkLines.last[pid] = instanceList;
                 }
                 if (body["values"] != null) {
                   if (body["values"][0][1] is String) {
@@ -171,9 +172,9 @@ class SensorInfoController extends GetxController {
               String key = body['key'];
 
               if (isAlert) {
-                alertNonSliSparklines[sensor.name ?? ""] = instanceList;
+                alertNonSliSparklines.last[sensor.name ?? ""] = instanceList;
               } else {
-                nonSliSparklines[sensor.name ?? ""] = instanceList;
+                nonSliSparklines.last[sensor.name ?? ""] = instanceList;
               }
               if (body["values"] != null) {
                 if (body["values"][0][1] is String) {
@@ -199,6 +200,14 @@ class SensorInfoController extends GetxController {
               throw Exception("Failed to retrieve data. Try again!");
             }
           }
+        }
+        if (sparkLines.length > 1 && !isAlert) {
+          sparkLines.removeRange(0, sparkLines.length - 1);
+          nonSliSparklines.removeRange(0, nonSliSparklines.length - 1);
+        } else if (alertSparklines.length > 1) {
+          alertSparklines.removeRange(0, alertSparklines.length - 1);
+          alertNonSliSparklines.removeRange(
+              0, alertNonSliSparklines.length - 1);
         }
       }
     } on SocketException catch (e) {

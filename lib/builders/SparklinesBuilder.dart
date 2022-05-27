@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/widgets/(OLD)SparklineCard.dart';
 import 'package:pycnomobile/widgets/SparklineCard.dart';
-import 'package:pycnomobile/model/TimeSeries.dart';
 import 'package:pycnomobile/model/sensors/Pulse.dart';
 import 'package:pycnomobile/model/functionalities/Functionality.dart';
 
@@ -13,7 +9,7 @@ import 'package:pycnomobile/model/functionalities/Functionality.dart';
 //   await controller.getTimeSeriesForSparklines(sensor);
 // }
 
-List<Widget> buildSparklinesV2(
+List<Widget> buildSparklines(
     {required Sensor sensor, required BuildContext context}) {
   List<Widget> cards = [];
   if (sensor.isPulse()) {
@@ -34,7 +30,7 @@ List<Widget> buildSparklinesV2(
               functionality == "LON2") {
             continue;
           }
-          cards.add(new SparklineCardV2(
+          cards.add(SparklineCard(
               name: functionality,
               index: sli["plottable"].indexOf(functionality),
               sliPid: pid,
@@ -63,7 +59,7 @@ List<Widget> buildSparklinesV2(
           func.key == "LON2") {
         continue;
       }
-      cards.add(new SparklineCardV2(
+      cards.add(new SparklineCard(
           name: func.name,
           index: sensor.functionalities!.indexOf(func),
           sliPid: "",
@@ -75,56 +71,3 @@ List<Widget> buildSparklinesV2(
 
   return cards;
 }
-
-// List<Widget> buildSparklines(
-//     {required Sensor sensor, required BuildContext context}) {
-//   print("Building sparklines...");
-//   SensorInfoController controller = Get.put(SensorInfoController());
-//   List<Widget> sparkLines = [];
-
-//   /*
-//     Sparklines format: Map<String, List<TimeSeries>>
-//                               |            |
-//                              SLI's PID  TimeSeries for each functionality in SLI
-//   */
-//   controller.sparkLines.forEach((key, value) {
-//     value.forEach((TimeSeries e) {
-//       if (e.getTimeSeries == null) {
-//         return;
-//       }
-//       sparkLines.add(SparklineCard(
-//           sensor: sensor,
-//           function: new Functionality(
-//               name: e.getName,
-//               key: e.getKey,
-//               value: null,
-//               color: null,
-//               icon: null,
-//               unit: null),
-//           sli: key,
-//           name: e.getName,
-//           data: controller.convertTimeSeriestoList(e.getTimeSeries!)));
-//     });
-//   });
-
-//   controller.nonSliSparklines.forEach((key, value) {
-//     value.forEach((TimeSeries e) {
-//       if (e.getTimeSeries == null) {
-//         return;
-//       }
-//       sparkLines.add(SparklineCard(
-//           sensor: sensor,
-//           function: new Functionality(
-//               name: e.getName,
-//               key: e.getKey,
-//               value: null,
-//               color: null,
-//               icon: null,
-//               unit: null),
-//           sli: "",
-//           name: e.getKey,
-//           data: controller.convertTimeSeriestoList(e.getTimeSeries)));
-//     });
-//   });
-//   return sparkLines;
-// }

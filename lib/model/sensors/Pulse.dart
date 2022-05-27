@@ -73,4 +73,28 @@ class Pulse extends Sensor {
         " slir: " +
         slir.toString();
   }
+
+  @override
+  Pulse clone() {
+    return new Pulse(
+        uid: this.uid,
+        name: this.name,
+        address: this.address,
+        img: this.img,
+        epoch: this.epoch,
+        site: this.site,
+        isLive: this.isLive,
+        isLiveHealth: this.isLiveHealth,
+        isLiveTS: this.isLiveTS,
+        updatedAt: this.updatedAt,
+        polledAt: this.polledAt,
+        soilType: this.soilType,
+        readableAgo: this.readableAgo,
+        readableAgoFull: this.readableAgoFull,
+        functionalities: this.functionalities,
+        sli: this.sli,
+        isSimActive: this.isSimActive,
+        slir: this.slir,
+        slil: this.slil);
+  }
 }
