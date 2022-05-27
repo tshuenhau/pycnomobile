@@ -19,7 +19,7 @@ class SparklinesPage extends StatelessWidget {
       crossAxisCount: 2,
       children:
           // buildSparklines(sensor: sensor, context: context),
-          buildSparklinesV2(sensor: sensor, context: context),
+          buildSparklines(sensor: sensor, context: context),
     );
   }
 }

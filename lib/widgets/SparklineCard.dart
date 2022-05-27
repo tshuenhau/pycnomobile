@@ -9,8 +9,8 @@ import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:collection/collection.dart';
 
-class SparklineCardV2 extends StatelessWidget {
-  SparklineCardV2(
+class SparklineCard extends StatelessWidget {
+  SparklineCard(
       {Key? key,
       required this.name,
       required this.function,
@@ -20,12 +20,12 @@ class SparklineCardV2 extends StatelessWidget {
       required this.sensor})
       : super(key: key);
 
-  String name; //name of sensor
-  Sensor sensor;
-  int index;
-  Functionality function;
-  String sliPid;
-  String sliName;
+  final String name; //name of sensor
+  final Sensor sensor;
+  final int index;
+  final Functionality function;
+  final String sliPid;
+  final String sliName;
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +55,21 @@ class SparklineCardV2 extends StatelessWidget {
 
           if (auth.currentTab.value == 0) {
             data = sliPid == ""
-                ? (controller.nonSliSparklines[sensor.name ?? ""]?.length ??
+                ? (controller.nonSliSparklines.last[sensor.name ?? ""]
+                                ?.length ??
                             0) <=
                         index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .nonSliSparklines[sensor.name ?? ""]?[index]
+                        .nonSliSparklines
+                        .last[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.sparkLines[sliPid.toString()]?.length ?? 0) <=
+                : (controller.sparkLines.last[sliPid.toString()]?.length ??
+                            0) <=
                         index
                     ? []
-                    : controller.convertTimeSeriestoList(controller
-                        .sparkLines[sliPid.toString()]?[index].getTimeSeries);
+                    : controller.convertTimeSeriestoList(controller.sparkLines
+                        .last[sliPid.toString()]?[index].getTimeSeries);
 
             if (data == null || data.length < 1) {
               change = 0;
@@ -76,22 +79,23 @@ class SparklineCardV2 extends StatelessWidget {
               change = ((data[data.length - 1] - data[0]));
             }
           } else {
-            print(controller.alertNonSliSparklines);
             data = sliPid == ""
-                ? (controller.alertNonSliSparklines[sensor.name ?? ""]
+                ? (controller.alertNonSliSparklines.last[sensor.name ?? ""]
                                 ?.length ??
                             0) <=
                         index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .alertNonSliSparklines[sensor.name ?? ""]?[index]
+                        .alertNonSliSparklines
+                        .last[sensor.name ?? ""]?[index]
                         .getTimeSeries)
-                : (controller.alertSparklines[sliPid.toString()]?.length ??
+                : (controller.alertSparklines.last[sliPid.toString()]?.length ??
                             0) <=
                         index
                     ? []
                     : controller.convertTimeSeriestoList(controller
-                        .alertSparklines[sliPid.toString()]?[index]
+                        .alertSparklines
+                        .last[sliPid.toString()]?[index]
                         .getTimeSeries);
 
             if (data == null) {

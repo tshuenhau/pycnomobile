@@ -127,7 +127,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     //Delete token and send api post request to delete token
     final response = await http
         .get(Uri.parse('https://stage.pycno.co/api/v2/data/logout?TK=$token'));

@@ -19,10 +19,10 @@ class SensorListPage extends StatefulWidget {
 }
 
 class _SensorListPageState extends State<SensorListPage> {
-  late StreamSubscription<bool> keyboardSubscription;
-  AuthController authController = Get.find();
   ListOfSensorsController sensorsController =
       Get.put(ListOfSensorsController());
+  late StreamSubscription<bool> keyboardSubscription;
+  AuthController authController = Get.find();
 
   late Timer everyMinute;
   late DateTime now;
@@ -39,6 +39,7 @@ class _SensorListPageState extends State<SensorListPage> {
         });
       }
     });
+
     sensorsController.context = context;
 
     super.initState();
@@ -55,16 +56,10 @@ class _SensorListPageState extends State<SensorListPage> {
   }
 
   @override
-  didChangeDependencies() {
-    context.dependOnInheritedWidgetOfExactType();
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     keyboardSubscription.cancel();
-    Get.delete<ListOfSensorsController>();
     super.dispose();
+    Get.delete<ListOfSensorsController>();
   }
 
   Future _refreshData() async {
@@ -75,6 +70,8 @@ class _SensorListPageState extends State<SensorListPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ListOfSensorsController sensorsController =
+    //     Get.put(ListOfSensorsController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(

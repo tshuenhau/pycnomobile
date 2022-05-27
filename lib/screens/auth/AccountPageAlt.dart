@@ -68,8 +68,8 @@ class AccountPage extends StatelessWidget {
                               TextButton.icon(
                                   icon: Icon(Icons.logout),
                                   label: Text("Logout"),
-                                  onPressed: () {
-                                    authController.logout();
+                                  onPressed: () async {
+                                    await authController.logout();
                                     Get.reset();
                                     Get.offAll(LoginPage());
                                     Navigator.of(context, rootNavigator: true)
