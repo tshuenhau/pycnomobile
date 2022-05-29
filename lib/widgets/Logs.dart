@@ -21,7 +21,7 @@ class _LogsState extends State<Logs> {
           Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Center(
-                child: Text("Log",
+                child: Text("Unit Logs",
                     style: TextStyle(
                         fontSize:
                             MediaQuery.of(context).size.height * 2.5 / 100))),
@@ -97,7 +97,6 @@ class _LogsState extends State<Logs> {
     //   ),
     // ));
     widget.data.forEach((key, value) {
-      print("iterating");
       widgets.add(Container(
         decoration: BoxDecoration(
             border: Border(
