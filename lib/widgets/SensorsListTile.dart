@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 
@@ -32,8 +33,14 @@ class SensorsListTile extends StatelessWidget {
           // EasyLoading.show(status: "Fetching Sensor Data...");
           try {
             controller.getTimeSeriesForSparklines(sensor, false);
-            Navigator.of(context).push(
-                CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
+            pushNewScreen(
+              context,
+              screen: SensorPage(sensor: sensor),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+            // Navigator.of(context).push(
+            //     CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
             // EasyLoading.dismiss();
           } catch (e) {
             EasyLoading.showError('$e');

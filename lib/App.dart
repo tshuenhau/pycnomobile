@@ -160,12 +160,12 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       ..indicatorColor = accent
       ..textColor = accent;
 
-    return SafeArea(
-      child: Scaffold(
-        body: DoubleBackToCloseApp(
-          snackBar: const SnackBar(
-            content: Text('Tap back again to leave'),
-          ),
+    return Scaffold(
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          content: Text('Tap back again to leave'),
+        ),
+        child: SafeArea(
           child: Center(
             child: PersistentTabView(
               context,
