@@ -99,15 +99,13 @@ class _SensorListPageState extends State<SensorListPage> {
                                     1,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              if (index ==
-                                  sensorsController
-                                      .filteredListOfSensors.length) {
+                              if (index == 0) {
                                 return Center(
                                     child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical:
+                                  padding: EdgeInsets.only(
+                                      bottom:
                                           MediaQuery.of(context).size.height *
-                                              2.5 /
+                                              1 /
                                               100),
                                   child: Text("Last refreshed " +
                                       timeago.format(sensorsController
@@ -115,7 +113,7 @@ class _SensorListPageState extends State<SensorListPage> {
                                 ));
                               }
                               Sensor sensor = sensorsController
-                                  .filteredListOfSensors[index];
+                                  .filteredListOfSensors[index - 1];
 
                               if (sensor.isActive() == IS_ACTIVE.INACTIVE &&
                                   !displayInactive) {
