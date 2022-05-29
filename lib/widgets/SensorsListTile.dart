@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -36,11 +38,11 @@ class SensorsListTile extends StatelessWidget {
             pushNewScreen(
               context,
               screen: SensorPage(sensor: sensor),
-              withNavBar: false, // OPTIONAL VALUE. True by default.
+              withNavBar: Platform.isAndroid ? false : true,
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
             );
             // Navigator.of(context).push(
-            //     CupertinoPageRoute(builder: (_) => SensorPage(sensor: sensor)));
+            //     MaterialPageRoute(builder: (_) => SensorPage(sensor: sensor)));
             // EasyLoading.dismiss();
           } catch (e) {
             EasyLoading.showError('$e');

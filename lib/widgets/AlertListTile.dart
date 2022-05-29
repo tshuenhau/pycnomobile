@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/model/NotificationData.dart';
 import 'package:pycnomobile/screens/SensorPage.dart';
@@ -9,6 +10,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:pycnomobile/controllers/NotificationsController.dart';
 import 'package:pycnomobile/controllers/SensorInfoController.dart';
+import 'dart:io';
 
 class AlertListTile extends StatelessWidget {
   AlertListTile({Key? key, required this.notification}) : super(key: key);
@@ -67,8 +69,16 @@ class AlertCard extends StatelessWidget {
                     await controller.getSensorFromNotifs(this.notification.uid);
                 sensorInfoController.getTimeSeriesForSparklines(sensor, true);
                 EasyLoading.dismiss();
-                Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (_) => SensorPage(sensor: sensor)));
+                pushNewScreen(
+                  context,
+                  withNavBar: Platform.isAndroid ? false : true,
+                  screen: SensorPage(sensor: sensor),
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => SensorPage(sensor: sensor)));
                 controller.dismissNotification(this.notification);
               },
               child: ListTile(
