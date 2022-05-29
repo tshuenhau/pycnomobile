@@ -24,12 +24,41 @@ class SplashPage extends StatelessWidget {
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.width * 40 / 100,
                     maxWidth: MediaQuery.of(context).size.width * 40 / 100),
-                child: Image(
-                  image: NetworkImage(Theme.of(context).brightness ==
-                          Brightness.light
-                      ? auth.colorScheme['light']['companyLightLogo'].toString()
-                      : auth.colorScheme['dark']['companyDarkLogo'].toString()),
-                ),
+                child: Image.network(
+                    Theme.of(context).brightness == Brightness.light
+                        ? auth.colorScheme['light']['companyLightLogo']
+                            .toString()
+                        : auth.colorScheme['dark']['companyDarkLogo']
+                            .toString(),
+                    frameBuilder: (context, child, frame, _) {
+                  if (frame == null) {
+                    // fallback to placeholder
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: MediaQuery.of(context).size.height *
+                                  3.5 /
+                                  100),
+                          child: CircularProgressIndicator(),
+                        ),
+                        Text("Loading Dashboard...",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.65),
+                                fontFamily: 'GothamRounded',
+                                fontSize: MediaQuery.of(context).size.width *
+                                    3.5 /
+                                    100))
+                      ],
+                    );
+                  }
+                  return child;
+                }),
               ))));
   }
 }
