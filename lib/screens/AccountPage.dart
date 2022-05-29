@@ -27,8 +27,8 @@ class _AccountPageState extends State<AccountPage> {
 
     return Obx(() => Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
-          body: Center(
-            child: ListView(
+          body: SingleChildScrollView(
+            child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[

@@ -3,6 +3,7 @@ import 'package:pycnomobile/model/sensors/Sensor.dart';
 import 'package:pycnomobile/screens/AllGraphsPage.dart';
 import 'package:pycnomobile/screens/SparklinesPage.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 class SensorPage extends StatefulWidget {
   final Sensor sensor;
