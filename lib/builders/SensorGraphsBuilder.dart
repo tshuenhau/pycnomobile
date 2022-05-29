@@ -254,12 +254,22 @@ class LoadingIndicator extends StatelessWidget {
     return Center(
       child: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 7.5 / 100,
-            bottom: MediaQuery.of(context).size.height * 10 / 100),
-        child: SizedBox(
-            height: MediaQuery.of(context).size.width * 5 / 100,
-            width: MediaQuery.of(context).size.width * 5 / 100,
-            child: CircularProgressIndicator()),
+          top: MediaQuery.of(context).size.height * 7 / 100,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.6)),
+          ),
+          height: MediaQuery.of(context).size.height * 22 / 100,
+          width: MediaQuery.of(context).size.width * 80 / 100,
+          child: Center(
+            child: SizedBox(
+                height: MediaQuery.of(context).size.width * 5 / 100,
+                width: MediaQuery.of(context).size.width * 5 / 100,
+                child: CircularProgressIndicator()),
+          ),
+        ),
       ),
     );
   }
