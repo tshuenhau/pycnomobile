@@ -49,7 +49,8 @@ class _AccountPageState extends State<AccountPage> {
                                                   .user.value!.profilePic !=
                                               null
                                           ? NetworkImage(
-                                              "https://pycno.co/${authController.user.value!.profilePic}")
+                                              "https://pycno.co/${authController.user.value!.profilePic}",
+                                            )
                                           : null,
                                       child: authController
                                                   .user.value!.profilePic ==
@@ -218,10 +219,7 @@ class _AccountPageState extends State<AccountPage> {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100),
-                        AccountListTile(
-                            title: "Username",
-                            value: "${authController.user.value!.username}",
-                            authController: authController),
+
                         AccountListTile(
                             title: "Email",
                             value:
@@ -255,9 +253,9 @@ class _AccountPageState extends State<AccountPage> {
                             title: "Farm Address",
                             value: "${authController.user.value!.farmAddr}",
                             authController: authController),
-                        SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 2.5 / 100),
+                        // SizedBox(
+                        //     height:
+                        //         MediaQuery.of(context).size.height * 0 / 100),
                         Container(
                             height:
                                 MediaQuery.of(context).size.height * 15 / 100,
@@ -282,18 +280,31 @@ class _AccountPageState extends State<AccountPage> {
                                           MediaQuery.of(context).size.width *
                                               40 /
                                               100),
-                                  child: Image(
-                                    image: NetworkImage(Theme.of(context)
-                                                .brightness ==
-                                            Brightness.light
-                                        ? authController.colorScheme['light']
-                                                ['companyLightLogo']
-                                            .toString()
-                                        : authController.colorScheme['dark']
-                                                ['companyDarkLogo']
-                                            .toString()),
-                                  ),
-                                )
+                                  child: Image.network(
+                                      Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? authController.colorScheme['light']
+                                                  ['companyLightLogo']
+                                              .toString()
+                                          : authController.colorScheme['dark']
+                                                  ['companyDarkLogo']
+                                              .toString(),
+                                      frameBuilder: (context, child, frame, _) {
+                                    if (frame == null) {
+                                      // fallback to placeholder
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.5 /
+                                                100),
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    return child;
+                                  }),
+                                ),
                               ],
                             )),
                         SizedBox(
