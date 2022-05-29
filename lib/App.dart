@@ -162,7 +162,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
     return Scaffold(
       body: DoubleBackToCloseApp(
-        snackBar: const SnackBar(
+        snackBar: SnackBar(
+          // behavior: SnackBarBehavior.floating,
+          // margin:
+          //     EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 2),
           content: Text('Tap back again to leave'),
         ),
         child: SafeArea(
