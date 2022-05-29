@@ -3,8 +3,33 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +69,7 @@ class SplashPage extends StatelessWidget {
                                   100),
                           child: CircularProgressIndicator(),
                         ),
-                        Text("Loading Dashboard...",
+                        Text("Loading Profile...",
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme
@@ -57,7 +82,19 @@ class SplashPage extends StatelessWidget {
                       ],
                     );
                   }
-                  return child;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      child,
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 2 / 100),
+                      LinearProgressIndicator(
+                        value: controller.value,
+                        semanticsLabel: 'Linear progress indicator',
+                      ),
+                    ],
+                  );
                 }),
               ))));
   }
