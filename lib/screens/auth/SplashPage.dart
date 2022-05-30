@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:pycnomobile/App.dart';
 import 'package:get/get.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'dart:math';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -25,6 +28,27 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     checkFirstLogin();
+    // EasyLoading.instance
+    //   ..maskType = EasyLoadingMaskType.custom
+    //   ..backgroundColor = Colors.transparent
+    //   ..maskColor = Colors.transparent
+    //   ..loadingStyle = EasyLoadingStyle.custom
+    //   ..indicatorColor = Colors.white
+    //   ..textStyle = TextStyle(
+    //       color: Colors.white,
+    //       fontSize: 15,
+    //       fontWeight: FontWeight.bold,
+    //       fontFamily: 'nulshock',
+    //       shadows: [
+    //         Shadow(
+    //             color: Colors.black.withOpacity(0.65),
+    //             offset: const Offset(8, 3),
+    //             blurRadius: 30),
+    //       ]);
+    // EasyLoading.show(
+    //   status: 'Loading Dashboard...',
+    //   maskType: EasyLoadingMaskType.custom,
+    // );
     super.initState();
   }
 
@@ -37,6 +61,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    // EasyLoading.dismiss();
+    // EasyLoading.instance..textStyle = null;
     controller.dispose();
     super.dispose();
   }
@@ -97,9 +123,18 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 child: Column(
                   children: [
                     Container(
-                        height: MediaQuery.of(context).size.width * 10 / 100,
-                        width: MediaQuery.of(context).size.width * 10 / 100,
-                        child: CircularProgressIndicator(color: Colors.white)),
+                        height: MediaQuery.of(context).size.width * 15 / 100,
+                        width: MediaQuery.of(context).size.width * 15 / 100,
+                        child: Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(pi),
+                          child: LoadingIndicator(
+                              indicatorType: Indicator.ballSpinFadeLoader,
+                              colors: [
+                                Colors.white,
+                              ],
+                              pathBackgroundColor: Colors.white),
+                        )),
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 5 / 100),
                     Text("Loading Dashboard...",
@@ -138,6 +173,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                                 frameBuilder: (context, child, frame, _) {
                               if (frame == null) {
                                 // fallback to placeholder
+
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical:

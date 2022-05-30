@@ -64,7 +64,7 @@ class AlertCard extends StatelessWidget {
             child: InkWell(
               onTap: () async {
                 FocusScope.of(context).unfocus();
-                EasyLoading.show(status: "Loading");
+                EasyLoading.show(status: "Loading...");
                 Sensor sensor =
                     await controller.getSensorFromNotifs(this.notification.uid);
                 sensorInfoController.getTimeSeriesForSparklines(sensor, true);
