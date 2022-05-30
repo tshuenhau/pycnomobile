@@ -48,6 +48,23 @@ class LoginPage extends StatelessWidget {
             TextField(
                 textInputAction: TextInputAction.go,
                 controller: usernameController,
+                onSubmitted: (string) async {
+                  try {
+                    await authController.setDeviceData();
+                    await authController.login(
+                        username: usernameController.text,
+                        password: passwordController.text);
+                    // EasyLoading.dismiss();
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => SplashPage()));
+                  } on SocketException catch (e) {
+                    EasyLoading.showError(
+                        "Check your connection and try again!");
+                  } catch (e) {
+                    EasyLoading.showError("invalid username/password");
+                    print(e);
+                  }
+                },
                 decoration: new InputDecoration(
                     fillColor: Theme.of(context).colorScheme.surface,
                     filled: true,
@@ -55,6 +72,23 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 1 / 100),
             TextField(
                 obscureText: true,
+                onSubmitted: (string) async {
+                  try {
+                    await authController.setDeviceData();
+                    await authController.login(
+                        username: usernameController.text,
+                        password: passwordController.text);
+                    // EasyLoading.dismiss();
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => SplashPage()));
+                  } on SocketException catch (e) {
+                    EasyLoading.showError(
+                        "Check your connection and try again!");
+                  } catch (e) {
+                    EasyLoading.showError("invalid username/password");
+                    print(e);
+                  }
+                },
                 controller: passwordController,
                 decoration: new InputDecoration(
                     fillColor: Theme.of(context).colorScheme.surface,
