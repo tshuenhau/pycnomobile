@@ -146,7 +146,7 @@ class SensorsListTile extends StatelessWidget {
                       ((sensor.img == null || sensor.img == "")
                           ? Positioned.fill(
                               child: Icon(
-                              Icons.device_unknown,
+                              Icons.phone_iphone,
                               color: Colors.white,
                             ))
                           : Container()),
