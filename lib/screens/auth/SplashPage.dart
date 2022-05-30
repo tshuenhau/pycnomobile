@@ -154,7 +154,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 ),
               ),
               Positioned(
-                bottom: MediaQuery.of(context).size.height * 20 / 100,
+                bottom: MediaQuery.of(context).size.height * 15 / 100,
                 child: Column(
                   children: [
                     (auth.colorScheme.isEmpty
@@ -162,7 +162,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                         : Container(
                             constraints: BoxConstraints(
                                 maxHeight: MediaQuery.of(context).size.height *
-                                    25 /
+                                    15 /
                                     100,
                                 maxWidth: MediaQuery.of(context).size.width *
                                     50 /
