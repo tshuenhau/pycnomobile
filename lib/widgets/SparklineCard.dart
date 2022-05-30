@@ -78,13 +78,12 @@ class SparklineCard extends StatelessWidget {
                     .sparkLines.last[sensor.name ?? ""]?[index].getTimeSeries);
               }
             }
-            if (data == null) {
+            if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
               double average = data.average;
-              change = ((data[data.length - 1] - data[0]) / average * 100);
-            } else {
-              change = 0;
+              //change = ((data[data.length - 1] - data[0]) / data.last * 100);
+              change = ((data[data.length - 1] - data[0]));
             }
           } else {
             if (sliPid == "") {
