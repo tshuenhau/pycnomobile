@@ -132,7 +132,10 @@ class SensorsListTile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.of(context).size.height * 1.5 / 100),
                             image: (sensor.img == null || sensor.img == "")
-                                ? null
+                                ? DecorationImage(
+                                    image:
+                                        AssetImage("assets/images/stock0.jpg"),
+                                    fit: BoxFit.cover)
                                 : DecorationImage(
                                     image: NetworkImage(sensor.img!.startsWith(
                                             "https://pycno-media.s3.amazonaws.com/")
@@ -140,6 +143,13 @@ class SensorsListTile extends StatelessWidget {
                                         : "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
+                      ((sensor.img == null || sensor.img == "")
+                          ? Positioned.fill(
+                              child: Icon(
+                              Icons.device_unknown,
+                              color: Colors.white,
+                            ))
+                          : Container()),
                       Positioned(
                         top: -MediaQuery.of(context).size.height * 0.75 / 100,
                         right: -MediaQuery.of(context).size.height * 0.75 / 100,
