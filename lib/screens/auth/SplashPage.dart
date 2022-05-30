@@ -135,18 +135,48 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                             child: Image.network(
                                 auth.colorScheme['dark']['companyDarkLogo']
                                     .toString(),
-                                loadingBuilder: (context, child, frame) {
+                                frameBuilder: (context, child, frame, _) {
                               if (frame == null) {
                                 // fallback to placeholder
-                                // return Padding(
-                                //   padding: EdgeInsets.symmetric(
-                                //       vertical: MediaQuery.of(context).size.height *
-                                //           0.5 /
-                                //           100),
-                                //   child: CircularProgressIndicator(),
-                                //);
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.5 /
+                                              100),
+                                  child: Column(
+                                    children: [],
+                                  ),
+                                );
                               }
-                              return child;
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("POWERED BY",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              2.5 /
+                                              100,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'nulshock',
+                                          shadows: [
+                                            Shadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.95),
+                                                offset: const Offset(8, 3),
+                                                blurRadius: 30),
+                                          ])),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              2 /
+                                              100),
+                                  child,
+                                ],
+                              );
                             }),
                           )),
                   ],
