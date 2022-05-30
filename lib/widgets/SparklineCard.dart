@@ -58,8 +58,9 @@ class SparklineCard extends StatelessWidget {
               if (controller.nonSliSparklines.length <= 0) {
                 data = [];
               } else {
-                if (controller
-                        .nonSliSparklines.last[sensor.name ?? ""]!.length <=
+                if ((controller
+                            .nonSliSparklines.last[sensor.name ?? ""]?.length ??
+                        0) <=
                     index) {
                   data = [];
                 } else {
@@ -77,30 +78,6 @@ class SparklineCard extends StatelessWidget {
                     .sparkLines.last[sensor.name ?? ""]?[index].getTimeSeries);
               }
             }
-            // data = sliPid == ""
-            //     ? (controller
-            //                     .nonSliSparklines[controller.nonSliSparklines.length - 1]
-            //                         [sensor.name ?? ""]
-            //                     ?.length ??
-            //                 0) <=
-            //             index
-            //         ? []
-            //         : controller.convertTimeSeriestoList(controller
-            //             .nonSliSparklines[controller.nonSliSparklines.length - 1]
-            //                 [sensor.name ?? ""]?[index]
-            //             .getTimeSeries)
-            //     : (controller
-            //                     .sparkLines[controller.sparkLines.length - 1]
-            //                         [sliPid.toString()]
-            //                     ?.length ??
-            //                 0) <=
-            //             index
-            //         ? []
-            //         : controller.convertTimeSeriestoList(controller
-            //             .sparkLines[controller.sparkLines.length - 1]
-            //                 [sliPid.toString()]?[index]
-            //             .getTimeSeries);
-
             if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
@@ -113,8 +90,9 @@ class SparklineCard extends StatelessWidget {
               if (controller.alertNonSliSparklines.length <= 0) {
                 data = [];
               } else {
-                if (controller.alertNonSliSparklines.last[sensor.name ?? ""]!
-                        .length <=
+                if ((controller.alertNonSliSparklines.last[sensor.name ?? ""]
+                            ?.length ??
+                        0) <=
                     index) {
                   data = [];
                 } else {
@@ -140,38 +118,15 @@ class SparklineCard extends StatelessWidget {
                 }
               }
             }
-            // data = sliPid == ""
-            //     ? (controller
-            //                     .alertNonSliSparklines[controller.alertNonSliSparklines.length - 1]
-            //                         [sensor.name ?? ""]
-            //                     ?.length ??
-            //                 0) <=
-            //             index
-            //         ? []
-            //         : controller.convertTimeSeriestoList(controller
-            //             .alertNonSliSparklines[controller.alertNonSliSparklines.length - 1]
-            //                 [sensor.name ?? ""]?[index]
-            //             .getTimeSeries)
-            //     : (controller
-            //                     .alertSparklines[controller.alertSparklines.length - 1]
-            //                         [sliPid.toString()]
-            //                     ?.length ??
-            //                 0) <=
-            //             index
-            //         ? []
-            //         : controller.convertTimeSeriestoList(controller
-            //             .alertSparklines[controller.alertSparklines.length - 1]
-            //                 [sliPid.toString()]?[index]
-            //             .getTimeSeries);
 
-            // if (data == null) {
-            //   change = 0;
-            // } else if (data.length > 0) {
-            //   double average = data.average;
-            //   change = ((data[data.length - 1] - data[0]) / average * 100);
-            // } else {
-            //   change = 0;
-            // }
+            if (data == null) {
+              change = 0;
+            } else if (data.length > 0) {
+              double average = data.average;
+              change = ((data[data.length - 1] - data[0]) / average * 100);
+            } else {
+              change = 0;
+            }
           }
 
           return Padding(
