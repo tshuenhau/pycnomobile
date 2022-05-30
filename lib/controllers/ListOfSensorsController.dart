@@ -33,6 +33,7 @@ class ListOfSensorsController extends GetxController
 
     try {
       EasyLoading.show(status: 'Fetching Sensors...');
+
       await getListOfSensors();
       EasyLoading.dismiss();
     } catch (err) {
@@ -54,7 +55,6 @@ class ListOfSensorsController extends GetxController
 
   void reload() {
     t = Timer.periodic(new Duration(seconds: 5), (Timer t) async {
-      // print("reload");
       if (ModalRoute.of(context)!.isCurrent &&
           authController.currentTab.value == 0 &&
           lastRefreshTime.value
@@ -118,13 +118,6 @@ class ListOfSensorsController extends GetxController
       return;
     }
     for (Sensor s in filteredListOfSensors) {
-      print(s.name ??
-          ' ' +
-              ' epoch ' +
-              s.epoch.toString() +
-              ' time ago ' +
-              s.polledAt.toString());
-      print(s.polledAt);
       if (s.isActive() == IS_ACTIVE.INACTIVE) {
         inactiveList.insert(0, s);
         allSensorList.insert(0, s);

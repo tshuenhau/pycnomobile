@@ -4,12 +4,13 @@ import 'package:pycnomobile/storage/Preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'package:pycnomobile/model/User.dart';
+import 'package:pycnomobile/App.dart';
 import 'dart:convert';
 import 'package:pycnomobile/theme/ThemeService.dart';
 import 'package:pycnomobile/theme/GlobalTheme.dart';
 import 'package:pycnomobile/screens/NoInternetPage.dart';
 
-enum AuthState { unknown, loggedIn, loggedOut }
+enum AuthState { unknown, loggedIn, loggedOut, firstLogin }
 
 class AuthController extends GetxController {
   String token = "";
@@ -25,49 +26,25 @@ class AuthController extends GetxController {
   onInit() async {
     super.onInit();
     preferences = await Preferences.getInstance();
-    isLoggedIn.value =
-        await checkLoggedInStatus() ? AuthState.loggedIn : AuthState.loggedOut;
-
-    // if (isLoggedIn.value == AuthState.loggedIn) {
-    //   getAccount();
-    // }
+    if (isLoggedIn.value != AuthState.firstLogin) {
+      isLoggedIn.value = await checkLoggedInStatus();
+    }
   }
 
-  // changeTheme() {
-  //   if (isDark.value) {
-  //     Get.changeThemeMode(ThemeMode.dark);
-  //   } else {
-  //     Get.changeThemeMode(ThemeMode.light);
-  //   }
-  // }
-
-  // Future<void> getTheme() async {
-  //   theme.value = preferences.getTheme();
-  // }
-
-  // Future<void> getIsDark() async {
-  //   isDark.value = preferences.getIsDark();
-  // }
-
-  // Future<void> setIsDark(bool isDark) async {
-  //   final preferences = await Preferences.getInstance();
-  //   preferences.setIsDark(isDark);
-  // }
-
-  Future<bool> checkLoggedInStatus() async {
+  Future<AuthState> checkLoggedInStatus() async {
     token = preferences.getToken();
     if (token == "") {
-      return false;
+      return AuthState.loggedOut;
     }
     try {
       await getAccount();
       await Future.delayed(Duration(seconds: 3)); //For logo to load
-      return true;
+      return AuthState.loggedIn;
     } on SocketException catch (e) {
       Get.to(NoInternetPage());
-      return false;
+      return AuthState.loggedOut;
     } catch (e) {
-      return false;
+      return AuthState.loggedOut;
     }
   }
 
@@ -82,8 +59,7 @@ class AuthController extends GetxController {
       deviceModel = deviceData["name"];
       deviceId = deviceData["identifierForVendor"];
     }
-    // final response = await http.post(Uri.parse(
-    //     'https://portal.pycno.co/login?username=$username&password=$password'));
+
     Map<String, dynamic> body = {
       "username": username,
       "password": password,
@@ -98,12 +74,9 @@ class AuthController extends GetxController {
       token = tk;
       final preferences = await Preferences.getInstance();
       await preferences.setToken(tk);
-      print("Login successful! Token: $token");
       await getAccount();
-
+      isLoggedIn.value = AuthState.firstLogin;
       if (user.value != null) {
-        // await preferences.setTheme(user.value!.colorScheme);
-
         ThemeService().saveColorScheme(user.value!.colorScheme);
         ThemeService().saveTheme(true);
         ThemeService().switchTheme();

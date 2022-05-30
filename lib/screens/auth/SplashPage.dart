@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:pycnomobile/App.dart';
 import 'package:get/get.dart';
 
 class SplashPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late AnimationController controller;
+  AuthController auth = Get.find();
 
   @override
   void initState() {
@@ -22,7 +24,15 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         setState(() {});
       });
     controller.repeat(reverse: true);
+    checkFirstLogin();
     super.initState();
+  }
+
+  void checkFirstLogin() async {
+    if (auth.isLoggedIn.value == AuthState.firstLogin) {
+      await Future.delayed(Duration(seconds: 3));
+      Get.to(App());
+    }
   }
 
   @override
@@ -33,7 +43,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    AuthController auth = Get.find();
     return Obx(() => Container(
         color: auth.colorScheme.isEmpty
             ? Colors.black
