@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pycnomobile/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:pycnomobile/App.dart';
+import 'package:pycnomobile/screens/auth/SplashPage.dart';
 import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
 import 'dart:io';
 
@@ -45,21 +46,6 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
             TextField(
-                onSubmitted: (s) async {
-                  try {
-                    EasyLoading.show(status: "Logging in...");
-                    await authController.setDeviceData();
-                    await authController.login(
-                        username: usernameController.text,
-                        password: passwordController.text);
-                    //EasyLoading.dismiss();
-                    Navigator.of(context, rootNavigator: true)
-                        .push(MaterialPageRoute(builder: (context) => App()));
-                  } catch (e) {
-                    EasyLoading.showError("invalid username/password");
-                    print(e);
-                  }
-                },
                 textInputAction: TextInputAction.go,
                 controller: usernameController,
                 decoration: new InputDecoration(
@@ -69,20 +55,6 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 1 / 100),
             TextField(
                 obscureText: true,
-                onSubmitted: (s) async {
-                  try {
-                    EasyLoading.show(status: "Logging in...");
-                    await authController.setDeviceData();
-                    await authController.login(
-                        username: usernameController.text,
-                        password: passwordController.text);
-                    //EasyLoading.dismiss();
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => App()));
-                  } catch (e) {
-                    EasyLoading.showError("invalid username/password");
-                  }
-                },
                 controller: passwordController,
                 decoration: new InputDecoration(
                     fillColor: Theme.of(context).colorScheme.surface,
@@ -100,14 +72,13 @@ class LoginPage extends StatelessWidget {
               child: Text('Login'),
               onPressed: () async {
                 try {
-                  EasyLoading.show(status: "Logging in...");
                   await authController.setDeviceData();
                   await authController.login(
                       username: usernameController.text,
                       password: passwordController.text);
                   // EasyLoading.dismiss();
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => App()));
+                      MaterialPageRoute(builder: (context) => SplashPage()));
                 } on SocketException catch (e) {
                   EasyLoading.showError("Check your connection and try again!");
                 } catch (e) {

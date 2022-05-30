@@ -52,8 +52,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     configLoading();
     AuthController controller = Get.put(AuthController());
-    return Obx(
-      () => GetMaterialApp(
+    return Obx(() {
+      print('hi im auth ' + controller.isLoggedIn.value.toString());
+      return GetMaterialApp(
         theme: controller.colorScheme.isEmpty
             ? globalTheme
             : getTheme(ThemeService().colorScheme, true),
@@ -65,10 +66,9 @@ class MyApp extends StatelessWidget {
             ? App()
             : controller.isLoggedIn.value == AuthState.loggedOut
                 ? WelcomePage()
-                //LoginPage()
                 : SplashPage(),
         builder: EasyLoading.init(),
-      ),
-    );
+      );
+    });
   }
 }

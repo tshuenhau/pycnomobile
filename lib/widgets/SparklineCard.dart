@@ -51,25 +51,55 @@ class SparklineCard extends StatelessWidget {
               });
         }, child: Obx(() {
           late List<double>? data;
-          late double change;
+          double change = 0;
 
           if (auth.currentTab.value == 0) {
-            data = sliPid == ""
-                ? (controller.nonSliSparklines.last[sensor.name ?? ""]
-                                ?.length ??
-                            0) <=
-                        index
-                    ? []
-                    : controller.convertTimeSeriestoList(controller
-                        .nonSliSparklines
-                        .last[sensor.name ?? ""]?[index]
-                        .getTimeSeries)
-                : (controller.sparkLines.last[sliPid.toString()]?.length ??
-                            0) <=
-                        index
-                    ? []
-                    : controller.convertTimeSeriestoList(controller.sparkLines
-                        .last[sliPid.toString()]?[index].getTimeSeries);
+            if (sliPid == "") {
+              if (controller.nonSliSparklines.length <= 0) {
+                data = [];
+              } else {
+                if (controller
+                        .nonSliSparklines.last[sensor.name ?? ""]!.length <=
+                    index) {
+                  data = [];
+                } else {
+                  data = controller.convertTimeSeriestoList(controller
+                      .nonSliSparklines
+                      .last[sensor.name ?? ""]?[index]
+                      .getTimeSeries);
+                }
+              }
+            } else {
+              if (controller.sparkLines.length == 0) {
+                data = [];
+              } else {
+                data = controller.convertTimeSeriestoList(controller
+                    .sparkLines.last[sensor.name ?? ""]?[index].getTimeSeries);
+              }
+            }
+            // data = sliPid == ""
+            //     ? (controller
+            //                     .nonSliSparklines[controller.nonSliSparklines.length - 1]
+            //                         [sensor.name ?? ""]
+            //                     ?.length ??
+            //                 0) <=
+            //             index
+            //         ? []
+            //         : controller.convertTimeSeriestoList(controller
+            //             .nonSliSparklines[controller.nonSliSparklines.length - 1]
+            //                 [sensor.name ?? ""]?[index]
+            //             .getTimeSeries)
+            //     : (controller
+            //                     .sparkLines[controller.sparkLines.length - 1]
+            //                         [sliPid.toString()]
+            //                     ?.length ??
+            //                 0) <=
+            //             index
+            //         ? []
+            //         : controller.convertTimeSeriestoList(controller
+            //             .sparkLines[controller.sparkLines.length - 1]
+            //                 [sliPid.toString()]?[index]
+            //             .getTimeSeries);
 
             if (data == null || data.length < 1) {
               change = 0;
@@ -79,33 +109,69 @@ class SparklineCard extends StatelessWidget {
               change = ((data[data.length - 1] - data[0]));
             }
           } else {
-            data = sliPid == ""
-                ? (controller.alertNonSliSparklines.last[sensor.name ?? ""]
-                                ?.length ??
-                            0) <=
-                        index
-                    ? []
-                    : controller.convertTimeSeriestoList(controller
-                        .alertNonSliSparklines
-                        .last[sensor.name ?? ""]?[index]
-                        .getTimeSeries)
-                : (controller.alertSparklines.last[sliPid.toString()]?.length ??
-                            0) <=
-                        index
-                    ? []
-                    : controller.convertTimeSeriestoList(controller
-                        .alertSparklines
-                        .last[sliPid.toString()]?[index]
-                        .getTimeSeries);
-
-            if (data == null) {
-              change = 0;
-            } else if (data.length > 0) {
-              double average = data.average;
-              change = ((data[data.length - 1] - data[0]) / average * 100);
+            if (sliPid == "") {
+              if (controller.alertNonSliSparklines.length <= 0) {
+                data = [];
+              } else {
+                if (controller.alertNonSliSparklines.last[sensor.name ?? ""]!
+                        .length <=
+                    index) {
+                  data = [];
+                } else {
+                  data = controller.convertTimeSeriestoList(controller
+                      .alertNonSliSparklines
+                      .last[sensor.name ?? ""]?[index]
+                      .getTimeSeries);
+                }
+              }
             } else {
-              change = 0;
+              if (controller.alertSparklines.length <= 0) {
+                data = [];
+              } else {
+                if (controller
+                        .alertSparklines.last[sensor.name ?? ""]!.length <=
+                    index) {
+                  data = [];
+                } else {
+                  data = controller.convertTimeSeriestoList(controller
+                      .alertNonSliSparklines
+                      .last[sensor.name ?? ""]?[index]
+                      .getTimeSeries);
+                }
+              }
             }
+            // data = sliPid == ""
+            //     ? (controller
+            //                     .alertNonSliSparklines[controller.alertNonSliSparklines.length - 1]
+            //                         [sensor.name ?? ""]
+            //                     ?.length ??
+            //                 0) <=
+            //             index
+            //         ? []
+            //         : controller.convertTimeSeriestoList(controller
+            //             .alertNonSliSparklines[controller.alertNonSliSparklines.length - 1]
+            //                 [sensor.name ?? ""]?[index]
+            //             .getTimeSeries)
+            //     : (controller
+            //                     .alertSparklines[controller.alertSparklines.length - 1]
+            //                         [sliPid.toString()]
+            //                     ?.length ??
+            //                 0) <=
+            //             index
+            //         ? []
+            //         : controller.convertTimeSeriestoList(controller
+            //             .alertSparklines[controller.alertSparklines.length - 1]
+            //                 [sliPid.toString()]?[index]
+            //             .getTimeSeries);
+
+            // if (data == null) {
+            //   change = 0;
+            // } else if (data.length > 0) {
+            //   double average = data.average;
+            //   change = ((data[data.length - 1] - data[0]) / average * 100);
+            // } else {
+            //   change = 0;
+            // }
           }
 
           return Padding(

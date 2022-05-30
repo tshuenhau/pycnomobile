@@ -63,7 +63,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             .isBefore(DateTime.now().add(const Duration(seconds: -900)))) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => App()));
-      EasyLoading.show(status: "Loading");
+      EasyLoading.show(status: "Fetching Sensors...");
       await _refreshData();
       EasyLoading.dismiss();
     }
@@ -148,7 +148,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final Color accent =
         getTheme(ThemeService().colorScheme, isLight).colorScheme.tertiary;
 
-    print("accent: " + accent.toString());
     EasyLoading.instance
       ..loadingStyle = EasyLoadingStyle.custom
       ..maskType = EasyLoadingMaskType.custom

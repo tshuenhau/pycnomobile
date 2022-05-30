@@ -57,9 +57,8 @@ class NoInternetPage extends StatelessWidget {
                       size: MediaQuery.of(context).size.width * 8 / 100),
                   onPressed: () async {
                     AuthController auth = Get.find();
-                    auth.isLoggedIn.value = await auth.checkLoggedInStatus()
-                        ? AuthState.loggedIn
-                        : AuthState.loggedOut;
+                    auth.isLoggedIn.value = await auth.checkLoggedInStatus();
+
                     if (auth.isLoggedIn.value == AuthState.loggedIn) {
                       Get.back();
                     }
