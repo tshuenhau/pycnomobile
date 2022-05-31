@@ -201,8 +201,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                                           shadows: [
                                             Shadow(
                                                 color: Colors.black
-                                                    .withOpacity(0.95),
-                                                offset: const Offset(8, 3),
+                                                    .withOpacity(0.65),
+                                                offset: const Offset(6, 2),
                                                 blurRadius: 30),
                                           ])),
                                   SizedBox(
