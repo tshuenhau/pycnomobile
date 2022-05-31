@@ -1,10 +1,10 @@
 // import 'package:flutter/material.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-// import 'package:pycnomobile/screens/AccountPage.dart';
-// import 'package:pycnomobile/screens/AlertsPage.dart';
-// import 'package:pycnomobile/screens/MapPage.dart';
-// import 'package:pycnomobile/screens/SensorListPage.dart';
-// import 'package:pycnomobile/screens/TodayPage.dart';
+// import 'package:Sensr/screens/AccountPage.dart';
+// import 'package:Sensr/screens/AlertsPage.dart';
+// import 'package:Sensr/screens/MapPage.dart';
+// import 'package:Sensr/screens/SensorListPage.dart';
+// import 'package:Sensr/screens/TodayPage.dart';
 
 // class CustomBottomNavigationBar extends StatefulWidget {
 //   final int selectedIndex;

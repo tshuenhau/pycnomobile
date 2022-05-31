@@ -1,4 +1,4 @@
-# pycnomobile
+# Sensr
 
 A new Flutter project.
 

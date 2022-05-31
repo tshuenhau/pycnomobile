@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/screens/BluetoothPage.dart';
-import 'package:pycnomobile/screens/auth/LoginPage.dart';
-import 'package:pycnomobile/screens/AccountDetailsPage.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/screens/BluetoothPage.dart';
+import 'package:Sensr/screens/auth/LoginPage.dart';
+import 'package:Sensr/screens/AccountDetailsPage.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/widgets/AccountListTile.dart';
+import 'package:Sensr/widgets/AccountListTile.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({Key? key, required this.resetFunction}) : super(key: key);

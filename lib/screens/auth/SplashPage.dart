@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/App.dart';
+import 'package:Sensr/controllers/AuthController.dart';
+import 'package:Sensr/App.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'dart:math';
@@ -97,7 +97,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 40 / 100,
                       child: Center(
-                        child: Text("SENSOR CLUB",
+                        child: Text("Sensr",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,

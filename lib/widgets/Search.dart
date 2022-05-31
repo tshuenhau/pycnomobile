@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:Sensr/controllers/ListOfSensorsController.dart';
 import 'package:get/get.dart';
 
 class Search extends StatelessWidget {

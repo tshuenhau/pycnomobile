@@ -4,7 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
-import 'package:pycnomobile/model/TimeSeries.dart';
+import 'package:Sensr/model/TimeSeries.dart';
 
 class SensorLineChart extends StatefulWidget {
   SensorLineChart({

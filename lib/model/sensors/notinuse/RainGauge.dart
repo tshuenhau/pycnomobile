@@ -1,11 +1,11 @@
-// import 'package:pycnomobile/model/sensors/Sensor.dart';
-// import 'package:pycnomobile/model/functionalities/Bat.dart';
-// import 'package:pycnomobile/model/functionalities/Hum.dart';
-// import 'package:pycnomobile/model/functionalities/Rain.dart';
-// import 'package:pycnomobile/model/functionalities/Rssi.dart';
-// import 'package:pycnomobile/model/TimeSeries.dart';
-// import 'package:pycnomobile/model/functionalities/Temp.dart';
-// import 'package:pycnomobile/model/functionalities/Functionality.dart';
+// import 'package:Sensr/model/sensors/Sensor.dart';
+// import 'package:Sensr/model/functionalities/Bat.dart';
+// import 'package:Sensr/model/functionalities/Hum.dart';
+// import 'package:Sensr/model/functionalities/Rain.dart';
+// import 'package:Sensr/model/functionalities/Rssi.dart';
+// import 'package:Sensr/model/TimeSeries.dart';
+// import 'package:Sensr/model/functionalities/Temp.dart';
+// import 'package:Sensr/model/functionalities/Functionality.dart';
 
 // class RainGauge extends Sensor {
 //   double? pw;

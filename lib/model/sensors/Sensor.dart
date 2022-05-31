@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:pycnomobile/model/sensors/MasterSoilSensor.dart';
-// import 'package:pycnomobile/model/sensors/NodeSoilSensor.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
+// import 'package:Sensr/model/sensors/MasterSoilSensor.dart';
+// import 'package:Sensr/model/sensors/NodeSoilSensor.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
 
 enum TYPE_OF_SENSOR {
   SONIC_ANEMOMETER,

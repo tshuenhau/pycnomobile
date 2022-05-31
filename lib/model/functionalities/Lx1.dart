@@ -1,4 +1,4 @@
-import "package:pycnomobile/model/functionalities/Functionality.dart";
+import "package:Sensr/model/functionalities/Functionality.dart";
 import 'package:flutter/material.dart';
 
 class Lx1 extends Functionality<double?> {

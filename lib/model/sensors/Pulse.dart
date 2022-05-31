@@ -1,4 +1,4 @@
-import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
 
 class Pulse extends Sensor {
   dynamic slil;

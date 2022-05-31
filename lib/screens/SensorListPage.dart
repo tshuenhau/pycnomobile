@@ -3,11 +3,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/widgets/Search.dart';
-import 'package:pycnomobile/widgets/SensorsListTile.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/widgets/Search.dart';
+import 'package:Sensr/widgets/SensorsListTile.dart';
+import 'package:Sensr/controllers/ListOfSensorsController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'dart:io';
 

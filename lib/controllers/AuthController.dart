@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:pycnomobile/storage/Preferences.dart';
+import 'package:Sensr/storage/Preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
-import 'package:pycnomobile/model/User.dart';
-import 'package:pycnomobile/App.dart';
+import 'package:Sensr/model/User.dart';
+import 'package:Sensr/App.dart';
 import 'dart:convert';
-import 'package:pycnomobile/theme/ThemeService.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
-import 'package:pycnomobile/screens/NoInternetPage.dart';
+import 'package:Sensr/theme/ThemeService.dart';
+import 'package:Sensr/theme/GlobalTheme.dart';
+import 'package:Sensr/screens/NoInternetPage.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut, firstLogin }
 

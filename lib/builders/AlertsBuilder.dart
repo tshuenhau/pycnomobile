@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
-// import 'package:pycnomobile/model/NotificationData.dart';
-// import 'package:pycnomobile/widgets/AlertListTile.dart';
-// import 'package:pycnomobile/controllers/NotificationsController.dart';
+// import 'package:Sensr/model/NotificationData.dart';
+// import 'package:Sensr/widgets/AlertListTile.dart';
+// import 'package:Sensr/controllers/NotificationsController.dart';
 // import 'package:get/get.dart';
 
 // List<Widget> buildAlerts({required bool isRead}) {

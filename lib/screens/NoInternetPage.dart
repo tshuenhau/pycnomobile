@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/screens/auth/LoginPage.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/screens/auth/LoginPage.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 class NoInternetPage extends StatelessWidget {

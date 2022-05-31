@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/TimeSeries.dart';
-import 'package:pycnomobile/model/LogSeries.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/TimeSeries.dart';
+import 'package:Sensr/model/LogSeries.dart';
+import 'package:Sensr/controllers/TimeSeriesController.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pycnomobile/widgets/Logs.dart';
-import 'package:pycnomobile/widgets/SensorLineChart.dart';
+import 'package:Sensr/widgets/Logs.dart';
+import 'package:Sensr/widgets/SensorLineChart.dart';
 
 Future<void> initGraphs(bool isAlert, Sensor sensor,
     List<Functionality?> functions, String sliPid, String sliName, String name,

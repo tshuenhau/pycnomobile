@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/screens/BluetoothPage.dart';
-import 'package:pycnomobile/screens/auth/LoginPage.dart';
-import 'package:pycnomobile/screens/AccountDetailsPage.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-import 'package:pycnomobile/controllers/NotificationsController.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
+import 'package:Sensr/screens/BluetoothPage.dart';
+import 'package:Sensr/screens/auth/LoginPage.dart';
+import 'package:Sensr/screens/AccountDetailsPage.dart';
+import 'package:Sensr/controllers/AuthController.dart';
+import 'package:Sensr/controllers/ListOfSensorsController.dart';
+import 'package:Sensr/controllers/NotificationsController.dart';
+import 'package:Sensr/controllers/TimeSeriesController.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/widgets/AccountListTile.dart';
-import 'package:pycnomobile/theme/ThemeService.dart';
+import 'package:Sensr/widgets/AccountListTile.dart';
+import 'package:Sensr/theme/ThemeService.dart';
 
 class AccountPage extends StatefulWidget {
   AccountPage({Key? key, required this.resetFunction}) : super(key: key);

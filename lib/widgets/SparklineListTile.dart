@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
-import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
+import 'package:Sensr/widgets/GraphBottomSheet.dart';
 
 class SparklineListTile extends StatelessWidget {
   SparklineListTile(

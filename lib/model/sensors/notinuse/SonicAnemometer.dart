@@ -1,14 +1,14 @@
-// import 'package:pycnomobile/model/sensors/Sensor.dart';
-// import 'package:pycnomobile/model/functionalities/Bat.dart';
-// import 'package:pycnomobile/model/functionalities/Gst.dart';
-// import 'package:pycnomobile/model/functionalities/Hum.dart';
-// import 'package:pycnomobile/model/functionalities/Lx1.dart';
-// import 'package:pycnomobile/model/functionalities/Rssi.dart';
-// import 'package:pycnomobile/model/functionalities/Temp.dart';
-// import 'package:pycnomobile/model/functionalities/Uv.dart';
-// import 'package:pycnomobile/model/functionalities/Wnd.dart';
-// import 'package:pycnomobile/model/functionalities/Wndr.dart';
-// import 'package:pycnomobile/model/functionalities/Functionality.dart';
+// import 'package:Sensr/model/sensors/Sensor.dart';
+// import 'package:Sensr/model/functionalities/Bat.dart';
+// import 'package:Sensr/model/functionalities/Gst.dart';
+// import 'package:Sensr/model/functionalities/Hum.dart';
+// import 'package:Sensr/model/functionalities/Lx1.dart';
+// import 'package:Sensr/model/functionalities/Rssi.dart';
+// import 'package:Sensr/model/functionalities/Temp.dart';
+// import 'package:Sensr/model/functionalities/Uv.dart';
+// import 'package:Sensr/model/functionalities/Wnd.dart';
+// import 'package:Sensr/model/functionalities/Wndr.dart';
+// import 'package:Sensr/model/functionalities/Functionality.dart';
 
 // class SonicAnemometer extends Sensor {
 //   double? pw;

@@ -1,9 +1,9 @@
 // import 'package:flutter/material.dart';
 // import 'package:chart_sparkline/chart_sparkline.dart';
-// import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
-// import 'package:pycnomobile/model/sensors/Sensor.dart';
-// import 'package:pycnomobile/model/functionalities/GenericFunctionality.dart';
-// import 'package:pycnomobile/model/functionalities/Functionality.dart';
+// import 'package:Sensr/widgets/GraphBottomSheet.dart';
+// import 'package:Sensr/model/sensors/Sensor.dart';
+// import 'package:Sensr/model/functionalities/GenericFunctionality.dart';
+// import 'package:Sensr/model/functionalities/Functionality.dart';
 // import 'package:get/get.dart';
 
 // class SparklineCard extends StatelessWidget {

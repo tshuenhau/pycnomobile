@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/FixSensor.dart';
-import 'package:pycnomobile/model/sensors/Pulse.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/TimeSeries.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/model/sensors/FixSensor.dart';
+import 'package:Sensr/model/sensors/Pulse.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/TimeSeries.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'dart:io';
 
 class ListOfSensorsController extends GetxController

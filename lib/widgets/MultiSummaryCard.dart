@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
-import 'package:pycnomobile/widgets/SummaryCard.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
+import 'package:Sensr/widgets/SummaryCard.dart';
 
 class MultiSummaryCard extends StatelessWidget {
   final Map data;

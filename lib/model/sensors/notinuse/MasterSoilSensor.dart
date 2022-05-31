@@ -1,6 +1,6 @@
 // import 'SoilSensor.dart';
-// import 'package:pycnomobile/model/sensors/Sensor.dart';
-// import 'package:pycnomobile/model/functionalities/Functionality.dart';
+// import 'package:Sensr/model/sensors/Sensor.dart';
+// import 'package:Sensr/model/functionalities/Functionality.dart';
 
 // class MasterSoilSensor extends SoilSensor {
 //   double? mdm;

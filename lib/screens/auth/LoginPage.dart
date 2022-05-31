@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/App.dart';
-import 'package:pycnomobile/screens/auth/SplashPage.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
+import 'package:Sensr/App.dart';
+import 'package:Sensr/screens/auth/SplashPage.dart';
+import 'package:Sensr/controllers/ListOfSensorsController.dart';
 import 'dart:io';
 
 class LoginPage extends StatelessWidget {
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 40 / 100,
                 child: Text(
-                  "SENSOR CLUB",
+                  "Sensr",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
