@@ -81,7 +81,7 @@ class LoginPage extends StatelessWidget {
                     }
                   },
                   decoration: new InputDecoration(
-                      fillColor: Theme.of(context).colorScheme.surface,
+                      fillColor: Colors.white.withOpacity(0.9),
                       filled: true,
                       hintText: "username")),
               SizedBox(height: MediaQuery.of(context).size.height * 1 / 100),
@@ -106,7 +106,7 @@ class LoginPage extends StatelessWidget {
                   },
                   controller: passwordController,
                   decoration: new InputDecoration(
-                      fillColor: Theme.of(context).colorScheme.surface,
+                      fillColor: Colors.white.withOpacity(0.9),
                       filled: true,
                       hintText: "password")),
               SizedBox(height: MediaQuery.of(context).size.height * 3 / 100),
