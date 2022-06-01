@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
-import 'package:pycnomobile/widgets/BasicSummaryCard.dart';
-import 'package:pycnomobile/widgets/MultiSummaryCard.dart';
-import 'package:pycnomobile/widgets/TitleSummaryCard.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
+import 'package:Sensr/widgets/BasicSummaryCard.dart';
+import 'package:Sensr/widgets/MultiSummaryCard.dart';
+import 'package:Sensr/widgets/TitleSummaryCard.dart';
 
 Widget buildSummaryCards(
     {required Sensor sensor, required BuildContext context}) {

@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
-// import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-// import 'package:pycnomobile/model/TimeSeries.dart';
-// import 'package:pycnomobile/theme/Theme.of(context).dart';
+// import 'package:Sensr/builders/SensorGraphsBuilder.dart';
+// import 'package:Sensr/model/TimeSeries.dart';
+// import 'package:Sensr/theme/Theme.of(context).dart';
 
 // Widget DateRangeSelector(BuildContext context) {
 //   return Theme(

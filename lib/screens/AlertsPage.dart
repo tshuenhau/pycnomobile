@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/AlertsBuilder.dart';
-import 'package:pycnomobile/controllers/NotificationsController.dart';
-import 'package:pycnomobile/widgets/AlertListTile.dart';
+import 'package:Sensr/builders/AlertsBuilder.dart';
+import 'package:Sensr/controllers/NotificationsController.dart';
+import 'package:Sensr/widgets/AlertListTile.dart';
 import 'package:get/get.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 

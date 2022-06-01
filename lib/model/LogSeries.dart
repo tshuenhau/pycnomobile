@@ -1,4 +1,4 @@
-import 'package:pycnomobile/model/TimeSeries.dart';
+import 'package:Sensr/model/TimeSeries.dart';
 
 class LogSeries extends TimeSeries {
   Map<int, String>? _logSeries;

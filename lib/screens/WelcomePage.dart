@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pycnomobile/screens/auth/LoginPage.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
-import 'package:pycnomobile/theme/ThemeService.dart';
-import 'package:pycnomobile/widgets/WelcomePageItem.dart';
+import 'package:Sensr/screens/auth/LoginPage.dart';
+import 'package:Sensr/theme/GlobalTheme.dart';
+import 'package:Sensr/theme/ThemeService.dart';
+import 'package:Sensr/widgets/WelcomePageItem.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -86,7 +86,7 @@ class _WelcomePageState extends State<WelcomePage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 40 / 100,
                 child: Center(
-                  child: Text("SENSOR CLUB",
+                  child: Text("Sensr",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,

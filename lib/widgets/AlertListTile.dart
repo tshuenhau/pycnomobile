@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/NotificationData.dart';
-import 'package:pycnomobile/screens/SensorPage.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/NotificationData.dart';
+import 'package:Sensr/screens/SensorPage.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
-import 'package:pycnomobile/controllers/NotificationsController.dart';
-import 'package:pycnomobile/controllers/SensorInfoController.dart';
+import 'package:Sensr/controllers/NotificationsController.dart';
+import 'package:Sensr/controllers/SensorInfoController.dart';
 import 'dart:io';
 
 class AlertListTile extends StatelessWidget {
@@ -64,7 +64,7 @@ class AlertCard extends StatelessWidget {
             child: InkWell(
               onTap: () async {
                 FocusScope.of(context).unfocus();
-                EasyLoading.show(status: "Loading");
+                EasyLoading.show(status: "Loading...");
                 Sensor sensor =
                     await controller.getSensorFromNotifs(this.notification.uid);
                 sensorInfoController.getTimeSeriesForSparklines(sensor, true);

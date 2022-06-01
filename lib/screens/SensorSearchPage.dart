@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-// import 'package:pycnomobile/model/sensors/Sensor.dart';
-// import 'package:pycnomobile/widgets/SensorsListTile.dart';
+// import 'package:Sensr/controllers/ListOfSensorsController.dart';
+// import 'package:Sensr/model/sensors/Sensor.dart';
+// import 'package:Sensr/widgets/SensorsListTile.dart';
 
 // class SensorSearchPage extends StatefulWidget {
 //   const SensorSearchPage({

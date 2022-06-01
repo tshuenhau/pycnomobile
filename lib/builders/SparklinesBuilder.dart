@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/widgets/SparklineCard.dart';
-import 'package:pycnomobile/model/sensors/Pulse.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/widgets/SparklineCard.dart';
+import 'package:Sensr/model/sensors/Pulse.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
 
 // Future<void> initSparklines({required Sensor sensor}) async {
 //   SensorInfoController controller = Get.put(SensorInfoController());

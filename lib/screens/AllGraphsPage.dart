@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-import 'package:pycnomobile/model/TimeSeries.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/controllers/TimeSeriesController.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/builders/SensorGraphsBuilder.dart';
+import 'package:Sensr/model/TimeSeries.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/controllers/TimeSeriesController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 
 class AllGraphsPage extends StatefulWidget {
   final Sensor sensor;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 
 class AccountListTile extends StatelessWidget {
   const AccountListTile({

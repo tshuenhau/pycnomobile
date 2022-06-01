@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 
 class AccountDetailsPage extends StatelessWidget {
   AccountDetailsPage({Key? key}) : super(key: key);

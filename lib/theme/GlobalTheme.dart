@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/theme/customColorScheme.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/theme/customColorScheme.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 var globalTheme = ThemeData(

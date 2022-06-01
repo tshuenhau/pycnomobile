@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
 
 class ActiveIndicator extends StatelessWidget {
   const ActiveIndicator({

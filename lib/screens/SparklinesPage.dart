@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/SparklinesBuilder.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/widgets/SparklineListTile.dart';
+import 'package:Sensr/builders/SparklinesBuilder.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/widgets/SparklineListTile.dart';
 import 'package:get/get.dart';
 
 class SparklinesPage extends StatelessWidget {

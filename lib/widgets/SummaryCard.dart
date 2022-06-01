@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pycnomobile/builders/SensorGraphsBuilder.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/functionalities/Functionality.dart';
-import 'package:pycnomobile/widgets/GraphBottomSheet.dart';
+import 'package:Sensr/builders/SensorGraphsBuilder.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/functionalities/Functionality.dart';
+import 'package:Sensr/widgets/GraphBottomSheet.dart';
 
 class SummaryCard extends StatelessWidget {
   final Sensor sensor;

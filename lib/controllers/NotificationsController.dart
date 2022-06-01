@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/model/NotificationData.dart';
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/model/sensors/FixSensor.dart';
+import 'package:Sensr/controllers/AuthController.dart';
+import 'package:Sensr/model/NotificationData.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/model/sensors/FixSensor.dart';
 import 'dart:io';
 
 class NotificationsController extends GetxController {

@@ -1,4 +1,4 @@
-import "package:pycnomobile/model/functionalities/Functionality.dart";
+import "package:Sensr/model/functionalities/Functionality.dart";
 
 class S1t extends Functionality<double?> {
   S1t(double? value)

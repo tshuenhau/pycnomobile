@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:pycnomobile/controllers/SensorInfoController.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
+import 'package:Sensr/controllers/SensorInfoController.dart';
+import 'package:Sensr/controllers/AuthController.dart';
 
-import 'package:pycnomobile/model/sensors/Sensor.dart';
-import 'package:pycnomobile/screens/SensorPage.dart';
+import 'package:Sensr/model/sensors/Sensor.dart';
+import 'package:Sensr/screens/SensorPage.dart';
 import 'package:get/get.dart';
-import 'package:pycnomobile/widgets/ActiveIndicator.dart';
+import 'package:Sensr/widgets/ActiveIndicator.dart';
 
 class SensorsListTile extends StatelessWidget {
   final Sensor sensor;
@@ -132,7 +132,10 @@ class SensorsListTile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.of(context).size.height * 1.5 / 100),
                             image: (sensor.img == null || sensor.img == "")
-                                ? null
+                                ? DecorationImage(
+                                    image:
+                                        AssetImage("assets/images/stock0.jpg"),
+                                    fit: BoxFit.cover)
                                 : DecorationImage(
                                     image: NetworkImage(sensor.img!.startsWith(
                                             "https://pycno-media.s3.amazonaws.com/")
@@ -140,6 +143,13 @@ class SensorsListTile extends StatelessWidget {
                                         : "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
+                      ((sensor.img == null || sensor.img == "")
+                          ? Positioned.fill(
+                              child: Icon(
+                              Icons.phone_iphone,
+                              color: Colors.white,
+                            ))
+                          : Container()),
                       Positioned(
                         top: -MediaQuery.of(context).size.height * 0.75 / 100,
                         right: -MediaQuery.of(context).size.height * 0.75 / 100,

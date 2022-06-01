@@ -3,15 +3,15 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:pycnomobile/controllers/AuthController.dart';
-import 'package:pycnomobile/controllers/NotificationsController.dart';
-import 'package:pycnomobile/controllers/ListOfSensorsController.dart';
-import 'package:pycnomobile/screens/AccountPage.dart';
-import 'package:pycnomobile/screens/AlertsPage.dart';
-import 'package:pycnomobile/screens/SensorListPage.dart';
+import 'package:Sensr/controllers/AuthController.dart';
+import 'package:Sensr/controllers/NotificationsController.dart';
+import 'package:Sensr/controllers/ListOfSensorsController.dart';
+import 'package:Sensr/screens/AccountPage.dart';
+import 'package:Sensr/screens/AlertsPage.dart';
+import 'package:Sensr/screens/SensorListPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pycnomobile/theme/GlobalTheme.dart';
-import 'package:pycnomobile/theme/ThemeService.dart';
+import 'package:Sensr/theme/GlobalTheme.dart';
+import 'package:Sensr/theme/ThemeService.dart';
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
