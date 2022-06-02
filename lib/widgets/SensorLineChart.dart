@@ -78,7 +78,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
         (widget.timeSeries.getKey == "IH")) {
       _maxY = (110);
       _minY = (10);
-      print(_maxY);
     }
     if (widget.timeSeries.getKey == "BAT") {
       _maxY = (4.5);
