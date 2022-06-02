@@ -62,8 +62,89 @@ class _SensorLineChartState extends State<SensorLineChart> {
       _maxX = _values.last.x;
       _minY = (minY / _divider).floorToDouble() * _divider;
       _maxY = (maxY / _divider).ceilToDouble() * _divider;
+
+      applyDefaultAxisScales();
       _leftTitlesInterval =
           ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
+    }
+  }
+
+  void applyDefaultAxisScales() {
+    if ((widget.timeSeries.getKey == "TEMP") ||
+        (widget.timeSeries.getKey == "IT")) {
+      _maxY = (50); // no min
+    }
+    if ((widget.timeSeries.getKey == "HUM") ||
+        (widget.timeSeries.getKey == "IH")) {
+      _maxY = (110);
+      _minY = (10);
+      print(_maxY);
+    }
+    if (widget.timeSeries.getKey == "BAT") {
+      _maxY = (4.5);
+      _minY = (2.8);
+    }
+    if ((widget.timeSeries.getKey == "ST") ||
+        (widget.timeSeries.getKey == "ST1") ||
+        (widget.timeSeries.getKey == "ST2") ||
+        (widget.timeSeries.getKey == "ST3") ||
+        (widget.timeSeries.getKey == "ST4") ||
+        (widget.timeSeries.getKey == "ST5") ||
+        (widget.timeSeries.getKey == "ST6")) {
+      _maxY = (40);
+      _minY = (-3);
+    }
+
+    if ((widget.timeSeries.getKey == "SO_20T") ||
+        (widget.timeSeries.getKey == "SO_40T") ||
+        (widget.timeSeries.getKey == "S1T") ||
+        (widget.timeSeries.getKey == "S2T") ||
+        (widget.timeSeries.getKey == "S3T") ||
+        (widget.timeSeries.getKey == "S4T") ||
+        (widget.timeSeries.getKey == "S5T") ||
+        (widget.timeSeries.getKey == "S6T") ||
+        (widget.timeSeries.getKey == "MM1") ||
+        (widget.timeSeries.getKey == "MM2") ||
+        (widget.timeSeries.getKey == "MM3") ||
+        (widget.timeSeries.getKey == "MM4") ||
+        (widget.timeSeries.getKey == "MM5") ||
+        (widget.timeSeries.getKey == "MM6")) {
+      _maxY = (90);
+      _minY = (0);
+    }
+
+    if ((widget.timeSeries.getKey == "SO_20") ||
+        (widget.timeSeries.getKey == "SO_40") ||
+        (widget.timeSeries.getKey == "S1") ||
+        (widget.timeSeries.getKey == "S2") ||
+        (widget.timeSeries.getKey == "S3") ||
+        (widget.timeSeries.getKey == "S4") ||
+        (widget.timeSeries.getKey == "S5") ||
+        (widget.timeSeries.getKey == "S6")) {
+      _maxY = (35000);
+      _minY = (26000);
+    }
+
+    if (widget.timeSeries.getKey == "NS") {
+      _minY = (0);
+    }
+
+    if (widget.timeSeries.getKey == "PW") {
+      _maxY = (22);
+      _minY = (6);
+    }
+
+    if ((widget.timeSeries.getKey == "LW") ||
+        (widget.timeSeries.getKey == "LW1") ||
+        (widget.timeSeries.getKey == "LW2")) {
+      _maxY = (1010);
+      _minY = (0);
+    }
+
+    if ((widget.timeSeries.getKey == "LX1") ||
+        (widget.timeSeries.getKey == "LX2")) {
+      _maxY = (150000);
+      _minY = (0);
     }
   }
 
@@ -180,9 +261,25 @@ class _SensorLineChartState extends State<SensorLineChart> {
                 if (flSpot.x == 0 || flSpot.x == 6) {
                   return null;
                 }
+                String x = "";
+                final DateTime date =
+                    DateTime.fromMillisecondsSinceEpoch(flSpot.x.toInt());
+                if (DateTimeRange(
+                            start: DateTime.fromMillisecondsSinceEpoch(
+                                _minX.toInt()),
+                            end: DateTime.fromMillisecondsSinceEpoch(
+                                _maxX.toInt()))
+                        .duration
+                        .inDays >
+                    365 * 6) {
+                  x = DateFormat.yMMMd('en_US').format(date);
+                }
+                x = DateFormat("MMM d", 'en_US').format(date) +
+                    ", " +
+                    DateFormat("HH:mm", 'en_US').format(date);
 
                 return LineTooltipItem(
-                  flSpot.y.toStringAsFixed(2),
+                  "${x} \n" + flSpot.y.toStringAsFixed(2),
                   TextStyle(
                     color: Theme.of(context).colorScheme.background,
                     fontWeight: FontWeight.bold,
