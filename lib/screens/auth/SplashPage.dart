@@ -6,6 +6,7 @@ import 'package:Sensr/App.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -167,53 +168,51 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                                 maxWidth: MediaQuery.of(context).size.width *
                                     50 /
                                     100),
-                            child: Image.network(
-                                auth.colorScheme['dark']['companyDarkLogo']
+                            child: CachedNetworkImage(
+                                imageUrl: auth.colorScheme['dark']
+                                        ['companyDarkLogo']
                                     .toString(),
-                                frameBuilder: (context, child, frame, _) {
-                              if (frame == null) {
-                                // fallback to placeholder
-
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical:
-                                          MediaQuery.of(context).size.height *
-                                              0.5 /
-                                              100),
-                                  child: Column(
-                                    children: [],
-                                  ),
-                                );
-                              }
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text("POWERED BY",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: MediaQuery.of(context)
+                                imageBuilder: (context, imageProvider) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("POWERED BY",
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  2.5 /
+                                                  100,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'nulshock',
+                                              shadows: [
+                                                Shadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.65),
+                                                    offset: const Offset(6, 2),
+                                                    blurRadius: 30),
+                                              ])),
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
                                                   .size
-                                                  .width *
-                                              2.5 /
-                                              100,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'nulshock',
-                                          shadows: [
-                                            Shadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.65),
-                                                offset: const Offset(6, 2),
-                                                blurRadius: 30),
-                                          ])),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                                                  .height *
                                               2 /
                                               100),
-                                  child,
-                                ],
-                              );
-                            }),
+                                      Image(image: imageProvider),
+                                      // Flexible(
+                                      //   child: Container(
+                                      //     decoration: BoxDecoration(
+                                      //         image: DecorationImage(
+                                      //             fit: BoxFit.contain,
+                                      //             image: imageProvider)),
+                                      //   ),
+                                      // )
+                                    ],
+                                  );
+                                }),
                           )),
                   ],
                 ),
