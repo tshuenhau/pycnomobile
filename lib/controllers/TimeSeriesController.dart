@@ -16,6 +16,8 @@ class TimeSeriesController extends GetxController {
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
 
+  int intConcurrentCount = 5;
+
   RxList<RxMap<String, RxList<TimeSeries>>> oldSliGraphs =
       RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
@@ -249,25 +251,58 @@ class TimeSeriesController extends GetxController {
           sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
         }
       }
+      //create a list of functions
+      int total = functions.length;
+      int count = 0;
+      int starti = 0;
+      while (total > 0) {
+        List<Functionality> nonNullFunctions = List.empty(growable: true);
+        late final sublist;
+        if (total - starti >= intConcurrentCount) {
+          sublist = functions.sublist(starti, starti + intConcurrentCount);
+        } else {
+          sublist = functions.sublist(starti, starti + total);
+        }
 
-      for (Functionality? function in functions) {
-        if (function != null) {
-          final response = await http.get(Uri.parse(
+        print(sublist);
+        count = 0;
+        for (Functionality? func in sublist) {
+          if (total == 0) {
+            break;
+          }
+          if (func != null && count < intConcurrentCount) {
+            nonNullFunctions.add(func);
+            count++;
+          }
+        }
+        total -= intConcurrentCount;
+
+        Iterable<Future<http.Response>> futureResponses =
+            nonNullFunctions.map((Functionality function) {
+          Future<http.Response> response = http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-          // print(
-          //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
-          if (response.statusCode == 200) {
-            if (jsonDecode(response.body).length <= 0) {
+          return response;
+        });
+
+        final responses = await Future.wait(futureResponses);
+        for (int i = 0; i < responses.length; i++) {
+          http.Response res = responses[i];
+
+          if (res.statusCode == 200) {
+            if (jsonDecode(res.body).length <= 0) {
               continue;
             }
-            var body = jsonDecode(response.body)[0];
+            var body = jsonDecode(res.body)[0];
 
             String color = body['color'];
             String key = body['key'];
+            print('start index ' + nonNullFunctions.toString());
+            print(nonNullFunctions[i].key);
+
             if (body["values"] == null) {
               instanceList.add(new TimeSeries(
                   name: key,
-                  key: function.key,
+                  key: nonNullFunctions[i].key,
                   color: color,
                   timeSeries: null));
               continue;
@@ -275,7 +310,9 @@ class TimeSeriesController extends GetxController {
             if (body["values"][0][1] is String) {
               Map<int, String> logSeries = convertListToMapLogs(body['values']);
               instanceList.add(new LogSeries(
-                  name: key, key: function.key, logSeries: logSeries));
+                  name: key,
+                  key: nonNullFunctions[i].name,
+                  logSeries: logSeries));
               continue;
             }
 
@@ -284,13 +321,56 @@ class TimeSeriesController extends GetxController {
                 name: key,
                 color: color,
                 timeSeries: timeSeries,
-                key: function.key));
+                key: nonNullFunctions[i].key));
           } else {
             throw Exception("Failed to retrieve data"); //Ask UI to reload
             // }
           }
         }
+        starti += count;
+
+        print('total ' + total.toString());
       }
+
+      // for (Functionality? function in functions) {
+      //   if (function != null) {
+      //     final response = await http.get(Uri.parse(
+      //         'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+      //     if (response.statusCode == 200) {
+      // if (jsonDecode(response.body).length <= 0) {
+      //   continue;
+      // }
+      //       var body = jsonDecode(response.body)[0];
+
+      //       String color = body['color'];
+      //       String key = body['key'];
+      //       if (body["values"] == null) {
+      //         instanceList.add(new TimeSeries(
+      //             name: key,
+      //             key: function.key,
+      //             color: color,
+      //             timeSeries: null));
+      //         continue;
+      //       }
+      //       if (body["values"][0][1] is String) {
+      //         Map<int, String> logSeries = convertListToMapLogs(body['values']);
+      //         instanceList.add(new LogSeries(
+      //             name: key, key: function.key, logSeries: logSeries));
+      //         continue;
+      //       }
+
+      //       Map<int, double> timeSeries = convertListToMap(body['values']);
+      //       instanceList.add(new TimeSeries(
+      //           name: key,
+      //           color: color,
+      //           timeSeries: timeSeries,
+      //           key: function.key));
+      //     } else {
+      //       throw Exception("Failed to retrieve data"); //Ask UI to reload
+      //       // }
+      //     }
+      //   }
+      // }
       if (graphs.length > 1 && !isAlert) {
         graphs.removeRange(0, graphs.length - 1);
       } else if (alertGraphs.length > 1) {

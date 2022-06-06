@@ -37,6 +37,6 @@ class TimeSeries {
 
   @override
   String toString() {
-    return "color: $_color, key: $_name, data: ${_timeSeries == null}";
+    return "color: $_color, key: $_name, data: ${_timeSeries != null}";
   }
 }
