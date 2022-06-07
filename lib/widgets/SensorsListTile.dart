@@ -6,7 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:Sensr/controllers/SensorInfoController.dart';
 import 'package:Sensr/controllers/AuthController.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/screens/SensorPage.dart';
 import 'package:get/get.dart';
@@ -137,11 +137,10 @@ class SensorsListTile extends StatelessWidget {
                                         AssetImage("assets/images/stock0.jpg"),
                                     fit: BoxFit.cover)
                                 : DecorationImage(
-                                    image: ExtendedNetworkImageProvider(
-                                        sensor.img!.startsWith(
-                                                "https://pycno-media.s3.amazonaws.com/")
-                                            ? sensor.img!
-                                            : "https://pycno.co/${sensor.img}"),
+                                    image: NetworkImage(sensor.img!.startsWith(
+                                            "https://pycno-media.s3.amazonaws.com/")
+                                        ? sensor.img!
+                                        : "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
                       ((sensor.img == null || sensor.img == "")
