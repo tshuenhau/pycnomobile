@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   void checkFirstLogin() async {
     if (auth.isLoggedIn.value == AuthState.firstLogin) {
       await Future.delayed(Duration(seconds: 3));
-      Get.to(App());
+      Get.offAll(App());
     }
   }
 

@@ -44,6 +44,10 @@ class _AccountPageState extends State<AccountPage> {
                               authController.user.value == null
                                   ? CircularProgressIndicator()
                                   : CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.2),
                                       radius: 50,
                                       backgroundImage: authController
                                                   .user.value!.profilePic !=
