@@ -44,18 +44,15 @@ class _LogsState extends State<Logs> {
                       scrollDirection: Axis.horizontal,
                       physics: ClampingScrollPhysics(),
                       child: Scrollbar(
-                        scrollbarOrientation: ScrollbarOrientation.right,
-                        child: Scrollbar(
-                          scrollbarOrientation: ScrollbarOrientation.left,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: IntrinsicWidth(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: buildLogs,
-                              ),
+                        scrollbarOrientation: ScrollbarOrientation.left,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: IntrinsicWidth(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: buildLogs,
                             ),
                           ),
                         ),

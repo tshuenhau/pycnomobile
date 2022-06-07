@@ -385,7 +385,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
               .length /
           50,
       margin: MediaQuery.of(context).size.width * 1.5 / 100,
-      interval: max(1, _leftTitlesInterval),
+      interval: max(0.5, _leftTitlesInterval),
     );
   }
 
