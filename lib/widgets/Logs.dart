@@ -103,7 +103,7 @@ class _LogsState extends State<Logs> {
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                   width: MediaQuery.of(context).size.width * 25 / 100,
