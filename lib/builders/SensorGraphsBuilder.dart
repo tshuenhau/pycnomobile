@@ -119,7 +119,9 @@ List<Widget> buildGraphs(
       loadingIndicators.add(LoadingIndicator());
     }
     return Column(
-      children: <Widget>[] + loadingIndicators,
+      children: <Widget>[] +
+          loadingIndicators +
+          [SizedBox(height: MediaQuery.of(context).size.height * 2.5 / 100)],
     );
     //return LoadingIndicator();
   }
@@ -182,6 +184,7 @@ List<Widget> buildGraphs(
           //LogSeries
           graphsToDraw.add(
             Logs(
+              title: (element as LogSeries).getName,
               data: (element as LogSeries).getLogSeries ?? {},
             ),
           );
@@ -210,6 +213,7 @@ List<Widget> buildGraphs(
         //LogSeries
         graphsToDraw.add(
           Logs(
+            title: (e as LogSeries).getName,
             data: (e as LogSeries).getLogSeries ?? {},
           ),
         );
