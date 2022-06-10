@@ -21,6 +21,14 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   late int? themeIndex;
 
+  String processNulls(String? s) {
+    if (s == null || s == "" || s == "null") {
+      return "-";
+    }
+
+    return s;
+  }
+
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.find();
@@ -226,34 +234,37 @@ class _AccountPageState extends State<AccountPage> {
                         AccountListTile(
                             title: "Email",
                             value:
-                                "${authController.user.value!.username}@pycno.co",
+                                "${processNulls(authController.user.value!.username)}@pycno.co",
                             authController: authController),
                         AccountListTile(
                             title: "Name",
-                            value: "${authController.user.value!.name}" +
-                                "${authController.user.value!.surname}",
+                            value: "${processNulls(authController.user.value!.name)}" +
+                                "${processNulls(authController.user.value!.surname)}",
                             authController: authController),
                         AccountListTile(
                             title: "Phone Number",
-                            value: authController.user.value!.phoneNumber == ""
-                                ? "-"
-                                : "${authController.user.value!.phoneNumber}",
+                            value:
+                                "${processNulls(authController.user.value!.phoneNumber)}",
                             authController: authController),
                         AccountListTile(
                             title: "Locale",
-                            value: "${authController.user.value!.locale}",
+                            value:
+                                "${processNulls(authController.user.value!.locale)}",
                             authController: authController),
                         AccountListTile(
                             title: "Farm Name",
-                            value: "${authController.user.value!.farmName}",
+                            value:
+                                "${processNulls(authController.user.value!.farmName)}",
                             authController: authController),
                         AccountListTile(
                             title: "Farm Type",
-                            value: "${authController.user.value!.farmType}",
+                            value:
+                                "${processNulls(authController.user.value!.farmType)}",
                             authController: authController),
                         AccountListTile(
                             title: "Farm Address",
-                            value: "${authController.user.value!.farmAddr}",
+                            value:
+                                "${processNulls(authController.user.value!.farmAddr)}",
                             authController: authController),
                         SizedBox(
                             height:
