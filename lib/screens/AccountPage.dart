@@ -223,23 +223,21 @@ class _AccountPageState extends State<AccountPage> {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100),
-
                         AccountListTile(
                             title: "Email",
                             value:
                                 "${authController.user.value!.username}@pycno.co",
                             authController: authController),
                         AccountListTile(
-                            title: "First Name",
-                            value: "${authController.user.value!.name}",
-                            authController: authController),
-                        AccountListTile(
-                            title: "Last Name",
-                            value: "${authController.user.value!.surname}",
+                            title: "Name",
+                            value: "${authController.user.value!.name}" +
+                                "${authController.user.value!.surname}",
                             authController: authController),
                         AccountListTile(
                             title: "Phone Number",
-                            value: "${authController.user.value!.phoneNumber}",
+                            value: authController.user.value!.phoneNumber == ""
+                                ? "-"
+                                : "${authController.user.value!.phoneNumber}",
                             authController: authController),
                         AccountListTile(
                             title: "Locale",
@@ -257,15 +255,15 @@ class _AccountPageState extends State<AccountPage> {
                             title: "Farm Address",
                             value: "${authController.user.value!.farmAddr}",
                             authController: authController),
-                        // SizedBox(
-                        //     height:
-                        //         MediaQuery.of(context).size.height * 0 / 100),
+                        SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 1.5 / 100),
                         Container(
                             height:
                                 MediaQuery.of(context).size.height * 15 / 100,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text("powered by: ",
                                     style:

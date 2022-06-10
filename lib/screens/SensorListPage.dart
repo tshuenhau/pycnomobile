@@ -96,9 +96,18 @@ class _SensorListPageState extends State<SensorListPage> {
                           child: ListView.builder(
                             itemCount:
                                 sensorsController.filteredListOfSensors.length +
-                                    1,
+                                    2,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
+                              if (index ==
+                                  sensorsController
+                                          .filteredListOfSensors.length +
+                                      1) {
+                                return SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        3.5 /
+                                        100);
+                              }
                               if (index == 0) {
                                 return Center(
                                     child: Padding(
@@ -132,27 +141,30 @@ class _SensorListPageState extends State<SensorListPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await EasyLoading.showInfo(
-              (!displayInactive ? "Showing" : "Hiding") +
-                  " ${sensorsController.inactiveListOfSensors.length} Inactive Sensor" +
-                  (sensorsController.inactiveListOfSensors.length > 0
-                      ? "s"
-                      : ""),
-              dismissOnTap: true);
-          if (this.mounted) {
-            setState(() {
-              // Your state change code goes here
-              displayInactive = !displayInactive;
-            });
-          }
-        },
-        tooltip: displayInactive ? "Hide Inactive" : "Display Inactive",
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        child: Icon(
-            displayInactive == false ? Icons.visibility_off : Icons.visibility),
-      ),
+      floatingActionButton: sensorsController.inactiveListOfSensors.length < 1
+          ? null
+          : FloatingActionButton(
+              onPressed: () async {
+                await EasyLoading.showInfo(
+                    (!displayInactive ? "Showing" : "Hiding") +
+                        " ${sensorsController.inactiveListOfSensors.length} Inactive Sensor" +
+                        (sensorsController.inactiveListOfSensors.length > 0
+                            ? "s"
+                            : ""),
+                    dismissOnTap: true);
+                if (this.mounted) {
+                  setState(() {
+                    // Your state change code goes here
+                    displayInactive = !displayInactive;
+                  });
+                }
+              },
+              tooltip: displayInactive ? "Hide Inactive" : "Display Inactive",
+              backgroundColor: Theme.of(context).colorScheme.tertiary,
+              child: Icon(displayInactive == false
+                  ? Icons.visibility_off
+                  : Icons.visibility),
+            ),
     );
   }
 }

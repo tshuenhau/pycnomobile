@@ -74,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                   textInputAction: TextInputAction.go,
                   controller: usernameController,
                   onSubmitted: (string) async {
-                    isLoading = true;
+                    setState(() {
+                      isLoading = true;
+                    });
 
                     try {
                       await authController.setDeviceData();
@@ -89,6 +91,10 @@ class _LoginPageState extends State<LoginPage> {
                           "Check your connection and try again!");
                     } catch (e) {
                       EasyLoading.showError("invalid username/password");
+                      setState(() {
+                        isLoading = false;
+                      });
+
                       print(e);
                     }
                   },
@@ -100,7 +106,9 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                   obscureText: true,
                   onSubmitted: (string) async {
-                    isLoading = true;
+                    setState(() {
+                      isLoading = true;
+                    });
 
                     try {
                       await authController.setDeviceData();
@@ -115,6 +123,10 @@ class _LoginPageState extends State<LoginPage> {
                           "Check your connection and try again!");
                     } catch (e) {
                       EasyLoading.showError("invalid username/password");
+                      setState(() {
+                        isLoading = false;
+                      });
+
                       print(e);
                     }
                   },
@@ -131,6 +143,13 @@ class _LoginPageState extends State<LoginPage> {
                       fixedSize: MaterialStateProperty.all(
                           Size.fromWidth(MediaQuery.of(context).size.width)),
                       alignment: Alignment.center,
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.black; // Disabled color
+                        }
+                        return Colors.black; // Regular color
+                      }),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)))),
@@ -141,37 +160,42 @@ class _LoginPageState extends State<LoginPage> {
 
                           /// Optional, The color collections
                           strokeWidth: 1,
-                          backgroundColor: Colors.black,
+                          backgroundColor: Colors.transparent,
                           pathBackgroundColor: Colors.black)
                       : Text('Login',
                           style: TextStyle(
                               fontFamily: 'nulshock',
                               fontSize:
                                   MediaQuery.of(context).size.width * 5 / 100)),
-                  onPressed: () async {
-                    isLoading = true;
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            await authController.setDeviceData();
+                            await authController.login(
+                                username: usernameController.text,
+                                password: passwordController.text);
+                            // EasyLoading.dismiss();
+                            Timer(
+                                Duration(seconds: 1),
+                                () => Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => SplashPage())));
+                          } on SocketException catch (e) {
+                            EasyLoading.showError(
+                                "Check your connection and try again!");
+                          } catch (e) {
+                            EasyLoading.showError("invalid username/password");
+                            setState(() {
+                              isLoading = false;
+                            });
 
-                    try {
-                      await authController.setDeviceData();
-                      await authController.login(
-                          username: usernameController.text,
-                          password: passwordController.text);
-                      // EasyLoading.dismiss();
-                      Timer(
-                          Duration(seconds: 1),
-                          () => Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => SplashPage())));
-                    } on SocketException catch (e) {
-                      EasyLoading.showError(
-                          "Check your connection and try again!");
-                    } catch (e) {
-                      EasyLoading.showError("invalid username/password");
-                      isLoading = false;
-
-                      print(e);
-                    }
-                  },
+                            print(e);
+                          }
+                        },
                 ),
               ),
               // SizedBox(height: MediaQuery.of(context).size.height * 3.5 / 100),
