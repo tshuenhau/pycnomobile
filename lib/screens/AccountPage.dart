@@ -270,8 +270,14 @@ class _AccountPageState extends State<AccountPage> {
                             height:
                                 MediaQuery.of(context).size.height * 1.5 / 100),
                         Container(
-                            height:
-                                MediaQuery.of(context).size.height * 15 / 100,
+                            padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    1 /
+                                    100),
+                            constraints: BoxConstraints(
+                                maxHeight: MediaQuery.of(context).size.height *
+                                    20 /
+                                    100),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -318,12 +324,17 @@ class _AccountPageState extends State<AccountPage> {
                                     return child;
                                   }),
                                 ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        1.5 /
+                                        100),
+                                Container(child: Text("ver. 1.0"))
                               ],
                             )),
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 3 / 100)
-                      ]))
+                      ])),
                 ]),
           ),
         ));
