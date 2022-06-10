@@ -56,13 +56,22 @@ class _SensorLineChartState extends State<SensorLineChart> {
           points.add(new FlSpot(key.toDouble(), value));
         }
       });
-      _values = points;
-      _minX = _values.first.x;
-      _maxX = _values.last.x;
+      _minX = points.first.x;
+      _maxX = points.last.x;
       _minY = (minY / _divider).floorToDouble() * _divider;
       _maxY = (maxY / _divider).ceilToDouble() * _divider;
 
       applyDefaultAxisScales();
+
+      List<FlSpot> temp = [];
+      for (int i = 0; i < points.length; i++) {
+        //print(points[i].y >= _minY);
+        if (points[i].y >= _minY && points[i].y <= _maxY) {
+          temp.add(points[i]);
+        }
+      }
+      _values = temp;
+
       _leftTitlesInterval =
           ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
     }
@@ -375,7 +384,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
               .length /
           50,
       margin: MediaQuery.of(context).size.width * 1.5 / 100,
-      interval: max(1, _leftTitlesInterval),
+      interval: max(0.5, _leftTitlesInterval),
     );
   }
 

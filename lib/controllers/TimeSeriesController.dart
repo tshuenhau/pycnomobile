@@ -37,7 +37,7 @@ class TimeSeriesController extends GetxController {
   }
 
   static Map<int, String> convertListToMapLogs(List list) {
-    return Map.fromIterable(list.reversed.where((e) => e[1] != null),
+    return Map.fromIterable(list.where((e) => e[1] != null),
         key: (e) => e[0], value: (e) => e[1].toString());
   }
 
@@ -110,7 +110,8 @@ class TimeSeriesController extends GetxController {
                 timeSeries: timeSeries,
                 key: function.key));
           } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
+            EasyLoading.showError("Failed to retrieve data! Try again.",
+                duration: Duration(seconds: 3), dismissOnTap: true);
           }
         }
       }
@@ -154,7 +155,8 @@ class TimeSeriesController extends GetxController {
             timeSeries: timeSeries,
             key: functions[0]!.key));
       } else {
-        throw Exception("Failed to retrieve data"); //Ask UI to reload
+        EasyLoading.showError("Failed to retrieve data! Try again.",
+            duration: Duration(seconds: 3), dismissOnTap: true);
       }
       if (sliGraphs.length > 1 && !isAlert) {
         sliGraphs.removeRange(0, sliGraphs.length - 1);
@@ -193,8 +195,6 @@ class TimeSeriesController extends GetxController {
         int count = 0;
         int starti = 0;
         while (total > 0) {
-          print('total ' + total.toString());
-          print('starti ' + starti.toString());
           List<String> nonNullFunctions = List.empty(growable: true);
           late final sublist;
           if (total - starti >= intConcurrentCount) {
@@ -258,8 +258,8 @@ class TimeSeriesController extends GetxController {
                   timeSeries: timeSeries,
                   key: nonNullFunctions[i]));
             } else {
-              throw Exception("Failed to retrieve data"); //Ask UI to reload
-              // }
+              EasyLoading.showError("Failed to retrieve data! Try again.",
+                  duration: Duration(seconds: 3), dismissOnTap: true);
             }
           }
           starti += count;
@@ -307,6 +307,8 @@ class TimeSeriesController extends GetxController {
 
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
+        print(Uri.parse(
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
         Future<http.Response> response = http.get(Uri.parse(
             'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
         return response;
@@ -349,7 +351,8 @@ class TimeSeriesController extends GetxController {
               timeSeries: timeSeries,
               key: nonNullFunctions[i].key));
         } else {
-          throw Exception("Failed to retrieve data"); //Ask UI to reload
+          EasyLoading.showError("Failed to retrieve data! Try again.",
+              duration: Duration(seconds: 3), dismissOnTap: true);
           // }
         }
       }
@@ -390,6 +393,9 @@ class TimeSeriesController extends GetxController {
           'Network Error: please check your internet connection.',
           duration: Duration(seconds: 3),
           dismissOnTap: true);
+    } catch (e) {
+      EasyLoading.showError("Failed to retrieve data! Try again.",
+          duration: Duration(seconds: 3), dismissOnTap: true);
     }
   }
 
@@ -482,8 +488,11 @@ class TimeSeriesController extends GetxController {
                 timeSeries: timeSeries,
                 key: nonNullFunctions[i]));
           } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
+            EasyLoading.showError("Failed to retrieve data! Try again.",
+                duration: Duration(seconds: 3),
+                dismissOnTap: true); //Ask UI to reload
             // }
+
           }
 
           starti += count;

@@ -44,18 +44,15 @@ class _LogsState extends State<Logs> {
                       scrollDirection: Axis.horizontal,
                       physics: ClampingScrollPhysics(),
                       child: Scrollbar(
-                        scrollbarOrientation: ScrollbarOrientation.right,
-                        child: Scrollbar(
-                          scrollbarOrientation: ScrollbarOrientation.left,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: IntrinsicWidth(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: buildLogs,
-                              ),
+                        scrollbarOrientation: ScrollbarOrientation.left,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: IntrinsicWidth(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: buildLogs,
                             ),
                           ),
                         ),
@@ -70,7 +67,6 @@ class _LogsState extends State<Logs> {
   }
 
   List<Widget> get buildLogs {
-    print("data: " + widget.data.toString());
     List<Widget> widgets = [];
     // widgets.add(Container(
     //   decoration: BoxDecoration(
@@ -106,7 +102,7 @@ class _LogsState extends State<Logs> {
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                   width: MediaQuery.of(context).size.width * 25 / 100,
