@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Logs extends StatefulWidget {
-  Logs({Key? key, required this.data}) : super(key: key);
+  Logs({Key? key, required this.title, required this.data}) : super(key: key);
 
   Map<int, String> data;
+  String title;
 
   @override
   State<Logs> createState() => _LogsState();
@@ -14,21 +15,21 @@ class _LogsState extends State<Logs> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 100 / 100,
-      height: MediaQuery.of(context).size.height * 35 / 100,
+      height: MediaQuery.of(context).size.height * 30 / 100,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 5 / 100,
             child: Center(
-                child: Text("Unit Logs",
+                child: Text(widget.title,
                     style: TextStyle(
                         fontSize:
                             MediaQuery.of(context).size.height * 2.5 / 100))),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height * 2.5 / 100,
+                vertical: MediaQuery.of(context).size.height * 1 / 100,
                 horizontal: MediaQuery.of(context).size.width * 2.5 / 100),
             child: Container(
               decoration: BoxDecoration(
