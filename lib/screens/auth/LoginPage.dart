@@ -20,15 +20,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
+  final TextEditingController usernameController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController =
-        new TextEditingController();
-    final TextEditingController passwordController =
-        new TextEditingController();
-
-    final AuthController authController = Get.put(AuthController());
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
