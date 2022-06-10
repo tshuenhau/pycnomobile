@@ -16,6 +16,8 @@ class TimeSeriesController extends GetxController {
   RxList<RxList<TimeSeries>> graphs = RxList<RxList<TimeSeries>>.empty();
   RxList<RxList<TimeSeries>> alertGraphs = RxList<RxList<TimeSeries>>.empty();
 
+  int intConcurrentCount = 3;
+
   RxList<RxMap<String, RxList<TimeSeries>>> oldSliGraphs =
       RxList<RxMap<String, RxList<TimeSeries>>>.empty();
 
@@ -35,7 +37,7 @@ class TimeSeriesController extends GetxController {
   }
 
   static Map<int, String> convertListToMapLogs(List list) {
-    return Map.fromIterable(list.reversed.where((e) => e[1] != null),
+    return Map.fromIterable(list.where((e) => e[1] != null),
         key: (e) => e[0], value: (e) => e[1].toString());
   }
 
@@ -108,7 +110,8 @@ class TimeSeriesController extends GetxController {
                 timeSeries: timeSeries,
                 key: function.key));
           } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
+            EasyLoading.showError("Failed to retrieve data! Try again.",
+                duration: Duration(seconds: 3), dismissOnTap: true);
           }
         }
       }
@@ -152,7 +155,8 @@ class TimeSeriesController extends GetxController {
             timeSeries: timeSeries,
             key: functions[0]!.key));
       } else {
-        throw Exception("Failed to retrieve data"); //Ask UI to reload
+        EasyLoading.showError("Failed to retrieve data! Try again.",
+            duration: Duration(seconds: 3), dismissOnTap: true);
       }
       if (sliGraphs.length > 1 && !isAlert) {
         sliGraphs.removeRange(0, sliGraphs.length - 1);
@@ -165,6 +169,197 @@ class TimeSeriesController extends GetxController {
     }
   }
 
+  Future<void> getSliMultiSeries(RxList<TimeSeries> instanceList, bool isAlert,
+      Sensor sensor, DateTime start, DateTime end) async {
+    dynamic slil = (sensor as Pulse).slil; //left sli
+    dynamic slir = (sensor).slir; //right sli
+    RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
+
+    if (!isAlert) {
+      sliGraphs.add(instanceSliMap);
+    } else {
+      sliAlertGraphs.add(instanceSliMap);
+    }
+
+    for (dynamic sli in sensor.sli!) {
+      String pid = sli["PID"].toString();
+      dynamic sid = sli["SID"];
+      String? name = sli["name"];
+
+      if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
+        RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
+        instanceSliMap[(name != null ? "Driver: " + name.toString() : "") +
+            " SLI: " +
+            pid] = instanceSliList;
+        int total = sli["plottable"].length;
+        int count = 0;
+        int starti = 0;
+        while (total > 0) {
+          List<String> nonNullFunctions = List.empty(growable: true);
+          late final sublist;
+          if (total - starti >= intConcurrentCount) {
+            sublist =
+                sli["plottable"].sublist(starti, starti + intConcurrentCount);
+          } else {
+            sublist = sli["plottable"].sublist(starti, starti + total);
+          }
+
+          count = 0;
+          for (String func in sublist) {
+            if (total == 0) {
+              break;
+            }
+            if (count < intConcurrentCount) {
+              nonNullFunctions.add(func);
+              count++;
+            }
+          }
+          total -= intConcurrentCount;
+
+          Iterable<Future<http.Response>> futureResponses =
+              nonNullFunctions.map((String function) {
+            Future<http.Response> response = http.get(Uri.parse(
+                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+            return response;
+          });
+
+          final responses = await Future.wait(futureResponses);
+          for (int i = 0; i < responses.length; i++) {
+            http.Response res = responses[i];
+
+            if (res.statusCode == 200) {
+              if (jsonDecode(res.body).length <= 0) {
+                continue;
+              }
+              var body = jsonDecode(res.body)[0];
+
+              String color = body['color'];
+              String key = body['key'];
+
+              if (body["values"] == null) {
+                instanceSliList.add(new TimeSeries(
+                    name: key,
+                    color: color,
+                    timeSeries: null,
+                    key: nonNullFunctions[i]));
+              }
+              if (body["values"][0][1] is String) {
+                Map<int, String> logSeries =
+                    convertListToMapLogs(body['values']);
+                instanceSliList.add(new LogSeries(
+                    name: key, key: nonNullFunctions[i], logSeries: logSeries));
+                continue;
+              }
+
+              Map<int, double> timeSeries = convertListToMap(body['values']);
+              instanceSliList.add(new TimeSeries(
+                  name: key,
+                  color: color,
+                  timeSeries: timeSeries,
+                  key: nonNullFunctions[i]));
+            } else {
+              EasyLoading.showError("Failed to retrieve data! Try again.",
+                  duration: Duration(seconds: 3), dismissOnTap: true);
+            }
+          }
+          starti += count;
+        }
+      }
+    }
+    if (sliGraphs.length > 1 && !isAlert) {
+      sliGraphs.removeRange(0, sliGraphs.length - 1);
+    } else if (sliAlertGraphs.length > 1) {
+      sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
+    }
+  }
+
+  Future<void> getMultiSeries(
+      RxList<TimeSeries> instanceList,
+      DateTime start,
+      DateTime end,
+      List<Functionality?> functions,
+      Sensor sensor,
+      bool isAlert) async {
+    //create a list of functions
+    int total = functions.length;
+    int count = 0;
+    int starti = 0;
+    while (total > 0) {
+      List<Functionality> nonNullFunctions = List.empty(growable: true);
+      late final sublist;
+      if (total - starti >= intConcurrentCount) {
+        sublist = functions.sublist(starti, starti + intConcurrentCount);
+      } else {
+        sublist = functions.sublist(starti, starti + total);
+      }
+
+      count = 0;
+      for (Functionality? func in sublist) {
+        if (total == 0) {
+          break;
+        }
+        if (func != null && count < intConcurrentCount) {
+          nonNullFunctions.add(func);
+          count++;
+        }
+      }
+      total -= intConcurrentCount;
+
+      Iterable<Future<http.Response>> futureResponses =
+          nonNullFunctions.map((Functionality function) {
+        print(Uri.parse(
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+        Future<http.Response> response = http.get(Uri.parse(
+            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+        return response;
+      });
+
+      final responses = await Future.wait(futureResponses);
+      for (int i = 0; i < responses.length; i++) {
+        http.Response res = responses[i];
+
+        if (res.statusCode == 200) {
+          if (jsonDecode(res.body).length <= 0) {
+            continue;
+          }
+          var body = jsonDecode(res.body)[0];
+
+          String color = body['color'];
+          String key = body['key'];
+
+          if (body["values"] == null) {
+            instanceList.add(new TimeSeries(
+                name: key,
+                key: nonNullFunctions[i].key,
+                color: color,
+                timeSeries: null));
+            continue;
+          }
+          if (body["values"][0][1] is String) {
+            Map<int, String> logSeries = convertListToMapLogs(body['values']);
+            instanceList.add(new LogSeries(
+                name: key,
+                key: nonNullFunctions[i].name,
+                logSeries: logSeries));
+            continue;
+          }
+
+          Map<int, double> timeSeries = convertListToMap(body['values']);
+          instanceList.add(new TimeSeries(
+              name: key,
+              color: color,
+              timeSeries: timeSeries,
+              key: nonNullFunctions[i].key));
+        } else {
+          EasyLoading.showError("Failed to retrieve data! Try again.",
+              duration: Duration(seconds: 3), dismissOnTap: true);
+          // }
+        }
+      }
+      starti += count;
+    }
+  }
+
   Future<void> getMultiTimeSeries(
     DateTime start,
     DateTime end,
@@ -174,7 +369,7 @@ class TimeSeriesController extends GetxController {
   ) async {
     try {
       RxList<TimeSeries> instanceList = RxList.empty(growable: true);
-      RxMap<String, RxList<TimeSeries>> instanceSliMap = RxMap();
+
       if (!isAlert) {
         graphs.add(instanceList);
       } else {
@@ -183,114 +378,11 @@ class TimeSeriesController extends GetxController {
 
       //check if pulse
       if (sensor.isPulse()) {
-        dynamic slil = (sensor as Pulse).slil; //left sli
-        dynamic slir = (sensor).slir; //right sli
-
-        if (!isAlert) {
-          sliGraphs.add(instanceSliMap);
-        } else {
-          sliAlertGraphs.add(instanceSliMap);
-        }
-
-        for (dynamic sli in sensor.sli!) {
-          String pid = sli["PID"].toString();
-          dynamic sid = sli["SID"];
-          String? name = sli["name"];
-
-          if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
-            RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-            instanceSliMap[(name != null ? "Driver: " + name.toString() : "") +
-                " SLI: " +
-                pid] = instanceSliList;
-            for (String functionality in sli["plottable"]) {
-              final response = await http.get(Uri.parse(
-                  'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-              if (response.statusCode == 200) {
-                if (jsonDecode(response.body).length <= 0) {
-                  continue;
-                }
-                var body = jsonDecode(response.body)[0];
-
-                String color = body['color'];
-                String key = body['key'];
-
-                if (body["values"] == null) {
-                  instanceSliList.add(new TimeSeries(
-                      name: key,
-                      color: color,
-                      timeSeries: null,
-                      key: functionality));
-                  continue;
-                }
-
-                if (body["values"][0][1] is String) {
-                  Map<int, String> logSeries =
-                      convertListToMapLogs(body['values']);
-                  instanceSliList.add(new LogSeries(
-                      name: key, key: functionality, logSeries: logSeries));
-                  continue;
-                }
-
-                Map<int, double> timeSeries = convertListToMap(body['values']);
-                instanceSliList.add(new TimeSeries(
-                    name: key,
-                    color: color,
-                    timeSeries: timeSeries,
-                    key: functionality));
-              } else {
-                throw Exception("Failed to retrieve data"); //Ask UI to reload
-              }
-            }
-          }
-        }
-        if (sliGraphs.length > 1 && !isAlert) {
-          sliGraphs.removeRange(0, sliGraphs.length - 1);
-        } else if (sliAlertGraphs.length > 1) {
-          sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
-        }
+        await getSliMultiSeries(instanceList, isAlert, sensor, start, end);
       }
 
-      for (Functionality? function in functions) {
-        if (function != null) {
-          final response = await http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-          // print(
-          //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
-          if (response.statusCode == 200) {
-            if (jsonDecode(response.body).length <= 0) {
-              continue;
-            }
-            var body = jsonDecode(response.body)[0];
-
-            String color = body['color'];
-            String key = body['key'];
-            if (body["values"] == null) {
-              instanceList.add(new TimeSeries(
-                  name: key,
-                  key: function.key,
-                  color: color,
-                  timeSeries: null));
-              continue;
-            }
-            if (body["values"][0][1] is String) {
-              Map<int, String> logSeries = convertListToMapLogs(body['values']);
-              instanceList.add(new LogSeries(
-                  name: key, key: function.key, logSeries: logSeries));
-              continue;
-            }
-
-            Map<int, double> timeSeries = convertListToMap(body['values']);
-            instanceList.add(new TimeSeries(
-                name: key,
-                color: color,
-                timeSeries: timeSeries,
-                key: function.key));
-          } else {
-            throw Exception("Failed to retrieve data"); //Ask UI to reload
-            // }
-          }
-        }
-      }
+      await getMultiSeries(
+          instanceList, start, end, functions, sensor, isAlert);
       if (graphs.length > 1 && !isAlert) {
         graphs.removeRange(0, graphs.length - 1);
       } else if (alertGraphs.length > 1) {
@@ -301,6 +393,9 @@ class TimeSeriesController extends GetxController {
           'Network Error: please check your internet connection.',
           duration: Duration(seconds: 3),
           dismissOnTap: true);
+    } catch (e) {
+      EasyLoading.showError("Failed to retrieve data! Try again.",
+          duration: Duration(seconds: 3), dismissOnTap: true);
     }
   }
 
@@ -324,43 +419,83 @@ class TimeSeriesController extends GetxController {
       String pid = sli["PID"].toString();
       String name = sli["name"].toString();
       instanceOldSliMap["Driver: " + name + " SLI: " + pid] = instanceSliList;
-      for (String functionality in sli["plottable"]) {
-        final response = await http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=${sli["PID"]}&$functionality&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-        if (response.statusCode == 200) {
-          if (jsonDecode(response.body).length <= 0) {
-            continue;
-          }
-          var body = jsonDecode(response.body)[0];
-
-          String color = body['color'];
-          String key = body['key'];
-          if (body["values"] == null) {
-            instanceSliList.add(
-              new TimeSeries(
-                  name: key,
-                  color: color,
-                  timeSeries: null,
-                  key: functionality),
-            );
-            continue;
-          }
-
-          if (body["values"][0][1] is String) {
-            Map<int, String> logSeries = convertListToMapLogs(body['values']);
-            instanceSliList.add(new LogSeries(
-                name: key, key: functionality, logSeries: logSeries));
-            continue;
-          }
-
-          Map<int, double> timeSeries = convertListToMap(body['values']);
-          instanceSliList.add(new TimeSeries(
-              name: key,
-              color: color,
-              timeSeries: timeSeries,
-              key: functionality));
+      int total = sli["plottable"].length;
+      int count = 0;
+      int starti = 0;
+      while (total > 0) {
+        print('total ' + total.toString());
+        print('starti ' + starti.toString());
+        List<String> nonNullFunctions = List.empty(growable: true);
+        late final sublist;
+        if (total - starti >= intConcurrentCount) {
+          sublist =
+              sli["plottable"].sublist(starti, starti + intConcurrentCount);
         } else {
-          throw Exception("Failed to retrieve data");
+          sublist = sli["plottable"].sublist(starti, starti + total);
+        }
+
+        count = 0;
+        for (String func in sublist) {
+          if (total == 0) {
+            break;
+          }
+          if (count < intConcurrentCount) {
+            nonNullFunctions.add(func);
+            count++;
+          }
+        }
+        total -= intConcurrentCount;
+
+        Iterable<Future<http.Response>> futureResponses =
+            nonNullFunctions.map((String function) {
+          Future<http.Response> response = http.get(Uri.parse(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          return response;
+        });
+
+        final responses = await Future.wait(futureResponses);
+        for (int i = 0; i < responses.length; i++) {
+          http.Response res = responses[i];
+
+          if (res.statusCode == 200) {
+            if (jsonDecode(res.body).length <= 0) {
+              continue;
+            }
+            var body = jsonDecode(res.body)[0];
+
+            String color = body['color'];
+            String key = body['key'];
+            if (body["values"] == null) {
+              instanceSliList.add(
+                new TimeSeries(
+                    name: key,
+                    color: color,
+                    timeSeries: null,
+                    key: nonNullFunctions[i]),
+              );
+              continue;
+            }
+            if (body["values"][0][1] is String) {
+              Map<int, String> logSeries = convertListToMapLogs(body['values']);
+              instanceSliList.add(new LogSeries(
+                  name: key, key: nonNullFunctions[i], logSeries: logSeries));
+              continue;
+            }
+            Map<int, double> timeSeries = convertListToMap(body['values']);
+            instanceSliList.add(new TimeSeries(
+                name: key,
+                color: color,
+                timeSeries: timeSeries,
+                key: nonNullFunctions[i]));
+          } else {
+            EasyLoading.showError("Failed to retrieve data! Try again.",
+                duration: Duration(seconds: 3),
+                dismissOnTap: true); //Ask UI to reload
+            // }
+
+          }
+
+          starti += count;
         }
       }
     }
@@ -413,52 +548,3 @@ class TimeSeriesController extends GetxController {
     return sliCount;
   }
 }
-
-
-    // if (function.value is List) {
-        //   //multi value
-        //   List func = function.value;
-
-        //   for (Functionality? subfunc in func) {
-        //     if (subfunc != null) {
-        //       final response = await http.get(Uri.parse(
-        //           'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${subfunc.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-
-        //       if (response.statusCode == 200) {
-        //         if (jsonDecode(response.body).length <= 0) {
-        //           continue;
-        //         }
-        //         var body = jsonDecode(response.body)[0];
-
-        //         String color = body['color'];
-        //         String key = body['key'];
-
-        //         if (body["values"] == null) {
-        //           instanceList.add(new TimeSeries(
-        //               name: key,
-        //               key: subfunc.key,
-        //               color: color,
-        //               timeSeries: null));
-        //           continue;
-        //         }
-
-        //         if (body["values"][0][1] is String) {
-        //           Map<int, String> logSeries =
-        //               convertListToMapLogs(body['values']);
-        //           instanceList.add(new LogSeries(
-        //               name: key, key: subfunc.key, logSeries: logSeries));
-        //           continue;
-        //         }
-
-        //         Map<int, double> timeSeries = convertListToMap(body['values']);
-        //         instanceList.add(new TimeSeries(
-        //             name: key,
-        //             color: color,
-        //             timeSeries: timeSeries,
-        //             key: subfunc.key));
-        //       } else {
-        //         throw Exception("Failed to retrieve data"); //Ask UI to reload
-        //       }
-        //     }
-        //   }
-        // } else {

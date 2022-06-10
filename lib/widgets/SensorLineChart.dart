@@ -40,7 +40,6 @@ class _SensorLineChartState extends State<SensorLineChart> {
   }
 
   void processData(TimeSeries data) {
-    print(data.getTimeSeries == null);
     double minY = double.maxFinite;
     double maxY = double.minPositive;
     List<FlSpot> points = [];

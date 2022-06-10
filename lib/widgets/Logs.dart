@@ -68,7 +68,6 @@ class _LogsState extends State<Logs> {
   }
 
   List<Widget> get buildLogs {
-    print("data: " + widget.data.toString());
     List<Widget> widgets = [];
     // widgets.add(Container(
     //   decoration: BoxDecoration(

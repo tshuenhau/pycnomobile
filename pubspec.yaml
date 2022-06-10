@@ -39,6 +39,7 @@ dependencies:
   flutter_easyloading: ^3.0.3
   badges: ^2.0.2
   async: ^2.8.2
+  extended_image: ^6.1.0
   flutter:
     sdk: flutter
 
@@ -82,8 +83,6 @@ flutter:
     - assets/images/vineyard.jpg
     - assets/images/water_treatment.jpg
     - assets/images/stock0.jpg
-
-
 
   fonts:
     - family: Nulshock
