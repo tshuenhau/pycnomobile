@@ -70,8 +70,10 @@ class _SensorLineChartState extends State<SensorLineChart> {
       }
       _values = temp;
 
+      _leftTitlesInterval = ((_maxY - _minY) / (_leftLabelsCount - 1));
       _leftTitlesInterval =
-          ((_maxY - _minY) / (_leftLabelsCount - 1)).floorToDouble();
+          num.parse(_leftTitlesInterval.toStringAsFixed(2)).toDouble();
+      print("interval: " + _leftTitlesInterval.toString());
     }
   }
 
@@ -360,7 +362,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       ),
       getTitles: (value) {
         //print("Y value: " + value.toString());
-        return value.toString();
+        return value.toStringAsFixed(1);
       },
       reservedSize: MediaQuery.of(context).size.width *
           (_maxY.toString().length > _minY.toString().length ? _maxY : _minY)
@@ -368,7 +370,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
               .length /
           50,
       margin: MediaQuery.of(context).size.width * 1.5 / 100,
-      interval: max(0.5, _leftTitlesInterval),
+      interval: _leftTitlesInterval == 0 ? null : _leftTitlesInterval,
     );
   }
 
