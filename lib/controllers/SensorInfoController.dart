@@ -101,20 +101,22 @@ class SensorInfoController extends GetxController {
               if (jsonDecode(res.body).length <= 0) {
                 continue;
               }
-              var body = jsonDecode(res.body)[0];
-
-              String color = body['color'];
-              String key = body['key'];
               if (isAlert) {
                 alertSparklines.last[pid] = instanceList;
               } else {
                 sparkLines.last[pid] = instanceList;
               }
-              if (body["values"] != null) {
-                if (body["values"][0][1] is String) {
-                  continue;
-                }
+
+              var body = jsonDecode(res.body)[0];
+              if (isAlert) {
+                alertSparklines.last[sensor.name ?? ""] = instanceList;
+              } else {
+                sparkLines.last[sensor.name ?? ""] = instanceList;
               }
+
+              String color = body['color'];
+              String key = body['key'];
+
               if (body["values"] == null) {
                 instanceList.add(new TimeSeries(
                     name: key,
@@ -142,11 +144,10 @@ class SensorInfoController extends GetxController {
       Sensor sensor, bool isAlert, DateTime oneDayBef, DateTime now) async {
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
     List<Functionality> functions = sensor.functionalities!;
-    print(functions);
+
     int total = functions.length;
     int count = 0;
     int starti = 0;
-    print('total ' + total.toString());
     while (total > 0) {
       List<Functionality> nonNullFunctions = List.empty(growable: true);
       late final sublist;
@@ -227,7 +228,6 @@ class SensorInfoController extends GetxController {
         alertNonSliSparklines.add(RxMap());
       } else {
         sparkLines.add(RxMap());
-
         nonSliSparklines.add(RxMap());
       }
 

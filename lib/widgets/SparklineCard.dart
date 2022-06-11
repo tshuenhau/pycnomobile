@@ -125,13 +125,22 @@ class _SparklineCardState extends State<SparklineCard> {
                 }
               }
             } else {
-              if (controller.sparkLines.length == 0) {
+              print('sli sparklines ' + controller.sparkLines.toString());
+
+              if (controller.sparkLines.length <= 0) {
                 data = [];
               } else {
-                data = controller.convertTimeSeriestoList(controller
-                    .sparkLines
-                    .last[widget.sensor.name ?? ""]?[widget.index]
-                    .getTimeSeries);
+                if ((controller.sparkLines.last[widget.sensor.name ?? ""]
+                            ?.length ??
+                        0) <=
+                    widget.index) {
+                  data = [];
+                } else {
+                  data = controller.convertTimeSeriestoList(controller
+                      .sparkLines
+                      .last[widget.sensor.name ?? ""]?[widget.index]
+                      .getTimeSeries);
+                }
               }
             }
             if (data == null || data.length < 1) {
@@ -168,7 +177,7 @@ class _SparklineCardState extends State<SparklineCard> {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
-                      .alertNonSliSparklines
+                      .alertSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                 }
