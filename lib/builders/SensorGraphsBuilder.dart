@@ -4,11 +4,13 @@ import 'package:Sensr/model/TimeSeries.dart';
 import 'package:Sensr/model/LogSeries.dart';
 import 'package:Sensr/controllers/TimeSeriesController.dart';
 import 'package:Sensr/model/functionalities/Functionality.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:Sensr/widgets/Logs.dart';
 import 'package:Sensr/widgets/SensorLineChart.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 Future<void> initGraphs(bool isAlert, Sensor sensor,
     List<Functionality?> functions, String sliPid, String sliName, String name,
@@ -126,10 +128,6 @@ List<Widget> buildGraphs(
     //return LoadingIndicator();
   }
 
-  if (count <= 0) {
-    graphsToDraw.add(NoGraphData());
-  }
-
   //! the graphs load out of sequence, i.e the pulse graphs should only load after the internal graphs
   if (sensor.isPulse() &&
       (type == TYPE_OF_TIMESERIES.SLI ||
@@ -221,30 +219,59 @@ List<Widget> buildGraphs(
   return result;
 }
 
-class NoGraphData extends StatelessWidget {
-  const NoGraphData({
+class LoadingIndicator extends StatefulWidget {
+  const LoadingIndicator({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height * 4.5 / 100),
-      child: Container(
-          width: MediaQuery.of(context).size.width * 80 / 100,
-          height: MediaQuery.of(context).size.height * 20 / 100,
-          decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.primary)),
-          child: Center(child: Text("No Current SLI Data"))),
-    );
-  }
+  State<LoadingIndicator> createState() => _LoadingIndicatorState();
 }
 
-class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({
-    Key? key,
-  }) : super(key: key);
+class _LoadingIndicatorState extends State<LoadingIndicator> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _connectionStatus = ConnectivityResult.wifi;
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -261,11 +288,12 @@ class LoadingIndicator extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 22 / 100,
           width: MediaQuery.of(context).size.width * 80 / 100,
           child: Center(
-            child: SizedBox(
-                height: MediaQuery.of(context).size.width * 5 / 100,
-                width: MediaQuery.of(context).size.width * 5 / 100,
-                child: CircularProgressIndicator()),
-          ),
+              child: _connectionStatus == ConnectivityResult.none
+                  ? Text("Error Loading Data")
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.width * 5 / 100,
+                      width: MediaQuery.of(context).size.width * 5 / 100,
+                      child: CircularProgressIndicator())),
         ),
       ),
     );
