@@ -324,7 +324,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.35)],
+        colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.20)],
       ),
     );
   }

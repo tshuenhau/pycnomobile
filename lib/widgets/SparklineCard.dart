@@ -128,7 +128,6 @@ class SparklineCard extends StatelessWidget {
               change = ((data[data.length - 1] - data[0]));
             }
           }
-
           return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
