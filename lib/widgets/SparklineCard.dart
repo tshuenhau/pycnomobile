@@ -107,6 +107,10 @@ class _SparklineCardState extends State<SparklineCard> {
           late List<double>? data;
           double change = 0;
 
+          Color color = Colors.black;
+
+          String name = "";
+
           if (auth.currentTab.value == 0) {
             if (widget.sliPid == "") {
               if (controller.nonSliSparklines.length <= 0) {
@@ -122,6 +126,22 @@ class _SparklineCardState extends State<SparklineCard> {
                       .nonSliSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
+
+                  String stringColor = controller
+                          .nonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getColor ??
+                      '0000000';
+
+                  color = new Color(
+                      int.parse(stringColor.substring(1, 7), radix: 16) +
+                          0xFF000000);
+
+                  name = controller
+                          .nonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getName ??
+                      "";
                 }
               }
             } else {
@@ -140,13 +160,25 @@ class _SparklineCardState extends State<SparklineCard> {
                       .sparkLines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
+                  String stringColor = controller
+                          .sparkLines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getColor ??
+                      '0000000';
+                  color = new Color(
+                      int.parse(stringColor.substring(1, 7), radix: 16) +
+                          0xFF000000);
+                  name = controller
+                          .nonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getName ??
+                      "";
                 }
               }
             }
             if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
-              double average = data.average;
               //change = ((data[data.length - 1] - data[0]) / data.last * 100);
               change = ((data[data.length - 1] - data[0]));
             }
@@ -165,6 +197,19 @@ class _SparklineCardState extends State<SparklineCard> {
                       .alertNonSliSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
+                  String stringColor = controller
+                          .alertNonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getColor ??
+                      '0000000';
+                  color = new Color(
+                      int.parse(stringColor.substring(1, 7), radix: 16) +
+                          0xFF000000);
+                  name = controller
+                          .nonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getName ??
+                      "";
                 }
               }
             } else {
@@ -180,6 +225,19 @@ class _SparklineCardState extends State<SparklineCard> {
                       .alertSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
+                  String stringColor = controller
+                          .alertSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getColor ??
+                      '0000000';
+                  color = new Color(
+                      int.parse(stringColor.substring(1, 7), radix: 16) +
+                          0xFF000000);
+                  name = controller
+                          .nonSliSparklines
+                          .last[widget.sensor.name ?? ""]?[widget.index]
+                          .getName ??
+                      "";
                 }
               }
             }
@@ -187,7 +245,6 @@ class _SparklineCardState extends State<SparklineCard> {
             if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
-              double average = data.average;
               //change = ((data[data.length - 1] - data[0]) / data.last * 100);
               change = ((data[data.length - 1] - data[0]));
             }
@@ -250,7 +307,7 @@ class _SparklineCardState extends State<SparklineCard> {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: Text(widget.function.name,
+                            child: Text(name == "" ? '-' : name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)
@@ -260,7 +317,10 @@ class _SparklineCardState extends State<SparklineCard> {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(widget.function.name,
+                        Text(
+                            widget.sliName == ""
+                                ? widget.sensor.name ?? ""
+                                : widget.sliName,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
@@ -308,29 +368,13 @@ class _SparklineCardState extends State<SparklineCard> {
                               child: Sparkline(
                                   averageLine: false,
                                   averageLabel: false,
-                                  lineColor: change == 0
-                                      ? Colors.blue.shade700
-                                      : change > 0
-                                          ? Colors.green.shade700
-                                              .withOpacity(0.75)
-                                          : Colors.red.shade700
-                                              .withOpacity(0.75),
+                                  lineColor: color,
                                   fillMode: FillMode.below,
-                                  fillColor: change == 0
-                                      ? Colors.blue.shade700.withOpacity(
-                                          (Theme.of(context).brightness == Brightness.light
-                                              ? 0.1
-                                              : 0.4))
-                                      : change > 0
-                                          ? Colors.green.shade700.withOpacity(
-                                              (Theme.of(context).brightness == Brightness.light
-                                                  ? 0.1
-                                                  : 0.4))
-                                          : Colors.red.shade700.withOpacity(
-                                              (Theme.of(context).brightness ==
-                                                      Brightness.light
-                                                  ? 0.1
-                                                  : 0.4)),
+                                  fillColor: color.withOpacity(
+                                      (Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? 0.1
+                                          : 0.4)),
                                   data: data))
                 ],
               ),
