@@ -7,12 +7,10 @@ import 'dart:math';
 import 'package:Sensr/model/TimeSeries.dart';
 
 class SensorLineChart extends StatefulWidget {
-  SensorLineChart({
-    Key? key,
-    required this.timeSeries,
-  }) : super(key: key);
+  SensorLineChart({Key? key, required this.timeSeries, required this.type})
+      : super(key: key);
   final TimeSeries timeSeries;
-
+  TYPE_OF_TIMESERIES type;
   @override
   _SensorLineChartState createState() => _SensorLineChartState();
 }
@@ -207,27 +205,15 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
     if (midLuminance > 128 &&
         Theme.of(context).brightness == Brightness.light) {
-      // minRed -= brightnessAdjustment;
-      // minGreen -= brightnessAdjustment;
-      // minBlue -= brightnessAdjustment;
-      // maxRed -= brightnessAdjustment;
-      // maxGreen -= brightnessAdjustment;
-      // maxBlue -= brightnessAdjustment;
-      // theme is light mode and graph is too bright
     } else if (midLuminance < 128 &&
-        Theme.of(context).brightness == Brightness.dark) {
-      // theme is dark mode and graph is too dark
-
-    }
+        Theme.of(context).brightness == Brightness.dark) {}
     if (minLuminance < 64) {
       //closer to black
       if (Theme.of(context).brightness == Brightness.dark) {
         minRed += luminanceAdjustment;
         minGreen += luminanceAdjustment;
         minBlue += luminanceAdjustment;
-        // minRed += brightnessAdjustment;
-        // minGreen += brightnessAdjustment;
-        // minBlue += brightnessAdjustment;
+
         maxRed += brightnessAdjustment;
         maxGreen += brightnessAdjustment;
         maxBlue += brightnessAdjustment;
@@ -238,9 +224,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
         maxRed -= luminanceAdjustment;
         maxGreen -= luminanceAdjustment;
         maxBlue -= luminanceAdjustment;
-        // minRed -= brightnessAdjustment;
-        // minGreen -= brightnessAdjustment;
-        // minBlue -= brightnessAdjustment;
+
         maxRed -= brightnessAdjustment;
         maxGreen -= brightnessAdjustment;
         maxBlue -= brightnessAdjustment;
@@ -281,16 +265,16 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     365 * 6) {
                   x = DateFormat.yMMMd('en_US').format(date);
                 }
-                x = DateFormat("MMM d", 'en_US').format(date) +
+                x = DateFormat("dd MMM y", 'en_US').format(date) +
                     ", " +
                     DateFormat("HH:mm", 'en_US').format(date);
 
                 return LineTooltipItem(
                   "${x} \n" + flSpot.y.toStringAsFixed(2),
                   TextStyle(
-                    color: Theme.of(context).colorScheme.background,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Theme.of(context).colorScheme.background,
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.width * 3 / 100),
                 );
               }).toList();
             }),
@@ -322,7 +306,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return LineChartBarData(
       spots: _values,
       isCurved: false,
-      colors: gradientColors(),
+      colors: [HexColor(widget.timeSeries.getColor)],
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
@@ -338,7 +322,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: gradientColors().map((e) => e.withOpacity(0.35)).toList(),
+        colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.35)],
       ),
     );
   }
@@ -418,7 +402,9 @@ class _SensorLineChartState extends State<SensorLineChart> {
           //   return DateFormat("MMM d").format(date);
           // }
 
-          return DateFormat("MMM d", 'en_US').format(date) +
+          return DateFormat("dd MMM", 'en_US').format(date) +
+              "\n" +
+              DateFormat("y", 'en_US').format(date) +
               "\n" +
               DateFormat("HH:mm", 'en_US').format(date);
 
@@ -432,6 +418,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.timeSeries.getKey);
     return Column(
       children: [
         Text(widget.timeSeries.getName,
@@ -470,7 +457,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
                           left: MediaQuery.of(context).size.height * 0.5 / 100,
                           top: MediaQuery.of(context).size.height * 1.5 / 100,
                           bottom:
-                              MediaQuery.of(context).size.height * 1.5 / 100),
+                              MediaQuery.of(context).size.height * 3.5 / 100),
                       child: widget.timeSeries.getTimeSeries == null
                           ? LineChart(
                               mainData(),
@@ -490,8 +477,15 @@ class _SensorLineChartState extends State<SensorLineChart> {
                           padding: EdgeInsets.only(
                               bottom:
                                   MediaQuery.of(context).size.height * 3 / 100),
-                          child:
-                              Container(child: Center(child: Text("No Data"))),
+                          child: Container(
+                              child: Center(
+                                  child: Text(widget.type ==
+                                          TYPE_OF_TIMESERIES.SLI
+                                      ? "This SLI has sent data but no plottable data streams are available."
+                                      : widget.type ==
+                                              TYPE_OF_TIMESERIES.SINGLE_SLI
+                                          ? "This SLI has sent data but no plottable data streams are available."
+                                          : "No Data"))),
                         ),
                       )
                     ]

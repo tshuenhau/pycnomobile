@@ -1,3 +1,4 @@
+import 'package:Sensr/model/TimeSeries.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:Sensr/widgets/GraphBottomSheet.dart';
@@ -196,7 +197,7 @@ class SparklineCard extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sliName != "" ? "SLI" : "Internal",
+                        Text(function.name,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
