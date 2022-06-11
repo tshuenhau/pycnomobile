@@ -1,15 +1,20 @@
+import 'dart:async';
+
+import 'package:Sensr/model/TimeSeries.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:Sensr/widgets/GraphBottomSheet.dart';
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/model/functionalities/GenericFunctionality.dart';
 import 'package:Sensr/model/functionalities/Functionality.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:Sensr/controllers/SensorInfoController.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'package:collection/collection.dart';
 
-class SparklineCard extends StatelessWidget {
+class SparklineCard extends StatefulWidget {
   SparklineCard(
       {Key? key,
       required this.name,
@@ -28,6 +33,55 @@ class SparklineCard extends StatelessWidget {
   final String sliName;
 
   @override
+  State<SparklineCard> createState() => _SparklineCardState();
+}
+
+class _SparklineCardState extends State<SparklineCard> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _connectionStatus = ConnectivityResult.wifi;
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SensorInfoController controller = Get.put(SensorInfoController());
     AuthController auth = Get.put(AuthController());
@@ -43,30 +97,30 @@ class SparklineCard extends StatelessWidget {
               context: context,
               builder: (context) {
                 return GraphBottomSheet(
-                    sensor: sensor,
-                    functions: [function],
-                    sliPid: sliPid,
-                    sliName: sliName,
-                    name: name);
+                    sensor: widget.sensor,
+                    functions: [widget.function],
+                    sliPid: widget.sliPid,
+                    sliName: widget.sliName,
+                    name: widget.name);
               });
         }, child: Obx(() {
           late List<double>? data;
           double change = 0;
 
           if (auth.currentTab.value == 0) {
-            if (sliPid == "") {
+            if (widget.sliPid == "") {
               if (controller.nonSliSparklines.length <= 0) {
                 data = [];
               } else {
-                if ((controller
-                            .nonSliSparklines.last[sensor.name ?? ""]?.length ??
+                if ((controller.nonSliSparklines.last[widget.sensor.name ?? ""]
+                            ?.length ??
                         0) <=
-                    index) {
+                    widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
                       .nonSliSparklines
-                      .last[sensor.name ?? ""]?[index]
+                      .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                 }
               }
@@ -76,14 +130,15 @@ class SparklineCard extends StatelessWidget {
               if (controller.sparkLines.length <= 0) {
                 data = [];
               } else {
-                if ((controller.sparkLines.last[sensor.name ?? ""]?.length ??
+                if ((controller.sparkLines.last[widget.sensor.name ?? ""]
+                            ?.length ??
                         0) <=
-                    index) {
+                    widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
                       .sparkLines
-                      .last[sensor.name ?? ""]?[index]
+                      .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                 }
               }
@@ -96,19 +151,19 @@ class SparklineCard extends StatelessWidget {
               change = ((data[data.length - 1] - data[0]));
             }
           } else {
-            if (sliPid == "") {
+            if (widget.sliPid == "") {
               if (controller.alertNonSliSparklines.length <= 0) {
                 data = [];
               } else {
-                if ((controller.alertNonSliSparklines.last[sensor.name ?? ""]
-                            ?.length ??
+                if ((controller.alertNonSliSparklines
+                            .last[widget.sensor.name ?? ""]?.length ??
                         0) <=
-                    index) {
+                    widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
                       .alertNonSliSparklines
-                      .last[sensor.name ?? ""]?[index]
+                      .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                 }
               }
@@ -116,14 +171,14 @@ class SparklineCard extends StatelessWidget {
               if (controller.alertSparklines.length <= 0) {
                 data = [];
               } else {
-                if (controller
-                        .alertSparklines.last[sensor.name ?? ""]!.length <=
-                    index) {
+                if (controller.alertSparklines.last[widget.sensor.name ?? ""]!
+                        .length <=
+                    widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
                       .alertSparklines
-                      .last[sensor.name ?? ""]?[index]
+                      .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                 }
               }
@@ -137,7 +192,6 @@ class SparklineCard extends StatelessWidget {
               change = ((data[data.length - 1] - data[0]));
             }
           }
-
           return Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 4 / 100,
@@ -196,7 +250,7 @@ class SparklineCard extends StatelessWidget {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: Text(function.name,
+                            child: Text(widget.function.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)
@@ -206,7 +260,7 @@ class SparklineCard extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sliName != "" ? sliName : sensor.name ?? "",
+                        Text(widget.function.name,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
@@ -231,14 +285,24 @@ class SparklineCard extends StatelessWidget {
                           ? Expanded(
                               child: Container(
                                   child: Center(
-                              child: SizedBox(
-                                  height: MediaQuery.of(context).size.width *
-                                      3 /
-                                      100,
-                                  width: MediaQuery.of(context).size.width *
-                                      3 /
-                                      100,
-                                  child: CircularProgressIndicator()),
+                              child: _connectionStatus ==
+                                      ConnectivityResult.none
+                                  ? SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              3 /
+                                              100,
+                                      child: FittedBox(
+                                          child: Text("Error Loading Data")))
+                                  : SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              3 /
+                                              100,
+                                      width: MediaQuery.of(context).size.width *
+                                          3 /
+                                          100,
+                                      child: CircularProgressIndicator()),
                             )))
                           : Expanded(
                               child: Sparkline(

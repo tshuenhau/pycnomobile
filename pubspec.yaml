@@ -58,6 +58,7 @@ dependencies:
   double_back_to_close_app: ^2.1.0
   loading_indicator: ^3.0.3
   cached_network_image: ^3.2.0
+  connectivity_plus: ^2.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
