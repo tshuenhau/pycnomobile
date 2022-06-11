@@ -260,7 +260,10 @@ class _SparklineCardState extends State<SparklineCard> {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(widget.function.name,
+                        Text(
+                            widget.sliName == ""
+                                ? widget.sensor.name ?? ""
+                                : widget.sliName,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
