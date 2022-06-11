@@ -71,11 +71,21 @@ class SparklineCard extends StatelessWidget {
                 }
               }
             } else {
-              if (controller.sparkLines.length == 0) {
+              print('sli sparklines ' + controller.sparkLines.toString());
+
+              if (controller.sparkLines.length <= 0) {
                 data = [];
               } else {
-                data = controller.convertTimeSeriestoList(controller
-                    .sparkLines.last[sensor.name ?? ""]?[index].getTimeSeries);
+                if ((controller.sparkLines.last[sensor.name ?? ""]?.length ??
+                        0) <=
+                    index) {
+                  data = [];
+                } else {
+                  data = controller.convertTimeSeriestoList(controller
+                      .sparkLines
+                      .last[sensor.name ?? ""]?[index]
+                      .getTimeSeries);
+                }
               }
             }
             if (data == null || data.length < 1) {
@@ -112,7 +122,7 @@ class SparklineCard extends StatelessWidget {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
-                      .alertNonSliSparklines
+                      .alertSparklines
                       .last[sensor.name ?? ""]?[index]
                       .getTimeSeries);
                 }
@@ -196,7 +206,7 @@ class SparklineCard extends StatelessWidget {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(sliName != "" ? "SLI" : "Internal",
+                        Text(sliName != "" ? sliName : sensor.name ?? "",
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor

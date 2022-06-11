@@ -78,6 +78,8 @@ class TimeSeriesController extends GetxController {
           }
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          print(
+              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -168,6 +170,8 @@ class TimeSeriesController extends GetxController {
     } on SocketException catch (e) {
       EasyLoading.showError(
           'Network Error: please check your internet connection.');
+      // instanceList.add(new TimeSeries(
+      //       name: "ERROR", color: 'FFffffff', timeSeries: null, key: 'error'));
     }
   }
 
@@ -272,11 +276,6 @@ class TimeSeriesController extends GetxController {
           starti += count;
         }
       }
-    }
-    if (sliGraphs.length > 1 && !isAlert) {
-      sliGraphs.removeRange(0, sliGraphs.length - 1);
-    } else if (sliAlertGraphs.length > 1) {
-      sliAlertGraphs.removeRange(0, sliAlertGraphs.length - 1);
     }
   }
 
@@ -402,6 +401,16 @@ class TimeSeriesController extends GetxController {
           'Network Error: please check your internet connection.',
           duration: Duration(seconds: 3),
           dismissOnTap: true);
+      RxList<TimeSeries> instanceList = RxList.empty(growable: true);
+      if (!isAlert) {
+        graphs.add(instanceList);
+      } else {
+        alertGraphs.add(instanceList);
+      }
+      for (int i = 0; i < functions.length; i++) {
+        instanceList.add(new TimeSeries(
+            name: "ERROR", color: 'FFffffff', timeSeries: null, key: 'error'));
+      }
     }
   }
 
