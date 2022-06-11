@@ -247,6 +247,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
+            maxContentWidth: MediaQuery.of(context).size.width * 75 / 100,
             tooltipBgColor: Theme.of(context).colorScheme.primary,
             getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
               return touchedBarSpots.map((barSpot) {
@@ -272,11 +273,13 @@ class _SensorLineChartState extends State<SensorLineChart> {
                     DateFormat("HH:mm", 'en_US').format(date);
 
                 return LineTooltipItem(
-                  "${x} \n" + flSpot.y.toStringAsFixed(2),
+                  "Y: " + flSpot.y.toStringAsFixed(2) + " \nX: " + "${x}",
                   TextStyle(
-                      color: Theme.of(context).colorScheme.background,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 3 / 100),
+                    color: Theme.of(context).colorScheme.background,
+                    fontWeight: FontWeight.bold,
+                    // fontSize: MediaQuery.of(context).size.width * 3 / 100,
+                  ),
+                  textAlign: TextAlign.start,
                 );
               }).toList();
             }),
