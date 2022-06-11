@@ -311,7 +311,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return LineChartBarData(
       spots: _values,
       isCurved: false,
-      colors: [HexColor(widget.timeSeries.getColor)],
+      colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.6)],
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
