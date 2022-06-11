@@ -9,8 +9,7 @@ import 'package:Sensr/model/functionalities/Functionality.dart';
 //   await controller.getTimeSeriesForSparklines(sensor);
 // }
 
-List<Widget> buildSparklines(
-    {required Sensor sensor, required BuildContext context}) {
+List<Widget> buildSparklines({required Sensor sensor}) {
   List<Widget> cards = [];
   if (sensor.isPulse()) {
     //create cards for slis
