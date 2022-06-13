@@ -62,8 +62,7 @@ class _AccountPageState extends State<AccountPage> {
                                               null
                                           ? NetworkImage(authController
                                                   .user.value!.profilePic!
-                                                  .startsWith(
-                                                      "https://pycno-media.s3.amazonaws.com/")
+                                                  .startsWith("https://")
                                               ? authController
                                                   .user.value!.profilePic!
                                               : "https://pycno.co/${authController.user.value!.profilePic}")
