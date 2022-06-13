@@ -137,10 +137,10 @@ class SensorsListTile extends StatelessWidget {
                                         AssetImage("assets/images/stock0.jpg"),
                                     fit: BoxFit.cover)
                                 : DecorationImage(
-                                    image: NetworkImage(sensor.img!.startsWith(
-                                            "https://pycno-media.s3.amazonaws.com/")
-                                        ? sensor.img!
-                                        : "https://pycno.co/${sensor.img}"),
+                                    image: NetworkImage(
+                                        sensor.img!.startsWith("https://")
+                                            ? sensor.img!
+                                            : "https://pycno.co/${sensor.img}"),
                                     fit: BoxFit.cover)),
                       ),
                       ((sensor.img == null || sensor.img == "")
