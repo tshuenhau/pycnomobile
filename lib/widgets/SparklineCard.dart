@@ -307,7 +307,7 @@ class _SparklineCardState extends State<SparklineCard> {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: Text(name == "" ? '-' : name,
+                            child: Text(widget.function.key,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)
@@ -317,10 +317,7 @@ class _SparklineCardState extends State<SparklineCard> {
                                         MediaQuery.of(context).size.width *
                                             3 /
                                             100))),
-                        Text(
-                            widget.sliName == ""
-                                ? widget.sensor.name ?? ""
-                                : widget.sliName,
+                        Text(name == "" ? '-' : name,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .primaryColor
