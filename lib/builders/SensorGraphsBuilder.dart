@@ -168,13 +168,13 @@ List<Widget> buildGraphs(
       //   ));
       // }
       value.forEach((element) {
-        if (element.getTimeSeries == null) {
-          graphsToDraw.add(Container(
-              height: MediaQuery.of(context).size.height * 10 / 100,
-              child: Text(
-                  "This SLI has sent data but no plottable data streams are available.",
-                  textAlign: TextAlign.center)));
-        }
+        // if (element.getTimeSeries == null) {
+        //   graphsToDraw.add(Container(
+        //       height: MediaQuery.of(context).size.height * 10 / 100,
+        //       child: Text(
+        //           "This SLI has sent data but no plottable data streams are available.",
+        //           textAlign: TextAlign.center)));
+        // }
         drawnCount += 1;
         if (element.isTimeSeries()) {
           graphsToDraw.add(SensorLineChart(timeSeries: element, type: type));

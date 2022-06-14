@@ -423,6 +423,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.type.toString());
     print(widget.timeSeries.getKey);
     return Column(
       children: [
@@ -484,13 +485,20 @@ class _SensorLineChartState extends State<SensorLineChart> {
                                   MediaQuery.of(context).size.height * 3 / 100),
                           child: Container(
                               child: Center(
-                                  child: Text(widget.type ==
-                                          TYPE_OF_TIMESERIES.SLI
-                                      ? "This SLI has sent data but no plottable data streams are available."
-                                      : widget.type ==
-                                              TYPE_OF_TIMESERIES.SINGLE_SLI
-                                          ? "This SLI has sent data but no plottable data streams are available."
-                                          : "No Data"))),
+                                  child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 65 / 100,
+                            child: Text(
+                                widget.type == TYPE_OF_TIMESERIES.SLI
+                                    ? "This SLI has sent data but no plottable data streams are available."
+                                    : widget.type ==
+                                            TYPE_OF_TIMESERIES.SINGLE_SLI
+                                        ? "This SLI has sent data but no plottable data streams are available."
+                                        : widget.type ==
+                                                TYPE_OF_TIMESERIES.OLD_SLI
+                                            ? "This SLI has sent data but no plottable data streams are available."
+                                            : "No Data",
+                                textAlign: TextAlign.center),
+                          ))),
                         ),
                       )
                     ]
