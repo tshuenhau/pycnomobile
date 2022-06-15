@@ -318,7 +318,9 @@ class _SparklineCardState extends State<SparklineCard> {
                                             3 /
                                             100))),
                         Text(name == "" ? '-' : name,
+                            maxLines: 1,
                             style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 color: Theme.of(context)
                                     .primaryColor
                                     .withOpacity(0.65),
