@@ -331,7 +331,13 @@ class _AccountPageState extends State<AccountPage> {
                                     height: MediaQuery.of(context).size.height *
                                         1.5 /
                                         100),
-                                Container(child: Text("ver. 1.0"))
+                                Container(
+                                    child: Text("ver. 1.0",
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withOpacity(0.65),
+                                            fontFamily: 'GothamRounded')))
                               ],
                             )),
                         SizedBox(
