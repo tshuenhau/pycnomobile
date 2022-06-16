@@ -1,12 +1,8 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:Sensr/controllers/SensorInfoController.dart';
-import 'package:Sensr/controllers/AuthController.dart';
-
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/screens/SensorPage.dart';
 import 'package:get/get.dart';

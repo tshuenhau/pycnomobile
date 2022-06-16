@@ -200,6 +200,10 @@ class TimeSeriesController extends GetxController {
         int total = sli["plottable"].length;
         int count = 0;
         int starti = 0;
+        if (total <= 0) {
+          instanceSliList.add(
+              new TimeSeries(name: "-", color: '', timeSeries: null, key: '-'));
+        }
         while (total > 0) {
           List<String> nonNullFunctions = List.empty(growable: true);
           late final sublist;
@@ -437,6 +441,10 @@ class TimeSeriesController extends GetxController {
       int total = sli["plottable"].length;
       int count = 0;
       int starti = 0;
+      if (total <= 0) {
+        instanceSliList.add(new TimeSeries(
+            name: "-", color: 'FFFFFF', timeSeries: null, key: '-'));
+      }
       while (total > 0) {
         List<String> nonNullFunctions = List.empty(growable: true);
         late final sublist;
