@@ -427,10 +427,12 @@ class _SensorLineChartState extends State<SensorLineChart> {
     print(widget.timeSeries.getKey);
     return Column(
       children: [
-        Text(widget.timeSeries.getName,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height * 2.5 / 100)),
+        (widget.timeSeries.getName == "-"
+            ? Container()
+            : Text(widget.timeSeries.getName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 2.5 / 100))),
         SizedBox(
           height: MediaQuery.of(context).size.height * 1 / 100,
         ),
@@ -482,21 +484,20 @@ class _SensorLineChartState extends State<SensorLineChart> {
                         child: Padding(
                           padding: EdgeInsets.only(
                               bottom:
-                                  MediaQuery.of(context).size.height * 3 / 100),
+                                  MediaQuery.of(context).size.height * 5 / 100),
                           child: Container(
                               child: Center(
                                   child: SizedBox(
                             width: MediaQuery.of(context).size.width * 65 / 100,
                             child: Text(
-                                widget.type == TYPE_OF_TIMESERIES.SLI
+                                ((widget.type == TYPE_OF_TIMESERIES.SLI ||
+                                            widget.type ==
+                                                TYPE_OF_TIMESERIES.SINGLE_SLI ||
+                                            widget.type ==
+                                                TYPE_OF_TIMESERIES.OLD_SLI) &&
+                                        widget.timeSeries.getName == "-")
                                     ? "This SLI has sent data but no plottable data streams are available."
-                                    : widget.type ==
-                                            TYPE_OF_TIMESERIES.SINGLE_SLI
-                                        ? "This SLI has sent data but no plottable data streams are available."
-                                        : widget.type ==
-                                                TYPE_OF_TIMESERIES.OLD_SLI
-                                            ? "This SLI has sent data but no plottable data streams are available."
-                                            : "No Data",
+                                    : "No Data",
                                 textAlign: TextAlign.center),
                           ))),
                         ),
