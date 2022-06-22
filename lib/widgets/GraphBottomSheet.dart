@@ -90,7 +90,7 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 2.5 / 100,
-          horizontal: MediaQuery.of(context).size.width * 1.5 / 100),
+          horizontal: MediaQuery.of(context).size.width * 2 / 100),
       decoration: new BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           borderRadius: new BorderRadius.only(
