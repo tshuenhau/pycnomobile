@@ -242,7 +242,8 @@ class _AccountPageState extends State<AccountPage> {
                         AccountListTile(
                             title: "Name",
                             value: "${processNulls(authController.user.value!.name)}" +
-                                "${processNulls(authController.user.value!.surname)}",
+                                " "
+                                    "${processNulls(authController.user.value!.surname)}",
                             authController: authController),
                         AccountListTile(
                             title: "Phone Number",

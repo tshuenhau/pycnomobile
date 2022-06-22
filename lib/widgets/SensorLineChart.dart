@@ -311,7 +311,11 @@ class _SensorLineChartState extends State<SensorLineChart> {
     return LineChartBarData(
       spots: _values,
       isCurved: false,
-      colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.6)],
+      colors: [
+        widget.timeSeries.getColor == ""
+            ? Colors.transparent
+            : HexColor(widget.timeSeries.getColor).withOpacity(0.6)
+      ],
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
@@ -327,7 +331,11 @@ class _SensorLineChartState extends State<SensorLineChart> {
       colorStops: [0.1, 0.4, 0.9],
       belowBarData: BarAreaData(
         show: true,
-        colors: [HexColor(widget.timeSeries.getColor).withOpacity(0.20)],
+        colors: [
+          widget.timeSeries.getColor == ""
+              ? Colors.transparent
+              : HexColor(widget.timeSeries.getColor).withOpacity(0.20)
+        ],
       ),
     );
   }
