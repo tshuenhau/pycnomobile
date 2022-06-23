@@ -105,8 +105,6 @@ class NotificationsController extends GetxController {
     try {
       final response = await http.get(Uri.parse(
           'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}'));
-      print(
-          'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}');
       if (response.statusCode == 200) {
         var body = jsonDecode(response.body);
         if (body["SLI"] != null) {

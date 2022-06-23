@@ -145,25 +145,21 @@ class _SparklineCardState extends State<SparklineCard> {
                 }
               }
             } else {
-              print('sli sparklines ' + controller.sparkLines.toString());
-
-              if (controller.sparkLines.length <= 0) {
+              if (controller.sliSparklines.length <= 0) {
                 data = [];
               } else {
-                if ((controller.sparkLines.last[widget.sensor.name ?? ""]
-                            ?.length ??
+                if ((controller.sliSparklines.last[widget.sliPid]?.length ??
                         0) <=
                     widget.index) {
                   data = [];
                 } else {
+                  print("PID 2 " + widget.sliPid);
                   data = controller.convertTimeSeriestoList(controller
-                      .sparkLines
-                      .last[widget.sensor.name ?? ""]?[widget.index]
+                      .sliSparklines
+                      .last[widget.sliPid]?[widget.index]
                       .getTimeSeries);
-                  String stringColor = controller
-                          .sparkLines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getColor ??
+                  String stringColor = controller.sliSparklines
+                          .last[widget.sliPid]?[widget.index].getColor ??
                       '0000000';
                   color = new Color(
                       int.parse(stringColor.substring(1, 7), radix: 16) +
@@ -213,20 +209,20 @@ class _SparklineCardState extends State<SparklineCard> {
                 }
               }
             } else {
-              if (controller.alertSparklines.length <= 0) {
+              if (controller.sliAlertSparklines.length <= 0) {
                 data = [];
               } else {
-                if (controller.alertSparklines.last[widget.sensor.name ?? ""]!
-                        .length <=
+                if (controller.sliAlertSparklines
+                        .last[widget.sensor.name ?? ""]!.length <=
                     widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
-                      .alertSparklines
+                      .sliAlertSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index]
                       .getTimeSeries);
                   String stringColor = controller
-                          .alertSparklines
+                          .sliAlertSparklines
                           .last[widget.sensor.name ?? ""]?[widget.index]
                           .getColor ??
                       '0000000';

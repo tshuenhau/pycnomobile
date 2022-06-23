@@ -26,7 +26,8 @@ List<Widget> buildSparklines({required Sensor sensor}) {
               functionality == "APN" ||
               functionality == "TXT" ||
               functionality == "LAT2" ||
-              functionality == "LON2") {
+              functionality == "LON2" ||
+              functionality == "ICCID") {
             continue;
           }
           cards.add(SparklineCard(
@@ -55,7 +56,8 @@ List<Widget> buildSparklines({required Sensor sensor}) {
           func.key == "LAT2" ||
           func.key == "BUF" ||
           func.key == "NET" ||
-          func.key == "LON2") {
+          func.key == "LON2" ||
+          func.key == "ICCID") {
         continue;
       }
       cards.add(new SparklineCard(

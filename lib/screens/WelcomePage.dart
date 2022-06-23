@@ -49,7 +49,6 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("curr index: " + index.toString());
     for (var asset in _allAsset) {
       precacheImage(AssetImage(asset), context);
     }

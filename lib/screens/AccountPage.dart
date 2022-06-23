@@ -121,8 +121,6 @@ class _AccountPageState extends State<AccountPage> {
                                                   groupValue: themeIndex,
                                                   onChanged: (int? value) {
                                                     setState(() {
-                                                      print(themeIndex);
-
                                                       themeIndex = value;
                                                       ThemeService()
                                                           .switchTheme();

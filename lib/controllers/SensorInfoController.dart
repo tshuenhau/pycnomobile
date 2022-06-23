@@ -15,9 +15,9 @@ import 'dart:io';
 
 class SensorInfoController extends GetxController {
   AuthController authController = Get.find();
-  RxList<RxMap<String, RxList<TimeSeries>>> sparkLines =
+  RxList<RxMap<String, RxList<TimeSeries>>> sliSparklines =
       RxList<RxMap<String, RxList<TimeSeries>>>();
-  RxList<RxMap<String, RxList<TimeSeries>>> alertSparklines =
+  RxList<RxMap<String, RxList<TimeSeries>>> sliAlertSparklines =
       RxList<RxMap<String, RxList<TimeSeries>>>();
   RxList<RxMap<String, RxList<TimeSeries>>> nonSliSparklines =
       RxList<RxMap<String, RxList<TimeSeries>>>();
@@ -101,17 +101,18 @@ class SensorInfoController extends GetxController {
               if (jsonDecode(res.body).length <= 0) {
                 continue;
               }
-              if (isAlert) {
-                alertSparklines.last[pid] = instanceList;
-              } else {
-                sparkLines.last[pid] = instanceList;
-              }
+              // if (isAlert) {
+              //   sliAlertSparklines.last[pid] = instanceList;
+              // } else {
+              //   sliSparklines.last[pid] = instanceList;
+              // }
 
               var body = jsonDecode(res.body)[0];
               if (isAlert) {
-                alertSparklines.last[sensor.name ?? ""] = instanceList;
+                sliAlertSparklines.last[pid] = instanceList;
               } else {
-                sparkLines.last[sensor.name ?? ""] = instanceList;
+                print("PID 1 " + pid);
+                sliSparklines.last[pid] = instanceList;
               }
 
               String color = body['color'];
@@ -224,10 +225,10 @@ class SensorInfoController extends GetxController {
     try {
       DateTime oneDayBef = DateTime.now().add(const Duration(hours: -24));
       if (isAlert) {
-        alertSparklines.add(RxMap());
+        sliAlertSparklines.add(RxMap());
         alertNonSliSparklines.add(RxMap());
       } else {
-        sparkLines.add(RxMap());
+        sliSparklines.add(RxMap());
         nonSliSparklines.add(RxMap());
       }
 
@@ -238,11 +239,11 @@ class SensorInfoController extends GetxController {
 
       await getSparklines(sensor, isAlert, oneDayBef, now);
 
-      if (sparkLines.length > 1 && !isAlert) {
-        sparkLines.removeRange(0, sparkLines.length - 1);
+      if (sliSparklines.length > 1 && !isAlert) {
+        sliSparklines.removeRange(0, sliSparklines.length - 1);
         nonSliSparklines.removeRange(0, nonSliSparklines.length - 1);
-      } else if (alertSparklines.length > 1) {
-        alertSparklines.removeRange(0, alertSparklines.length - 1);
+      } else if (sliAlertSparklines.length > 1) {
+        sliAlertSparklines.removeRange(0, sliAlertSparklines.length - 1);
         alertNonSliSparklines.removeRange(0, alertNonSliSparklines.length - 1);
       }
     } on SocketException catch (e) {
