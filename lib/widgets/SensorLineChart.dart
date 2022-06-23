@@ -22,6 +22,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   double _minY = 0;
   double _maxY = 0;
   double _leftTitlesInterval = 0;
+  int decimalPlace = 2;
 
   final int _divider = 5; //Old value 25
   final int _leftLabelsCount = 6;
@@ -60,7 +61,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
       _maxY = (maxY / _divider).ceilToDouble() * _divider;
 
       applyDefaultAxisScales();
-
+      print("max:" + _maxY.toString());
+      print("last: " + maxY.toString());
       List<FlSpot> temp = [];
       for (int i = 0; i < points.length; i++) {
         //print(points[i].y >= _minY);
@@ -78,6 +80,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
   }
 
   void applyDefaultAxisScales() {
+    if ((widget.timeSeries.getKey == "EC1")) {}
     if ((widget.timeSeries.getKey == "TEMP") ||
         (widget.timeSeries.getKey == "IT")) {
       _maxY = (50); // no min
