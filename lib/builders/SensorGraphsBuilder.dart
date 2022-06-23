@@ -82,13 +82,14 @@ Future<void> getGraphsForTimeRange(
   TimeSeriesController controller = Get.put(TimeSeriesController());
 
   if (sensor.functionalities != null) {
-    await controller.getMultiTimeSeries(
-      dateRange.start,
-      dateRange.end.add(Duration(days: 1)),
-      functions,
-      sensor,
-      isAlert,
-    );
+    if (functions.length <= 1) {
+      //for non sli graph bottom sheet
+      await controller.getSingleTimeSeries(dateRange.start, dateRange.end,
+          sensor, isAlert, sliPid, sliName, functions);
+    } else {
+      await controller.getMultiTimeSeries(
+          dateRange.start, dateRange.end, functions, sensor, isAlert);
+    }
   }
 
   EasyLoading.dismiss();

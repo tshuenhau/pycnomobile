@@ -201,8 +201,8 @@ class TimeSeriesController extends GetxController {
         int count = 0;
         int starti = 0;
         if (total <= 0) {
-          instanceSliList.add(
-              new TimeSeries(name: "-", color: '', timeSeries: null, key: '-'));
+          instanceSliList.add(new TimeSeries(
+              name: "-", color: 'FFFFFF', timeSeries: null, key: '-'));
         }
         while (total > 0) {
           List<String> nonNullFunctions = List.empty(growable: true);
@@ -252,6 +252,7 @@ class TimeSeriesController extends GetxController {
                     color: color,
                     timeSeries: null,
                     key: nonNullFunctions[i]));
+                continue;
               }
               if (body["values"][0][1] is String) {
                 Map<int, String> logSeries =
