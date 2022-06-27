@@ -106,11 +106,8 @@ class _SparklineCardState extends State<SparklineCard> {
         }, child: Obx(() {
           late List<double>? data;
           double change = 0;
-
           Color color = Colors.black;
-
           String name = "";
-
           if (auth.currentTab.value == 0) {
             if (widget.sliPid == "") {
               if (controller.nonSliSparklines.length <= 0) {
@@ -153,7 +150,11 @@ class _SparklineCardState extends State<SparklineCard> {
                     widget.index) {
                   data = [];
                 } else {
-                  print("PID 2 " + widget.sliPid);
+                  print("PID " + widget.sliPid);
+                  print("NAME " +
+                      controller.sliSparklines
+                          .last[widget.sliPid]![widget.index].getName);
+                  print("index " + widget.index.toString());
                   data = controller.convertTimeSeriestoList(controller
                       .sliSparklines
                       .last[widget.sliPid]?[widget.index]
@@ -164,10 +165,8 @@ class _SparklineCardState extends State<SparklineCard> {
                   color = new Color(
                       int.parse(stringColor.substring(1, 7), radix: 16) +
                           0xFF000000);
-                  name = controller
-                          .nonSliSparklines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getName ??
+                  name = controller.sliSparklines
+                          .last[widget.sliPid]?[widget.index].getName ??
                       "";
                 }
               }
@@ -212,27 +211,22 @@ class _SparklineCardState extends State<SparklineCard> {
               if (controller.sliAlertSparklines.length <= 0) {
                 data = [];
               } else {
-                if (controller.sliAlertSparklines
-                        .last[widget.sensor.name ?? ""]!.length <=
+                if (controller.sliAlertSparklines.last[widget.sliPid]!.length <=
                     widget.index) {
                   data = [];
                 } else {
                   data = controller.convertTimeSeriestoList(controller
                       .sliAlertSparklines
-                      .last[widget.sensor.name ?? ""]?[widget.index]
+                      .last[widget.sliPid]?[widget.index]
                       .getTimeSeries);
-                  String stringColor = controller
-                          .sliAlertSparklines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getColor ??
+                  String stringColor = controller.sliAlertSparklines
+                          .last[widget.sliPid]?[widget.index].getColor ??
                       '0000000';
                   color = new Color(
                       int.parse(stringColor.substring(1, 7), radix: 16) +
                           0xFF000000);
-                  name = controller
-                          .nonSliSparklines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getName ??
+                  name = controller.nonSliSparklines
+                          .last[widget.sliPid]?[widget.index].getName ??
                       "";
                 }
               }
@@ -303,7 +297,10 @@ class _SparklineCardState extends State<SparklineCard> {
                         SizedBox(
                             height:
                                 MediaQuery.of(context).size.height * 2 / 100,
-                            child: Text(widget.function.key,
+                            child: Text(
+                                widget.sliPid == ""
+                                    ? widget.sensor.name ?? ""
+                                    : widget.sliPid,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Theme.of(context)

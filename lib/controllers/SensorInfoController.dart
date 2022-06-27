@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +7,6 @@ import 'package:Sensr/model/TimeSeries.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'package:Sensr/model/sensors/Pulse.dart';
-import 'package:Sensr/builders/SensorGraphsBuilder.dart';
-import 'package:Sensr/widgets/SensorLineChart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
 
@@ -75,7 +72,7 @@ class SensorInfoController extends GetxController {
           } else {
             sublist = sli["plottable"].sublist(starti, starti + total);
           }
-
+          starti += sublist.length as int;
           count = 0;
           for (String func in sublist) {
             if (total == 0) {
@@ -86,11 +83,15 @@ class SensorInfoController extends GetxController {
               count++;
             }
           }
+
           total -= intConcurrentCount;
+          print(oneDayBef);
+          print(now);
+          print(authController.token);
           Iterable<Future<http.Response>> futureResponses =
               nonNullFunctions.map((String function) {
             Future<http.Response> response = http.get(Uri.parse(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
             return response;
           });
           final responses = await Future.wait(futureResponses);
@@ -101,19 +102,17 @@ class SensorInfoController extends GetxController {
               if (jsonDecode(res.body).length <= 0) {
                 continue;
               }
-              // if (isAlert) {
-              //   sliAlertSparklines.last[pid] = instanceList;
-              // } else {
-              //   sliSparklines.last[pid] = instanceList;
-              // }
 
               var body = jsonDecode(res.body)[0];
               if (isAlert) {
                 sliAlertSparklines.last[pid] = instanceList;
               } else {
-                print("PID 1 " + pid);
                 sliSparklines.last[pid] = instanceList;
               }
+
+              //{
+              //  pid: [TimeSeries, TimeSeries,...]
+              //}
 
               String color = body['color'];
               String key = body['key'];
@@ -157,7 +156,6 @@ class SensorInfoController extends GetxController {
       } else {
         sublist = functions.sublist(starti, starti + total);
       }
-      count = 0;
       for (Functionality? func in sublist) {
         if (total == 0) {
           break;
@@ -217,7 +215,7 @@ class SensorInfoController extends GetxController {
           // }
         }
       }
-      starti += count;
+      count = 0;
     }
   }
 
