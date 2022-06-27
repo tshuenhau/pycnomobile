@@ -15,6 +15,7 @@ List<Widget> buildSparklines({required Sensor sensor}) {
     //create cards for slis
     dynamic slil = (sensor as Pulse).slil; //left sli
     dynamic slir = (sensor).slir; //right sli
+    int numOfGraphs = 0;
     for (dynamic sli in sensor.sli!) {
       String pid = sli["PID"].toString();
       dynamic sid = sli["SID"];
@@ -44,6 +45,7 @@ List<Widget> buildSparklines({required Sensor sensor}) {
                   value: null,
                   unit: null)));
         }
+        numOfGraphs += sli["plottable"].length as int;
       }
     }
   }
