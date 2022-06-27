@@ -85,9 +85,6 @@ class SensorInfoController extends GetxController {
           }
 
           total -= intConcurrentCount;
-          print(oneDayBef);
-          print(now);
-          print(authController.token);
           Iterable<Future<http.Response>> futureResponses =
               nonNullFunctions.map((String function) {
             Future<http.Response> response = http.get(Uri.parse(
@@ -140,7 +137,7 @@ class SensorInfoController extends GetxController {
     }
   }
 
-  Future<void> getSparklines(
+  Future<void> getNonSliSparklines(
       Sensor sensor, bool isAlert, DateTime oneDayBef, DateTime now) async {
     RxList<TimeSeries> instanceList = RxList.empty(growable: true);
     List<Functionality> functions = sensor.functionalities!;
@@ -156,6 +153,7 @@ class SensorInfoController extends GetxController {
       } else {
         sublist = functions.sublist(starti, starti + total);
       }
+      count = 0;
       for (Functionality? func in sublist) {
         if (total == 0) {
           break;
@@ -165,6 +163,7 @@ class SensorInfoController extends GetxController {
           count++;
         }
       }
+      starti += count;
       total -= intConcurrentCount;
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
@@ -215,7 +214,6 @@ class SensorInfoController extends GetxController {
           // }
         }
       }
-      count = 0;
     }
   }
 
@@ -235,7 +233,7 @@ class SensorInfoController extends GetxController {
         await getSliSparklines(sensor, isAlert, oneDayBef, now);
       }
 
-      await getSparklines(sensor, isAlert, oneDayBef, now);
+      await getNonSliSparklines(sensor, isAlert, oneDayBef, now);
 
       if (sliSparklines.length > 1 && !isAlert) {
         sliSparklines.removeRange(0, sliSparklines.length - 1);
