@@ -83,6 +83,7 @@ class _SparklineCardState extends State<SparklineCard> {
 
   @override
   Widget build(BuildContext context) {
+    print("GIVE INDEX " + widget.index.toString());
     SensorInfoController controller = Get.put(SensorInfoController());
     AuthController auth = Get.put(AuthController());
 
@@ -119,26 +120,17 @@ class _SparklineCardState extends State<SparklineCard> {
                     widget.index) {
                   data = [];
                 } else {
-                  data = controller.convertTimeSeriestoList(controller
-                      .nonSliSparklines
-                      .last[widget.sensor.name ?? ""]?[widget.index]
-                      .getTimeSeries);
-
-                  String stringColor = controller
-                          .nonSliSparklines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getColor ??
-                      '0000000';
-
+                  print("INDEX " + widget.index.toString());
+                  TimeSeries? sparklines = controller.nonSliSparklines
+                      .last[widget.sensor.name ?? ""]?[widget.index];
+                  print("NAME " + sparklines!.getName.toString());
+                  data = controller
+                      .convertTimeSeriestoList(sparklines?.getTimeSeries);
+                  String stringColor = sparklines?.getColor ?? '0000000';
                   color = new Color(
                       int.parse(stringColor.substring(1, 7), radix: 16) +
                           0xFF000000);
-
-                  name = controller
-                          .nonSliSparklines
-                          .last[widget.sensor.name ?? ""]?[widget.index]
-                          .getName ??
-                      "";
+                  name = sparklines?.getName ?? "";
                 }
               }
             } else {
@@ -150,11 +142,6 @@ class _SparklineCardState extends State<SparklineCard> {
                     widget.index) {
                   data = [];
                 } else {
-                  print("PID " + widget.sliPid);
-                  print("NAME " +
-                      controller.sliSparklines
-                          .last[widget.sliPid]![widget.index].getName);
-                  print("index " + widget.index.toString());
                   data = controller.convertTimeSeriestoList(controller
                       .sliSparklines
                       .last[widget.sliPid]?[widget.index]
@@ -174,7 +161,6 @@ class _SparklineCardState extends State<SparklineCard> {
             if (data == null || data.length < 1) {
               change = 0;
             } else if (data.length > 0) {
-              //change = ((data[data.length - 1] - data[0]) / data.last * 100);
               change = ((data[data.length - 1] - data[0]));
             }
           } else {
