@@ -147,35 +147,8 @@ List<Widget> buildGraphs(
             key, //! this needs to be the more detailed stuff
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
-      // if (value.length < 1) {
-      //   graphsToDraw.add(Padding(
-      //     padding: EdgeInsets.only(
-      //         bottom: MediaQuery.of(context).size.height * 7.5 / 100),
-      //     child: Container(
-      //         height: MediaQuery.of(context).size.height * 20 / 100,
-      //         width: MediaQuery.of(context).size.width * 80 / 100,
-      //         decoration: BoxDecoration(
-      //             border:
-      //                 Border.all(color: Theme.of(context).colorScheme.primary)),
-      //         child: Padding(
-      //           padding: EdgeInsets.symmetric(
-      //               horizontal: MediaQuery.of(context).size.width * 1 / 100),
-      //           child: Center(
-      //             child: Text(
-      //                 "This SLI has sent data but no plottable data streams are available.",
-      //                 textAlign: TextAlign.center),
-      //           ),
-      //         )),
-      //   ));
-      // }
+
       value.forEach((element) {
-        // if (element.getTimeSeries == null) {
-        //   graphsToDraw.add(Container(
-        //       height: MediaQuery.of(context).size.height * 10 / 100,
-        //       child: Text(
-        //           "This SLI has sent data but no plottable data streams are available.",
-        //           textAlign: TextAlign.center)));
-        // }
         drawnCount += 1;
         if (element.isTimeSeries()) {
           graphsToDraw.add(SensorLineChart(timeSeries: element, type: type));
