@@ -55,6 +55,13 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 - The CustomColorScheme.dart handles the creation of color schemes (default and whitelabelled)
 - GlobalTheme.dart is responsible for wrapping the color schemes into ThemeData widgets for further use by the MaterialApp widget.
 
+## Graphs
+
+- Graph styling is located in the SensorLineChart.dart file
+- uses fl_chart library to render the graphs in the "All Graphs" page.
+- link to the library: <https://pub.dev/packages/fl_chart>
+- pre-set axis limits are also located inside under the applyDefaultAxisScales() function.
+
 # Controller
 
 
