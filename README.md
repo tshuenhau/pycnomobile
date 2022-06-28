@@ -71,14 +71,14 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
     - variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
 
 - `ListOfSensorsController`
-    - gets list of sensors from server and stores them into a `List<Sensor>` 
-    - controller also used to sort and search
+    - Gets list of sensors from server and stores them into a `List<Sensor>` 
+    - Controller also used to sort and search
 
 
 # Model
 - `Sensor` is the parent class and there are 2 children classes `FixSensor` and `Pulse`. `FixSensor` just represents all the sensors that do not have the hot swap capabilities like the Terra. 
 - In the future, if you are introducing sensors that have fixed functionality, then you can just use the `FixSensor` class.
-- The Pulse has the fields slil, slir and sli, which represents Left SLI, Right SLI and all SLI respectively.
+- The Pulse has the fields slil, slir and sli, which represents Left SLI, Right SLI and all SLI respectively. These are used to check if an SLI is the current SLI inside the Pulse, or an old one.
 - In the future, if you are introducing a sensor that has these fields, then you can use the Pulse class.
 - If you are introducing a new type of sensor that doesn't fit into these 2 classes, you would have to create your own new one and have it extend Sensor.
 
