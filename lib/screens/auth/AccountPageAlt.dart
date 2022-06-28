@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Sensr/screens/BluetoothPage.dart';
 import 'package:Sensr/screens/auth/LoginPage.dart';
-import 'package:Sensr/screens/AccountDetailsPage.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
 import 'package:Sensr/widgets/AccountListTile.dart';

@@ -10,7 +10,7 @@ import 'package:Sensr/model/functionalities/GenericFunctionality.dart';
 import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:Sensr/controllers/SensorInfoController.dart';
+import 'package:Sensr/controllers/SparklinesController.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'package:collection/collection.dart';
 
@@ -83,8 +83,7 @@ class _SparklineCardState extends State<SparklineCard> {
 
   @override
   Widget build(BuildContext context) {
-    print("GIVE INDEX " + widget.index.toString());
-    SensorInfoController controller = Get.put(SensorInfoController());
+    SparklinesController controller = Get.put(SparklinesController());
     AuthController auth = Get.put(AuthController());
 
     return Card(
@@ -120,10 +119,8 @@ class _SparklineCardState extends State<SparklineCard> {
                     widget.index) {
                   data = [];
                 } else {
-                  print("INDEX " + widget.index.toString());
                   TimeSeries? sparklines = controller.nonSliSparklines
                       .last[widget.sensor.name ?? ""]?[widget.index];
-                  print("NAME " + sparklines!.getName.toString());
                   data = controller
                       .convertTimeSeriestoList(sparklines?.getTimeSeries);
                   String stringColor = sparklines?.getColor ?? '0000000';

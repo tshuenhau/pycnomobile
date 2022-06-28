@@ -32,11 +32,13 @@ class TimeSeriesController extends GetxController {
 
   bool showOldGraphs = false;
   static Map<int, double> convertListToMap(List list) {
+    // converts API data of [epoch, value] to {epoch: value}
     return Map.fromIterable(list.reversed.where((e) => e[1] != null),
         key: (e) => e[0].toInt(), value: (e) => e[1].toDouble());
   }
 
   static Map<int, String> convertListToMapLogs(List list) {
+    // converts API data of [epoch, logs] to {epoch: logs}
     return Map.fromIterable(list.where((e) => e[1] != null),
         key: (e) => e[0], value: (e) => e[1].toString());
   }
@@ -78,8 +80,6 @@ class TimeSeriesController extends GetxController {
           }
           final response = await http.get(Uri.parse(
               'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
-          print(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}');
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -170,8 +170,6 @@ class TimeSeriesController extends GetxController {
     } on SocketException catch (e) {
       EasyLoading.showError(
           'Network Error: please check your internet connection.');
-      // instanceList.add(new TimeSeries(
-      //       name: "ERROR", color: 'FFffffff', timeSeries: null, key: 'error'));
     }
   }
 
@@ -269,8 +267,6 @@ class TimeSeriesController extends GetxController {
                   timeSeries: timeSeries,
                   key: nonNullFunctions[i]));
             } else {
-              // EasyLoading.showError("Failed to retrieve data! Try again.",
-              //     duration: Duration(seconds: 3), dismissOnTap: true);
               instanceSliList.add(new TimeSeries(
                   name: "ERROR",
                   color: 'FFffffff',
@@ -318,8 +314,6 @@ class TimeSeriesController extends GetxController {
 
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
-        // print(Uri.parse(
-        //     'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
         Future<http.Response> response = http.get(Uri.parse(
             'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
         return response;
