@@ -92,3 +92,6 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 - There are 2 times of data models: `TimeSeries` and `LogSeries`
 - Because `LogSeries` were introduced much later into the app development phase, it extends `TimeSeries` just so that the code doesn't break
 - In the future, if you have a new type of data model, it is best to just have it extend `TimeSeries` so you don't have to refactor too much code, or you can have a parent class for all the data models
+
+# Others
+- `env.dart` contains the environment variables. For now, it only stores the API base url.
