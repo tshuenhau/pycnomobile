@@ -3,17 +3,19 @@
 
 
 ## Getting Started
+You will need the flutter SDK installed on your Mac/Windows PC.
+Follow the instructions here to install it: <https://docs.flutter.dev/get-started/install>
 
 
 
 ## Package Name/Bundle Identifier
 
 ### Android
-change package name in build build.gradle
+change package name in `android/build.gradle`
 
 ```
 defaultConfig {
-    applicationId "your.package.name"
+    applicationId "your.package.name" <--- THIS
     minSdkVersion 16
     targetSdkVersion 27
     versionCode 1
@@ -28,37 +30,39 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 
 ```
 <key>CFBundleIdentifier</key>
-<string>com.your.packagename</string>
+<string>com.your.packagename</string> <--- THIS
 ```
 
-# Building
+# Building & Publishing
 
 ### iOS:
 <https://docs.flutter.dev/deployment/ios>
 ### Android:
 <https://docs.flutter.dev/deployment/android#build-an-app-bundle>
 
+Mainly need to follow the guide "Signing the app" & "Building the app for release" & "Publishing to the Google Play Store" &
+
 
 # View
 
 ## Folder Structure
-- Each new page is stored in lib/screens
+- Each new page is stored in `lib/screens`
   - Within each screen consists of Widgets & Custom Widgets
-- Custom Widgets live in lib/widgets
-- For UI elements that require iterating and complex processing, the building of these widgets are abstracted out and put into Builder Functions in lib/builders. These include:
-  - All the Sparklin Cards
+- Custom Widgets live in `lib/widgets`
+- For UI elements that require iterating and complex processing, the building of these widgets are abstracted out and put into Builder Functions in `lib/builders`. These include:
+  - All the Sparkline Cards
   - List of Graphs
   - List of Alerts
 ## Themes & Color Schemes
 
-- Themes and color schemes are located under lib/theme.
-- The CustomColorScheme.dart handles the creation of color schemes (default and whitelabelled)
-- GlobalTheme.dart is responsible for wrapping the color schemes into ThemeData widgets for further use by the MaterialApp widget.
+- Themes and color schemes are located under `lib/theme`.
+- The `CustomColorScheme.dart` handles the creation of color schemes (default and whitelabelled)
+- `GlobalTheme.dart` is responsible for wrapping the color schemes into ThemeData widgets which is required for use by the main MaterialApp widget.
 
 ## Graphs
 
-- Graph styling is located in the SensorLineChart.dart file
-- uses fl_chart library to render the graphs in the "All Graphs" page.
+- Graph styling is located in the `SensorLineChart.dart` file
+- uses `fl_chart` library to render the graphs in the "All Graphs" page.
 - link to the library: <https://pub.dev/packages/fl_chart>
 - pre-set axis limits are also located inside under the applyDefaultAxisScales() function.
 
@@ -78,12 +82,12 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
     - variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
 
 - `ListOfSensorsController`
-    - Gets list of sensors from server and stores them into a `List<Sensor>` 
+    - Gets list of sensors from server and stores them into a `List<Sensor>`
     - Controller also used to sort and search
 
 
 # Model
-- `Sensor` is the parent class and there are 2 children classes `FixSensor` and `Pulse`. `FixSensor` just represents all the sensors that do not have the hot swap capabilities like the Terra. 
+- `Sensor` is the parent class and there are 2 children classes `FixSensor` and `Pulse`. `FixSensor` just represents all the sensors that do not have the hot swap capabilities like the Terra.
 - In the future, if you are introducing sensors that have fixed functionality, then you can just use the `FixSensor` class.
 - The Pulse has the fields slil, slir and sli, which represents Left SLI, Right SLI and all SLI respectively. These are used to check if an SLI is the current SLI inside the Pulse, or an old one.
 - In the future, if you are introducing a sensor that has these fields, then you can use the Pulse class.
