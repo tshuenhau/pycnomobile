@@ -112,37 +112,43 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
                       type: TYPE_OF_TIMESERIES.INTERNAL,
                       context: context,
                       isAlert: isAlert)) +
-                  [
-                    Container(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 3 / 100,
-                      ),
-                      child: Center(
-                          child: ElevatedButton(
-                        onPressed: () async {
-                          await initOldGraphs(isAlert, widget.sensor,
-                              widget.sensor.functionalities!);
-                          setState(() {
-                            showOldGraphs = !showOldGraphs;
-                          });
-                        },
-                        child: Text(showOldGraphs == false
-                            ? "Show Old SLI Graphs"
-                            : "Hide Old SLI Graphs"),
-                      )),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 2.5 / 100,
-                    ),
-                  ] +
-                  (showOldGraphs == true
-                      ? buildGraphs(
-                          sensor: widget.sensor,
-                          functions: widget.sensor.functionalities!,
-                          type: TYPE_OF_TIMESERIES.OLD_SLI,
-                          context: context,
-                          isAlert: isAlert)
+                  (widget.sensor.isPulse()
+                      ? ([
+                            Container(),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    3 /
+                                    100,
+                              ),
+                              child: Center(
+                                  child: ElevatedButton(
+                                onPressed: () async {
+                                  await initOldGraphs(isAlert, widget.sensor,
+                                      widget.sensor.functionalities!);
+                                  setState(() {
+                                    showOldGraphs = !showOldGraphs;
+                                  });
+                                },
+                                child: Text(showOldGraphs == false
+                                    ? "Show Old SLI Graphs"
+                                    : "Hide Old SLI Graphs"),
+                              )),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height *
+                                  2.5 /
+                                  100,
+                            ),
+                          ] +
+                          (showOldGraphs == true
+                              ? buildGraphs(
+                                  sensor: widget.sensor,
+                                  functions: widget.sensor.functionalities!,
+                                  type: TYPE_OF_TIMESERIES.OLD_SLI,
+                                  context: context,
+                                  isAlert: isAlert)
+                              : []))
                       : [])),
         ),
       ),
