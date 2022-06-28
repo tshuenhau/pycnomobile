@@ -45,12 +45,6 @@ class AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(notification.epoch.toString() +
-        " " +
-        timeago.format(DateTime.fromMillisecondsSinceEpoch(
-          notification.epoch,
-        )));
-
     SparklinesController sensorInfoController = Get.put(SparklinesController());
 
     return Card(

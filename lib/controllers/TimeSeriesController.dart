@@ -427,12 +427,12 @@ class TimeSeriesController extends GetxController {
     }
     for (dynamic sli in sensor.sli!) {
       dynamic sid = sli["SID"];
+      String pid = sli["PID"].toString();
+      String name = sli["name"].toString();
       if (sid == slil || sid == slir && (slil != 0 || slir != 0)) {
         continue;
       }
       RxList<TimeSeries> instanceSliList = RxList.empty(growable: true);
-      String pid = sli["PID"].toString();
-      String name = sli["name"].toString();
       instanceOldSliMap["Driver: " + name + " SLI: " + pid] = instanceSliList;
       int total = sli["plottable"].length;
       int count = 0;
@@ -444,6 +444,8 @@ class TimeSeriesController extends GetxController {
       while (total > 0) {
         List<String> nonNullFunctions = List.empty(growable: true);
         late final sublist;
+        print(sid);
+        print(sli["plottable"]);
         if (total - starti >= intConcurrentCount) {
           sublist =
               sli["plottable"].sublist(starti, starti + intConcurrentCount);
@@ -515,9 +517,8 @@ class TimeSeriesController extends GetxController {
                 timeSeries: null,
                 key: 'error'));
           }
-
-          starti += count;
         }
+        starti += count;
       }
     }
   }
@@ -566,6 +567,7 @@ class TimeSeriesController extends GetxController {
         sliCount += (sli["plottable"] as List).length;
       }
     }
+    print("OLD COUNT " + sliCount.toString());
     return sliCount;
   }
 }

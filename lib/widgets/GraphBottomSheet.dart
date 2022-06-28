@@ -44,7 +44,6 @@ class _GraphBottomSheetState extends State<GraphBottomSheet> {
   }
 
   void initData() async {
-    print(widget.functions);
     await initGraphs(isAlert, widget.sensor, widget.functions, widget.sliPid,
         widget.sliName, widget.name);
   }
