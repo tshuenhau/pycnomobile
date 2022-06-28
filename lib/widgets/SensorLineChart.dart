@@ -61,8 +61,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
       _maxY = (maxY / _divider).ceilToDouble() * _divider;
 
       applyDefaultAxisScales();
-      print("max:" + _maxY.toString());
-      print("last: " + maxY.toString());
+      // print("max:" + _maxY.toString());
+      // print("last: " + maxY.toString());
       List<FlSpot> temp = [];
       for (int i = 0; i < points.length; i++) {
         //print(points[i].y >= _minY);
@@ -75,7 +75,7 @@ class _SensorLineChartState extends State<SensorLineChart> {
       _leftTitlesInterval = ((_maxY - _minY) / (_leftLabelsCount - 1));
       _leftTitlesInterval =
           num.parse(_leftTitlesInterval.toStringAsFixed(2)).toDouble();
-      print("interval: " + _leftTitlesInterval.toString());
+      // print("interval: " + _leftTitlesInterval.toString());
     }
   }
 
@@ -434,8 +434,8 @@ class _SensorLineChartState extends State<SensorLineChart> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.type.toString());
-    print(widget.timeSeries.getKey);
+    // print(widget.type.toString());
+    // print(widget.timeSeries.getKey);
     return Column(
       children: [
         (widget.timeSeries.getName == "-"
