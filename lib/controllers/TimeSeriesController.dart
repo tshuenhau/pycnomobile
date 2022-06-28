@@ -10,6 +10,7 @@ import 'package:Sensr/model/LogSeries.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'dart:io';
+import 'package:Sensr/env.dart';
 
 class TimeSeriesController extends GetxController {
   AuthController authController = Get.find();
@@ -79,7 +80,7 @@ class TimeSeriesController extends GetxController {
             continue;
           }
           final response = await http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+              '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
           if (response.statusCode == 200) {
             if (jsonDecode(response.body).length <= 0) {
               continue;
@@ -127,7 +128,7 @@ class TimeSeriesController extends GetxController {
 
       instanceSliMap["Driver: " + sliName + " SLI: " + sliPid] = instanceList;
       final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${functions[0]!.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+          '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$sliPid&${functions[0]!.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
       if (response.statusCode == 200) {
         if (jsonDecode(response.body).length <= 0) {
           return;
@@ -227,7 +228,7 @@ class TimeSeriesController extends GetxController {
           Iterable<Future<http.Response>> futureResponses =
               nonNullFunctions.map((String function) {
             Future<http.Response> response = http.get(Uri.parse(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+                '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
             return response;
           });
 
@@ -315,7 +316,7 @@ class TimeSeriesController extends GetxController {
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
         Future<http.Response> response = http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+            '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
         return response;
       });
 
@@ -465,7 +466,7 @@ class TimeSeriesController extends GetxController {
         Iterable<Future<http.Response>> futureResponses =
             nonNullFunctions.map((String function) {
           Future<http.Response> response = http.get(Uri.parse(
-              'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
+              '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&$function&start=${start.toUtc().toIso8601String()}&end=${end.toUtc().toIso8601String()}'));
           return response;
         });
 

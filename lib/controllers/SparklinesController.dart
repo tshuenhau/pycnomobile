@@ -9,6 +9,7 @@ import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'package:Sensr/model/sensors/Pulse.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
+import 'package:Sensr/env.dart';
 
 class SparklinesController extends GetxController {
   AuthController authController = Get.find();
@@ -88,7 +89,7 @@ class SparklinesController extends GetxController {
           Iterable<Future<http.Response>> futureResponses =
               nonNullFunctions.map((String function) {
             Future<http.Response> response = http.get(Uri.parse(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+                '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
             return response;
           });
           final responses = await Future.wait(futureResponses);
@@ -164,7 +165,7 @@ class SparklinesController extends GetxController {
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
         Future<http.Response> response = http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+            '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
         return response;
       });
 
