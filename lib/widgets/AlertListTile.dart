@@ -9,7 +9,7 @@ import 'package:Sensr/screens/SensorPage.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart';
 import 'package:Sensr/controllers/NotificationsController.dart';
-import 'package:Sensr/controllers/SensorInfoController.dart';
+import 'package:Sensr/controllers/SparklinesController.dart';
 import 'dart:io';
 
 class AlertListTile extends StatelessWidget {
@@ -51,7 +51,7 @@ class AlertCard extends StatelessWidget {
           notification.epoch,
         )));
 
-    SensorInfoController sensorInfoController = Get.put(SensorInfoController());
+    SparklinesController sensorInfoController = Get.put(SparklinesController());
 
     return Card(
         shape: RoundedRectangleBorder(

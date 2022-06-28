@@ -9,8 +9,9 @@ import 'package:Sensr/model/functionalities/Functionality.dart';
 import 'package:Sensr/model/sensors/Pulse.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'dart:io';
+import 'package:Sensr/env.dart';
 
-class SensorInfoController extends GetxController {
+class SparklinesController extends GetxController {
   AuthController authController = Get.find();
   RxList<RxMap<String, RxList<TimeSeries>>> sliSparklines =
       RxList<RxMap<String, RxList<TimeSeries>>>();
@@ -30,7 +31,7 @@ class SensorInfoController extends GetxController {
 
   @override
   void onClose() {
-    Get.delete<SensorInfoController>();
+    Get.delete<SparklinesController>();
     super.onClose();
   }
 
@@ -88,7 +89,7 @@ class SensorInfoController extends GetxController {
           Iterable<Future<http.Response>> futureResponses =
               nonNullFunctions.map((String function) {
             Future<http.Response> response = http.get(Uri.parse(
-                'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+                '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$function&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
             return response;
           });
           final responses = await Future.wait(futureResponses);
@@ -106,10 +107,6 @@ class SensorInfoController extends GetxController {
               } else {
                 sliSparklines.last[pid] = instanceList;
               }
-
-              //{
-              //  pid: [TimeSeries, TimeSeries,...]
-              //}
 
               String color = body['color'];
               String key = body['key'];
@@ -168,7 +165,7 @@ class SensorInfoController extends GetxController {
       Iterable<Future<http.Response>> futureResponses =
           nonNullFunctions.map((Functionality function) {
         Future<http.Response> response = http.get(Uri.parse(
-            'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
+            '$API_URL/data/1?TK=${authController.token}&UID=${sensor.uid}&${function.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
         return response;
       });
 
@@ -250,95 +247,3 @@ class SensorInfoController extends GetxController {
     }
   }
 }
-
-
-
-
-        // for (String functionality in sli["plottable"]) {
-        //   final response = await http.get(Uri.parse(
-        //       'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&PID=$pid&$functionality&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-        //   if (response.statusCode == 200) {
-        //     if (jsonDecode(response.body).length <= 0) {
-        //       continue;
-        //     }
-        //     var body = jsonDecode(response.body)[0];
-
-        //     String color = body['color'];
-        //     String key = body['key'];
-        //     if (isAlert) {
-        //       alertSparklines.last[pid] = instanceList;
-        //     } else {
-        //       sparkLines.last[pid] = instanceList;
-        //     }
-        //     if (body["values"] != null) {
-        //       if (body["values"][0][1] is String) {
-        //         continue;
-        //       }
-        //     }
-        //     if (body["values"] == null) {
-        //       instanceList.add(new TimeSeries(
-        //           name: key,
-        //           color: color,
-        //           timeSeries: null,
-        //           key: functionality));
-        //       continue;
-        //     }
-        //     Map<int, double> timeSeries = convertListToMap(body['values']);
-        //     instanceList.add(new TimeSeries(
-        //         name: key,
-        //         color: color,
-        //         timeSeries: timeSeries,
-        //         key: functionality));
-        //   } else {
-        //     throw Exception("Failed to retrieve data. Try again!");
-        //   }
-        // }
-
-
-
-
-
-
-         // for (Functionality? functionality in sensor.functionalities!) {
-    //   if (functionality != null) {
-    //     final response = await http.get(Uri.parse(
-    //         'https://stage.pycno.co.uk/api/v2/data/1?TK=${authController.token}&UID=${sensor.uid}&${functionality.key}&start=${oneDayBef.toUtc().toIso8601String()}&end=${now.toUtc().toIso8601String()}'));
-
-    //     if (response.statusCode == 200) {
-    //       if (jsonDecode(response.body).length <= 0) {
-    //         continue;
-    //       }
-    //       var body = jsonDecode(response.body)[0];
-    //       String color = body['color'];
-    //       String key = body['key'];
-
-    //       if (isAlert) {
-    //         alertNonSliSparklines.last[sensor.name ?? ""] = instanceList;
-    //       } else {
-    //         nonSliSparklines.last[sensor.name ?? ""] = instanceList;
-    //       }
-    // if (body["values"] != null) {
-    //   if (body["values"][0][1] is String) {
-    //     //Don't display any logs
-    //     continue;
-    //   }
-    // }
-    // if (body["values"] == null) {
-    //   instanceList.add(new TimeSeries(
-    //       name: key,
-    //       color: color,
-    //       timeSeries: null,
-    //       key: functionality.key));
-    //   continue;
-    // }
-    // Map<int, double> timeSeries = convertListToMap(body['values']);
-    // instanceList.add(new TimeSeries(
-    //     name: key,
-    //     color: color,
-    //     timeSeries: timeSeries,
-    //     key: functionality.key));
-    //     } else {
-    //       throw Exception("Failed to retrieve data. Try again!");
-    //     }
-    // }
-    // }

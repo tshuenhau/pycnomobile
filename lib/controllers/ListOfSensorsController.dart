@@ -10,6 +10,7 @@ import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/model/TimeSeries.dart';
 import 'package:Sensr/controllers/AuthController.dart';
 import 'dart:io';
+import 'package:Sensr/env.dart';
 
 class ListOfSensorsController extends GetxController
     with StateMixin<List<Sensor>> {
@@ -80,8 +81,8 @@ class ListOfSensorsController extends GetxController
   Future<void>? getListOfSensors() async {
     print(authController.token + " token, getting list of sensors!");
     try {
-      final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/data/nodelist.json?TK=${authController.token}'));
+      final response = await http.get(
+          Uri.parse('$API_URL/data/nodelist.json?TK=${authController.token}'));
       if (response.statusCode == 200) {
         listOfSensors.clear();
         filteredListOfSensors.clear();

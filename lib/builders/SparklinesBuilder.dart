@@ -60,7 +60,6 @@ List<Widget> buildSparklines({required Sensor sensor}) {
           func.key == "ICCID") {
         continue;
       }
-      print("GIVEN INDEX " + sensor.functionalities!.indexOf(func).toString());
       cards.add(new SparklineCard(
           name: func.name,
           index: sensor.functionalities!.indexOf(func),

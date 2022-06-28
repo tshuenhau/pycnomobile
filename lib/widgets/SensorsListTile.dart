@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:Sensr/controllers/SensorInfoController.dart';
+import 'package:Sensr/controllers/SparklinesController.dart';
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/screens/SensorPage.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,7 @@ class SensorsListTile extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           FocusScope.of(context).unfocus();
-          SensorInfoController controller = Get.put(SensorInfoController());
+          SparklinesController controller = Get.put(SparklinesController());
 
           // EasyLoading.show(status: "Fetching Sensor Data...");
           try {
@@ -37,9 +37,6 @@ class SensorsListTile extends StatelessWidget {
               withNavBar: Platform.isAndroid ? false : true,
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
             );
-            // Navigator.of(context).push(
-            //     MaterialPageRoute(builder: (_) => SensorPage(sensor: sensor)));
-            // EasyLoading.dismiss();
           } catch (e) {
             EasyLoading.showError('$e');
           }

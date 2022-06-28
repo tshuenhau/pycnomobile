@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:Sensr/theme/ThemeService.dart';
 import 'package:Sensr/theme/GlobalTheme.dart';
 import 'package:Sensr/screens/NoInternetPage.dart';
+import 'package:Sensr/env.dart';
 
 enum AuthState { unknown, loggedIn, loggedOut, firstLogin }
 
@@ -67,8 +68,7 @@ class AuthController extends GetxController {
       "deviceID": deviceId
     };
 
-    final response = await http
-        .post(Uri.parse("https://stage.pycno.co/api/v2/login"), body: body);
+    final response = await http.post(Uri.parse("$API_URL/login"), body: body);
     if (response.statusCode == 200) {
       String tk = jsonDecode(response.body)["tk"];
       token = tk;
@@ -87,8 +87,8 @@ class AuthController extends GetxController {
   }
 
   getAccount() async {
-    final response = await http.get(
-        Uri.parse('https://stage.pycno.co/api/v2/data/account.json?TK=$token'));
+    final response =
+        await http.get(Uri.parse('$API_URL/data/account.json?TK=$token'));
 
     if (response.statusCode == 200) {
       user.value = User.fromJson(jsonDecode(response.body)["user"]);
@@ -102,8 +102,8 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     //Delete token and send api post request to delete token
-    final response = await http
-        .get(Uri.parse('https://stage.pycno.co/api/v2/data/logout?TK=$token'));
+    final response =
+        await http.get(Uri.parse('$API_URL/data/logout?TK=$token'));
     if (response.statusCode == 200) {
       final preferences = await Preferences.getInstance();
       await preferences.deleteToken();

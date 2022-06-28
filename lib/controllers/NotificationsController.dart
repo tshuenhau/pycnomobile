@@ -8,6 +8,7 @@ import 'package:Sensr/model/NotificationData.dart';
 import 'package:Sensr/model/sensors/Sensor.dart';
 import 'package:Sensr/model/sensors/FixSensor.dart';
 import 'dart:io';
+import 'package:Sensr/env.dart';
 
 class NotificationsController extends GetxController {
   AuthController authController = Get.find();
@@ -47,7 +48,7 @@ class NotificationsController extends GetxController {
     //     'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}');
     final response = await http.put(
         Uri.parse(
-            'https://stage.pycno.co/api/v2/data/notifications/${notif.id}?TK=${authController.token}'),
+            '$API_URL/data/notifications/${notif.id}?TK=${authController.token}'),
         headers: {
           "content-type": "application/json",
         },
@@ -67,8 +68,8 @@ class NotificationsController extends GetxController {
 
   Future<void> getNotifications() async {
     try {
-      final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}'));
+      final response = await http.get(
+          Uri.parse('$API_URL/notifications.json?TK=${authController.token}'));
       // print(
       //     'https://stage.pycno.co.uk/api/v2/notifications.json?TK=${authController.token}');
       if (response.statusCode == 200) {
@@ -103,8 +104,8 @@ class NotificationsController extends GetxController {
 
   Future<Sensor> getSensorFromNotifs(String uid) async {
     try {
-      final response = await http.get(Uri.parse(
-          'https://stage.pycno.co.uk/api/v2/data/no/$uid.json?TK=${authController.token}'));
+      final response = await http.get(
+          Uri.parse('$API_URL/data/no/$uid.json?TK=${authController.token}'));
       if (response.statusCode == 200) {
         var body = jsonDecode(response.body);
         if (body["SLI"] != null) {
