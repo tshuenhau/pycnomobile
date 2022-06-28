@@ -56,26 +56,26 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 - GlobalTheme.dart is responsible for wrapping the color schemes into ThemeData widgets for further use by the MaterialApp widget.
 
 # Controller
-- TimeSeriesController
+- `TimeSeriesController`
     - Contains the functions to retrieve time series data
     - getSingleTimeSeries only gets time series for one functionality
     - getMultiTimeSeries gets all the time series in that sensor
     - Body of these 2 functions may have to change if a new sensor is introduced
 
-- SparklinesController
+- `SparklinesController`
     - Contains the functions to retrieve sparklines data
-    - getTimeSeriesForSparklines is the main function that retrieves all the sparkines from the server. This function contains two functions: getSliSparklines and getNonSliSparklines
-    - getSliSparklines gets all the sparklines for the online SLIs in a Pulse
-    - getNonSliSparklines gets all the sparklines for a sensor. If the sensor is a Pulse, it was get the non-sli sparklines
+    - `getTimeSeriesForSparklines` is the main function that retrieves all the sparkines from the server. This function contains two functions: `getSliSparklines` and `getNonSliSparklines`
+    - `getSliSparklines` gets all the sparklines for the online SLIs in a Pulse
+    - `getNonSliSparklines` gets all the sparklines for a sensor. If the sensor is a Pulse, it was get the non-sli sparklines
 
 
 # Model
-- Sensor is the parent class and there are 2 children classes FixSensor and Pulse. FixSensor just represents all the sensors that do not have the hot swap capabilities like the Terra. 
-- In the future, if you are introducing sensors that have fixed functionality, then you can just use the FixSensor class.
+- `Sensor` is the parent class and there are 2 children classes `FixSensor` and `Pulse`. `FixSensor` just represents all the sensors that do not have the hot swap capabilities like the Terra. 
+- In the future, if you are introducing sensors that have fixed functionality, then you can just use the `FixSensor` class.
 - The Pulse has the fields slil, slir and sli, which represents Left SLI, Right SLI and all SLI respectively.
 - In the future, if you are introducing a sensor that has these fields, then you can use the Pulse class.
 - If you are introducing a new type of sensor that doesn't fit into these 2 classes, you would have to create your own new one and have it extend Sensor.
 
-- There are 2 times of data models: TimeSeries and LogSeries
-- Because LogSeries were introduced much later into the app development phase, it extends TimeSeries just so that the code doesn't break
-- In the future, if you have a new type of data model, it is best to just have it extend TimeSeries so you don't have to refactor too much code, or you can have a parent class for all the data models
+- There are 2 times of data models: `TimeSeries` and `LogSeries`
+- Because `LogSeries` were introduced much later into the app development phase, it extends `TimeSeries` just so that the code doesn't break
+- In the future, if you have a new type of data model, it is best to just have it extend `TimeSeries` so you don't have to refactor too much code, or you can have a parent class for all the data models
