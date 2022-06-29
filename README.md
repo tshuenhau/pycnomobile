@@ -69,7 +69,7 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
     - getMultiTimeSeries gets all the time series in that sensor
     - Body of these 2 functions may have to change if a new sensor is introduced
     - Variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
-    - Contains 4 types of lists:
+    - Contains 4 lists:
         - `oldSliGraphs`
         - `oldSliAlertGraphs`
         - `sliGraphs`
@@ -81,7 +81,7 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
     - `getSliSparklines` gets all the sparklines for the online SLIs in a Pulse
     - `getNonSliSparklines` gets all the sparklines for a sensor. If the sensor is a Pulse, it was get the non-sli sparklines
     - variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
-    - Contains 4 types of lists:
+    - Contains 4 lists:
         - `sliSparklines`
         - `sliAlertSparklines`
         - `nonSliSparklines`
