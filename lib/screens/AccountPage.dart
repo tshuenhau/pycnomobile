@@ -86,12 +86,6 @@ class _AccountPageState extends State<AccountPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                // TextButton.icon(
-                                //     icon: Icon(Icons.radar),
-                                //     label: Text("Scan for devices"),
-                                //     onPressed: () => Navigator.of(context).push(
-                                //         MaterialPageRoute(
-                                //             builder: (_) => BluetoothPage()))),
                                 TextButton.icon(
                                     icon: Icon(Icons.palette_outlined),
                                     label: Text("Change Theme"),

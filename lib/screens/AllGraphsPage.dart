@@ -64,6 +64,8 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
               if (_newDateRange != null) {
                 await getGraphsForTimeRange(isAlert, _newDateRange,
                     widget.sensor, widget.sensor.functionalities!, "", "", "");
+                initOldGraphs(isAlert, widget.sensor,
+                    widget.sensor.functionalities!, _newDateRange);
               }
             },
             child: Icon(Icons.today,
@@ -86,70 +88,71 @@ class _AllGraphsPageState extends State<AllGraphsPage> {
       child: Align(
         alignment: Alignment.topCenter,
         child: Obx(
-          () => ListView(
-              padding: EdgeInsets.all(0),
-              children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [DateRangeSelector(context)],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 2.5 / 100,
-                    ),
-                  ] +
-                  (widget.sensor.isPulse()
-                      ? (buildGraphs(
-                          sensor: widget.sensor,
-                          functions: widget.sensor.functionalities!,
-                          type: TYPE_OF_TIMESERIES.SLI,
-                          context: context,
-                          isAlert: isAlert))
-                      : []) +
-                  (buildGraphs(
+          () => ListView(padding: EdgeInsets.all(0), children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [DateRangeSelector(context)],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 2.5 / 100,
+            ),
+            Column(
+              children: (widget.sensor.isPulse()
+                  ? (buildGraphs(
                       sensor: widget.sensor,
                       functions: widget.sensor.functionalities!,
-                      type: TYPE_OF_TIMESERIES.INTERNAL,
+                      type: TYPE_OF_TIMESERIES.SLI,
                       context: context,
-                      isAlert: isAlert)) +
-                  (widget.sensor.isPulse()
-                      ? ([
-                            Container(),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).size.height *
-                                    3 /
-                                    100,
-                              ),
-                              child: Center(
-                                  child: ElevatedButton(
-                                onPressed: () async {
-                                  await initOldGraphs(isAlert, widget.sensor,
-                                      widget.sensor.functionalities!);
-                                  setState(() {
-                                    showOldGraphs = !showOldGraphs;
-                                  });
-                                },
-                                child: Text(showOldGraphs == false
-                                    ? "Show Old SLI Graphs"
-                                    : "Hide Old SLI Graphs"),
-                              )),
+                      isAlert: isAlert))
+                  : []),
+            ),
+            Column(
+                children: (widget.sensor.isPulse()
+                    ? ([
+                          Container(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom:
+                                  MediaQuery.of(context).size.height * 3 / 100,
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height *
-                                  2.5 /
-                                  100,
-                            ),
-                          ] +
-                          (showOldGraphs == true
-                              ? buildGraphs(
-                                  sensor: widget.sensor,
-                                  functions: widget.sensor.functionalities!,
-                                  type: TYPE_OF_TIMESERIES.OLD_SLI,
-                                  context: context,
-                                  isAlert: isAlert)
-                              : []))
-                      : [])),
+                            child: Center(
+                                child: ElevatedButton(
+                              onPressed: () async {
+                                await initOldGraphs(isAlert, widget.sensor,
+                                    widget.sensor.functionalities!);
+                                setState(() {
+                                  showOldGraphs = !showOldGraphs;
+                                });
+                              },
+                              child: Text(showOldGraphs == false
+                                  ? "Show Old SLI Graphs"
+                                  : "Hide Old SLI Graphs"),
+                            )),
+                          ),
+                          SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height * 2.5 / 100,
+                          ),
+                        ] +
+                        (showOldGraphs == true
+                            ? buildGraphs(
+                                sensor: widget.sensor,
+                                functions: widget.sensor.functionalities!,
+                                type: TYPE_OF_TIMESERIES.OLD_SLI,
+                                context: context,
+                                isAlert: isAlert)
+                            : []))
+                    : [])),
+            Column(
+              children: (buildGraphs(
+                  sensor: widget.sensor,
+                  functions: widget.sensor.functionalities!,
+                  type: TYPE_OF_TIMESERIES.INTERNAL,
+                  context: context,
+                  isAlert: isAlert)),
+            )
+          ]),
         ),
       ),
     ));
