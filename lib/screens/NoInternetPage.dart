@@ -4,7 +4,10 @@ import 'package:Sensr/controllers/AuthController.dart';
 import 'package:get/get.dart';
 
 class NoInternetPage extends StatelessWidget {
-  const NoInternetPage({Key? key}) : super(key: key);
+  NoInternetPage({Key? key, required this.message1, required this.message2})
+      : super(key: key);
+  String message1 = "";
+  String message2 = "";
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,13 @@ class NoInternetPage extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: 'GothamRounded',
                       fontSize: MediaQuery.of(context).size.width * 7.5 / 100)),
-              Text("No Internet connection!",
+              Text(message1,
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'GothamRounded',
                       fontWeight: FontWeight.w500,
                       fontSize: MediaQuery.of(context).size.width * 4 / 100)),
-              Text("Please check you connection and try again!",
+              Text(message2,
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'GothamRounded',

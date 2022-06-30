@@ -42,7 +42,9 @@ class AuthController extends GetxController {
       await Future.delayed(Duration(seconds: 3)); //For logo to load
       return AuthState.loggedIn;
     } on SocketException catch (e) {
-      Get.to(NoInternetPage());
+      Get.to(NoInternetPage(
+          message1: "No Internet connection.",
+          message2: "Please check you connection and try again."));
       return AuthState.loggedOut;
     } catch (e) {
       return AuthState.loggedOut;
