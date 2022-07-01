@@ -40,7 +40,7 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 ### Android:
 <https://docs.flutter.dev/deployment/android#build-an-app-bundle>
 
-Mainly need to follow the guide "Signing the app" & "Building the app for release" & "Publishing to the Google Play Store" &
+Mainly need to follow the guide "Signing the app" & "Building the app for release" & "Publishing to the Google Play Store" & "Updating the app’s version number"
 
 
 # View
