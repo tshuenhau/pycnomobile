@@ -57,14 +57,16 @@ Mainly need to follow the guide "Signing the app" & "Building the app for releas
 
 - Themes and color schemes are located under `lib/theme`.
 - The `CustomColorScheme.dart` handles the creation of color schemes (default and whitelabelled)
+  - Basically, the theme is defined and decided here.
+  - This is likely the only file that you will have a need to edit in the future.
 - `GlobalTheme.dart` is responsible for wrapping the color schemes into ThemeData widgets which is required for use by the main MaterialApp widget.
 
 ## Graphs
 
 - Graph styling is located in the `SensorLineChart.dart` file
 - uses `fl_chart` library to render the graphs in the "All Graphs" page.
-- link to the library: <https://pub.dev/packages/fl_chart>
-- pre-set axis limits are also located inside under the applyDefaultAxisScales() function.
+  - link to the library: <https://pub.dev/packages/fl_chart>
+- pre-set axis limits are also located inside under the `applyDefaultAxisScales()` function.
 
 # Controller
 - `TimeSeriesController`
