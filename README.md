@@ -1,103 +1,89 @@
-# Sensr
+# Sensr for Pycno
 
+Welcome to **Sensr**, an innovative application developed exclusively for [Pycno](https://www.pycno.co), designed to bring precision agriculture to the palm of your hand. Leveraging Pycno's cutting-edge sensor technology, Sensr provides real-time data monitoring, comprehensive analytics, and actionable insights for farmers, agronomists, and agricultural professionals. Experience the power of real-time data, interactive graphs, instant notifications for adverse weather conditions, and insightful summaries directly through your smartphone.
 
+## 🚀 Getting Started
 
-## Getting Started
-You will need the flutter SDK installed on your Mac/Windows PC.
-Follow the instructions here to install it: <https://docs.flutter.dev/get-started/install>
+To embark on a journey towards data-driven agriculture with Sensr, ensure you have the Flutter SDK set up on your system. Follow the [official Flutter setup guide](https://docs.flutter.dev/get-started/install) to install Flutter on Mac or Windows PC.
 
+## 📦 Configuration
 
+### Setting Up Your Project
 
-## Package Name/Bundle Identifier
+#### Android
 
-### Android
-change package name in `android/build.gradle`
+1. Navigate to `android/app/build.gradle`.
+2. Modify the `applicationId` to your unique package name:
 
-```
-defaultConfig {
-    applicationId "your.package.name" <--- THIS
-    minSdkVersion 16
-    targetSdkVersion 27
-    versionCode 1
-    versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-}
-```
+    ```gradle
+    defaultConfig {
+        applicationId "your.package.name" // Replace with your package name
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    ```
 
-### iOS
+#### iOS
 
-Change the bundle identifier from your Info.plist file inside your ios/Runner directory.
+1. Open the `Info.plist` file within the `ios/Runner` directory.
+2. Update the `CFBundleIdentifier` with your package name:
 
-```
-<key>CFBundleIdentifier</key>
-<string>com.your.packagename</string> <--- THIS
-```
+    ```xml
+    <key>CFBundleIdentifier</key>
+    <string>com.your.packagename</string> <!-- Replace with your package name -->
+    ```
 
-# Building & Publishing
+## 🏗 Building & Publishing
 
-### iOS:
-<https://docs.flutter.dev/deployment/ios>
-### Android:
-<https://docs.flutter.dev/deployment/android#build-an-app-bundle>
+Effortlessly build and publish your application with these step-by-step guides:
 
-Mainly need to follow the guide "Signing the app" & "Building the app for release" & "Publishing to the Google Play Store" & "Updating the app’s version number"
+- **iOS:** [Deploying to iOS Devices](https://docs.flutter.dev/deployment/ios)
+- **Android:** [Deploying to Android Devices](https://docs.flutter.dev/deployment/android#build-an-app-bundle)
 
+Key areas include app signing, release builds, and app store deployment.
 
-# View
+## 📂 Project Structure
 
-## Folder Structure
-- Each new page is stored in `lib/screens`
-  - Within each screen consists of Widgets & Custom Widgets
-- Custom Widgets live in `lib/widgets`
-- For UI elements that require iterating and complex processing, the building of these widgets are abstracted out and put into Builder Functions in `lib/builders`. These include:
-  - All the Sparkline Cards
-  - List of Graphs
-  - List of Alerts
-## Themes & Color Schemes
+### 🌟 View
 
-- Themes and color schemes are located under `lib/theme`.
-- The `CustomColorScheme.dart` handles the creation of color schemes (default and whitelabelled)
-  - Basically, the theme is defined and decided here.
-  - This is likely the only file that you will have a need to edit in the future.
-- `GlobalTheme.dart` is responsible for wrapping the color schemes into ThemeData widgets which is required for use by the main MaterialApp widget.
+- **Folder Structure:** Organized for efficiency.
+  - Pages: `lib/screens`
+  - Widgets: `lib/widgets`
+  - Builder Functions: `lib/builders` for complex UI elements.
 
-## Graphs
+### 🎨 Themes & Color Schemes
 
-- Graph styling is located in the `SensorLineChart.dart` file
-- uses `fl_chart` library to render the graphs in the "All Graphs" page.
-  - link to the library: <https://pub.dev/packages/fl_chart>
-- pre-set axis limits are also located inside under the `applyDefaultAxisScales()` function.
+- Centralized theme management: `lib/theme`.
+- Customize themes with `CustomColorScheme.dart`.
+- Apply themes globally with `GlobalTheme.dart`.
 
-# Controller
-- `TimeSeriesController`
-    - Contains the functions to retrieve time series data
-    - getSingleTimeSeries only gets time series for one functionality
-    - getMultiTimeSeries gets all the time series in that sensor
-    - Body of these 2 functions may have to change if a new sensor is introduced
-    - variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
+### 📈 Graphs & Analytics
 
-- `SparklinesController`
-    - Contains the functions to retrieve sparklines data
-    - `getTimeSeriesForSparklines` is the main function that retrieves all the sparkines from the server. This function contains two functions: `getSliSparklines` and `getNonSliSparklines`
-    - `getSliSparklines` gets all the sparklines for the online SLIs in a Pulse
-    - `getNonSliSparklines` gets all the sparklines for a sensor. If the sensor is a Pulse, it was get the non-sli sparklines
-    - variable `intConcurrentCount` determines the number of concurrent API calls made to the server.
+- Graph styling in `SensorLineChart.dart`, powered by `fl_chart`.
+- Real-time data and analytics visualization.
 
-- `ListOfSensorsController`
-    - Gets list of sensors from server and stores them into a `List<Sensor>`
-    - Controller also used to sort and search
+## 🕹 Controller
 
+Control and manage data with precision:
 
-# Model
-- `Sensor` is the parent class and there are 2 children classes `FixSensor` and `Pulse`. `FixSensor` just represents all the sensors that do not have the hot swap capabilities like the Terra.
-- In the future, if you are introducing sensors that have fixed functionality, then you can just use the `FixSensor` class.
-- The Pulse has the fields slil, slir and sli, which represents Left SLI, Right SLI and all SLI respectively. These are used to check if an SLI is the current SLI inside the Pulse, or an old one.
-- In the future, if you are introducing a sensor that has these fields, then you can use the Pulse class.
-- If you are introducing a new type of sensor that doesn't fit into these 2 classes, you would have to create your own new one and have it extend Sensor.
+- `TimeSeriesController`: Fetch and process time series data.
+- `SparklinesController`: Retrieve sparklines for quick data insights.
+- `ListOfSensorsController`: Manage sensor data effectively.
 
-- There are 2 times of data models: `TimeSeries` and `LogSeries`
-- Because `LogSeries` were introduced much later into the app development phase, it extends `TimeSeries` just so that the code doesn't break
-- In the future, if you have a new type of data model, it is best to just have it extend `TimeSeries` so you don't have to refactor too much code, or you can have a parent class for all the data models
+## 📦 Model
 
-# Others
-- `env.dart` contains the environment variables. For now, it only stores the API base url.
+Robust data models for scalability:
+
+- Base `Sensor` class with `FixSensor` and `Pulse` subclasses.
+- Data models: `TimeSeries` and `LogSeries`.
+
+## 🔧 Others
+
+Environment configurations and API integration:
+
+- `env.dart`: Contains essential environment variables like the API base url.
+
+By harnessing the power of Sensr and Pycno's sensors, stakeholders in the agricultural sector can optimize their practices, ensure sustainable farming, and achieve remarkable improvements in crop yield and health. Welcome to the future of agriculture.
